@@ -8,7 +8,7 @@ from fastapi_admin.site import Site, Menu
 
 TORTOISE_ORM = {
     'connections': {
-        'default': 'mysql://root:123456@127.0.0.1:3306/test'
+        'default': 'mysql://root:123456@127.0.0.1:3306/micro'
     },
     'apps': {
         'models': {
@@ -27,34 +27,86 @@ def create_app():
     fast_app.mount('/admin', admin_app)
 
     admin_app.init(
-        user_model='TestUser',
+        user_model='User',
         admin_secret='test',
         models='examples.models',
         site=Site(
-            name='FastAPI-Admin',
+            name='微服务管理后台',
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
-            locale='en-US',
-            locale_switcher=True,
+            locale='zh-CN',
+            locale_switcher=False,
             menu=[
                 Menu(
-                    name='Home',
-                    url='/home',
-                    icon='fa fa-home',
+                    name='首页',
+                    url='/',
+                    icon='fa fa-home'
                 ),
                 Menu(
-                    name='Information',
-                    title=True,
-                    icon='fa fa-user',
+                    name='配置',
+                    title=True
                 ),
                 Menu(
-                    name='User',
-                    url='/rest/TestUser',
-                    icon='fa fa-user',
+                    name='应用',
+                    url='/rest/App',
+                    icon='fa fa-pencil'
                 ),
                 Menu(
-                    name='Logout',
-                    url='/logout',
-                    icon='icon-lock',
+                    name='阿里云秘钥',
+                    url='/rest/AliYunSecret',
+                    icon='fa fa-user-secret'
+                ),
+                Menu(
+                    name='阿里云OSS',
+                    url='/rest/AliYunOss',
+                    icon='fa fa-database'
+                ),
+                Menu(
+                    name='App短信',
+                    url='/rest/AppSms',
+                    icon='fa fa-envelope-o'
+                ),
+                Menu(
+                    name='百度AI',
+                    url='/rest/BaiduAi',
+                    icon='fa fa-desktop'
+                ),
+                Menu(
+                    name='App百度AI',
+                    url='/rest/AppBaiduAi',
+                    icon='fa fa-laptop',
+                ),
+                Menu(
+                    name='在线参数',
+                    url='/rest/Config',
+                    icon='fa fa-cog'
+                ),
+                Menu(
+                    name='基本信息',
+                    title=True
+                ),
+                Menu(
+                    name='请求日志',
+                    url='/rest/ApiLog',
+                    icon='fa fa-sticky-note'
+                ),
+                Menu(
+                    name='App版本',
+                    url='/rest/AppVersion',
+                    icon='fa fa-mobile'
+                ),
+                Menu(
+                    name='授权',
+                    title=True
+                ),
+                Menu(
+                    name='用户',
+                    url='/rest/User',
+                    icon='fa fa-user'
+                ),
+                Menu(
+                    name='注销',
+                    url='/login',
+                    icon='fa fa-lock'
                 )
             ]
         )

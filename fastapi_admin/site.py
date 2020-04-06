@@ -11,6 +11,7 @@ class Menu(BaseModel):
     include: Optional[Tuple[str]]
     exclude: Optional[Tuple[str]]
     external: Optional[bool] = False
+    raw_id_fields: Optional[Tuple[str]] = ()
 
 
 class Site(BaseModel):

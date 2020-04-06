@@ -3,6 +3,7 @@ from typing import Type
 
 from fastapi import FastAPI
 from tortoise import Model, Tortoise
+
 from .site import Site, Resource, Field
 
 
@@ -22,7 +23,13 @@ class AdminApp(FastAPI):
         'FloatField': 'number',
         'TextField': 'textarea',
         'SmallIntField': 'number',
+        'ForeignKeyFieldInstance': 'select',
     }
+    _model_menu_mapping = {}
+
+    def _get_model_menu_mapping(self):
+        for menu in filter(lambda x: x.url, self.site.menus):
+            self._model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
 
     def init(self, site: Site, user_model: str, admin_secret: str, models: str, ):
         """
@@ -38,6 +45,7 @@ class AdminApp(FastAPI):
         self.models = importlib.import_module(models)
         self.user_model = getattr(self.models, user_model)
         self._inited = True
+        self._get_model_menu_mapping()
 
     def _exclude_field(self, resource: str, field: str):
         """
@@ -46,20 +54,20 @@ class AdminApp(FastAPI):
         :param field:
         :return:
         """
-        for menu in filter(lambda x: x.url, self.site.menus):
-            if resource == menu.url.split('?')[0].split('/')[-1]:
-                if menu.include:
-                    if field not in menu.include:
-                        return True
-                if menu.exclude:
-                    if field in menu.exclude:
-                        return True
+        menu = self._model_menu_mapping[resource]
+        if menu.include:
+            if field not in menu.include:
+                return True
+        if menu.exclude:
+            if field in menu.exclude:
+                return True
         return False
 
-    def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
-                                            exclude_readonly: bool):
+    async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
+                                                  exclude_readonly: bool):
         data_fields = model_describe.get('data_fields')
         pk_field = model_describe.get('pk_field')
+        fk_fields = model_describe.get('fk_fields')
         if exclude_readonly:
             ret = {}
         else:
@@ -90,15 +98,29 @@ class AdminApp(FastAPI):
                 type=type_,
                 options=options
             )
+
+        menu = self._model_menu_mapping[resource]
+        for fk_field in fk_fields:
+            name = fk_field.get('name')
+            if name not in menu.raw_id_fields:
+                fk_model_class = model._meta.fields_map[name].model_class
+                objs = await fk_model_class.all()
+                ret[fk_field.get('raw_field')] = Field(
+                    label=fk_field.get('description') or name.title(),
+                    required=True,
+                    type='select',
+                    options=list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
+                )
+
         return ret
 
-    def get_resource(self, resource: str, exclude_readonly=False):
+    async def get_resource(self, resource: str, exclude_readonly=False, ):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = Tortoise.describe_model(model)
         return Resource(
             title=model_describe.get('description') or resource.title(),
-            fields=self._build_resource_from_model_describe(resource, model, model_describe, exclude_readonly)
+            fields=await self._build_resource_from_model_describe(resource, model, model_describe, exclude_readonly)
         )
 
 

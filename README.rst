@@ -93,7 +93,7 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
                     ),
                     Menu(
                         name='User',
-                        url='/rest/TestUser', #important,TestUser is same of the Model class TestUser.
+                        url='/rest/TestUser', #important,TestUser is same of the Model class TestUser and must be /rest/<Model>.
                         icon='fa fa-user',
                     ),
                     Menu(
@@ -155,6 +155,10 @@ Inherit ``fastapi_admin.models.User`` and add you own fields,then pass in ``init
 Verbose Name
 ~~~~~~~~~~~~
 FastAPI-admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
+
+ForeignKeyField Support
+~~~~~~~~~~~~~~~~~~~~~~~
+If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-admin will get all related objects and display ``select`` in front with ``Model.__str__``.
 
 Front
 -----

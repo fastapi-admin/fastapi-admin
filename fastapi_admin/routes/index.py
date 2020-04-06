@@ -24,7 +24,8 @@ async def get_resource(
     if query.where:
         qs = qs.filter(**query.where)
     result = await qs.limit(query.size).offset((query.page - 1) * query.size)
-    creator = pydantic_model_creator(model, include=app.get_resource(resource).resource_fields.keys())
+    resource = await app.get_resource(resource)
+    creator = pydantic_model_creator(model, include=resource.resource_fields.keys())
     return GetManyOut(
         total=await qs.count(),
         data=list(map(lambda x: creator.from_orm(x).dict(), result))
@@ -37,7 +38,8 @@ async def get_resource(
 async def form(
         resource: str,
 ):
-    return app.get_resource(resource, exclude_readonly=True).dict(by_alias=True, exclude_unset=True)
+    resource = await app.get_resource(resource, exclude_readonly=True)
+    return resource.dict(by_alias=True, exclude_unset=True)
 
 
 @router.get(
@@ -46,7 +48,8 @@ async def form(
 async def grid(
         resource: str,
 ):
-    return app.get_resource(resource).dict(by_alias=True, exclude_unset=True)
+    resource = await app.get_resource(resource)
+    return resource.dict(by_alias=True, exclude_unset=True)
 
 
 @router.get(
@@ -55,7 +58,8 @@ async def grid(
 async def view(
         resource: str,
 ):
-    return app.get_resource(resource)
+    resource = await app.get_resource(resource)
+    return resource.dict(by_alias=True, exclude_unset=True)
 
 
 @router.delete(
@@ -85,8 +89,8 @@ async def update_one(
             message=f'Update Error,{e}'
         ))
     user_ = await get_object_or_404(model, pk=id)
-    creator = pydantic_model_creator(model,
-                                     include=app.get_resource(resource, exclude_readonly=True).resource_fields.keys())
+    resource = await app.get_resource(resource, exclude_readonly=True)
+    creator = pydantic_model_creator(model, include=resource.resource_fields.keys())
     return creator.from_orm(user_).dict()
 
 
@@ -98,7 +102,8 @@ async def create_one(
         body=Depends(get_body),
         model=Depends(get_model)
 ):
-    creator = pydantic_model_creator(model, include=app.get_resource(resource).resource_fields.keys())
+    resource = await app.get_resource(resource)
+    creator = pydantic_model_creator(model, include=resource.resource_fields.keys())
     try:
         obj = await model.create(**body)
     except IntegrityError as e:
@@ -117,6 +122,7 @@ async def get_one(
         model=Depends(get_model)
 ):
     obj = await get_object_or_404(model, pk=id)
-    include = app.get_resource(resource, exclude_readonly=True).resource_fields.keys()
+    resource = await app.get_resource(resource)
+    include = resource.resource_fields.keys()
     creator = pydantic_model_creator(model, include=include)
     return creator.from_orm(obj).dict()
