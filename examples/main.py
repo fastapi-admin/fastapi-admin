@@ -32,7 +32,7 @@ def create_app():
         models='examples.models',
         site=Site(
             name='FastAPI-Admin',
-            logo='https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
+            logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
             locale='en-US',
             locale_switcher=True,
             menu=[

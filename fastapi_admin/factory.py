@@ -25,6 +25,14 @@ class AdminApp(FastAPI):
     }
 
     def init(self, site: Site, user_model: str, admin_secret: str, models: str, ):
+        """
+        init admin site
+        :param site:
+        :param user_model: admin user model path,like admin.models.user
+        :param admin_secret: admin jwt secret.
+        :param models: tortoise models
+        :return:
+        """
         self.site = site
         self.admin_secret = admin_secret
         self.models = importlib.import_module(models)
@@ -32,6 +40,12 @@ class AdminApp(FastAPI):
         self._inited = True
 
     def _exclude_field(self, resource: str, field: str):
+        """
+        exclude field by menu include and exclude
+        :param resource:
+        :param field:
+        :return:
+        """
         for menu in filter(lambda x: x.url, self.site.menus):
             if resource == menu.url.split('?')[0].split('/')[-1]:
                 if menu.include:

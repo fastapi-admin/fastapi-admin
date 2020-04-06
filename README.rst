@@ -10,9 +10,9 @@ FastAPI Admin
 Introduction
 ============
 
-fastapi-admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ and `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+FastAPI-admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ and `rest-admin <https://github.com/wxs77577/rest-admin>`_.
 
-fastapi-admin provide crud feature out-of-the-box with just a few config.
+FastAPI-admin provide crud feature out-of-the-box with just a few config.
 
 Features
 ========
@@ -25,18 +25,20 @@ Features
 Screenshots
 ===========
 
-.. image:: ./images/login.png
-.. image:: ./images/list.png
-.. image:: ./images/view.png
-.. image:: ./images/create.png
+.. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/login.png
+.. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/list.png
+.. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/view.png
+.. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/create.png
 
 
-Example
-=======
+Quick Start
+===========
 
-backend
+Backend
 -------
 
+example
+~~~~~~~
 Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
 
 .. code-block:: python
@@ -75,7 +77,7 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
             models='examples.models',
             site=Site(
                 name='FastAPI-Admin',
-                logo='https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
+                logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
                 locale='en-US',
                 locale_switcher=True,
                 menu=[
@@ -91,7 +93,7 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
                     ),
                     Menu(
                         name='User',
-                        url='/rest/TestUser',
+                        url='/rest/TestUser', #important,TestUser is same of the Model class TestUser.
                         icon='fa fa-user',
                     ),
                     Menu(
@@ -119,15 +121,46 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
     if __name__ == '__main__':
         uvicorn.run('main:app', port=8000, debug=True, reload=True)
 
+Enum Support
+~~~~~~~~~~~~
+When you define a enum field of tortoise-orm,like ``IntEnumField``,you can inherit ``fastapi_admin.enum.EnumMixin`` and impl ``choices()`` method,
+FastAPI-admin will auto read and display and render a ``select`` widget in front.
 
-front
+.. code-block:: python
+
+    class Status(EnumMixin, IntEnum):
+        on = 1
+        off = 2
+
+        @classmethod
+        def choices(cls):
+            return {
+                cls.on: 'ON',
+                cls.off: 'OFF'
+            }
+
+Admin User Model
+~~~~~~~~~~~~~~~~
+Inherit ``fastapi_admin.models.User`` and add you own fields,then pass in ``init()``.
+
+.. code-block:: python
+
+    class AdminUser(User):
+        is_active = fields.BooleanField(default=False, description='Is Active')
+        status = fields.IntEnumField(Status, description='User Status')
+        created_at = fields.DatetimeField(auto_now_add=True)
+        updated_at = fields.DatetimeField(auto_now=True)
+
+
+Front
 -----
-just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+
+Just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
 
 Deployment
 ==========
-1. deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com/deployment/.
-2. run ``npm run build`` in ``front`` dir,then copy static files in ``dists`` to you server,deployment by ``nginx``.
+1. Deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com/deployment/.
+2. Run ``npm run build`` in ``front`` dir,then copy static files in ``dists`` to you server,deployment by ``nginx``.
 
 .. note::
    Maybe you should config ``VUE_APP_API_URL``, ``BASE_URL`` environment .etc in ``.env`` of ``front`` dir,just reference docs of `rest-admin <https://github.com/wxs77577/rest-admin>`_.

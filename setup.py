@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as f:
 
 
 def requirements():
-    return open("requirements.txt", "rt").read().splitlines()
+    return open('requirements.txt', 'rt').read().splitlines()
 
 
 setup(
@@ -21,11 +21,11 @@ setup(
     author_email='long2ice@gmail.com',
     url='https://github.com/long2ice/fastapi-admin',
     license='MIT License',
-    packages=find_packages(include=["fastapi_admin*"]),
+    packages=find_packages(include=['fastapi_admin*']),
     include_package_data=True,
     platforms='any',
     keywords=(
-        "fastapi admin dashboard"
+        'fastapi admin dashboard'
     ),
     dependency_links=['https://github.com/long2ice/tortoise-orm.git@long2ice#egg=tortoise-orm'],
     install_requires=requirements(),
