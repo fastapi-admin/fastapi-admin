@@ -1,0 +1,62 @@
+/**
+ * See https://bootswatch.com/
+ * Change `lumen` to any other words blow:
+ * 
+ * cerulean  darkly    litera    materia   sandstone slate     superhero
+ * cosmo     flatly    lumen     minty     simplex   solar     united
+ * cyborg    journal   lux       pulse     sketchy   spacelab  yeti
+ */
+ 
+//  @import "node_modules/bootswatch/dist/lumen/bootstrap";
+
+ .app-footer{
+   border-top: none;
+   color: #666;
+ }
+ .card {
+  border: none;
+  box-shadow: 0 0 5px #ccc;
+}
+.card-header{
+  border:none;
+  font-weight: bold;
+}
+.card-footer{
+  border: none;
+}
+.nav-tabs .nav-link {
+  border-color:transparent !important;
+  border-radius: 4px;
+  margin: 0 0.2em;
+  padding: 0.3em 1em !important;
+  font-weight: bold;
+  
+}
+.data-form .tabs .nav-tabs {
+  margin: 0 1em 1em 1em;
+  border:none;
+}
+.nav-tabs .nav-link.active{
+  border-color:#ccc !important;
+  border-radius: 2em;
+  
+}
+.tab-content{
+  border-color:transparent;
+}
+
+.btn{
+  padding: 0.5em 1.2em;
+  // border-radius: 2em;
+}
+
+.table th, .table td {
+  border-top: 1px solid #dee2e65c;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+.table thead th {
+  border-bottom: 1px solid #dee2e6;
+}

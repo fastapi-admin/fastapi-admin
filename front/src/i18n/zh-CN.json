@@ -1,0 +1,48 @@
+{
+  "actions": {
+    "create": "新建",
+    "new": "新建",
+    "delete": "删除",
+    "delete_all": "全部删除",
+    "reload": "刷新",
+    "search": "搜索",
+    "search_and_export": "搜索并导出",
+    "save": "保存",
+    "back": "返回",
+    "submit": "提交",
+    "view": "查看",
+    "actions": "操作",
+    "upload": "上传",
+    "change": "更换",
+    "choose": "选择",
+    "login": "登录",
+    "edit": "编辑"
+  },
+  "texts": {
+
+  },
+  "fields": {
+    "username": "用户名",
+    "password": "密码"
+  },
+  "messages": {
+    "paginate": "共{total}条数据",
+    "login_please": "请先登录",
+    "login_footer": "REST ADMIN - Awesome Admin Dashboard for RESTFul API",
+    "login_description": "管理后台",
+    "dashboard": "控制台",
+    "go_home": "返回首页",
+    "succeed": "操作成功",
+    "uploaded": "上传成功",
+    "deleted": "删除成功",
+    "deleted_all": "全部删除成功",
+    "confirm_delete": "确定要删除吗？",
+    "image_size": "尺寸要求：{width}x{height}",
+    "confirm_delete_all": "此次操作不可恢复，确定要全部删除吗？",
+    "no_options_text": "暂无可选项"
+  },
+  "errors": {
+    "too_large": "请上传小于{limit}KB的文件",
+    "wrong_size": "请上传{width}x{height}像素的图片"
+  }
+}
