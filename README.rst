@@ -152,6 +152,10 @@ Inherit ``fastapi_admin.models.User`` and add you own fields,then pass in ``init
         updated_at = fields.DatetimeField(auto_now=True)
 
 
+Verbose Name
+~~~~~~~~~~~~
+FastAPI-admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
+
 Front
 -----
 
