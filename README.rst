@@ -156,9 +156,13 @@ Verbose Name
 ~~~~~~~~~~~~
 FastAPI-admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
 
-ForeignKeyField Support
-~~~~~~~~~~~~~~~~~~~~~~~
+ForeignKeyField
+~~~~~~~~~~~~~~~~
 If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-admin will get all related objects and display ``select`` in front with ``Model.__str__``.
+
+JSONField
+~~~~~~~~~
+FastAPI-admin will render ``JSONField`` with ``jsoneditor`` as beauty interface.
 
 Front
 -----
