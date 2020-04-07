@@ -46,6 +46,11 @@ def get_model(resource: str = Path(...)):
     return model
 
 
-async def get_body(request: Request):
+async def parse_body(request: Request, resource: str = Path(...)):
     body = await request.json()
-    return body
+    resource = await app.get_resource(resource, exclude_readonly=True)
+    resource_fields = resource.resource_fields.keys()
+    ret = {}
+    for key in resource_fields:
+        ret[key] = body.get(key)
+    return ret, resource_fields

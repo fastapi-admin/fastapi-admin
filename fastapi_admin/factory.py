@@ -17,6 +17,7 @@ class AdminApp(FastAPI):
         'IntField': 'number',
         'BooleanField': 'checkbox',
         'DatetimeField': 'datetime',
+        'DateField': 'date',
         'IntEnumFieldInstance': 'select',
         'CharEnumFieldInstance': 'select',
         'DecimalField': 'number',
@@ -24,6 +25,7 @@ class AdminApp(FastAPI):
         'TextField': 'textarea',
         'SmallIntField': 'number',
         'ForeignKeyFieldInstance': 'select',
+        'JSONField': 'json',
     }
     _model_menu_mapping = {}
 

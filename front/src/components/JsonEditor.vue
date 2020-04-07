@@ -21,9 +21,9 @@ export default {
       this.value = JSON.parse(this.value);
     }
     this.editor.set(this.value || {});
-    this.editor.onChange = v => {
-      this.$emit("input", JSON.stringify(v));
-    };
+    this.editor._onChange = v => {
+      this.$emit("input", this.editor.get());
+    }
   },
   created() {}
 };

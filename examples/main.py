@@ -20,7 +20,7 @@ TORTOISE_ORM = {
 
 
 def create_app():
-    fast_app = FastAPI()
+    fast_app = FastAPI(debug=True)
 
     register_tortoise(fast_app, config=TORTOISE_ORM)
 
@@ -126,4 +126,4 @@ def create_app():
 app = create_app()
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8000, debug=True, reload=True)
+    uvicorn.run('main:app', port=8000, debug=True, reload=True, lifespan='on')

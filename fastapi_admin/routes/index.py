@@ -4,7 +4,7 @@ from starlette.status import HTTP_409_CONFLICT
 from tortoise.contrib.pydantic import pydantic_model_creator
 from tortoise.exceptions import IntegrityError
 
-from ..depends import QueryItem, get_query, get_body, get_model
+from ..depends import QueryItem, get_query, parse_body, get_model
 from ..factory import app
 from ..responses import GetManyOut
 from ..shortcuts import get_object_or_404
@@ -77,20 +77,20 @@ async def delete_one(
     '/{resource}/{id}'
 )
 async def update_one(
-        resource: str,
         id: int,
-        body=Depends(get_body),
+        parsed=Depends(parse_body),
         model=Depends(get_model)
 ):
+    body, resource_fields = parsed
     try:
+        print(body)
         await model.filter(pk=id).update(**body)
     except IntegrityError as e:
         return ORJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(
             message=f'Update Error,{e}'
         ))
     user_ = await get_object_or_404(model, pk=id)
-    resource = await app.get_resource(resource, exclude_readonly=True)
-    creator = pydantic_model_creator(model, include=resource.resource_fields.keys())
+    creator = pydantic_model_creator(model, include=resource_fields)
     return creator.from_orm(user_).dict()
 
 
@@ -98,12 +98,11 @@ async def update_one(
     '/{resource}'
 )
 async def create_one(
-        resource: str,
-        body=Depends(get_body),
+        parsed=Depends(parse_body),
         model=Depends(get_model)
 ):
-    resource = await app.get_resource(resource)
-    creator = pydantic_model_creator(model, include=resource.resource_fields.keys())
+    body, resource_fields = parsed
+    creator = pydantic_model_creator(model, include=resource_fields)
     try:
         obj = await model.create(**body)
     except IntegrityError as e:
