@@ -83,7 +83,6 @@ async def update_one(
 ):
     body, resource_fields = parsed
     try:
-        print(body)
         await model.filter(pk=id).update(**body)
     except IntegrityError as e:
         return ORJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(

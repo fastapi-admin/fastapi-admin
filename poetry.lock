@@ -26,7 +26,7 @@ description = "asyncio bridge to the standard sqlite3 module"
 name = "aiosqlite"
 optional = false
 python-versions = ">=3.5"
-version = "0.11.0"
+version = "0.12.0"
 
 [[package]]
 category = "main"
@@ -168,7 +168,7 @@ description = "FastAPI framework, high performance, easy to learn, fast to code,
 name = "fastapi"
 optional = false
 python-versions = ">=3.6"
-version = "0.54.0"
+version = "0.54.1"
 
 [package.dependencies]
 pydantic = ">=0.32.2,<2.0.0"
@@ -227,7 +227,7 @@ optional = true
 version = "*"
 
 [package.extras]
-all = ["graphene", "requests", "aiofiles", "jinja2", "python-multipart", "itsdangerous", "pyyaml", "ujson", "orjson", "email-validator", "uvicorn", "async-exit-stack", "async-generator"]
+all = ["requests", "aiofiles", "jinja2", "python-multipart", "itsdangerous", "pyyaml", "graphene", "ujson", "orjson", "email-validator", "uvicorn", "async-exit-stack", "async-generator"]
 dev = ["pyjwt", "passlib", "autoflake", "flake8", "uvicorn", "graphene"]
 doc = ["mkdocs", "mkdocs-material", "markdown-include", "typer", "typer-cli", "pyyaml"]
 test = ["pytest (>=4.0.0)", "pytest-cov", "mypy", "black", "isort", "requests", "email-validator", "sqlalchemy", "peewee", "databases", "orjson", "async-exit-stack", "async-generator", "python-multipart", "aiofiles", "flask"]
@@ -354,7 +354,7 @@ description = "Fast, correct Python JSON library supporting dataclasses, datetim
 name = "orjson"
 optional = false
 python-versions = ">=3.6"
-version = "2.6.3"
+version = "2.6.4"
 
 [[package]]
 category = "main"
@@ -632,7 +632,7 @@ aiomysql = [
     {file = "aiomysql-0.0.20.tar.gz", hash = "sha256:d89ce25d44dadb43cf2d9e4603bd67b7a0ad12d5e67208de013629ba648df2ba"},
 ]
 aiosqlite = [
-    {file = "aiosqlite-0.11.0.tar.gz", hash = "sha256:4f02314a42db6722dc26f2a6119c64e3f05f141f57bbf2b1e1f9fd741b6d7fb8"},
+    {file = "aiosqlite-0.12.0.tar.gz", hash = "sha256:c1dad5652630b21cec14081a3555213462970ab35d4902f7febe17f43d2202f1"},
 ]
 aniso8601 = [
     {file = "aniso8601-7.0.0-py2.py3-none-any.whl", hash = "sha256:d10a4bf949f619f719b227ef5386e31f49a2b6d453004b21f02661ccc8670c7b"},
@@ -744,8 +744,8 @@ email-validator = [
     {file = "email_validator-1.0.5-py2.py3-none-any.whl", hash = "sha256:e3e6ede1765d7c1e580d2050d834b2689361f7da2d50ce74df6a5968fca7cb13"},
 ]
 fastapi = [
-    {file = "fastapi-0.54.0-py3-none-any.whl", hash = "sha256:c7ec84df59addd5d013c39b5b762b6a4afa4766fb344380abd2674f93e726d6a"},
-    {file = "fastapi-0.54.0.tar.gz", hash = "sha256:33188cc5abe96fb93a9e01bd953c72194f04536eb3d7b87d880d434efd283268"},
+    {file = "fastapi-0.54.1-py3-none-any.whl", hash = "sha256:1ee9a49f28d510b62b3b51a9452b274853bfc9c5d4b947ed054366e2d49f9efa"},
+    {file = "fastapi-0.54.1.tar.gz", hash = "sha256:72f40f47e5235cb5cbbad1d4f97932ede6059290c07e12e9784028dcd1063d28"},
 ]
 graphene = [
     {file = "graphene-2.1.8-py2.py3-none-any.whl", hash = "sha256:09165f03e1591b76bf57b133482db9be6dac72c74b0a628d3c93182af9c5a896"},
@@ -825,21 +825,21 @@ markupsafe = [
     {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
 ]
 orjson = [
-    {file = "orjson-2.6.3-cp36-cp36m-macosx_10_7_x86_64.whl", hash = "sha256:d23e026a0c6cdc61e4c51b20f09fae04a06507616386754ed92b88d4d9c85a42"},
-    {file = "orjson-2.6.3-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:04f9092778146f42ad3ced5f6d798a211e31a6eb28382aad79650cfb3ef99fa8"},
-    {file = "orjson-2.6.3-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:94173d464d06e284cfd342522dce1eaa09cd8b69b33d83e3134e70fa551cc519"},
-    {file = "orjson-2.6.3-cp36-none-win_amd64.whl", hash = "sha256:a5b61dc3f232a99cc1334d58f7aa12c26e2ab1e744d04d9d55f546dda699696c"},
-    {file = "orjson-2.6.3-cp37-cp37m-macosx_10_7_x86_64.whl", hash = "sha256:bf82bab2bb4c32e9cd43c175f34363cb842b75450ad6dd40ae68d99754d0a231"},
-    {file = "orjson-2.6.3-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:5d4ad1bbc7d15ee52e27370ad56781b77d3befa3bcaffb2ba89b74e3b05972d6"},
-    {file = "orjson-2.6.3-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:50d0aca853bed06da9fe6fe48a5a9cb6e1e0c1718f9a60961604c1cd525d581c"},
-    {file = "orjson-2.6.3-cp37-none-win_amd64.whl", hash = "sha256:09356d7be4b1318a49bfa14662e7b96bb9aeb6513cce1d65fd0106cfd72fe6a3"},
-    {file = "orjson-2.6.3-cp38-cp38-macosx_10_7_x86_64.whl", hash = "sha256:11c694b02a8ecbf95a67c83e2b40edd74dfe7536a8a09bec71e12a93a188c825"},
-    {file = "orjson-2.6.3-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:43571d32bfe8bae7a78d0613f15efec73eb645de3ccba03fab47719fcbc4db6b"},
-    {file = "orjson-2.6.3-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:cc226c584ad49071eec25eeceeded75ec461a2f53b1476dd4bf99a610fe8595a"},
-    {file = "orjson-2.6.3-cp38-none-win_amd64.whl", hash = "sha256:1de82a859465bedcae774190e81971a1261b8a346265aa80cb93d50e1eb2a0b5"},
-    {file = "orjson-2.6.3-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:2a53ad3a79d83fdc7859569f42558858a3357f57b3b637df627f60ea008822aa"},
-    {file = "orjson-2.6.3-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:0069c46cea56562c070b72549cbb5f85f09ff8d784c612d4e0aa81c8d0bc89d3"},
-    {file = "orjson-2.6.3.tar.gz", hash = "sha256:01e65a84dfdbf1c50fe7d480f23a0de7bffd189fa4d46bb181a6f86062b49511"},
+    {file = "orjson-2.6.4-cp36-cp36m-macosx_10_7_x86_64.whl", hash = "sha256:a651201da04e608b55b9915227d74b315d78a499ef28b4bd5f2b79eb19eb02f6"},
+    {file = "orjson-2.6.4-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:38990bb4bceccfcda95dd41e81af244eb25a3816b410a1fab9f8cbef43877568"},
+    {file = "orjson-2.6.4-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:426d59d02a0312485f01feabf78ebb80caa9d64079c8ecca1a55407d5ed7db4e"},
+    {file = "orjson-2.6.4-cp36-none-win_amd64.whl", hash = "sha256:132722a210d67ef4815ae9107a1e3443a0698f6ffb7488ec307a923fce2c1baf"},
+    {file = "orjson-2.6.4-cp37-cp37m-macosx_10_7_x86_64.whl", hash = "sha256:1297e03ac7203b28a19d4a78504965e070af949d7b66dfc04db8529b4e0398e5"},
+    {file = "orjson-2.6.4-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:9e9b64bf8bdda1ac3e856a7f5f92b0d0f276e0e2ff65cf37483e3393008c8bba"},
+    {file = "orjson-2.6.4-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:9ab385fea430c4038d5dbb0fe7567db4ae356a31186e2371bf363c8da874bb52"},
+    {file = "orjson-2.6.4-cp37-none-win_amd64.whl", hash = "sha256:ea89bfae368d7a28896f8d20b65735f2b1dfefc3e5e34d78c4b1431e11739d7e"},
+    {file = "orjson-2.6.4-cp38-cp38-macosx_10_7_x86_64.whl", hash = "sha256:76e86beb6e8f08f958b562e5cc56d4396dc66a5954eb7d4889483be7f3ea3e84"},
+    {file = "orjson-2.6.4-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ee050fc1461727ee12b30cc441ca09bea52772d3b5e0bfbec2bb567c5bbbe5cb"},
+    {file = "orjson-2.6.4-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:caa4fecb790717cb8bf351084db059c3ff23989af4b20f962951a335899db448"},
+    {file = "orjson-2.6.4-cp38-none-win_amd64.whl", hash = "sha256:856e254bbc5ce9fe5957c1360dbc4e7199c697c1ae751aa1996da6373163bea4"},
+    {file = "orjson-2.6.4-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:c052f3600f895d2eaad7ca6129b8f745d36f4a1ceeb7ffdd5bc4654585a46c22"},
+    {file = "orjson-2.6.4-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:ac30e46e222cc7bd601b75bbeeed915897136c4155f6be9223ae1a192e9ff337"},
+    {file = "orjson-2.6.4.tar.gz", hash = "sha256:b34551448836ac579bac266fc51ced4cb845587499da5b94584b680bb521f1dd"},
 ]
 passlib = [
     {file = "passlib-1.7.2-py2.py3-none-any.whl", hash = "sha256:68c35c98a7968850e17f1b6892720764cc7eed0ef2b7cb3116a89a28e43fe177"},

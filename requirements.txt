@@ -1,6 +1,6 @@
 aiofiles==0.4.0
 aiomysql==0.0.20
-aiosqlite==0.11.0
+aiosqlite==0.12.0
 aniso8601==7.0.0
 async-exit-stack==1.0.1
 async-generator==1.10
@@ -13,7 +13,7 @@ click==7.1.1
 cryptography==2.9
 dnspython==1.16.0
 email-validator==1.0.5
-fastapi==0.54.0
+fastapi==0.54.1
 graphene==2.1.8
 graphql-core==2.3.1
 graphql-relay==2.0.1
@@ -24,7 +24,7 @@ iso8601==0.1.12; sys_platform == "win32" or implementation_name != "cpython"
 itsdangerous==1.1.0
 jinja2==2.11.1
 markupsafe==1.1.1
-orjson==2.6.3
+orjson==2.6.4
 passlib==1.7.2
 promise==2.3
 pycparser==2.20
@@ -40,6 +40,7 @@ requests==2.23.0
 rx==1.6.1
 six==1.14.0
 starlette==0.13.2
+-e git+https://github.com/long2ice/tortoise-orm.git@9450cd98fb276981d5c4ed1aa55832b009954c72#egg=tortoise-orm
 typing-extensions==3.7.4.2
 ujson==2.0.3
 urllib3==1.25.8
