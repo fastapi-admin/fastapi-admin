@@ -48,7 +48,7 @@ def create_app():
                 Menu(
                     name='应用',
                     url='/rest/App',
-                    icon='fa fa-pencil'
+                    icon='fa fa-pencil',
                 ),
                 Menu(
                     name='阿里云秘钥',
@@ -63,7 +63,8 @@ def create_app():
                 Menu(
                     name='App短信',
                     url='/rest/AppSms',
-                    icon='fa fa-envelope-o'
+                    icon='fa fa-envelope-o',
+                    search_fields=('app',)
                 ),
                 Menu(
                     name='百度AI',

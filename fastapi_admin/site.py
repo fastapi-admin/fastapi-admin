@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Dict, Union, List
+from typing import Optional, Tuple, Dict, Union, List, Set
 
 from pydantic import BaseModel, HttpUrl
 
@@ -11,7 +11,8 @@ class Menu(BaseModel):
     include: Optional[Tuple[str]]
     exclude: Optional[Tuple[str]]
     external: Optional[bool] = False
-    raw_id_fields: Optional[Tuple[str]] = ()
+    raw_id_fields: Optional[Set[str]] = set()
+    search_fields: Optional[Set[str]] = set()
 
 
 class Site(BaseModel):
@@ -40,8 +41,9 @@ class Field(BaseModel):
 class Resource(BaseModel):
     title: str
     resource_fields: Dict[str, Field]
+    searchFields: Optional[Dict[str, Field]]
 
     class Config:
         fields = {
-            'resource_fields': 'fields'
+            'resource_fields': 'fields',
         }

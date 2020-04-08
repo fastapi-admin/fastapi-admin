@@ -70,10 +70,13 @@ class AdminApp(FastAPI):
         data_fields = model_describe.get('data_fields')
         pk_field = model_describe.get('pk_field')
         fk_fields = model_describe.get('fk_fields')
+        menu = self._model_menu_mapping[resource]
+        search_fields_ret = {}
+        search_fields = menu.search_fields
         if exclude_readonly:
-            ret = {}
+            fields = {}
         else:
-            ret = {
+            fields = {
                 pk_field.get('name'): Field(
                     label=pk_field.get('name').title(),
                     required=True,
@@ -94,35 +97,50 @@ class AdminApp(FastAPI):
                 for k, v in model._meta.fields_map[name].enum_type.choices().items():
                     options.append({'text': v, 'value': k})
 
-            ret[name] = Field(
-                label=field.get('description') or field.get('name').title(),
+            label = field.get('description') or field.get('name').title()
+            fields[name] = Field(
+                label=label,
                 required=not field.get('nullable'),
                 type=type_,
                 options=options
             )
+            if name in search_fields:
+                search_fields_ret[name] = Field(
+                    label=label,
+                )
 
-        menu = self._model_menu_mapping[resource]
         for fk_field in fk_fields:
             name = fk_field.get('name')
             if name not in menu.raw_id_fields:
                 fk_model_class = model._meta.fields_map[name].model_class
                 objs = await fk_model_class.all()
-                ret[fk_field.get('raw_field')] = Field(
-                    label=fk_field.get('description') or name.title(),
+                raw_field = fk_field.get('raw_field')
+                label = fk_field.get('description') or name.title()
+                options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
+                fields[raw_field] = Field(
+                    label=label,
                     required=True,
                     type='select',
-                    options=list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
+                    options=options
                 )
-
-        return ret
+                if name in search_fields:
+                    search_fields_ret[raw_field] = Field(
+                        label=label,
+                        type='select',
+                        options=options,
+                    )
+        return fields, search_fields_ret
 
     async def get_resource(self, resource: str, exclude_readonly=False, ):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = Tortoise.describe_model(model)
+        fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
+                                                                               exclude_readonly)
         return Resource(
             title=model_describe.get('description') or resource.title(),
-            fields=await self._build_resource_from_model_describe(resource, model, model_describe, exclude_readonly)
+            fields=fields,
+            searchFields=search_fields
         )
 
 

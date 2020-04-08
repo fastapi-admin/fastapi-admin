@@ -14,13 +14,6 @@ FastAPI-admin is a admin dashboard based on `fastapi <https://github.com/tiangol
 
 FastAPI-admin provide crud feature out-of-the-box with just a few config.
 
-Features
-========
-
-* Out-of-the-box admin dashboard.
-* Automatic field type mapping.
-* Build-in user authorization.
-* Easy to extension.
 
 Screenshots
 ===========
@@ -35,9 +28,6 @@ Quick Start
 ===========
 
 Backend
--------
-
-example
 ~~~~~~~
 Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
 
@@ -121,6 +111,13 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
     if __name__ == '__main__':
         uvicorn.run('main:app', port=8000, debug=True, reload=True)
 
+Front
+~~~~~
+``cp .env.development.local.example .env`` and modify,then just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+
+Features
+========
+
 Enum Support
 ~~~~~~~~~~~~
 When you define a enum field of tortoise-orm,like ``IntEnumField``,you can inherit ``fastapi_admin.enum.EnumMixin`` and impl ``choices()`` method,
@@ -156,18 +153,18 @@ Verbose Name
 ~~~~~~~~~~~~
 FastAPI-admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
 
-ForeignKeyField
-~~~~~~~~~~~~~~~~
+ForeignKeyField Support
+~~~~~~~~~~~~~~~~~~~~~~~
 If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-admin will get all related objects and display ``select`` in front with ``Model.__str__``.
 
-JSONField
-~~~~~~~~~
+JSONField Render
+~~~~~~~~~~~~~~~~
 FastAPI-admin will render ``JSONField`` with ``jsoneditor`` as beauty interface.
 
-Front
------
+Search Fields
+~~~~~~~~~~~~~
+Defined ``menu.search_fields`` in ``menu`` will render a search form by fields.
 
-Just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
 
 Deployment
 ==========
