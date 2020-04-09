@@ -23,6 +23,7 @@ setup(
     license='MIT License',
     packages=find_packages(include=['fastapi_admin*']),
     include_package_data=True,
+    zip_safe=True,
     platforms='any',
     keywords=(
         'fastapi admin dashboard'
