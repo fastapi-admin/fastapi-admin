@@ -24,14 +24,13 @@ class AdminApp(FastAPI):
         'FloatField': 'number',
         'TextField': 'textarea',
         'SmallIntField': 'number',
-        'ForeignKeyFieldInstance': 'select',
         'JSONField': 'json',
     }
-    _model_menu_mapping = {}
+    model_menu_mapping = {}
 
     def _get_model_menu_mapping(self):
         for menu in filter(lambda x: x.url, self.site.menus):
-            self._model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
+            self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
 
     def init(self, site: Site, user_model: str, admin_secret: str, models: str, ):
         """
@@ -56,7 +55,7 @@ class AdminApp(FastAPI):
         :param field:
         :return:
         """
-        menu = self._model_menu_mapping[resource]
+        menu = self.model_menu_mapping[resource]
         if menu.include:
             if field not in menu.include:
                 return True
@@ -66,21 +65,33 @@ class AdminApp(FastAPI):
         return False
 
     async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
-                                                  exclude_readonly: bool):
+                                                  exclude_readonly: bool, exclude_m2m_field=True):
+        """
+        build resource
+        :param resource:
+        :param model:
+        :param model_describe:
+        :param exclude_readonly:
+        :param exclude_m2m_field:
+        :return:
+        """
         data_fields = model_describe.get('data_fields')
         pk_field = model_describe.get('pk_field')
         fk_fields = model_describe.get('fk_fields')
-        menu = self._model_menu_mapping[resource]
+        m2m_fields = model_describe.get('m2m_fields')
+        menu = self.model_menu_mapping[resource]
         search_fields_ret = {}
         search_fields = menu.search_fields
-        if exclude_readonly:
-            fields = {}
-        else:
+        sort_fields = menu.sort_fields
+        fields = {}
+        name = pk_field.get('name')
+        if not exclude_readonly and not self._exclude_field(resource, name):
             fields = {
-                pk_field.get('name'): Field(
+                name: Field(
                     label=pk_field.get('name').title(),
                     required=True,
                     type=self._field_type_mapping.get(pk_field.get('field_type')) or 'text',
+                    sortable=name in sort_fields
                 )
             }
         for field in data_fields:
@@ -102,7 +113,8 @@ class AdminApp(FastAPI):
                 label=label,
                 required=not field.get('nullable'),
                 type=type_,
-                options=options
+                options=options,
+                sortable=name in sort_fields
             )
             if name in search_fields:
                 search_fields_ret[name] = Field(
@@ -111,32 +123,48 @@ class AdminApp(FastAPI):
 
         for fk_field in fk_fields:
             name = fk_field.get('name')
-            if name not in menu.raw_id_fields:
-                fk_model_class = model._meta.fields_map[name].model_class
-                objs = await fk_model_class.all()
-                raw_field = fk_field.get('raw_field')
-                label = fk_field.get('description') or name.title()
-                options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
-                fields[raw_field] = Field(
-                    label=label,
-                    required=True,
-                    type='select',
-                    options=options
-                )
-                if name in search_fields:
-                    search_fields_ret[raw_field] = Field(
+            if not self._exclude_field(resource, name):
+                if name not in menu.raw_id_fields:
+                    fk_model_class = model._meta.fields_map[name].model_class
+                    objs = await fk_model_class.all()
+                    raw_field = fk_field.get('raw_field')
+                    label = fk_field.get('description') or name.title()
+                    options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
+                    fields[raw_field] = Field(
                         label=label,
+                        required=True,
                         type='select',
                         options=options,
+                        sortable=name in sort_fields
+                    )
+                    if name in search_fields:
+                        search_fields_ret[raw_field] = Field(
+                            label=label,
+                            type='select',
+                            options=options,
+                        )
+        if not exclude_m2m_field:
+            for m2m_field in m2m_fields:
+                name = m2m_field.get('name')
+                if not self._exclude_field(resource, name):
+                    label = m2m_field.get('description') or name.title()
+                    m2m_model_class = model._meta.fields_map[name].model_class
+                    objs = await m2m_model_class.all()
+                    options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
+                    fields[name] = Field(
+                        label=label,
+                        type='tree',
+                        options=options,
+                        multiple=True,
                     )
         return fields, search_fields_ret
 
-    async def get_resource(self, resource: str, exclude_readonly=False, ):
+    async def get_resource(self, resource: str, exclude_readonly=False, exclude_m2m_field=True):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = Tortoise.describe_model(model)
         fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
-                                                                               exclude_readonly)
+                                                                               exclude_readonly, exclude_m2m_field)
         return Resource(
             title=model_describe.get('description') or resource.title(),
             fields=fields,

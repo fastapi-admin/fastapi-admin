@@ -87,3 +87,8 @@ class AppVersion(BaseModel):
     class Meta:
         ordering = ['-id']
         indexes = (('app', 'device_sys', 'channel'),)
+
+
+class ManyToManyTest(BaseModel):
+    apps = fields.ManyToManyField('models.App')
+    label = fields.CharField(max_length=200)

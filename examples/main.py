@@ -49,6 +49,11 @@ def create_app():
                     name='应用',
                     url='/rest/App',
                     icon='fa fa-pencil',
+                    sort_fields=('uaid',)
+                ),
+                Menu(
+                    name='多对多测试',
+                    url='/rest/ManyToManyTest'
                 ),
                 Menu(
                     name='阿里云秘钥',

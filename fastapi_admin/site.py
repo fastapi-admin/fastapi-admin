@@ -13,6 +13,7 @@ class Menu(BaseModel):
     external: Optional[bool] = False
     raw_id_fields: Optional[Set[str]] = set()
     search_fields: Optional[Set[str]] = set()
+    sort_fields: Optional[Set[str]] = set()
 
 
 class Site(BaseModel):
@@ -36,6 +37,10 @@ class Field(BaseModel):
     type: Optional[Union[str, Dict]]
     required: bool = True
     options: Optional[List[Dict]]
+    sortable: Optional[bool]
+    multiple: bool = False
+    ref: Optional[str]
+    description: Optional[str]
 
 
 class Resource(BaseModel):

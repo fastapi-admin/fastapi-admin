@@ -29,6 +29,7 @@ class QueryItem(BaseModel):
     where: dict
     with_: dict
     size: int = 10
+    sort: dict
 
     class Config:
         fields = {
@@ -48,7 +49,7 @@ def get_model(resource: str = Path(...)):
 
 async def parse_body(request: Request, resource: str = Path(...)):
     body = await request.json()
-    resource = await app.get_resource(resource, exclude_readonly=True)
+    resource = await app.get_resource(resource, exclude_readonly=True, exclude_m2m_field=False)
     resource_fields = resource.resource_fields.keys()
     ret = {}
     for key in resource_fields:

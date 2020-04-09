@@ -157,6 +157,10 @@ ForeignKeyField Support
 ~~~~~~~~~~~~~~~~~~~~~~~
 If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-admin will get all related objects and display ``select`` in front with ``Model.__str__``.
 
+ManyToManyField Support
+~~~~~~~~~~~~~~~~~~~~~~~
+FastAPI-admin will render ``ManyToManyField`` with multiple ``select`` in ``form`` edit with ``Model.__str__``.
+
 JSONField Render
 ~~~~~~~~~~~~~~~~
 FastAPI-admin will render ``JSONField`` with ``jsoneditor`` as beauty interface.
