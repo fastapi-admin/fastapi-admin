@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from fastapi import Depends, APIRouter
 from fastapi.responses import ORJSONResponse
 from starlette.status import HTTP_409_CONFLICT

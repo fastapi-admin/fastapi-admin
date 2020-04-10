@@ -14,6 +14,7 @@ class Menu(BaseModel):
     raw_id_fields: Optional[Set[str]] = set()
     search_fields: Optional[Set[str]] = set()
     sort_fields: Optional[Set[str]] = set()
+    fields_type: Dict = {}
 
 
 class Site(BaseModel):
@@ -34,13 +35,14 @@ class Field(BaseModel):
     cols: Optional[int]
     input_cols: Optional[int]
     group: Optional[str]
-    type: Optional[Union[str, Dict]]
+    type: str
     required: bool = True
     options: Optional[List[Dict]]
     sortable: Optional[bool]
     multiple: bool = False
     ref: Optional[str]
     description: Optional[str]
+    disabled: Optional[bool] = False
 
 
 class Resource(BaseModel):

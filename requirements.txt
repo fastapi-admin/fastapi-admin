@@ -24,7 +24,7 @@ iso8601==0.1.12; sys_platform == "win32" or implementation_name != "cpython"
 itsdangerous==1.1.0
 jinja2==2.11.1
 markupsafe==1.1.1
-orjson==2.6.4
+orjson==2.6.5
 passlib==1.7.2
 promise==2.3
 pycparser==2.20
@@ -40,6 +40,7 @@ requests==2.23.0
 rx==1.6.1
 six==1.14.0
 starlette==0.13.2
+-e git+https://github.com/long2ice/tortoise-orm.git@9450cd98fb276981d5c4ed1aa55832b009954c72#egg=tortoise-orm
 typing-extensions==3.7.4.2
 ujson==2.0.3
 urllib3==1.25.8

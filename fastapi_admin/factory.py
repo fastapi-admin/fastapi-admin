@@ -4,7 +4,7 @@ from typing import Type
 from fastapi import FastAPI
 from tortoise import Model, Tortoise
 
-from .site import Site, Resource, Field
+from .site import Site, Resource, Field, Menu
 
 
 class AdminApp(FastAPI):
@@ -64,6 +64,16 @@ class AdminApp(FastAPI):
                 return True
         return False
 
+    def _get_field_type(self, menu: Menu, name: str, field_type: str) -> str:
+        """
+        get field display type
+        :param menu:
+        :param field_type:
+        :return:
+        """
+        field_type = menu.fields_type.get(name) or self._field_type_mapping.get(field_type) or 'text'
+        return field_type
+
     async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
                                                   exclude_readonly: bool, exclude_m2m_field=True):
         """
@@ -90,36 +100,35 @@ class AdminApp(FastAPI):
                 name: Field(
                     label=pk_field.get('name').title(),
                     required=True,
-                    type=self._field_type_mapping.get(pk_field.get('field_type')) or 'text',
+                    type=self._get_field_type(menu, name, pk_field.get('field_type')),
                     sortable=name in sort_fields
                 )
             }
-        for field in data_fields:
-            read_only = field.get('constraints').get('readOnly')
-            field_type = field.get('field_type')
-            name = field.get('name')
-
-            if (read_only and exclude_readonly) or self._exclude_field(resource, name):
+        for data_field in data_fields:
+            readonly = data_field.get('constraints').get('readOnly')
+            field_type = data_field.get('field_type')
+            name = data_field.get('name')
+            if self._exclude_field(resource, name):
                 continue
 
-            type_ = self._field_type_mapping.get(field_type) or 'text'
+            type_ = self._get_field_type(menu, name, field_type)
             options = []
             if type_ == 'select':
                 for k, v in model._meta.fields_map[name].enum_type.choices().items():
                     options.append({'text': v, 'value': k})
 
-            label = field.get('description') or field.get('name').title()
-            fields[name] = Field(
+            label = data_field.get('description') or data_field.get('name').title()
+            field = Field(
                 label=label,
-                required=not field.get('nullable'),
+                required=not data_field.get('nullable'),
                 type=type_,
                 options=options,
-                sortable=name in sort_fields
+                sortable=name in sort_fields,
+                disabled=readonly
             )
+            fields[name] = field
             if name in search_fields:
-                search_fields_ret[name] = Field(
-                    label=label,
-                )
+                search_fields_ret[name] = field
 
         for fk_field in fk_fields:
             name = fk_field.get('name')
@@ -130,19 +139,16 @@ class AdminApp(FastAPI):
                     raw_field = fk_field.get('raw_field')
                     label = fk_field.get('description') or name.title()
                     options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
-                    fields[raw_field] = Field(
+                    field = Field(
                         label=label,
                         required=True,
                         type='select',
                         options=options,
                         sortable=name in sort_fields
                     )
+                    fields[raw_field] = field
                     if name in search_fields:
-                        search_fields_ret[raw_field] = Field(
-                            label=label,
-                            type='select',
-                            options=options,
-                        )
+                        search_fields_ret[raw_field] = field
         if not exclude_m2m_field:
             for m2m_field in m2m_fields:
                 name = m2m_field.get('name')

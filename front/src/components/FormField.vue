@@ -30,11 +30,14 @@
     />
     <!-- <b-select v-if="['select', 'select2'].includes(field.type)" track-by="value" label="text" @input="model = arguments[0]" :id="id" v-bind="field" :title="value" /> -->
 
-    <b-date-picker
+    <date-picker
       v-else-if="['date', 'datetime'].includes(field.type)"
       :name="name"
       v-bind="field"
       v-model="model"
+      :type="field.type"
+      format="YYYY-MM-DDTHH:mm:ss"
+      value-type="format"
     />
     <b-form-radio-group
       v-else-if="['radiolist'].includes(field.type)"
@@ -286,7 +289,10 @@
   import BSelect from "./FormSelect2";
   // import BSelect from "@alfsnd/vue-bootstrap-select";
   // import "vue-multiselect/dist/vue-multiselect.min.css"
-  import BDatePicker from "vue2-datepicker";
+  import DatePicker from "vue2-datepicker";
+  import 'vue2-datepicker/index.css';
+  import 'vue2-datepicker/locale/zh-cn';
+
   // import BUeditor from "./UEditor"
   import BFormUploader from "./FormUploader";
   import VueHtml5Editor from "vue-html5-editor";
@@ -300,7 +306,7 @@
   export default {
     components: {
       // BUeditor,
-      BDatePicker,
+      DatePicker,
       BSelect,
       BFormUploader,
       // BJsonEditor,
