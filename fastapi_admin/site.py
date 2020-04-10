@@ -8,12 +8,19 @@ class Menu(BaseModel):
     title: Optional[bool]
     url: Optional[str]
     icon: Optional[str]
+    # include fields
     include: Optional[Tuple[str]]
+    # exclude fields
     exclude: Optional[Tuple[str]]
+    # external link
     external: Optional[bool] = False
+    # raw id fields
     raw_id_fields: Optional[Set[str]] = set()
+    # searchable fields
     search_fields: Optional[Set[str]] = set()
+    # sortable fields
     sort_fields: Optional[Set[str]] = set()
+    # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
 
 
@@ -21,8 +28,17 @@ class Site(BaseModel):
     name: str
     logo: HttpUrl
     locale: str
-    locale_switcher: bool
+    locale_switcher: bool = False
+    theme_switcher: bool = False
+    theme: Optional[str]
+    url: Optional[HttpUrl]
+    grid_style: int = 1
+    # custom css
+    css: Optional[List[HttpUrl]]
+    # menu define
     menus: List[Menu]
+    # custom footer with html
+    footer: Optional[str]
 
     class Config:
         fields = {

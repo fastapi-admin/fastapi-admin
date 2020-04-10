@@ -27,6 +27,10 @@ Screenshots
 Quick Start
 ===========
 
+Example
+~~~~~~~
+Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/examples>`_.
+
 Backend
 ~~~~~~~
 Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
