@@ -25,7 +25,8 @@ class Menu(BaseModel):
     actions: Dict = {
         'toolbar': {
             'delete_all': True
-        }
+        },
+        'export': True
     }
 
 

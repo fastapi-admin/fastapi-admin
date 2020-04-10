@@ -29,7 +29,7 @@ class QueryItem(BaseModel):
     where: dict
     with_: dict
     size: int = 10
-    sort: dict
+    sort: dict = {}
 
     class Config:
         fields = {

@@ -16,6 +16,7 @@ aiosqlite = "*"
 passlib = "*"
 bcrypt = "*"
 pyjwt = "*"
+xlsxwriter = "*"
 
 [tool.poetry.dev-dependencies]
 taskipy = "*"

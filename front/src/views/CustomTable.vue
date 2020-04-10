@@ -28,7 +28,8 @@
           v-for="button in _.get(actions, 'toolbar.extra', [])"
           :key="button.label"
           v-bind="button"
-        >{{button.label}}</b-btn>
+        >{{button.label}}
+        </b-btn>
         <b-btn
           @click="removeAll"
           class="pull-right"
@@ -51,18 +52,18 @@
           :fields="table.searchFields"
           v-model="table.searchModel"
         >
-        
-        <div slot="extra-buttons" class="ml-2">
-          <b-button
-            type="button"
-            @click="searchAndExport"
-            variant="success"
-            v-if="_.get(actions, 'export')"
-          >{{$t('actions.search_and_export')}}</b-button>
-          <iframe :src="iframeSrc" style="width:0;height:0;border:none;"></iframe>
-        </div>
+
+          <div slot="extra-buttons" class="ml-2">
+            <b-button
+              type="button"
+              @click="searchAndExport"
+              variant="success"
+              v-if="_.get(actions, 'export')"
+            >{{$t('actions.search_and_export')}}
+            </b-button>
+          </div>
         </b-form-builder>
-        
+
       </div>
       <div class="row align-items-center">
         <div class="col-md-8">
@@ -97,7 +98,8 @@
             :key="key"
             class="table-header"
             :class="{'text-right': ['number'].includes(field.type)}"
-          >{{field.label || key}}</div>
+          >{{field.label || key}}
+          </div>
         </template>
         <template v-for="(field, key) in table.fields" :slot="key" slot-scope="row">
           <b-data-value :field="field" :key="key" :name="key" :model="row.item" short-id/>
@@ -112,26 +114,30 @@
             size="sm"
             v-bind="field"
             v-show="field.label"
-          >{{field.label}}</b-button>
+          >{{field.label}}
+          </b-button>
           <b-btn
             v-if="actions.edit !== false"
             variant="success"
             size="sm"
             :to="`/rest/${uri}/${row.item[$config.primaryKey]}`"
             class="mr-1"
-          >{{$t('actions.view')}}</b-btn>
+          >{{$t('actions.view')}}
+          </b-btn>
           <b-btn
             v-if="actions.edit !== false"
             variant="primary"
             size="sm"
             :to="`/rest/${uri}/${row.item[$config.primaryKey]}/edit`"
             class="mr-1"
-          >{{$t('actions.edit')}}</b-btn>
+          >{{$t('actions.edit')}}
+          </b-btn>
           <b-btn
             v-if="actions.delete !== false"
             size="sm"
             @click.stop="remove(row.item[$config.primaryKey])"
-          >{{$t('actions.delete')}}</b-btn>
+          >{{$t('actions.delete')}}
+          </b-btn>
         </template>
       </b-table>
 
@@ -151,171 +157,176 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import types from "../store/types";
-import _ from "lodash";
+  import {mapState, mapGetters} from "vuex";
+  import types from "../store/types";
+  import _ from "lodash";
+  import {saveAs} from 'file-saver';
 
-export default {
-  components: {},
-  props: {},
-  data() {
-    return {
-      init: false,
-      loaded: false,
-      table: {},
-      total: 0, //total rows
-      pageLimit: 10, //display how many page buttons
-      currentPage: 1,
-      sortBy: this.$config.primaryKey,
-      sortDesc: true,
-      sortDirection: null,
-      perPage: 10,
-      where: {},
-      iframeSrc: ""
-    };
-  },
-  watch: {
-    "$route.query"(val) {
-      this.applyRouteQuery();
+  export default {
+    components: {},
+    props: {},
+    data() {
+      return {
+        init: false,
+        loaded: false,
+        table: {},
+        total: 0, //total rows
+        pageLimit: 10, //display how many page buttons
+        currentPage: 1,
+        sortBy: this.$config.primaryKey,
+        sortDesc: true,
+        sortDirection: null,
+        perPage: 10,
+        where: {},
+        iframeSrc: ""
+      };
     },
-    "$route.params"(val) {
-      this.applyRouteQuery();
-      this.fetch();
-    }
-    // page(val) {}
-  },
-  computed: {
-    ...mapState(["site", "i18n", "auth"]),
-    ...mapGetters(["currentLanguage"]),
-    columns(){
-      return Object.entries(this.table.fields).map(([name, field]) => {
-        return {
-          key:name,
-          ...field,
-        }
-      })
-    },
-    populate() {
-      return _(this.table.fields || {})
-        .map("ref")
-        .filter()
-        .map(v => v.split(".").shift())
-        .uniq()
-        .toJSON();
-    },
-    actions() {
-      return _.get(this.table, "fields._actions", {});
-    },
-    resource() {
-      return this.$route.params.resource;
-    },
-    uri() {
-      return this.resource.replace(/\./g, "/");
-    }
-  },
-  methods: {
-    doSearch(params) {
-      this.where = _.omitBy(params, v => v === null);
-      this.$refs.table.refresh();
-      // console.log(params);
-    },
-    searchAndExport() {
-      const query = JSON.stringify({
-        where: _.clone(this.table.searchModel),
-        with: _.clone(this.populate)
-      });
-      this.iframeSrc = "";
-      setTimeout(() => {
-        this.iframeSrc = `${global.API_URI}${
-          this.uri
-        }/export?query=${query}&token=${this.$store.state.auth.token}`;
-      }, 50);
-    },
-    applyRouteQuery() {
-      const { sort = {}, page = 1, where = {} } = JSON.parse(
-        this.$route.query.query || "{}"
-      );
-      const [sortBy, sortDesc] = Object.entries(sort).pop() || [];
-      sortBy && (this.sortBy = sortBy);
-
-      if (sortDesc) {
-        this.sortDesc = sortDesc === -1 ? true : false;
+    watch: {
+      "$route.query"(val) {
+        this.applyRouteQuery();
+      },
+      "$route.params"(val) {
+        this.applyRouteQuery();
+        this.fetch();
       }
-      this.total = page * this.perPage;
-      this.currentPage = page;
-      this.where = where;
-      this.init = true;
+      // page(val) {}
     },
-    remove(id) {
-      if (window.confirm("是否删除?")) {
-        this.$http.delete(`${this.uri}/${id}`).then(res => {
-          this.$snotify.success("删除成功");
-          this.$refs.table.refresh();
-        });
-      }
-    },
-    fetchItems(ctx) {
-      const query = _.merge({}, _.get(this.table, "query"), {
-        page: ctx.currentPage,
-        sort: { [ctx.sortBy]: this.sortDesc ? -1 : 1 },
-        where: this.where,
-        with: this.populate
-      });
-      // console.log(query)
-
-      if (!this.init) {
-        // this.$router.replace({
-        //   query: { query: JSON.stringify(query) }
-        // });
-        return [];
-      }
-      // this.$router.push({
-      //   query: { query: JSON.stringify(query) }
-      // });
-      return this.$http
-        .get(this.uri, {
-          params: {
-            query: JSON.stringify(query)
+    computed: {
+      ...mapState(["site", "i18n", "auth"]),
+      ...mapGetters(["currentLanguage"]),
+      columns() {
+        return Object.entries(this.table.fields).map(([name, field]) => {
+          return {
+            key: name,
+            ...field,
           }
         })
-        .then(res => {
-          const { total, data } = res.data;
-          this.total = total;
-          return data;
-        })
-        .catch(e => {
-          return [];
-        });
+      },
+      populate() {
+        return _(this.table.fields || {})
+          .map("ref")
+          .filter()
+          .map(v => v.split(".").shift())
+          .uniq()
+          .toJSON();
+      },
+      actions() {
+        return _.get(this.table, "fields._actions", {});
+      },
+      resource() {
+        return this.$route.params.resource;
+      },
+      uri() {
+        return this.resource.replace(/\./g, "/");
+      }
     },
-    fetch() {
-      this.init = false;
-      this.$http.get(this.uri + "/grid").then(res => {
-        _.mapValues(res.data.fields, field => {
-          field.thClass = "bg-light";
+    methods: {
+      doSearch(params) {
+        this.where = _.omitBy(params, v => v === null);
+        this.$refs.table.refresh();
+        // console.log(params);
+      },
+      searchAndExport() {
+        const query = JSON.stringify({
+          where: _.clone(this.table.searchModel),
+          with: _.clone(this.populate)
         });
+        this.$http.get(this.uri + "/export", {
+          responseType: 'arraybuffer',
+          params: {
+            query: query
+          }
+        }).then(res => {
+          const blob = new Blob([res.data]);
+          saveAs(blob, `${this.resource}.xlsx`)
+        })
+      },
+      applyRouteQuery() {
+        const {sort = {}, page = 1, where = {}} = JSON.parse(
+          this.$route.query.query || "{}"
+        );
+        const [sortBy, sortDesc] = Object.entries(sort).pop() || [];
+        sortBy && (this.sortBy = sortBy);
 
-        this.table = res.data;
-
-        if (_.get(this.table, "fields._actions") !== false) {
-          _.set(
-            this.table,
-            "fields._actions.label",
-            this.$t("actions.actions")
-          );
+        if (sortDesc) {
+          this.sortDesc = sortDesc === -1 ? true : false;
         }
+        this.total = page * this.perPage;
+        this.currentPage = page;
+        this.where = where;
         this.init = true;
-        if (this.$refs.table) {
-          this.$refs.table.refresh();
+      },
+      remove(id) {
+        if (window.confirm("是否删除?")) {
+          this.$http.delete(`${this.uri}/${id}`).then(res => {
+            this.$snotify.success("删除成功");
+            this.$refs.table.refresh();
+          });
         }
-      });
-    }
-  },
-  mounted() {},
-  created() {
-    this.applyRouteQuery();
+      },
+      fetchItems(ctx) {
+        const query = _.merge({}, _.get(this.table, "query"), {
+          page: ctx.currentPage,
+          sort: {[ctx.sortBy]: this.sortDesc ? -1 : 1},
+          where: this.where,
+          with: this.populate
+        });
+        // console.log(query)
 
-    this.fetch();
-    // this.fetchTable();
-  }
-};
+        if (!this.init) {
+          // this.$router.replace({
+          //   query: { query: JSON.stringify(query) }
+          // });
+          return [];
+        }
+        // this.$router.push({
+        //   query: { query: JSON.stringify(query) }
+        // });
+        return this.$http
+          .get(this.uri, {
+            params: {
+              query: JSON.stringify(query)
+            }
+          })
+          .then(res => {
+            const {total, data} = res.data;
+            this.total = total;
+            return data;
+          })
+          .catch(e => {
+            return [];
+          });
+      },
+      fetch() {
+        this.init = false;
+        this.$http.get(this.uri + "/grid").then(res => {
+          _.mapValues(res.data.fields, field => {
+            field.thClass = "bg-light";
+          });
+
+          this.table = res.data;
+
+          if (_.get(this.table, "fields._actions") !== false) {
+            _.set(
+              this.table,
+              "fields._actions.label",
+              this.$t("actions.actions")
+            );
+          }
+          this.init = true;
+          if (this.$refs.table) {
+            this.$refs.table.refresh();
+          }
+        });
+      }
+    },
+    mounted() {
+    },
+    created() {
+      this.applyRouteQuery();
+
+      this.fetch();
+      // this.fetchTable();
+    }
+  };
 </script>

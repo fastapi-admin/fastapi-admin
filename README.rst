@@ -173,6 +173,9 @@ Search Fields
 ~~~~~~~~~~~~~
 Defined ``menu.search_fields`` in ``menu`` will render a search form by fields.
 
+Excel Export
+~~~~~~~~~~~~
+FastAPI-admin can export searched data to excel file when define ``{export : True}`` in ``menu.actions``.
 
 Deployment
 ==========

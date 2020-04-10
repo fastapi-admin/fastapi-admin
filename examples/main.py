@@ -49,7 +49,8 @@ def create_app():
                     name='应用',
                     url='/rest/App',
                     icon='fa fa-pencil',
-                    sort_fields=('uaid',)
+                    sort_fields=('uaid',),
+                    search_fields=('uaid',)
                 ),
                 Menu(
                     name='多对多测试',

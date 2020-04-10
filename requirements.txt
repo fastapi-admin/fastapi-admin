@@ -31,7 +31,7 @@ pycparser==2.20
 pydantic==1.4
 pyjwt==1.7.1
 pymysql==0.9.2
-pypika==0.36.1
+pypika==0.36.3
 python-dotenv==0.12.0
 python-multipart==0.0.5
 python-rapidjson==0.9.1
@@ -46,3 +46,4 @@ urllib3==1.25.8
 uvicorn==0.11.3
 uvloop==0.14.0
 websockets==8.1
+xlsxwriter==1.2.8
