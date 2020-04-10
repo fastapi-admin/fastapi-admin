@@ -49,7 +49,7 @@ async def get_resource(
 async def form(
         resource: str,
 ):
-    resource = await app.get_resource(resource, exclude_readonly=True, exclude_m2m_field=False)
+    resource = await app.get_resource(resource, exclude_pk=True, exclude_m2m_field=False)
     return resource.dict(by_alias=True, exclude_unset=True)
 
 

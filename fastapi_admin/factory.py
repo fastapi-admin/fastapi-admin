@@ -75,13 +75,13 @@ class AdminApp(FastAPI):
         return field_type
 
     async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
-                                                  exclude_readonly: bool, exclude_m2m_field=True):
+                                                  exclude_pk: bool, exclude_m2m_field=True):
         """
         build resource
         :param resource:
         :param model:
         :param model_describe:
-        :param exclude_readonly:
+        :param exclude_pk:
         :param exclude_m2m_field:
         :return:
         """
@@ -95,7 +95,7 @@ class AdminApp(FastAPI):
         sort_fields = menu.sort_fields
         fields = {}
         name = pk_field.get('name')
-        if not exclude_readonly and not self._exclude_field(resource, name):
+        if not exclude_pk and not self._exclude_field(resource, name):
             fields = {
                 name: Field(
                     label=pk_field.get('name').title(),
@@ -165,12 +165,12 @@ class AdminApp(FastAPI):
                     )
         return fields, search_fields_ret
 
-    async def get_resource(self, resource: str, exclude_readonly=False, exclude_m2m_field=True):
+    async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = Tortoise.describe_model(model)
         fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
-                                                                               exclude_readonly, exclude_m2m_field)
+                                                                               exclude_pk, exclude_m2m_field)
         return Resource(
             title=model_describe.get('description') or resource.title(),
             fields=fields,
