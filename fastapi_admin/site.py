@@ -22,6 +22,11 @@ class Menu(BaseModel):
     sort_fields: Optional[Set[str]] = set()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
+    actions: Dict = {
+        'toolbar': {
+            'delete_all': True
+        }
+    }
 
 
 class Site(BaseModel):
@@ -63,7 +68,7 @@ class Field(BaseModel):
 
 class Resource(BaseModel):
     title: str
-    resource_fields: Dict[str, Field]
+    resource_fields: Dict[str, Union[Field, Dict]]
     searchFields: Optional[Dict[str, Field]]
 
     class Config:

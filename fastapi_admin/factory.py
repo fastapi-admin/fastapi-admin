@@ -104,6 +104,9 @@ class AdminApp(FastAPI):
                     sortable=name in sort_fields
                 )
             }
+
+        fields['_actions'] = menu.actions
+
         for data_field in data_fields:
             readonly = data_field.get('constraints').get('readOnly')
             field_type = data_field.get('field_type')
