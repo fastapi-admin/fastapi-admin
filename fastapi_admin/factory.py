@@ -75,7 +75,7 @@ class AdminApp(FastAPI):
         return field_type
 
     async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
-                                                  exclude_pk: bool, exclude_m2m_field=True):
+                                                  exclude_pk: bool, exclude_m2m_field=True, exclude_actions=False):
         """
         build resource
         :param resource:
@@ -94,7 +94,7 @@ class AdminApp(FastAPI):
         search_fields = menu.search_fields
         sort_fields = menu.sort_fields
         fields = {}
-        name = pk_field.get('name')
+        pk = name = pk_field.get('name')
         if not exclude_pk and not self._exclude_field(resource, name):
             fields = {
                 name: Field(
@@ -104,8 +104,8 @@ class AdminApp(FastAPI):
                     sortable=name in sort_fields
                 )
             }
-
-        fields['_actions'] = menu.actions
+        if not exclude_actions:
+            fields['_actions'] = menu.actions
 
         for data_field in data_fields:
             readonly = data_field.get('constraints').get('readOnly')
@@ -166,18 +166,20 @@ class AdminApp(FastAPI):
                         options=options,
                         multiple=True,
                     )
-        return fields, search_fields_ret
+        return pk, fields, search_fields_ret
 
-    async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True):
+    async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True, exclude_actions=False):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = Tortoise.describe_model(model)
-        fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
-                                                                               exclude_pk, exclude_m2m_field)
+        pk, fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
+                                                                                   exclude_pk, exclude_m2m_field,
+                                                                                   exclude_actions)
         return Resource(
             title=model_describe.get('description') or resource.title(),
             fields=fields,
-            searchFields=search_fields
+            searchFields=search_fields,
+            pk=pk
         )
 
 

@@ -69,6 +69,7 @@ class Field(BaseModel):
 
 class Resource(BaseModel):
     title: str
+    pk: str
     resource_fields: Dict[str, Union[Field, Dict]]
     searchFields: Optional[Dict[str, Field]]
 

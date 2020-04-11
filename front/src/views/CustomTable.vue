@@ -120,7 +120,7 @@
             v-if="actions.edit !== false"
             variant="success"
             size="sm"
-            :to="`/rest/${uri}/${row.item[$config.primaryKey]}`"
+            :to="`/rest/${uri}/${row.item[pk]}`"
             class="mr-1"
           >{{$t('actions.view')}}
           </b-btn>
@@ -128,14 +128,14 @@
             v-if="actions.edit !== false"
             variant="primary"
             size="sm"
-            :to="`/rest/${uri}/${row.item[$config.primaryKey]}/edit`"
+            :to="`/rest/${uri}/${row.item[pk]}/edit`"
             class="mr-1"
           >{{$t('actions.edit')}}
           </b-btn>
           <b-btn
             v-if="actions.delete !== false"
             size="sm"
-            @click.stop="remove(row.item[$config.primaryKey])"
+            @click.stop="remove(row.item[pk])"
           >{{$t('actions.delete')}}
           </b-btn>
         </template>
@@ -173,12 +173,12 @@
         total: 0, //total rows
         pageLimit: 10, //display how many page buttons
         currentPage: 1,
-        sortBy: this.$config.primaryKey,
+        sortBy: this.pk,
         sortDesc: true,
         sortDirection: null,
         perPage: 10,
         where: {},
-        iframeSrc: ""
+        pk: null,
       };
     },
     watch: {
@@ -249,7 +249,7 @@
         sortBy && (this.sortBy = sortBy);
 
         if (sortDesc) {
-          this.sortDesc = sortDesc === -1 ? true : false;
+          this.sortDesc = sortDesc === -1;
         }
         this.total = page * this.perPage;
         this.currentPage = page;
@@ -305,6 +305,7 @@
           });
 
           this.table = res.data;
+          this.pk = res.data.pk;
 
           if (_.get(this.table, "fields._actions") !== false) {
             _.set(

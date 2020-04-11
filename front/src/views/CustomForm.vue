@@ -21,8 +21,8 @@ import { mapState } from "vuex";
 export default {
   components: {},
   props: {
-    
-    
+
+
   },
   data() {
     return {
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     fetch() {
-      
+
     },
     fetchForm() {
       this.$http.get(this.uri).then(({ data }) => {

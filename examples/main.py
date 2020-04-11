@@ -85,7 +85,10 @@ def create_app():
                 Menu(
                     name='在线参数',
                     url='/rest/Config',
-                    icon='fa fa-cog'
+                    icon='fa fa-cog',
+                    actions={
+                        'delete': False
+                    }
                 ),
                 Menu(
                     name='基本信息',
