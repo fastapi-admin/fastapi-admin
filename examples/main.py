@@ -50,7 +50,7 @@ def create_app():
                     url='/rest/App',
                     icon='fa fa-pencil',
                     sort_fields=('uaid',),
-                    search_fields=('uaid',)
+                    search_fields=('uaid',),
                 ),
                 Menu(
                     name='多对多测试',
@@ -97,7 +97,8 @@ def create_app():
                 Menu(
                     name='请求日志',
                     url='/rest/ApiLog',
-                    icon='fa fa-sticky-note'
+                    icon='fa fa-sticky-note',
+                    search_fields=('app',),
                 ),
                 Menu(
                     name='App版本',

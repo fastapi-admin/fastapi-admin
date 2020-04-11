@@ -30,15 +30,6 @@
           v-bind="button"
         >{{button.label}}
         </b-btn>
-        <b-btn
-          @click="removeAll"
-          class="pull-right"
-          variant="second"
-          v-if="_.get(actions, 'toolbar.delete_all') === true"
-        >
-          <i class="icon-trash"></i>
-          {{$t('actions.delete_all')}}
-        </b-btn>
       </div>
     </div>
     <div class>
@@ -88,6 +79,9 @@
         ref="table"
         :items="fetchItems"
         :fields="columns"
+        selectable
+        @row-selected="onRowSelected"
+        :select-mode="selectModel"
         :current-page="currentPage"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
@@ -140,7 +134,12 @@
           </b-btn>
         </template>
       </b-table>
-
+      <div class="form-inline my-2">
+        <b-button class="mr-1" @click="selectAllRows">{{ $t("actions.select_all") }}</b-button>
+        <b-button class="mr-1" @click="clearSelected">{{ $t("actions.clear_selected")}}</b-button>
+        <b-form-select class="mr-1" v-model="selectBulkAction" :options="bulkActions"></b-form-select>
+        <b-button @click="submitBulk" variant="primary">{{ $t("actions.submit")}}</b-button>
+      </div>
       <div class="row align-items-center">
         <div class="col-md-10">
           <b-pagination
@@ -170,6 +169,8 @@
         init: false,
         loaded: false,
         table: {},
+        modes: ['multi', 'single', 'range'],
+        selectModel: 'range',
         total: 0, //total rows
         pageLimit: 10, //display how many page buttons
         currentPage: 1,
@@ -179,6 +180,9 @@
         perPage: 10,
         where: {},
         pk: null,
+        selected_pk_list: [],
+        bulkActions: {},
+        selectBulkAction: null
       };
     },
     watch: {
@@ -221,10 +225,30 @@
       }
     },
     methods: {
+      submitBulk() {
+        if (window.confirm(this.$t("messages.confirm_bulk_action"))) {
+          this.$http.post(this.uri + '/bulk/' + this.selectBulkAction, {
+            pk_list: this.selected_pk_list
+          }).then(() => {
+            this.$snotify.success(this.$t("messages.bulk_success"));
+            this.fetch();
+          });
+        }
+      },
+      selectAllRows() {
+        this.$refs.table.selectAllRows()
+      },
+      onRowSelected(items) {
+        this.selected_pk_list = _.map(items, item => {
+          return item[this.pk];
+        })
+      },
+      clearSelected() {
+        this.$refs.table.clearSelected()
+      },
       doSearch(params) {
         this.where = _.omitBy(params, v => v === null);
         this.$refs.table.refresh();
-        // console.log(params);
       },
       searchAndExport() {
         const query = JSON.stringify({
@@ -300,6 +324,12 @@
       fetch() {
         this.init = false;
         this.$http.get(this.uri + "/grid").then(res => {
+          _.mapValues(res.data.bulk_actions, action => {
+            action.text = this.$t(`actions.${action.text}`)
+          });
+
+          this.bulkActions = res.data.bulk_actions;
+
           _.mapValues(res.data.fields, field => {
             field.thClass = "bg-light";
           });

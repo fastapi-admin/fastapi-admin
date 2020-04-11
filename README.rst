@@ -173,9 +173,42 @@ Search Fields
 ~~~~~~~~~~~~~
 Defined ``menu.search_fields`` in ``menu`` will render a search form by fields.
 
-Excel Export
-~~~~~~~~~~~~
+Xlsx Export
+~~~~~~~~~~~
 FastAPI-admin can export searched data to excel file when define ``{export : True}`` in ``menu.actions``.
+
+Bulk Actions
+~~~~~~~~~~~~
+Current FastAPI-admin support builtin bulk action ``delete_all``,if you want write your own bulk actions:
+
+1. pass ``bulk_actions`` in ``Menu``,example:
+
+.. code-block:: python
+
+    Menu(
+        ...
+        bulk_actions=[{
+            'value': 'delete', # this is fastapi router path param.
+            'text': 'delete_all', # this will show in front.
+        }]
+    )
+
+2. write fastapi route,example:
+
+.. code-block:: python
+
+    from fastapi_admin.schemas import BulkIn
+    from fastapi_admin.factory import app as admin_app
+
+    @admin_app.post(
+        '/{resource}/bulk/delete' # delete is defined before.
+    )
+    async def bulk_delete(
+            bulk_in: BulkIn,
+            model=Depends(get_model)
+    ):
+        await model.filter(pk__in=bulk_in.pk_list).delete()
+        return {'success': True}
 
 Deployment
 ==========

@@ -27,7 +27,7 @@ class QueryItem(BaseModel):
     page: int = 1
     sort: dict
     where: dict
-    with_: dict
+    with_: dict = {}
     size: int = 10
     sort: dict = {}
 

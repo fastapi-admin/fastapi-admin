@@ -1,5 +1,5 @@
 import importlib
-from typing import Type
+from typing import Type, List, Dict
 
 from fastapi import FastAPI
 from tortoise import Model, Tortoise
@@ -26,7 +26,7 @@ class AdminApp(FastAPI):
         'SmallIntField': 'number',
         'JSONField': 'json',
     }
-    model_menu_mapping = {}
+    model_menu_mapping: Dict[str, Menu] = {}
 
     def _get_model_menu_mapping(self):
         for menu in filter(lambda x: x.url, self.site.menus):
@@ -179,7 +179,8 @@ class AdminApp(FastAPI):
             title=model_describe.get('description') or resource.title(),
             fields=fields,
             searchFields=search_fields,
-            pk=pk
+            pk=pk,
+            bulk_actions=self.model_menu_mapping[resource].bulk_actions,
         )
 
 

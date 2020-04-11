@@ -10,6 +10,7 @@ from ..common import handle_m2m_fields_create_or_update
 from ..depends import QueryItem, get_query, parse_body, get_model
 from ..factory import app
 from ..responses import GetManyOut
+from ..schemas import BulkIn
 from ..shortcuts import get_object_or_404
 
 router = APIRouter()
@@ -71,6 +72,17 @@ async def view(
 ):
     resource = await app.get_resource(resource)
     return resource.dict(by_alias=True, exclude_unset=True)
+
+
+@router.post(
+    '/{resource}/bulk/delete'
+)
+async def bulk_delete(
+        bulk_in: BulkIn,
+        model=Depends(get_model)
+):
+    await model.filter(pk__in=bulk_in.pk_list).delete()
+    return {'success': True}
 
 
 @router.delete(

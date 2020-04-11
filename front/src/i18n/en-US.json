@@ -1,6 +1,8 @@
 {
   "actions": {
-    
+    "select_all": "Select all",
+    "clear_selected": "Clear selected",
+    "delete_all": "Delete all"
   },
   "messages": {
     "paginate": "Total: {total}",
@@ -9,10 +11,10 @@
     "deleted_all": "All deleted",
     "confirm_delete": "Are you sure you want to delete?",
     "image_size": "Size limit: {width}x{height}",
-    "confirm_delete_all": "Are you sure you want to delete all data?",
-    "no_options_text": "No Options Here!"
+    "confirm_bulk_action": "Are you sure you want to do bulk action?",
+    "no_options_text": "No Options Here!",
+    "bulk_success": "Bulk action success!"
   },
   "errors": {
-
   }
 }

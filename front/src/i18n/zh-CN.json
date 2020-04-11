@@ -16,10 +16,11 @@
     "change": "更换",
     "choose": "选择",
     "login": "登录",
-    "edit": "编辑"
+    "edit": "编辑",
+    "select_all": "选择全部",
+    "clear_selected": "清除选择"
   },
   "texts": {
-
   },
   "fields": {
     "username": "用户名",
@@ -38,8 +39,9 @@
     "deleted_all": "全部删除成功",
     "confirm_delete": "确定要删除吗？",
     "image_size": "尺寸要求：{width}x{height}",
-    "confirm_delete_all": "此次操作不可恢复，确定要全部删除吗？",
-    "no_options_text": "暂无可选项"
+    "confirm_bulk_action": "确定执行批量操作？",
+    "no_options_text": "暂无可选项",
+    "bulk_success": "批量操作成功！"
   },
   "errors": {
     "too_large": "请上传小于{limit}KB的文件",

@@ -23,11 +23,12 @@ class Menu(BaseModel):
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
     actions: Dict = {
-        'toolbar': {
-            'delete_all': True
-        },
         'export': True
     }
+    bulk_actions: List[Dict] = [{
+        'value': 'delete',
+        'text': 'delete_all',
+    }]
 
 
 class Site(BaseModel):
@@ -72,6 +73,7 @@ class Resource(BaseModel):
     pk: str
     resource_fields: Dict[str, Union[Field, Dict]]
     searchFields: Optional[Dict[str, Field]]
+    bulk_actions: Optional[List[Dict]]
 
     class Config:
         fields = {
