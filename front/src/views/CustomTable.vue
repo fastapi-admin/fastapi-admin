@@ -135,10 +135,10 @@
         </template>
       </b-table>
       <div class="form-inline my-2">
-        <b-button class="mr-1" @click="selectAllRows">{{ $t("actions.select_all") }}</b-button>
-        <b-button class="mr-1" @click="clearSelected">{{ $t("actions.clear_selected")}}</b-button>
-        <b-form-select class="mr-1" v-model="selectBulkAction" :options="bulkActions"></b-form-select>
-        <b-button @click="submitBulk" variant="primary">{{ $t("actions.submit")}}</b-button>
+        <b-button class="mr-1" size="sm" @click="selectAllRows">{{ $t("actions.select_all") }}</b-button>
+        <b-button class="mr-1" size="sm" @click="clearSelected">{{ $t("actions.clear_selected")}}</b-button>
+        <b-form-select class="mr-1" size="sm" v-model="selectBulkAction" :options="bulkActions"></b-form-select>
+        <b-button @click="submitBulk" size="sm" variant="primary">{{ $t("actions.submit")}}</b-button>
       </div>
       <div class="row align-items-center">
         <div class="col-md-10">
