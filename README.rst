@@ -81,7 +81,7 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
 
 
     @admin_app.post(
-        '/{resource}/bulk/test_bulk'
+        '/{resource}/bulk/test_bulk' # must be format with /{resource}/bulk/<action>
     )
     async def test_bulk(
             bulk_in: BulkIn,
@@ -132,8 +132,8 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
                                 'text': 'delete_all',
                             }
                             , {
-                                'value': 'test_bulk',
-                                'text': 'TestBulk'
+                                'value': 'test_bulk', # this is the action need in fastapi route.
+                                'text': 'TestBulk' # will show in front.
                             }
                         ]
                     ),

@@ -5,10 +5,12 @@ from pydantic import BaseModel, HttpUrl
 
 class Menu(BaseModel):
     name: str
+    # whether is it a title or a model resource.
     title: Optional[bool]
+    # must be format with /rest/<Model> if it's a model resource.
     url: Optional[str]
     icon: Optional[str]
-    # children meun
+    # children menu
     children: Optional[List['Menu']] = []
     # include fields
     include: Optional[Tuple[str]]
