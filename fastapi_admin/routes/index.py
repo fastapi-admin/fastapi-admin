@@ -152,7 +152,7 @@ async def get_one(
     for m2m_field in m2m_fields:
         if m2m_field in include:
             relate_model = getattr(obj, m2m_field)  # type:ManyToManyRelation
-            ids = await relate_model.all().values_list(relate_model.model._meta.pk_attr)
+            ids = await relate_model.all().values_list(relate_model.remote_model._meta.pk_attr)
             ret[m2m_field] = list(map(lambda x: x[0], ids))
     ret['__str__'] = str(obj)
     return ret

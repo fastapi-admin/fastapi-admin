@@ -28,9 +28,12 @@ class AdminApp(FastAPI):
     }
     model_menu_mapping: Dict[str, Menu] = {}
 
-    def _get_model_menu_mapping(self):
-        for menu in filter(lambda x: x.url, self.site.menus):
-            self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
+    def _get_model_menu_mapping(self, menus: List[Menu]):
+        for menu in filter(lambda x: (x.url and 'rest' in x.url) or x.children, menus):
+            if menu.children:
+                self._get_model_menu_mapping(menu.children)
+            else:
+                self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
 
     def init(self, site: Site, user_model: str, admin_secret: str, models: str, ):
         """
@@ -46,7 +49,7 @@ class AdminApp(FastAPI):
         self.models = importlib.import_module(models)
         self.user_model = getattr(self.models, user_model)
         self._inited = True
-        self._get_model_menu_mapping()
+        self._get_model_menu_mapping(site.menus)
 
     def _exclude_field(self, resource: str, field: str):
         """
@@ -116,7 +119,7 @@ class AdminApp(FastAPI):
 
             type_ = self._get_field_type(menu, name, field_type)
             options = []
-            if type_ == 'select':
+            if type_ == 'select' or type_ == 'radiolist':
                 for k, v in model._meta.fields_map[name].enum_type.choices().items():
                     options.append({'text': v, 'value': k})
 
@@ -137,7 +140,7 @@ class AdminApp(FastAPI):
             name = fk_field.get('name')
             if not self._exclude_field(resource, name):
                 if name not in menu.raw_id_fields:
-                    fk_model_class = model._meta.fields_map[name].model_class
+                    fk_model_class = model._meta.fields_map[name].model
                     objs = await fk_model_class.all()
                     raw_field = fk_field.get('raw_field')
                     label = fk_field.get('description') or name.title()
@@ -157,7 +160,7 @@ class AdminApp(FastAPI):
                 name = m2m_field.get('name')
                 if not self._exclude_field(resource, name):
                     label = m2m_field.get('description') or name.title()
-                    m2m_model_class = model._meta.fields_map[name].model_class
+                    m2m_model_class = model._meta.fields_map[name].model
                     objs = await m2m_model_class.all()
                     options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
                     fields[name] = Field(
@@ -171,7 +174,7 @@ class AdminApp(FastAPI):
     async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True, exclude_actions=False):
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
-        model_describe = Tortoise.describe_model(model)
+        model_describe = model.describe(serializable=False)
         pk, fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
                                                                                    exclude_pk, exclude_m2m_field,
                                                                                    exclude_actions)

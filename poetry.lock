@@ -4,7 +4,7 @@ description = "File support for asyncio."
 name = "aiofiles"
 optional = false
 python-versions = "*"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 category = "main"
@@ -161,6 +161,18 @@ version = "1.0.5"
 [package.dependencies]
 dnspython = ">=1.15.0"
 idna = ">=2.0.0"
+
+[[package]]
+category = "dev"
+description = "Faker is a Python package that generates fake data for you."
+name = "faker"
+optional = false
+python-versions = ">=3.4"
+version = "4.0.2"
+
+[package.dependencies]
+python-dateutil = ">=2.4"
+text-unidecode = "1.3"
 
 [[package]]
 category = "main"
@@ -438,6 +450,17 @@ python-versions = "*"
 version = "0.36.3"
 
 [[package]]
+category = "dev"
+description = "Extensions to the standard Python datetime module"
+name = "python-dateutil"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+version = "2.8.1"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
 category = "main"
 description = "Add .env support to your django/flask apps in development and deployments"
 name = "python-dotenv"
@@ -533,6 +556,14 @@ toml = ">=0.10.0,<0.11.0"
 
 [[package]]
 category = "dev"
+description = "The most basic Text::Unidecode port"
+name = "text-unidecode"
+optional = false
+python-versions = "*"
+version = "1.3"
+
+[[package]]
+category = "dev"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
@@ -545,7 +576,7 @@ description = "Easy async ORM for python, built with relations in mind"
 name = "tortoise-orm"
 optional = false
 python-versions = "*"
-version = "0.16.4"
+version = "0.16.5"
 
 [package.dependencies]
 aiosqlite = ">=0.11.0"
@@ -555,7 +586,7 @@ pypika = ">=0.36.1"
 typing-extensions = ">=3.7"
 
 [package.source]
-reference = "9450cd98fb276981d5c4ed1aa55832b009954c72"
+reference = "cde9d7bff4568c7549e89c8360e8a55b8b1dd46c"
 type = "git"
 url = "https://github.com/long2ice/tortoise-orm.git"
 [[package]]
@@ -627,13 +658,13 @@ python-versions = "*"
 version = "1.2.8"
 
 [metadata]
-content-hash = "725d22fbc5a12792d02318b33d5e05653edb47790ad72078304c987c880cf6b0"
+content-hash = "826fcab0d9d69efbbecc67bb195b8dcf7da1b2b2ddd2bae7a4d4468d95270fde"
 python-versions = "^3.8"
 
 [metadata.files]
 aiofiles = [
-    {file = "aiofiles-0.4.0-py3-none-any.whl", hash = "sha256:1e644c2573f953664368de28d2aa4c89dfd64550429d0c27c4680ccd3aa4985d"},
-    {file = "aiofiles-0.4.0.tar.gz", hash = "sha256:021ea0ba314a86027c166ecc4b4c07f2d40fc0f4b3a950d1868a0f2571c2bbee"},
+    {file = "aiofiles-0.5.0-py3-none-any.whl", hash = "sha256:377fdf7815cc611870c59cbd07b68b180841d2a2b79812d8c218be02448c2acb"},
+    {file = "aiofiles-0.5.0.tar.gz", hash = "sha256:98e6bcfd1b50f97db4980e182ddd509b7cc35909e903a8fe50d8849e02d815af"},
 ]
 aiomysql = [
     {file = "aiomysql-0.0.20-py3-none-any.whl", hash = "sha256:5fd798481f16625b424eec765c56d712ac78a51f3bd0175a3de94107aae43307"},
@@ -751,6 +782,10 @@ dnspython = [
 email-validator = [
     {file = "email_validator-1.0.5-py2.py3-none-any.whl", hash = "sha256:e3e6ede1765d7c1e580d2050d834b2689361f7da2d50ce74df6a5968fca7cb13"},
 ]
+faker = [
+    {file = "Faker-4.0.2-py3-none-any.whl", hash = "sha256:b89aa33837498498e15c709eb40c31386408a901a53c7a5e12a425737a767976"},
+    {file = "Faker-4.0.2.tar.gz", hash = "sha256:2d3f866ef25e1a5af80e7b0ceeacc3c92dec5d0fdbad3e2cb6adf6e60b22188f"},
+]
 fastapi = [
     {file = "fastapi-0.54.1-py3-none-any.whl", hash = "sha256:1ee9a49f28d510b62b3b51a9452b274853bfc9c5d4b947ed054366e2d49f9efa"},
     {file = "fastapi-0.54.1.tar.gz", hash = "sha256:72f40f47e5235cb5cbbad1d4f97932ede6059290c07e12e9784028dcd1063d28"},
@@ -830,6 +865,11 @@ markupsafe = [
     {file = "MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:ba59edeaa2fc6114428f1637ffff42da1e311e29382d81b339c1817d37ec93c6"},
     {file = "MarkupSafe-1.1.1-cp37-cp37m-win32.whl", hash = "sha256:b00c1de48212e4cc9603895652c5c410df699856a2853135b3967591e4beebc2"},
     {file = "MarkupSafe-1.1.1-cp37-cp37m-win_amd64.whl", hash = "sha256:9bf40443012702a1d2070043cb6291650a0841ece432556f784f004937f0f32c"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:6788b695d50a51edb699cb55e35487e430fa21f1ed838122d722e0ff0ac5ba15"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:cdb132fc825c38e1aeec2c8aa9338310d29d337bebbd7baa06889d09a60a1fa2"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:13d3144e1e340870b25e7b10b98d779608c02016d5184cfb9927a9f10c689f42"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-win32.whl", hash = "sha256:596510de112c685489095da617b5bcbbac7dd6384aeebeda4df6025d0256a81b"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:e8313f01ba26fbbe36c7be1966a7b7424942f670f38e666995b88d012765b9be"},
     {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
 ]
 orjson = [
@@ -886,6 +926,10 @@ pymysql = [
 ]
 pypika = [
     {file = "PyPika-0.36.3.tar.gz", hash = "sha256:4fd6455955faa9d9016c2e39281a4808f82bbcf6065726f2c73e923a9e32b1bc"},
+]
+python-dateutil = [
+    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
+    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-dotenv = [
     {file = "python-dotenv-0.12.0.tar.gz", hash = "sha256:92b3123fb2d58a284f76cc92bfe4ee6c502c32ded73e8b051c4f6afc8b6751ed"},
@@ -957,6 +1001,10 @@ starlette = [
 taskipy = [
     {file = "taskipy-1.2.1-py3-none-any.whl", hash = "sha256:99bdaf5b19791c2345806847147e0fc2d28e1ac9446058def5a8b6b3fc9f23e2"},
     {file = "taskipy-1.2.1.tar.gz", hash = "sha256:5eb2c3b1606c896c7fa799848e71e8883b880759224958d07ba760e5db263175"},
+]
+text-unidecode = [
+    {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
+    {file = "text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8"},
 ]
 toml = [
     {file = "toml-0.10.0-py2.7.egg", hash = "sha256:f1db651f9657708513243e61e6cc67d101a39bad662eaa9b5546f789338e07a3"},

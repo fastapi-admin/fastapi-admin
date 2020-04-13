@@ -1,4 +1,4 @@
-aiofiles==0.4.0
+aiofiles==0.5.0
 aiomysql==0.0.20
 aiosqlite==0.12.0
 aniso8601==7.0.0
@@ -40,6 +40,7 @@ requests==2.23.0
 rx==1.6.1
 six==1.14.0
 starlette==0.13.2
+-e git+https://github.com/long2ice/tortoise-orm.git@cde9d7bff4568c7549e89c8360e8a55b8b1dd46c#egg=tortoise-orm
 typing-extensions==3.7.4.2
 ujson==2.0.3
 urllib3==1.25.8

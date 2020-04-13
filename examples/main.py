@@ -1,14 +1,16 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
-
+from tortoise.contrib.pydantic import pydantic_queryset_creator
+from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
+from fastapi_admin.schemas import BulkIn
 from fastapi_admin.site import Site, Menu
 
 TORTOISE_ORM = {
     'connections': {
-        'default': 'mysql://root:123456@127.0.0.1:3306/micro'
+        'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'
     },
     'apps': {
         'models': {
@@ -19,11 +21,23 @@ TORTOISE_ORM = {
 }
 
 
+@admin_app.post(
+    '/{resource}/bulk/test_bulk'
+)
+async def test_bulk(
+        bulk_in: BulkIn,
+        model=Depends(get_model)
+):
+    qs = model.filter(pk__in=bulk_in.pk_list)
+    pydantic = pydantic_queryset_creator(model)
+    ret = await pydantic.from_queryset(qs)
+    return ret.dict()
+
+
 def create_app():
     fast_app = FastAPI(debug=True)
 
-    register_tortoise(fast_app, config=TORTOISE_ORM)
-
+    register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
     fast_app.mount('/admin', admin_app)
 
     admin_app.init(
@@ -31,92 +45,71 @@ def create_app():
         admin_secret='test',
         models='examples.models',
         site=Site(
-            name='微服务管理后台',
+            name='FastAPI-admin Demo',
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
-            locale='zh-CN',
-            locale_switcher=False,
+            locale='en-US',
+            locale_switcher=True,
             menu=[
                 Menu(
-                    name='首页',
+                    name='Home',
                     url='/',
                     icon='fa fa-home'
                 ),
                 Menu(
-                    name='配置',
+                    name='Content',
                     title=True
                 ),
                 Menu(
-                    name='应用',
-                    url='/rest/App',
-                    icon='fa fa-pencil',
-                    sort_fields=('uaid',),
-                    search_fields=('uaid',),
+                    name='Product',
+                    url='/rest/Product',
+                    icon='icon-list',
+                    search_fields=('type',),
+                    fields_type={
+                        'type': 'radiolist'
+                    },
+                    bulk_actions=[
+                        {
+                            'value': 'delete',
+                            'text': 'delete_all',
+                        }
+                        , {
+                            'value': 'test_bulk',
+                            'text': 'TestBulk'
+                        }
+                    ]
                 ),
                 Menu(
-                    name='多对多测试',
-                    url='/rest/ManyToManyTest'
+                    name='Category',
+                    url='/rest/Category',
+                    icon='icon-list'
                 ),
                 Menu(
-                    name='阿里云秘钥',
-                    url='/rest/AliYunSecret',
-                    icon='fa fa-user-secret'
-                ),
-                Menu(
-                    name='阿里云OSS',
-                    url='/rest/AliYunOss',
-                    icon='fa fa-database'
-                ),
-                Menu(
-                    name='App短信',
-                    url='/rest/AppSms',
-                    icon='fa fa-envelope-o',
-                    search_fields=('app',)
-                ),
-                Menu(
-                    name='百度AI',
-                    url='/rest/BaiduAi',
-                    icon='fa fa-desktop'
-                ),
-                Menu(
-                    name='App百度AI',
-                    url='/rest/AppBaiduAi',
-                    icon='fa fa-laptop',
-                ),
-                Menu(
-                    name='在线参数',
-                    url='/rest/Config',
-                    icon='fa fa-cog',
-                    actions={
-                        'delete': False
-                    }
-                ),
-                Menu(
-                    name='基本信息',
+                    name='External',
                     title=True
                 ),
                 Menu(
-                    name='请求日志',
-                    url='/rest/ApiLog',
-                    icon='fa fa-sticky-note',
-                    search_fields=('app',),
+                    name='Github',
+                    url='https://github.com/long2ice/fastapi-admin',
+                    icon='fa fa-github',
+                    external=True
                 ),
                 Menu(
-                    name='App版本',
-                    url='/rest/AppVersion',
-                    icon='fa fa-mobile'
-                ),
-                Menu(
-                    name='授权',
+                    name='Auth',
                     title=True
                 ),
                 Menu(
-                    name='用户',
+                    name='User',
                     url='/rest/User',
-                    icon='fa fa-user'
+                    icon='fa fa-user',
+                    fields_type={
+                        'avatar': 'image'
+                    },
+                    exclude=('password',),
+                    search_fields=('username',)
                 ),
                 Menu(
-                    name='注销',
-                    url='/login',
+                    name='Logout',
+                    url='/logout',
                     icon='fa fa-lock'
                 )
             ]

@@ -31,6 +31,26 @@ Example
 ~~~~~~~
 Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/examples>`_.
 
+1. ``git clone https://github.com/long2ice/fastapi-admin.git``.
+2. create database ``fastapi-admin`` and import from ``examples/example.sql``.
+3. ``pip install -r requirements.txt``.
+4. ``cd examples && python3 main.py``,then you can see:
+
+.. code-block:: python
+
+    INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+    INFO:     Started reloader process [89005]
+    INFO:     Started server process [89009]
+    INFO:     Waiting for application startup.
+    INFO:     Tortoise-ORM startup
+        connections: {'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'}
+        apps: {'models': {'models': ['examples.models'], 'default_connection': 'default'}}
+    INFO:     Tortoise-ORM started, {'default': <tortoise.backends.mysql.client.MySQLClient object at 0x110ed6760>}, {'models': {'Category': <class 'examples.models.Category'>, 'Product': <class 'examples.models.Product'>, 'User': <class 'examples.models.User'>}}
+    INFO:     Tortoise-ORM generating schema
+    INFO:     Application startup complete.
+
+That's all,enjoy it!
+
 Backend
 ~~~~~~~
 Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
@@ -38,16 +58,18 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
 .. code-block:: python
 
     import uvicorn
-    from fastapi import FastAPI
+    from fastapi import FastAPI, Depends
     from starlette.middleware.cors import CORSMiddleware
     from tortoise.contrib.fastapi import register_tortoise
-
+    from tortoise.contrib.pydantic import pydantic_queryset_creator
+    from fastapi_admin.depends import get_model
     from fastapi_admin.factory import app as admin_app
+    from fastapi_admin.schemas import BulkIn
     from fastapi_admin.site import Site, Menu
 
     TORTOISE_ORM = {
         'connections': {
-            'default': 'mysql://root:123456@127.0.0.1:3306/test'
+            'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'
         },
         'apps': {
             'models': {
@@ -58,42 +80,96 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
     }
 
 
+    @admin_app.post(
+        '/{resource}/bulk/test_bulk'
+    )
+    async def test_bulk(
+            bulk_in: BulkIn,
+            model=Depends(get_model)
+    ):
+        qs = model.filter(pk__in=bulk_in.pk_list)
+        pydantic = pydantic_queryset_creator(model)
+        ret = await pydantic.from_queryset(qs)
+        return ret.dict()
+
+
     def create_app():
-        fast_app = FastAPI()
+        fast_app = FastAPI(debug=True)
 
-        register_tortoise(fast_app, config=TORTOISE_ORM)
-
+        register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
         fast_app.mount('/admin', admin_app)
 
         admin_app.init(
-            user_model='TestUser',
+            user_model='User',
             admin_secret='test',
             models='examples.models',
             site=Site(
-                name='FastAPI-Admin',
+                name='FastAPI-admin Demo',
                 logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
                 locale='en-US',
                 locale_switcher=True,
                 menu=[
                     Menu(
                         name='Home',
-                        url='/home',
-                        icon='fa fa-home',
+                        url='/',
+                        icon='fa fa-home'
                     ),
                     Menu(
-                        name='Information',
-                        title=True,
-                        icon='fa fa-user',
+                        name='Content',
+                        title=True
+                    ),
+                    Menu(
+                        name='Product',
+                        url='/rest/Product',
+                        icon='icon-list',
+                        search_fields=('type',),
+                        fields_type={
+                            'type': 'radiolist'
+                        },
+                        bulk_actions=[
+                            {
+                                'value': 'delete',
+                                'text': 'delete_all',
+                            }
+                            , {
+                                'value': 'test_bulk',
+                                'text': 'TestBulk'
+                            }
+                        ]
+                    ),
+                    Menu(
+                        name='Category',
+                        url='/rest/Category',
+                        icon='icon-list'
+                    ),
+                    Menu(
+                        name='External',
+                        title=True
+                    ),
+                    Menu(
+                        name='Github',
+                        url='https://github.com/long2ice/fastapi-admin',
+                        icon='fa fa-github',
+                        external=True
+                    ),
+                    Menu(
+                        name='Auth',
+                        title=True
                     ),
                     Menu(
                         name='User',
-                        url='/rest/TestUser', #important,TestUser is same of the Model class TestUser and must be /rest/<Model>.
+                        url='/rest/User',
                         icon='fa fa-user',
+                        fields_type={
+                            'avatar': 'image'
+                        },
+                        exclude=('password',),
+                        search_fields=('username',)
                     ),
                     Menu(
                         name='Logout',
                         url='/logout',
-                        icon='icon-lock',
+                        icon='fa fa-lock'
                     )
                 ]
             )
@@ -113,7 +189,7 @@ Only you should do is runing a fastapi app and mount admin app from fastapi-admi
     app = create_app()
 
     if __name__ == '__main__':
-        uvicorn.run('main:app', port=8000, debug=True, reload=True)
+        uvicorn.run('main:app', port=8000, debug=True, reload=True, lifespan='on')
 
 Front
 ~~~~~

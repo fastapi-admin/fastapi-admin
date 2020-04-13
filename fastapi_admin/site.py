@@ -8,6 +8,8 @@ class Menu(BaseModel):
     title: Optional[bool]
     url: Optional[str]
     icon: Optional[str]
+    # children meun
+    children: Optional[List['Menu']] = []
     # include fields
     include: Optional[Tuple[str]]
     # exclude fields
@@ -29,6 +31,9 @@ class Menu(BaseModel):
         'value': 'delete',
         'text': 'delete_all',
     }]
+
+
+Menu.update_forward_refs()
 
 
 class Site(BaseModel):

@@ -22,7 +22,7 @@ export default {
   },
   watch: {
     "site.name"(name) {
-      window.document.title = name || "REST ADMIN DASHBOARD";
+      window.document.title = name || "FASTAPI-ADMIN DASHBOARD";
     },
     "site.skin"(name) {
       const tag = document.getElementById("css-skin");
