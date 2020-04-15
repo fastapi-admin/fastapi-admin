@@ -6,7 +6,7 @@ from fastapi_admin.models import User as AdminUser, Permission, Role
 from .enums import ProductType
 
 
-class User(AdminUser, Model):
+class User(AdminUser):
     last_login = fields.DatetimeField(description='Last Login', default=datetime.datetime.now)
     is_active = fields.BooleanField(default=True, description='Is Active')
     is_superuser = fields.BooleanField(default=False, description='Is SuperUser')

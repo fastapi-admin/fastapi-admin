@@ -55,148 +55,59 @@ Backend
 ~~~~~~~
 Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
 
-.. code-block:: python
-
-    import uvicorn
-    from fastapi import FastAPI, Depends
-    from starlette.middleware.cors import CORSMiddleware
-    from tortoise.contrib.fastapi import register_tortoise
-    from tortoise.contrib.pydantic import pydantic_queryset_creator
-    from fastapi_admin.depends import get_model
-    from fastapi_admin.factory import app as admin_app
-    from fastapi_admin.schemas import BulkIn
-    from fastapi_admin.site import Site, Menu
-
-    TORTOISE_ORM = {
-        'connections': {
-            'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'
-        },
-        'apps': {
-            'models': {
-                'models': ['examples.models'],
-                'default_connection': 'default',
-            }
-        }
-    }
-
-
-    @admin_app.post(
-        '/{resource}/bulk/test_bulk' # must be format with /{resource}/bulk/<action>
-    )
-    async def test_bulk(
-            bulk_in: BulkIn,
-            model=Depends(get_model)
-    ):
-        qs = model.filter(pk__in=bulk_in.pk_list)
-        pydantic = pydantic_queryset_creator(model)
-        ret = await pydantic.from_queryset(qs)
-        return ret.dict()
-
-
-    def create_app():
-        fast_app = FastAPI(debug=True)
-
-        register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
-        fast_app.mount('/admin', admin_app)
-
-        admin_app.init(
-            user_model='User',
-            admin_secret='test',
-            models='examples.models',
-            site=Site(
-                name='FastAPI-admin Demo',
-                logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
-                locale='en-US',
-                locale_switcher=True,
-                menu=[
-                    Menu(
-                        name='Home',
-                        url='/',
-                        icon='fa fa-home'
-                    ),
-                    Menu(
-                        name='Content',
-                        title=True
-                    ),
-                    Menu(
-                        name='Product',
-                        url='/rest/Product',
-                        icon='icon-list',
-                        search_fields=('type',),
-                        fields_type={
-                            'type': 'radiolist'
-                        },
-                        bulk_actions=[
-                            {
-                                'value': 'delete',
-                                'text': 'delete_all',
-                            }
-                            , {
-                                'value': 'test_bulk', # this is the action need in fastapi route.
-                                'text': 'TestBulk' # will show in front.
-                            }
-                        ]
-                    ),
-                    Menu(
-                        name='Category',
-                        url='/rest/Category',
-                        icon='icon-list'
-                    ),
-                    Menu(
-                        name='External',
-                        title=True
-                    ),
-                    Menu(
-                        name='Github',
-                        url='https://github.com/long2ice/fastapi-admin',
-                        icon='fa fa-github',
-                        external=True
-                    ),
-                    Menu(
-                        name='Auth',
-                        title=True
-                    ),
-                    Menu(
-                        name='User',
-                        url='/rest/User',
-                        icon='fa fa-user',
-                        fields_type={
-                            'avatar': 'image'
-                        },
-                        exclude=('password',),
-                        search_fields=('username',)
-                    ),
-                    Menu(
-                        name='Logout',
-                        url='/logout',
-                        icon='fa fa-lock'
-                    )
-                ]
-            )
-        )
-
-        fast_app.add_middleware(
-            CORSMiddleware,
-            allow_origins=['*'],
-            allow_credentials=True,
-            allow_methods=['*'],
-            allow_headers=['*'],
-        )
-
-        return fast_app
-
-
-    app = create_app()
-
-    if __name__ == '__main__':
-        uvicorn.run('main:app', port=8000, debug=True, reload=True, lifespan='on')
-
 Front
 ~~~~~
 ``cp .env.development.local.example .env`` and modify,then just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
 
 Features
 ========
+
+Builtin Auth And Permissions Control
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inherit ``fastapi_admin.models.User`` and add you own fields,must contains ``is_active`` and ``is_superuser``.
+
+And you must import ``Permission`` and ``Role``, just import and do nothing:
+
+.. code-block:: python
+
+    from fastapi_admin.models import User as AdminUser, Permission, Role
+
+    class AdminUser(AdminUser,Model):
+        is_active = fields.BooleanField(default=False, description='Is Active')
+        is_superuser = fields.BooleanField(default=False, description='Is Superuser')
+        status = fields.IntEnumField(Status, description='User Status')
+        created_at = fields.DatetimeField(auto_now_add=True)
+        updated_at = fields.DatetimeField(auto_now=True)
+
+
+Then register permissions and createsuperuser:
+
+.. code-block:: shell
+
+    > fastapi-admin -h
+    usage: fastapi-admin [-h] -c CONFIG {register_permissions,createsuperuser} ...
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            Tortoise-orm config dict import path,like settings.TORTOISE_ORM.
+
+    subcommands:
+      {register_permissions,createsuperuser}
+
+And set ``permission=True`` to active it:
+
+.. code-block:: python
+
+        admin_app.init(
+            user_model='AdminUser',
+            admin_secret='123456',
+            models='examples.models',
+            permission=True,
+            site=Site(
+                ...
+            )
+        )
 
 Enum Support
 ~~~~~~~~~~~~
@@ -215,19 +126,6 @@ FastAPI-admin will auto read and display and render a ``select`` widget in front
                 cls.on: 'ON',
                 cls.off: 'OFF'
             }
-
-Admin User Model
-~~~~~~~~~~~~~~~~
-Inherit ``fastapi_admin.models.User`` and add you own fields,then pass in ``init()``.
-
-.. code-block:: python
-
-    class AdminUser(User):
-        is_active = fields.BooleanField(default=False, description='Is Active')
-        status = fields.IntEnumField(Status, description='User Status')
-        created_at = fields.DatetimeField(auto_now_add=True)
-        updated_at = fields.DatetimeField(auto_now=True)
-
 
 Verbose Name
 ~~~~~~~~~~~~
