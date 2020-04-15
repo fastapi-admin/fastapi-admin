@@ -328,9 +328,7 @@ export default {
         return this.onSubmit(this.model);
       }
       const methodName = String(this.method).toLowerCase();
-      // console.log(this.$refs.form);
       let formData = this.model;
-      console.log(formData,)
       if (this.useFormData) {
         formData = new FormData();
         _.mapValues(this.model, (v, k) => formData.append(k, v));

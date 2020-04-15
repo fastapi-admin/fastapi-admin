@@ -1,30 +1,35 @@
 import importlib
 from typing import Type, List, Dict
 
-from fastapi import FastAPI
-from tortoise import Model, Tortoise
+from fastapi import FastAPI, HTTPException
+from tortoise import Model
+from tortoise.fields import IntField, BooleanField, DatetimeField, DateField
+from tortoise.fields.data import IntEnumFieldInstance, CharEnumFieldInstance, DecimalField, FloatField, TextField, \
+    SmallIntField, JSONField
 
+from .exceptions import exception_handler
 from .site import Site, Resource, Field, Menu
 
 
 class AdminApp(FastAPI):
     models: str
     admin_secret: str
-    user_model: str
+    user_model: Model
     site: Site
+    permission: bool
     _inited: bool = False
     _field_type_mapping = {
-        'IntField': 'number',
-        'BooleanField': 'checkbox',
-        'DatetimeField': 'datetime',
-        'DateField': 'date',
-        'IntEnumFieldInstance': 'select',
-        'CharEnumFieldInstance': 'select',
-        'DecimalField': 'number',
-        'FloatField': 'number',
-        'TextField': 'textarea',
-        'SmallIntField': 'number',
-        'JSONField': 'json',
+        IntField: 'number',
+        BooleanField: 'checkbox',
+        DatetimeField: 'datetime',
+        DateField: 'date',
+        IntEnumFieldInstance: 'select',
+        CharEnumFieldInstance: 'select',
+        DecimalField: 'number',
+        FloatField: 'number',
+        TextField: 'textarea',
+        SmallIntField: 'number',
+        JSONField: 'json',
     }
     model_menu_mapping: Dict[str, Menu] = {}
 
@@ -35,16 +40,18 @@ class AdminApp(FastAPI):
             else:
                 self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
 
-    def init(self, site: Site, user_model: str, admin_secret: str, models: str, ):
+    def init(self, site: Site, user_model: str, admin_secret: str, models: str, permission: bool = False):
         """
         init admin site
+        :param permission: active builtin permission
+        :param models:
         :param site:
         :param user_model: admin user model path,like admin.models.user
         :param admin_secret: admin jwt secret.
-        :param models: tortoise models
         :return:
         """
         self.site = site
+        self.permission = permission
         self.admin_secret = admin_secret
         self.models = importlib.import_module(models)
         self.user_model = getattr(self.models, user_model)
@@ -160,7 +167,7 @@ class AdminApp(FastAPI):
                 name = m2m_field.get('name')
                 if not self._exclude_field(resource, name):
                     label = m2m_field.get('description') or name.title()
-                    m2m_model_class = model._meta.fields_map[name].model
+                    m2m_model_class = m2m_field.get('python_type')
                     objs = await m2m_model_class.all()
                     options = list(map(lambda x: {'text': str(x), 'value': x.pk}, objs))
                     fields[name] = Field(
@@ -190,3 +197,4 @@ class AdminApp(FastAPI):
 app = AdminApp(
     openapi_prefix='/admin',
 )
+app.add_exception_handler(HTTPException, exception_handler)

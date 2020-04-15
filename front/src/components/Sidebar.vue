@@ -5,8 +5,7 @@
         <b-img class="site-logo" :src="site.logo" fluid/>
       </a>
 
-      <!-- <b-img class="site-logo" :src="require('../assets/img/gengyi-logo.svg')" fluid style="border-radius: 5px;" /> -->
-      <!-- <b-img rounded="circle" :src="auth.user.avatar" height="70" blank-color="#777" alt="avatar" class="m-2" /> -->
+      <b-img rounded="circle" :src="auth.user.avatar" height="70" blank-color="#777" alt="avatar" class="m-2"/>
       <div class="my-3" v-if="site.sidebar_userinfo !== false" v-show="!collapsed">
         <h5 style="letter-spacing:2px">{{site.name}}</h5>
         <template v-if="auth.user">

@@ -33,6 +33,9 @@ setup(
     packages=find_packages(include=['fastapi_admin*']),
     include_package_data=True,
     zip_safe=True,
+    entry_points={
+        'console_scripts': ['fastapi-admin = fastapi_admin.cli:cli'],
+    },
     platforms='any',
     keywords=(
         'fastapi admin dashboard'

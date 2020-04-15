@@ -1,6 +1,6 @@
 from enum import IntEnum
 
-from fastapi_admin.enum import EnumMixin
+from fastapi_admin.enums import EnumMixin
 
 
 class ProductType(EnumMixin, IntEnum):

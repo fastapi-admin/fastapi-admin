@@ -17,11 +17,12 @@ passlib = "*"
 bcrypt = "*"
 pyjwt = "*"
 xlsxwriter = "*"
+colorama = "*"
+prompt_toolkit = "*"
 
 [tool.poetry.dev-dependencies]
 taskipy = "*"
 asynctest = "*"
-faker = "*"
 
 [build-system]
 requires = ["poetry>=0.12"]

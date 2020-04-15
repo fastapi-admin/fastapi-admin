@@ -38,12 +38,14 @@ def create_app():
     fast_app = FastAPI(debug=True)
 
     register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
-    fast_app.mount('/admin', admin_app)
 
+    fast_app.mount('/admin', admin_app)
+    admin_app.debug = True
     admin_app.init(
         user_model='User',
         admin_secret='test',
         models='examples.models',
+        permission=True,
         site=Site(
             name='FastAPI-admin Demo',
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
@@ -101,11 +103,18 @@ def create_app():
                     name='User',
                     url='/rest/User',
                     icon='fa fa-user',
-                    fields_type={
-                        'avatar': 'image'
-                    },
                     exclude=('password',),
                     search_fields=('username',)
+                ),
+                Menu(
+                    name='Role',
+                    url='/rest/Role',
+                    icon='fa fa-group'
+                ),
+                Menu(
+                    name='Permission',
+                    url='/rest/Permission',
+                    icon='fa fa-copyright'
                 ),
                 Menu(
                     name='Logout',

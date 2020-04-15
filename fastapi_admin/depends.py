@@ -1,10 +1,14 @@
+import json
+
 import jwt
-import orjson
 from fastapi import Query, Path, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security.utils import get_authorization_scheme_param
 from pydantic import BaseModel
 from starlette.requests import Request
-from starlette.status import HTTP_401_UNAUTHORIZED
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
+
+from . import enums
 from .factory import app
 
 auth_schema = HTTPBearer()
@@ -38,7 +42,7 @@ class QueryItem(BaseModel):
 
 
 def get_query(query=Query(...)):
-    query = orjson.loads(query)
+    query = json.loads(query)
     return QueryItem.parse_obj(query)
 
 
@@ -57,3 +61,35 @@ async def parse_body(request: Request, resource: str = Path(...)):
         if v is not None:
             ret[key] = v
     return ret, resource_fields
+
+
+async def get_current_user(user_id=Depends(jwt_required)):
+    user = await app.user_model.get_or_none(pk=user_id)
+    if not user:
+        raise HTTPException(HTTP_404_NOT_FOUND)
+    return user
+
+
+class PermissionsChecker:
+    def __init__(self, action: enums.PermissionAction):
+        self.action = action
+
+    async def __call__(self, resource: str = Path(...), user=Depends(get_current_user)):
+        if not app.permission or user.is_superuser:
+            return
+        if not user.is_active:
+            raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='User is not Active!')
+        has_permission = False
+        await user.fetch_related('roles')
+        for role in user.roles:
+            if await role.permissions.filter(model=resource, action=self.action):
+                has_permission = True
+                break
+        if not has_permission:
+            raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='No Permission!')
+
+
+read_checker = PermissionsChecker(action=enums.PermissionAction.read)
+create_checker = PermissionsChecker(action=enums.PermissionAction.create)
+update_checker = PermissionsChecker(action=enums.PermissionAction.update)
+delete_checker = PermissionsChecker(action=enums.PermissionAction.delete)

@@ -10,6 +10,7 @@ cffi==1.14.0
 chardet==3.0.4
 ciso8601==2.1.3; sys_platform != "win32" and implementation_name == "cpython"
 click==7.1.1
+colorama==0.4.3
 cryptography==2.9
 dnspython==1.16.0
 email-validator==1.0.5
@@ -22,11 +23,11 @@ httptools==0.1.1; sys_platform != "win32" and sys_platform != "cygwin" and platf
 idna==2.9
 iso8601==0.1.12; sys_platform == "win32" or implementation_name != "cpython"
 itsdangerous==1.1.0
-jinja2==2.11.1
+jinja2==2.11.2
 markupsafe==1.1.1
-orjson==2.6.5
 passlib==1.7.2
 promise==2.3
+prompt-toolkit==3.0.5
 pycparser==2.20
 pydantic==1.4
 pyjwt==1.7.1
@@ -45,5 +46,6 @@ ujson==2.0.3
 urllib3==1.25.8
 uvicorn==0.11.3
 uvloop==0.14.0
+wcwidth==0.1.9
 websockets==8.1
 xlsxwriter==1.2.8

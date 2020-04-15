@@ -1,5 +1,9 @@
 from copy import deepcopy
 
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+
 
 async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=True, pk=None):
     """
@@ -25,7 +29,7 @@ async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=Tru
         m2m_related = getattr(obj, k)
         if not create:
             await m2m_related.clear()
-        m2m_model = m2m_related.model
+        m2m_model = m2m_related.remote_model
         m2m_objs = await m2m_model.filter(pk__in=v)
         await m2m_related.add(*m2m_objs)
     return obj

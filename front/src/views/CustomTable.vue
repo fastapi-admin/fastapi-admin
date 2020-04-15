@@ -348,6 +348,8 @@
           if (this.$refs.table) {
             this.$refs.table.refresh();
           }
+        }).catch(error => {
+          this.table = {}
         });
       }
     },

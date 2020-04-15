@@ -1,5 +1,5 @@
 from fastapi import Depends, APIRouter
-from fastapi.responses import ORJSONResponse
+from fastapi.responses import UJSONResponse
 from starlette.status import HTTP_409_CONFLICT
 from tortoise import Model
 from tortoise.contrib.pydantic import pydantic_model_creator
@@ -7,7 +7,8 @@ from tortoise.exceptions import IntegrityError
 from tortoise.fields import ManyToManyRelation
 
 from ..common import handle_m2m_fields_create_or_update
-from ..depends import QueryItem, get_query, parse_body, get_model
+from ..depends import QueryItem, get_query, parse_body, get_model, read_checker, delete_checker, update_checker, \
+    create_checker
 from ..factory import app
 from ..responses import GetManyOut
 from ..schemas import BulkIn
@@ -17,7 +18,8 @@ router = APIRouter()
 
 
 @router.get(
-    '/{resource}'
+    '/{resource}',
+    dependencies=[Depends(read_checker)]
 )
 async def get_resource(
         resource: str,
@@ -45,7 +47,8 @@ async def get_resource(
 
 
 @router.get(
-    '/{resource}/form'
+    '/{resource}/form',
+    dependencies=[Depends(read_checker)]
 )
 async def form(
         resource: str,
@@ -55,7 +58,8 @@ async def form(
 
 
 @router.get(
-    '/{resource}/grid'
+    '/{resource}/grid',
+    dependencies=[Depends(read_checker)]
 )
 async def grid(
         resource: str,
@@ -65,7 +69,8 @@ async def grid(
 
 
 @router.get(
-    '/{resource}/view'
+    '/{resource}/view',
+    dependencies=[Depends(read_checker)]
 )
 async def view(
         resource: str,
@@ -75,7 +80,8 @@ async def view(
 
 
 @router.post(
-    '/{resource}/bulk/delete'
+    '/{resource}/bulk/delete',
+    dependencies=[Depends(delete_checker)]
 )
 async def bulk_delete(
         bulk_in: BulkIn,
@@ -86,7 +92,8 @@ async def bulk_delete(
 
 
 @router.delete(
-    '/{resource}/{id}'
+    '/{resource}/{id}',
+    dependencies=[Depends(delete_checker)]
 )
 async def delete_one(
         id: int,
@@ -97,7 +104,8 @@ async def delete_one(
 
 
 @router.put(
-    '/{resource}/{id}'
+    '/{resource}/{id}',
+    dependencies=[Depends(update_checker)]
 )
 async def update_one(
         id: int,
@@ -109,7 +117,7 @@ async def update_one(
     try:
         obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model, False, id)
     except IntegrityError as e:
-        return ORJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(
+        return UJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(
             message=f'Update Error,{e}'
         ))
     creator = pydantic_model_creator(model, include=resource_fields, exclude=m2m_fields)
@@ -117,7 +125,8 @@ async def update_one(
 
 
 @router.post(
-    '/{resource}'
+    '/{resource}',
+    dependencies=[Depends(create_checker)]
 )
 async def create_one(
         parsed=Depends(parse_body),
@@ -129,14 +138,15 @@ async def create_one(
     try:
         obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model)
     except IntegrityError as e:
-        return ORJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(
+        return UJSONResponse(status_code=HTTP_409_CONFLICT, content=dict(
             message=f'Create Error,{e}'
         ))
     return creator.from_orm(obj).dict()
 
 
 @router.get(
-    '/{resource}/{id}'
+    '/{resource}/{id}',
+    dependencies=[Depends(read_checker)]
 )
 async def get_one(
         id: int,
