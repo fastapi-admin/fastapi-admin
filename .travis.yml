@@ -1,0 +1,18 @@
+language: node_js
+node_js: stable
+install:
+  - npm install
+script:
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: dist
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  fqdn: fastapi-admin.long2ice.cn
+  on:
+    branch: master
+  repo: fastapi-admin
+  email: long2ice@gmail.com
+  edge: true

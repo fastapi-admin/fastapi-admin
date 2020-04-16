@@ -4,6 +4,8 @@ FastAPI Admin
 
 .. image:: https://img.shields.io/pypi/v/fastapi-admin.svg?style=flat
    :target: https://pypi.python.org/pypi/fastapi-admin
+.. image:: https://travis-ci.com/long2ice/fastapi-admin.svg?branch=master
+   :target: https://travis-ci.com/long2ice/fastapi-admin
 .. image:: https://img.shields.io/github/license/long2ice/fastapi-admin
    :target: https://github.com/long2ice/fastapi-admin
 
