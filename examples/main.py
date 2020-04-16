@@ -114,7 +114,7 @@ def create_app():
                 Menu(
                     name='Permission',
                     url='/rest/Permission',
-                    icon='fa fa-copyright'
+                    icon='fa fa-user-plus'
                 ),
                 Menu(
                     name='Logout',

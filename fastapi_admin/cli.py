@@ -1,6 +1,7 @@
 import argparse
 import importlib
-
+import sys
+import os
 from colorama import Fore, init
 from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
@@ -8,6 +9,8 @@ from tortoise import Tortoise, run_async
 from fastapi_admin import enums
 from fastapi_admin.common import pwd_context
 from fastapi_admin.models import Permission
+
+sys.path.extend([os.getcwd()])
 
 init(autoreset=True)
 
@@ -37,6 +40,8 @@ async def init_tortoise(args):
 
 async def register_permissions(args):
     await init_tortoise(args)
+    await Tortoise.generate_schemas()
+
     if args.clean:
         await Permission.all().delete()
         Logger.waring('Cleaned all permissions success.')
