@@ -16,6 +16,14 @@ FastAPI-admin is a admin dashboard based on `fastapi <https://github.com/tiangol
 
 FastAPI-admin provide crud feature out-of-the-box with just a few config.
 
+Live Demo
+=========
+Check a live Demo here `https://fastapi-admin.long2ice.cn <https://fastapi-admin.long2ice.cn/>`_.
+
+* username: ``admin``
+* password: ``123456``
+
+Data in database will restore every day.
 
 Screenshots
 ===========
