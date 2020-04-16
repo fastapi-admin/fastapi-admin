@@ -14,6 +14,5 @@ deploy:
   fqdn: fastapi-admin.long2ice.cn
   on:
     branch: master
-  repo: fastapi-admin
   email: long2ice@gmail.com
   edge: true
