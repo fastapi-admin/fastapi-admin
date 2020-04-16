@@ -26,6 +26,7 @@ async def login(
         'user': {
             'username': user.username,
             'is_superuser': user.is_superuser,
+            'avatar': user.avatar if hasattr(user, 'avatar') else None
 
         },
         'token': jwt.encode({'user_id': user.pk}, app.admin_secret, algorithm='HS256')
