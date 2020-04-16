@@ -4,12 +4,11 @@ install:
   - cd front
   - npm install
 script:
-  - cd front
   - npm run build
 deploy:
   provider: pages
   skip_cleanup: true
-  local_dir: front/dist
+  local_dir: dist
   github_token: $GITHUB_TOKEN
   keep_history: true
   fqdn: fastapi-admin.long2ice.cn
