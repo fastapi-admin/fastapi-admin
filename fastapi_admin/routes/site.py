@@ -27,7 +27,7 @@ async def site(
     if app.permission and not user.is_superuser:
         site_ = deepcopy(site_)
         await user.fetch_related('roles')
-        for menu in site_.menus:
+        for menu in filter(lambda x: (x.url and 'rest' in x.url) or x.children, site_.menus):
             has_permission = False
             if not has_permission:
                 for role in user.roles:
