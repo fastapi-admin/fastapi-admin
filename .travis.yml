@@ -15,5 +15,6 @@ deploy:
   on:
     branch: master
   email: long2ice@gmail.com
-  edge: true
+  edge:
+    branch: master
   verbose: true
