@@ -147,7 +147,7 @@ class AdminApp(FastAPI):
             name = fk_field.get('name')
             if not self._exclude_field(resource, name):
                 if name not in menu.raw_id_fields:
-                    fk_model_class = model._meta.fields_map[name].model
+                    fk_model_class = fk_field.get('python_type')
                     objs = await fk_model_class.all()
                     raw_field = fk_field.get('raw_field')
                     label = fk_field.get('description') or name.title()
