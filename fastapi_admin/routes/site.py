@@ -13,7 +13,7 @@ router = APIRouter()
 )
 async def home():
     return {
-        'title': "Welcome to REST ADMIN"
+        'title': "Welcome to FastAPI ADMIN"
     }
 
 

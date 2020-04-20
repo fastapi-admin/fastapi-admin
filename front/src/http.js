@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import store, { types } from './store'
+import store, {types} from './store'
 import _ from 'lodash'
 
 const API_URI = process.env.VUE_APP_API_URL || '/admin/api/'
@@ -20,7 +20,7 @@ axios.interceptors.response.use(response => {
   return response;
 }, ({response}) => {
   store.commit(types.STOP_LOADING)
-  const { data, status, statusText } = response
+  const {data, status, statusText} = response
   switch (status) {
     case 422:
 
@@ -37,7 +37,7 @@ axios.interceptors.response.use(response => {
   if (Array.isArray(msg)) {
     msg = msg[0].message
   }
-  
+
   if (msg) {
     Vue.prototype.$snotify.error(String(msg))
   } else {

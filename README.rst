@@ -121,7 +121,7 @@ And set ``permission=True`` to active it:
 
 Enum Support
 ~~~~~~~~~~~~
-When you define a enum field of tortoise-orm,like ``IntEnumField``,you can inherit ``fastapi_admin.enum.EnumMixin`` and impl ``choices()`` method,
+When you define a enum field of tortoise-orm,like ``IntEnumField``,you can inherit ``fastapi_admin.enums.EnumMixin`` and impl ``choices()`` method,
 FastAPI-admin will auto read and display and render a ``select`` widget in front.
 
 .. code-block:: python
