@@ -10,16 +10,16 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup Node
-          uses: actions/setup-node@v1
-          with:
-            node-version: '12.x'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
       - name: Cache dependencies
-          uses: actions/cache@v1
-          with:
-            path: ~/.npm
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.os }}-node-
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Build
         env:
           PRODUCTION_BASE_URL: /
@@ -28,8 +28,8 @@ jobs:
         run: npm run build
 
       - name: deploy
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./dist
-            cname: fastapi-admin.long2ice.cn
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: fastapi-admin.long2ice.cn
