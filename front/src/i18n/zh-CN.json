@@ -29,7 +29,7 @@
   "messages": {
     "paginate": "共{total}条数据",
     "login_please": "请先登录",
-    "login_footer": "REST ADMIN - Awesome Admin Dashboard for RESTFul API",
+    "login_footer": "FASTAPI ADMIN - Fast Admin Dashboard for RESTFul API",
     "login_description": "管理后台",
     "dashboard": "控制台",
     "go_home": "返回首页",

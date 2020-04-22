@@ -4,8 +4,6 @@ FastAPI Admin
 
 .. image:: https://img.shields.io/pypi/v/fastapi-admin.svg?style=flat
    :target: https://pypi.python.org/pypi/fastapi-admin
-.. image:: https://travis-ci.com/long2ice/fastapi-admin.svg?branch=master
-   :target: https://travis-ci.com/long2ice/fastapi-admin
 .. image:: https://img.shields.io/github/license/long2ice/fastapi-admin
    :target: https://github.com/long2ice/fastapi-admin
 
@@ -208,3 +206,8 @@ ThanksTo
 * `fastapi <https://github.com/tiangolo/fastapi>`_ ,high performance async api framework.
 * `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ ,familiar asyncio ORM for python.
 * `rest-admin <https://github.com/wxs77577/rest-admin>`_,restful Admin Dashboard Based on Vue and Boostrap 4.
+
+License
+=======
+
+This project is licensed under the `MIT <https://github.com/long2ice/fastapi-admin/blob/master/LICENSE>`_ License.

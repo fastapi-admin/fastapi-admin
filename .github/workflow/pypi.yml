@@ -7,12 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build dists
-      run: |
-        python setup.py sdist
-    - name: Pypi Publish
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
+      - uses: actions/checkout@v2
+      - name: Build dists
+        run: |
+          python3 setup.py sdist
+      - name: Pypi Publish
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
