@@ -2,7 +2,7 @@ name: gh-pages
 on:
   push:
     paths:
-      - 'front/*'
+      - 'front/**'
       - '.github/workflows/gh-pages.yml'
 jobs:
   build:
