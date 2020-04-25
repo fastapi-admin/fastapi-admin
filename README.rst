@@ -7,7 +7,9 @@ FastAPI Admin
 .. image:: https://img.shields.io/github/license/long2ice/fastapi-admin
    :target: https://github.com/long2ice/fastapi-admin
 .. image:: https://github.com/long2ice/fastapi-admin/workflows/gh-pages/badge.svg
+   :target: https://github.com/long2ice/fastapi-admin/workflows/gh-pages
 .. image:: https://github.com/long2ice/fastapi-admin/workflows/pypi/badge.svg
+   :target: https://github.com/long2ice/fastapi-admin/workflows/pypi
 
 Introduction
 ============
