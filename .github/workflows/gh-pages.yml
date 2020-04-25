@@ -25,7 +25,7 @@ jobs:
         env:
           PRODUCTION_BASE_URL: /
           BASE_URL: /
-          VUE_APP_API_URL: https://api-fastapi-admin.long2ice.cn:8443
+          VUE_APP_API_URL: https://api-fastapi-admin.long2ice.cn:8443/
         run: |
           cd front
           npm install
