@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'fastapi_admin/__init__.py'
+      - '.github/workflows/pypi.yml'
 jobs:
   build:
     runs-on: ubuntu-latest

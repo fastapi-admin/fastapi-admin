@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'front/*'
+      - '.github/workflows/gh-pages.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
