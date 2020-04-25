@@ -116,6 +116,9 @@
           <template v-else-if="['html'].includes(data.field.type)">
             <div v-html="data.value" class=" data-value-html"></div>
           </template>
+          <template v-else-if="['select', 'select2', 'radiolist', 'checkboxlist'].includes(data.field.type)">
+            {{ _.find(data.field.options,{value:data.value}).text }}
+          </template>
           <template v-else>
             {{ data.value}}
           </template>
