@@ -6,6 +6,8 @@ FastAPI Admin
    :target: https://pypi.python.org/pypi/fastapi-admin
 .. image:: https://img.shields.io/github/license/long2ice/fastapi-admin
    :target: https://github.com/long2ice/fastapi-admin
+.. image:: https://github.com/long2ice/fastapi-admin/workflows/gh-pages/badge.svg
+.. image:: https://github.com/long2ice/fastapi-admin/workflows/pypi/badge.svg
 
 Introduction
 ============
