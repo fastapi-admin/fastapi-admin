@@ -12,9 +12,11 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+
       - name: Build dists
         run: |
           python3 setup.py sdist
+
       - name: Pypi Publish
         uses: pypa/gh-action-pypi-publish@master
         with:

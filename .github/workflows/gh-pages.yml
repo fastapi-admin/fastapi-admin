@@ -26,7 +26,9 @@ jobs:
           PRODUCTION_BASE_URL: /
           BASE_URL: /
           VUE_APP_API_URL: https://api-fastapi-admin.long2ice.cn:8443
-        run: npm run build
+        run: |
+          cd front
+          npm run build
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
