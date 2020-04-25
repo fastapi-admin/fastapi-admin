@@ -8,9 +8,7 @@ import router from './router'
 import store, { types } from './store'
 import './http'
 import i18n from './i18n'
-import config from './config'
 import inflection from 'inflection'
-Vue.prototype.$config = config
 Vue.prototype.$inflection = inflection
 
 import { sync } from 'vuex-router-sync'
@@ -50,15 +48,15 @@ new Vue({
   store,
   i18n,
   watch: {
-    
+
   },
   methods: {
-    
+
   },
   render: h => h(App),
-  
+
   created() {
-    
+
     // form.init()
   }
 })

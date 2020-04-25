@@ -51,7 +51,7 @@ def create_app():
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
             locale='en-US',
             locale_switcher=True,
-            menu=[
+            menus=[
                 Menu(
                     name='Home',
                     url='/',
@@ -67,7 +67,8 @@ def create_app():
                     icon='icon-list',
                     search_fields=('type',),
                     fields_type={
-                        'type': 'radiolist'
+                        'type': 'radiolist',
+                        'image': 'link'
                     },
                     bulk_actions=[
                         {
@@ -104,7 +105,10 @@ def create_app():
                     url='/rest/User',
                     icon='fa fa-user',
                     exclude=('password',),
-                    search_fields=('username',)
+                    search_fields=('username',),
+                    fields_type={
+                        'avatar': 'image'
+                    },
                 ),
                 Menu(
                     name='Role',

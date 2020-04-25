@@ -19,9 +19,9 @@ class Menu(BaseModel):
     # external link
     external: Optional[bool] = False
     # raw id fields
-    raw_id_fields: Optional[Set[str]] = set()
+    raw_id_fields: Optional[Tuple[str]] = set()
     # searchable fields
-    search_fields: Optional[Set[str]] = set()
+    search_fields: Optional[Tuple[str]] = set()
     # sortable fields
     sort_fields: Optional[Set[str]] = set()
     # define field type,like select,radiolist,text,date
@@ -53,11 +53,6 @@ class Site(BaseModel):
     menus: List[Menu]
     # custom footer with html
     footer: Optional[str]
-
-    class Config:
-        fields = {
-            'menus': 'menu'
-        }
 
 
 class Field(BaseModel):

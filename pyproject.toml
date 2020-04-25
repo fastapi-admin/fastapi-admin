@@ -6,7 +6,7 @@ authors = ["long2ice <long2ice@prismslight.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-tortoise-orm = {git = "https://github.com/long2ice/tortoise-orm.git", branch = "long2ice"}
+tortoise-orm = {git = "https://github.com/tortoise/tortoise-orm.git", branch = "develop"}
 aiomysql = "*"
 python-dotenv = "*"
 uvloop = "*"

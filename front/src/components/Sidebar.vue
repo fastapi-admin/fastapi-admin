@@ -21,7 +21,7 @@
     </div>
     <div slot="header"></div>
     <b-nav pills class="sidebar-nav" vertical>
-      <template v-for="(item, index) in site.menu">
+      <template v-for="(item, index) in site.menus">
         <b-nav-text v-if="item.title" :key="index">
           <small class="text-muted">
             <b>{{item.name}}</b>
@@ -71,22 +71,22 @@
 
     computed: {
       ...mapState(["auth", "site"]),
-      menu() {
-        const menu = [];
+      menus() {
+        const menus = [];
         const titleIndices = [];
-        this.site.menu.forEach((v, k) => {
+        this.site.menus.forEach((v, k) => {
           v.title && titleIndices.push(parseInt(k));
         });
         for (let i in titleIndices) {
-          menu.push({
-            name: this.site.menu[titleIndices[i]].name,
-            children: this.site.menu.slice(
+          menus.push({
+            name: this.site.menus[titleIndices[i]].name,
+            children: this.site.menus.slice(
               titleIndices[i] + 1,
               titleIndices[parseInt(i) + 1]
             )
           });
         }
-        return menu;
+        return menus;
       }
     },
     components: {LocaleSwitcher, ThemeSwitcher},

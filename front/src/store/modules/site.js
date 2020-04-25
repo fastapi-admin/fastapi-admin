@@ -10,7 +10,7 @@ export default {
     name: "",
     url: "",
     description: "",
-    menu: menu,
+    menus: menu,
     languages: false,
     footer: false,
     theme: "cosmo",

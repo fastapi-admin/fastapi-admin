@@ -66,10 +66,8 @@
           ></b-pagination>
         </div>
         <div class="col-md-4 form-inline justify-content-end">
-          <b-select v-model="currentPage" class="mx-2">
-            <option v-for="n in Math.ceil(total/perPage)" :key="n" :value="n">{{n}}</option>
+          <b-select v-model="perPage" :options="pages" class="mx-2">
           </b-select>
-
           <span>{{$t('messages.paginate', {total: total})}}</span>
         </div>
       </div>
@@ -80,6 +78,7 @@
         :items="fetchItems"
         :fields="columns"
         selectable
+        :per-page="perPage"
         @row-selected="onRowSelected"
         :select-mode="selectModel"
         :current-page="currentPage"
@@ -95,8 +94,35 @@
           >{{field.label || key}}
           </div>
         </template>
+
+        <template v-slot:cell()="data">
+          <template v-if="['datetime', 'date'].includes(data.field.type)">
+            {{$d(new Date(data.value), 'long')}}
+          </template>
+          <template v-else-if="['image'].includes(data.field.type)">
+            <b-img width="50px" class="type-image" :src="data.value" fluid/>
+          </template>
+          <template v-else-if="['link'].includes(data.field.type)">
+            <a :class="data.field.classes" :href="data.value" :target="data.field.target">
+              <i :class="data.field.icon" v-if="data.field.icon"></i>
+              {{data.value}}
+            </a>
+          </template>
+          <template v-else-if="['switch', 'boolean', 'checkbox'].includes(data.field.type)">
+            <b-badge :variant="data.value ? 'success' : 'danger'">
+              {{data.value ? 'Yes' : 'No'}}
+            </b-badge>
+          </template>
+          <template v-else-if="['html'].includes(data.field.type)">
+            <div v-html="data.value" class=" data-value-html"></div>
+          </template>
+          <template v-else>
+            {{ data.value}}
+          </template>
+        </template>
+
         <template v-for="(field, key) in table.fields" :slot="key" slot-scope="row">
-          <b-data-value :field="field" :key="key" :name="key" :model="row.item" short-id/>
+          <b-data-value :field="field" :key="key" :name="key" :model="row.item" :pk="pk" short-id/>
         </template>
 
         <template v-slot:cell(_actions)="row">
@@ -171,8 +197,8 @@
         table: {},
         modes: ['multi', 'single', 'range'],
         selectModel: 'range',
-        total: 0, //total rows
-        pageLimit: 10, //display how many page buttons
+        total: 0,
+        pageLimit: 10,
         currentPage: 1,
         sortBy: this.pk,
         sortDesc: true,
@@ -182,7 +208,8 @@
         pk: null,
         selected_pk_list: [],
         bulkActions: {},
-        selectBulkAction: null
+        selectBulkAction: null,
+        pages: [10, 50, 100]
       };
     },
     watch: {
@@ -291,6 +318,7 @@
       fetchItems(ctx) {
         const query = _.merge({}, _.get(this.table, "query"), {
           page: ctx.currentPage,
+          size: ctx.perPage,
           sort: {[ctx.sortBy]: this.sortDesc ? -1 : 1},
           where: this.where,
           with: this.populate
@@ -351,7 +379,7 @@
         }).catch(error => {
           this.table = {}
         });
-      }
+      },
     },
     mounted() {
     },
