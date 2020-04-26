@@ -2439,6 +2439,18 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
+compression-webpack-plugin@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/compression-webpack-plugin/download/compression-webpack-plugin-3.1.0.tgz#9f510172a7b5fae5aad3b670652e8bd7997aeeca"
+  integrity sha1-n1EBcqe1+uWq07ZwZS6L15l67so=
+  dependencies:
+    cacache "^13.0.1"
+    find-cache-dir "^3.0.0"
+    neo-async "^2.5.0"
+    schema-utils "^2.6.1"
+    serialize-javascript "^2.1.2"
+    webpack-sources "^1.0.1"
+
 compression@^1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/compression/-/compression-1.7.4.tgz#95523eff170ca57c29a0ca41e6fe131f41e5bb8f"
@@ -8851,7 +8863,7 @@ webpack-merge@^4.2.2:
   dependencies:
     lodash "^4.17.15"
 
-webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
+webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.3.tgz#eedd8ec0b928fbf1cbfe994e22d2d890f330a933"
   integrity sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==
