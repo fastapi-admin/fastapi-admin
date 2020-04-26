@@ -45,8 +45,8 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
 
 1. ``git clone https://github.com/long2ice/fastapi-admin.git``.
 2. create database ``fastapi-admin`` and import from ``examples/example.sql``.
-3. ``pip install -r requirements.txt``.
-4. ``cd examples && python3 main.py``,then you can see:
+3. ``python setup.py install``.
+4. ``env PYTHONPATH=./ python3 examples/main.py``,then you can see:
 
 .. code-block:: python
 
@@ -65,11 +65,16 @@ That's all,enjoy it!
 
 Backend
 ~~~~~~~
-Only you should do is runing a fastapi app and mount admin app from fastapi-admin,then call ``init()``.
+
+.. code-block:: shell
+
+    $  pip3 install fastapi-admin
+
+Only you should do is running a fastapi app and mount admin app from fastapi-admin,then call ``init(...)``.
 
 Front
 ~~~~~
-``cp .env.development.local.example .env`` and modify,then just run ``cd front && npm run serve``,more reference in `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+``cd front && cp .env.example .env`` and modify,then just run ``npm run serve``.
 
 Features
 ========
@@ -96,7 +101,7 @@ Then register permissions and createsuperuser:
 
 .. code-block:: shell
 
-    > fastapi-admin -h
+    $ fastapi-admin -h
     usage: fastapi-admin [-h] -c CONFIG {register_permissions,createsuperuser} ...
 
     optional arguments:
@@ -199,10 +204,7 @@ Current FastAPI-admin support builtin bulk action ``delete_all``,if you want wri
 Deployment
 ==========
 1. Deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com/deployment/.
-2. Run ``npm run build`` in ``front`` dir,then copy static files in ``dists`` to you server,deployment by ``nginx``.
-
-.. note::
-   Maybe you should config ``VUE_APP_API_URL``, ``BASE_URL`` environment .etc in ``.env`` of ``front`` dir,just reference docs of `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+2. ``cp .env.example .env`` and modify,run ``npm run build`` in ``front`` dir,then copy static files in ``dists`` to you server,deployment by ``nginx``.
 
 ThanksTo
 ========

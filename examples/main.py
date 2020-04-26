@@ -21,7 +21,7 @@ TORTOISE_ORM = {
     }
 }
 
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory='examples/templates')
 
 
 @admin_app.post(
