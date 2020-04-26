@@ -61,7 +61,18 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
     INFO:     Tortoise-ORM generating schema
     INFO:     Application startup complete.
 
-That's all,enjoy it!
+5. ``cd front && npm install && npm run serve``,then you can see:
+
+.. code-block:: shell
+
+    App running at:
+    - Local:   http://localhost:8080/
+    - Network: http://192.168.10.23:8080/
+
+    Note that the development build is not optimized.
+    To create a production build, run yarn build.
+
+Open ``http://localhost:8080/`` in browser and enjoy it!
 
 Backend
 ~~~~~~~
