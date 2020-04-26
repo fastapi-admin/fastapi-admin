@@ -321,7 +321,7 @@ INSERT INTO `user`
 VALUES (1, 'long2ice', '$2b$12$CD5ImAgBr7TZpJABxuXASOXz/cAFMIhXsmnZCU.cvo/c.kOOpSkXq', '2020-04-13 12:44:06.000000', 1,
         'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
         'test', '2020-04-13 12:44:14.000000', 1),
-       (7, 'test', '$2b$12$CD5ImAgBr7TZpJABxuXASOXz/cAFMIhXsmnZCU.cvo/c.kOOpSkXq', '2020-04-14 16:54:40.510165', 1,
+       (2, 'admin', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0ptG', '2020-04-14 16:54:40.510165', 1,
         'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
         'test', '2020-04-14 16:54:40.510555', 0);
 /*!40000 ALTER TABLE `user`
