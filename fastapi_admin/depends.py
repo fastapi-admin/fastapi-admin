@@ -3,6 +3,7 @@ import json
 import jwt
 from fastapi import Query, Path, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security.utils import get_authorization_scheme_param
 from pydantic import BaseModel
 from starlette.requests import Request
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
@@ -24,6 +25,20 @@ async def jwt_required(request: Request, token: HTTPAuthorizationCredentials = D
         raise credentials_exception
     request.scope['user_id'] = user_id
     return user_id
+
+
+async def jwt_optional(request: Request):
+    authorization: str = request.headers.get("Authorization")
+    scheme, credentials = get_authorization_scheme_param(authorization)
+    if credentials:
+        try:
+            payload = jwt.decode(credentials, app.admin_secret)
+            user_id = payload.get('user_id')
+            request.scope['user_id'] = user_id
+            return user_id
+        except jwt.PyJWTError:
+            pass
+    return
 
 
 class QueryItem(BaseModel):
@@ -77,7 +92,7 @@ class PermissionsChecker:
         if not app.permission or user.is_superuser:
             return
         if not user.is_active:
-            raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='User is not Active!')
+            raise HTTPException(status_code=HTTP_403_FORBIDDEN)
         has_permission = False
         await user.fetch_related('roles')
         for role in user.roles:
@@ -85,7 +100,7 @@ class PermissionsChecker:
                 has_permission = True
                 break
         if not has_permission:
-            raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='No Permission!')
+            raise HTTPException(status_code=HTTP_403_FORBIDDEN)
 
 
 read_checker = PermissionsChecker(action=enums.PermissionAction.read)

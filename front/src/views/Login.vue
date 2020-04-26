@@ -20,8 +20,8 @@
         <div class="card text-white bg-primary py-5 d-md-down-none" :style="site.desbg_style">
           <div class="card-body text-center align-items-center d-flex">
             <div class style="width: 100%">
-              <h2>{{site.name || 'REST ADMIN'}} - {{$t('messages.dashboard')}}</h2>
-              <p>{{site.description || $t('messages.login_description')}}</p>
+              <h2>{{site.name || 'FASTAPI ADMIN'}} - {{$t('messages.dashboard')}}</h2>
+              <p>{{site.login_description || $t('messages.login_description')}}</p>
               <!-- <button type="button" class="btn btn-primary active mt-3">{{$t('messages.go_home')}}</button> -->
             </div>
           </div>
@@ -35,57 +35,58 @@
 </template>
 
 <script>
-import { types } from "../store";
-import { mapState } from "vuex";
-import LocaleSwitcher from "../components/LocaleSwitcher";
+  import {types} from "../store";
+  import {mapState} from "vuex";
+  import LocaleSwitcher from "../components/LocaleSwitcher";
 
-export default {
-  name: "Login",
-  components: { LocaleSwitcher },
-  computed: {
-    ...mapState(["auth", "site"]),
-    fields() {
+  export default {
+    name: "Login",
+    components: {LocaleSwitcher},
+    computed: {
+      ...mapState(["auth", "site"]),
+      fields() {
+        return {
+          username: {
+            label: this.$t("fields.username"),
+            placeholder: this.$t("fields.username"),
+            icon: "icon-user"
+          },
+          password: {
+            label: this.$t("fields.password"),
+            placeholder: this.$t("fields.password"),
+            icon: "icon-lock",
+            type: "password"
+          }
+        };
+      }
+    },
+    data() {
       return {
-        username: {
-          label: this.$t("fields.username"),
-          placeholder: this.$t("fields.username"),
-          icon: "icon-user"
+        model: {
+          username: "",
+          password: ""
         },
-        password: {
-          label: this.$t("fields.password"),
-          placeholder: this.$t("fields.password"),
-          icon: "icon-lock",
-          type: "password"
-        }
+        errors: []
       };
+    },
+    methods: {
+      onSuccess(data) {
+        this.$store.commit(types.SET_AUTH, data);
+        this.$store.dispatch(types.FETCH_SITE);
+        this.$router.push({
+          path: data.redirect || "/"
+        });
+      }
+    },
+    mounted() {
     }
-  },
-  data() {
-    return {
-      model: {
-        username: "",
-        password: ""
-      },
-      errors: []
-    };
-  },
-  methods: {
-    onSuccess(data) {
-      this.$store.commit(types.SET_AUTH, data);
-      this.$store.dispatch(types.FETCH_SITE);
-      this.$router.push({
-        path: data.redirect || "/"
-      });
-    }
-  },
-  mounted() {}
-};
+  };
 </script>
 
 <style lang="scss">
-.login-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-}
+  .login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
 </style>

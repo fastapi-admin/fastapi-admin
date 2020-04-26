@@ -61,6 +61,8 @@ def create_app():
         site=Site(
             name='FastAPI-admin Demo',
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
+            login_footer='FASTAPI ADMIN - FastAPI Admin Dashboard',
+            login_description='FastAPI Admin Dashboard',
             locale='en-US',
             locale_switcher=True,
             menus=[
@@ -86,8 +88,8 @@ def create_app():
                         {
                             'value': 'delete',
                             'text': 'delete_all',
-                        }
-                        , {
+                        },
+                        {
                             'value': 'test_bulk',
                             'text': 'TestBulk'
                         }

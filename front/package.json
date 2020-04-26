@@ -5,9 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "mode": "echo $2",
-    "test-api": "node ./api",
-    "lint": "vue-cli-service lint"
+    "test-api": "node ./api"
   },
   "dependencies": {
     "@alfsnd/vue-bootstrap-select": "^0.4.4",
@@ -28,7 +29,7 @@
     "vue": "^2.6.11",
     "vue-element-loading": "^1.1.5",
     "vue-html5-editor": "^1.1.1",
-    "vue-i18n": "^8.15.0",
+    "vue-i18n": "^8.17.3",
     "vue-router": "^3.1.3",
     "vue-select": "^3.2.0",
     "vue-snotify": "^3.2.1",
@@ -38,6 +39,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^1.0.0",
     "@vue/cli-plugin-babel": "^4.0.5",
     "@vue/cli-plugin-eslint": "^4.0.5",
     "@vue/cli-service": "^4.0.5",
@@ -50,6 +52,7 @@
     "nodemon": "^1.19.4",
     "sass": "^1.23.1",
     "sass-loader": "^8.0.0",
+    "vue-cli-plugin-i18n": "~1.0.1",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

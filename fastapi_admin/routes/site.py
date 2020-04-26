@@ -2,8 +2,9 @@ from copy import deepcopy
 
 from fastapi import APIRouter, Depends
 
-from ..depends import get_current_user
+from ..depends import jwt_optional
 from ..factory import app
+from ..shortcuts import get_object_or_404
 
 router = APIRouter()
 
@@ -12,10 +13,13 @@ router = APIRouter()
     '/site',
 )
 async def site(
-        user=Depends(get_current_user)
+        user_id=Depends(jwt_optional)
 ):
     site_ = app.site
-    if app.permission and not user.is_superuser:
+    user = None
+    if user_id:
+        user = await get_object_or_404(app.user_model, pk=user_id)
+    if user and app.permission and not user.is_superuser:
         site_ = deepcopy(site_)
         await user.fetch_related('roles')
         filter_menus = filter(lambda x: (x.url and 'rest' in x.url) or x.children, site_.menus)

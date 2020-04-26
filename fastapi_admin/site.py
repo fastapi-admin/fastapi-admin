@@ -41,6 +41,10 @@ Menu.update_forward_refs()
 class Site(BaseModel):
     name: str
     logo: HttpUrl
+    login_logo: Optional[HttpUrl]
+    login_footer: Optional[str]
+    login_description: Optional[str]
+    footer: Optional[str]
     locale: str
     locale_switcher: bool = False
     theme_switcher: bool = False

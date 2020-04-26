@@ -22,26 +22,17 @@ axios.interceptors.response.use(response => {
   store.commit(types.STOP_LOADING)
   const {data, status, statusText} = response
   switch (status) {
-    case 422:
-
-      break;
     case 401:
-      // vm.$snotify.error('请先登录')
       store.dispatch(types.GO_LOGIN)
       break
     case 404:
       Vue.prototype.$snotify.error(String(statusText))
       break;
-  }
-  let msg = _.get(data, 'message', _.get(data, 'error.message', _.get(data, '0.message')))
-  if (Array.isArray(msg)) {
-    msg = msg[0].message
-  }
-
-  if (msg) {
-    Vue.prototype.$snotify.error(String(msg))
-  } else {
-    // console.error(data)
+    default:
+      let msg = _.get(data, 'msg')
+      if (msg) {
+        Vue.prototype.$snotify.error(String(msg))
+      }
   }
   return Promise.reject(response);
 });

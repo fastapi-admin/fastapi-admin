@@ -1,10 +1,10 @@
 <template>
   <div class="app-footer">
-    <footer class="bg-light" v-html="site.footer" v-if="site.footer"></footer>
-    <footer class="bg-light" v-else>
+    <footer v-html="site.footer" v-if="site.footer"></footer>
+    <footer v-else>
       <span class="ml-auto">
         GitHub
-        <a href="https://github.com/wxs77577/rest-admin">REST-ADMIN</a>
+        <a href="https://github.com/long2ice/fastapi-admin">FASTAPI-ADMIN</a>
       </span>
     </footer>
   </div>
@@ -19,9 +19,9 @@ export default {
 </script>
 <style lang="scss">
 .app-footer {
-  // position: fixed;
   bottom: 0;
   right: 0;
+  margin-top: 10px;
   width: 100%;
   z-index: 9;
   letter-spacing: 1px;
@@ -29,7 +29,7 @@ export default {
   & > footer {
     // margin-left: 215px;
     padding: 0.5em;
-    text-align: right;
+    text-align: center;
   }
 }
 </style>

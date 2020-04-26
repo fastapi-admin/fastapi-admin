@@ -1,12 +1,20 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import inflection from 'inflection'
+import inflection from "inflection";
 
 Vue.use(VueI18n)
 
-const messages = {
-  "en-US": require('./en-US.json'),
-  "zh-CN": require('./zh-CN.json')
+function loadLocaleMessages() {
+  const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
+  const messages = {}
+  locales.keys().forEach(key => {
+    const matched = key.match(/([A-Za-z0-9-_]+)\./i)
+    if (matched && matched.length > 1) {
+      const locale = matched[1]
+      messages[locale] = locales(key)
+    }
+  })
+  return messages
 }
 
 const dateTimeFormats = {
@@ -31,8 +39,9 @@ const dateTimeFormats = {
 }
 
 export default new VueI18n({
-  locale: 'en-US',
-  messages,
+  locale: process.env.VUE_APP_I18N_LOCALE || 'en-US',
+  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en-US',
+  messages: loadLocaleMessages(),
   dateTimeFormats,
   silentTranslationWarn: true,
   missing(lang, key) {
