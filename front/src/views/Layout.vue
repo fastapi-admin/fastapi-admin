@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-row>
-      <b-col class="h-scroll" :cols="6" md="3" lg="2" xl="2"
+      <b-col :cols="6" md="3" lg="2" xl="2"
              :class="{[`fold-${foldLevel}`]: true}">
         <b-sidebar :collapsed="collapsed"></b-sidebar>
       </b-col>
-      <b-col class="h-scroll" style="overflow-x: auto;">
+      <b-col style="overflow-x: auto;">
         <main class="pt-3">
           <b-loading
             :active="$store.state.loading && $store.state.site.enable_loading"
@@ -32,9 +32,11 @@
               </div>
             </div>
           </div>
-          <b-footer/>
         </main>
       </b-col>
+    </b-row>
+    <b-row>
+      <b-footer/>
     </b-row>
   </div>
 </template>
@@ -105,9 +107,4 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-
-  /* main.main {
-    margin-left: 200px;
-    padding-bottom: 2em;
-  } */
 </style>

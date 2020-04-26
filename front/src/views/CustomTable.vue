@@ -1,9 +1,6 @@
 <template>
   <div class="custom-table">
     <div class="row">
-      <div class="col col-md-8 d-none">
-        <!-- <legend v-html="table.title || header"></legend> -->
-      </div>
       <div class="col col-md-12">
         <b-btn
           class="mr-2"
