@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
+from starlette.templating import Jinja2Templates
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_queryset_creator
 from fastapi_admin.depends import get_model
@@ -20,6 +21,8 @@ TORTOISE_ORM = {
     }
 }
 
+templates = Jinja2Templates(directory='templates')
+
 
 @admin_app.post(
     '/{resource}/bulk/test_bulk'
@@ -32,6 +35,15 @@ async def test_bulk(
     pydantic = pydantic_queryset_creator(model)
     ret = await pydantic.from_queryset(qs)
     return ret.dict()
+
+
+@admin_app.get(
+    '/home',
+)
+async def home():
+    return {
+        'html': templates.get_template('home.html').render()
+    }
 
 
 def create_app():

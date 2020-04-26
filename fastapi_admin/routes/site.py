@@ -9,15 +9,6 @@ router = APIRouter()
 
 
 @router.get(
-    '/home',
-)
-async def home():
-    return {
-        'title': "Welcome to FastAPI ADMIN"
-    }
-
-
-@router.get(
     '/site',
 )
 async def site(

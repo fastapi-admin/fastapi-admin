@@ -24,6 +24,7 @@ idna==2.9
 iso8601==0.1.12; sys_platform == "win32" or implementation_name != "cpython"
 itsdangerous==1.1.0
 jinja2==2.11.2
+markdown==3.2.1
 markupsafe==1.1.1
 orjson==2.6.6
 passlib==1.7.2

@@ -7,7 +7,7 @@
       <div class="col col-md-12">
         <b-btn
           class="mr-2"
-          :to="'/rest/' + uri + '/create'"
+          :to="uri + '/create'"
           variant="secondary"
           v-if="_.get(actions,'toolbar.create') !== false"
         >
@@ -143,7 +143,7 @@
             v-if="actions.edit !== false"
             variant="success"
             size="sm"
-            :to="`/rest/${uri}/${row.item[pk]}`"
+            :to="`${uri}/${row.item[pk]}`"
             class="mr-1"
           >{{$t('actions.view')}}
           </b-btn>
@@ -151,7 +151,7 @@
             v-if="actions.edit !== false"
             variant="primary"
             size="sm"
-            :to="`/rest/${uri}/${row.item[pk]}/edit`"
+            :to="`${uri}/${row.item[pk]}/edit`"
             class="mr-1"
           >{{$t('actions.edit')}}
           </b-btn>
@@ -251,7 +251,7 @@
         return this.$route.params.resource;
       },
       uri() {
-        return this.resource.replace(/\./g, "/");
+        return this.site.resource_prefix + '/' + this.resource.replace(/\./g, "/");
       }
     },
     methods: {

@@ -19,6 +19,7 @@ pyjwt = "*"
 xlsxwriter = "*"
 colorama = "*"
 prompt_toolkit = "*"
+markdown = "*"
 
 [tool.poetry.dev-dependencies]
 taskipy = "*"

@@ -30,7 +30,7 @@ export default {
     page_header: "",
     components: [],
     use_field_apis: true,
-    resource_prefix: "",
+    resource_prefix: "/rest",
     fetched: false
   },
   mutations: {
