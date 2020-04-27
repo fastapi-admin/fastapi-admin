@@ -73,15 +73,27 @@
     </div>
     <!-- <b-uploader v-else-if="['image', 'file', 'audio'].includes(field.type)" :id="id" v-model="model" v-bind="field" /> -->
 
-    <component
-      :is="field.autoUpload === false ? 'b-form-file' : 'b-form-uploader'"
-      v-else-if="['image', 'file', 'audio', 'video'].includes(field.type)"
-      :field="field"
-      v-model="model"
-      :id="id"
-      :name="name"
-      :parent="parent"
-    />
+    <!--    <component-->
+    <!--      :is="field.autoUpload === false ? 'b-form-file' : 'b-form-uploader'"-->
+    <!--      v-else-if="['image', 'file', 'audio', 'video'].includes(field.type)"-->
+    <!--      :field="field"-->
+    <!--      v-model="model"-->
+    <!--      :id="id"-->
+    <!--      :name="name"-->
+    <!--      :parent="parent"-->
+    <!--    />-->
+    <div v-else-if="['image'].includes(field.type)">
+      <b-card :img-src="model" img-left>
+        <b-card-text>
+          <b-form-input
+            v-model="model"
+            :name="name"
+            :id="id"
+            v-bind="field"
+          />
+        </b-card-text>
+      </b-card>
+    </div>
     <div v-else-if="['switch', 'checkbox'].includes(field.type)">
       <b-form-checkbox
         variant="success"
@@ -308,7 +320,7 @@
       // BUeditor,
       DatePicker,
       BSelect,
-      BFormUploader,
+      // BFormUploader,
       // BJsonEditor,
       BDraggable,
       BTreeSelect

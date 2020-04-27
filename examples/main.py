@@ -47,12 +47,12 @@ async def home():
 
 
 def create_app():
-    fast_app = FastAPI(debug=True)
+    fast_app = FastAPI(debug=False)
 
     register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
 
     fast_app.mount('/admin', admin_app)
-    admin_app.debug = True
+    admin_app.debug = False
     admin_app.init(
         user_model='User',
         admin_secret='test',
@@ -157,4 +157,4 @@ def create_app():
 app = create_app()
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8000, debug=True, reload=True, lifespan='on')
+    uvicorn.run('main:app', port=8000, debug=False, reload=False, lifespan='on')

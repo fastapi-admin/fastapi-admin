@@ -1,13 +1,13 @@
 <template>
   <div>
-    
+
     <div class="preview">
       <div class="thumbnail" v-if="field.multiple">
         <b-draggable v-model="model" @input="update" class="row">
           <b-form-uploader-item class="col-4" :name="name" :id="`${id}_${k}`" :key="k"
           v-for="(v, k) in model" :field="field" :parent="parent" v-model="model[k]"
           @input="update"
-          @remove="model.splice(k, 1) ; update()" 
+          @remove="model.splice(k, 1) ; update()"
           @add="model.splice(k + 1,0, null) ; update()" allow-add />
         </b-draggable>
       </div>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    
+
   </div>
 </template>
 <script>
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     tag() {
-      return this.field.type == "image" ? "img" : this.field.type;
+      return this.field.type === "image" ? "img" : this.field.type;
     }
   },
   methods: {
