@@ -8766,6 +8766,11 @@ vue-i18n@^8.17.0, vue-i18n@^8.17.3:
   resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.17.3.tgz?cache=0&sync_timestamp=1587630870936&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-i18n%2Fdownload%2Fvue-i18n-8.17.3.tgz#f366082d5784c3c35e8ffda733cb3f3990a3900d"
   integrity sha1-82YILVeEw8Nej/2nM8s/OZCjkA0=
 
+vue-json-pretty@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.npm.taobao.org/vue-json-pretty/download/vue-json-pretty-1.6.3.tgz#c7f378f3c9f68977047de28197735bc2cf81b15b"
+  integrity sha1-x/N488n2iXcEfeKBl3Nbws+BsVs=
+
 vue-loader@^15.9.1:
   version "15.9.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.9.1.tgz#bd2ab8f3d281e51d7b81d15390a58424d142243e"

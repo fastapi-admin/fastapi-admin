@@ -178,7 +178,8 @@ class AdminApp(FastAPI):
                     )
         return pk, fields, search_fields_ret
 
-    async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True, exclude_actions=False):
+    async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True,
+                           exclude_actions=False) -> Resource:
         assert self._inited, 'must call init() first!'
         model = getattr(self.models, resource)  # type:Type[Model]
         model_describe = model.describe(serializable=False)

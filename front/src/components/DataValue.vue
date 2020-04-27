@@ -14,7 +14,12 @@
       </template>
       <b-img class="type-image" v-else :src="preview(value)" v-bind="field" fluid @click.stop="previewInModal(value)"/>
     </template>
-
+    <template v-else-if="['json'].includes(field.type)">
+      <b-json-pretty
+        :value=value
+      >
+      </b-json-pretty>
+    </template>
     <template v-else-if="['audio', 'video'].includes(field.type)">
       <component :is="field.type" :src="value" controls/>
     </template>
@@ -87,8 +92,10 @@
 
 <script>
   import _ from "lodash";
+  import BJsonPretty from "./JsonPretty";
 
   export default {
+    components: {BJsonPretty},
     data() {
       return {
         previewValue: null,

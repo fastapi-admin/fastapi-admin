@@ -3,7 +3,7 @@ import datetime
 from tortoise import fields, Model
 
 from fastapi_admin.models import User as AdminUser, Permission, Role
-from .enums import ProductType
+from .enums import ProductType, Status
 
 
 class User(AdminUser):
@@ -40,3 +40,13 @@ class Product(Model):
 
     def __str__(self):
         return f'{self.pk}#{self.name}'
+
+
+class Config(Model):
+    label = fields.CharField(max_length=200)
+    key = fields.CharField(max_length=20)
+    value = fields.JSONField()
+    status: Status = fields.IntEnumField(Status, default=Status.on)
+
+    def __str__(self):
+        return f'{self.pk}#{self.label}'

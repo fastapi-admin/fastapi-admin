@@ -5,13 +5,14 @@ import _ from 'lodash'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store, { types } from './store'
+import store, {types} from './store'
 import './http'
 import i18n from './i18n'
 import inflection from 'inflection'
+
 Vue.prototype.$inflection = inflection
 
-import { sync } from 'vuex-router-sync'
+import {sync} from 'vuex-router-sync'
 
 import BootstrapVue from 'bootstrap-vue'
 import Snotify from 'vue-snotify'
@@ -22,6 +23,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './scss/style.scss'
 
 import "vue-snotify/styles/material.css"
+
 Vue.use(Snotify)
 
 Vue.config.productionTip = false
@@ -30,9 +32,11 @@ Vue.use(BootstrapVue)
 import './form'
 
 import storage from './storage'
+
 Vue.prototype.$storage = storage
 
 import VueElementLoading from 'vue-element-loading'
+
 Vue.component('BLoading', VueElementLoading)
 
 Vue.prototype._ = _
@@ -47,12 +51,8 @@ new Vue({
   router,
   store,
   i18n,
-  watch: {
-
-  },
-  methods: {
-
-  },
+  watch: {},
+  methods: {},
   render: h => h(App),
 
   created() {

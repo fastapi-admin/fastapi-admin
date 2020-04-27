@@ -101,6 +101,11 @@ def create_app():
                     icon='icon-list'
                 ),
                 Menu(
+                    name='Config',
+                    url='/rest/Config',
+                    icon='fa fa-pencil'
+                ),
+                Menu(
                     name='External',
                     title=True
                 ),

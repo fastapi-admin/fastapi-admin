@@ -307,3 +307,32 @@ VALUES (2, 'admin', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0pt
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for config
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config`
+(
+    `id`     int(11)     NOT NULL AUTO_INCREMENT,
+    `label`  varchar(20) NOT NULL,
+    `key`    varchar(50) NOT NULL,
+    `value`  longtext    NOT NULL,
+    `status` tinyint(1)  NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `key` (`key`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 8
+  DEFAULT CHARSET = utf8mb4;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+BEGIN;
+INSERT INTO `config`
+VALUES (1, 'test', 'test',
+        '{"status":200,"error":"","data":[{"news_id":51184,"title":"iPhone X Review: Innovative future with real black technology","source":"Netease phone"},{"news_id":51183,"title":"Traffic paradise: How to design streets for people and unmanned vehicles in the future?","source":"Netease smart"},{"news_id":51182,"title":"Teslamask''s American Business Relations: The government does not pay billions to build factories","source":"AI Finance","members":["Daniel","Mike","John"]}]}',
+        1);
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

@@ -13,3 +13,15 @@ class ProductType(EnumMixin, IntEnum):
             cls.article: 'Article',
             cls.page: 'Page'
         }
+
+
+class Status(EnumMixin, IntEnum):
+    on = 1
+    off = 0
+
+    @classmethod
+    def choices(cls):
+        return {
+            cls.on: 'On',
+            cls.off: 'Off'
+        }
