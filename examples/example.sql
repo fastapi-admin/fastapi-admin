@@ -31,7 +31,7 @@ CREATE TABLE `category`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 10
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of category
@@ -73,7 +73,7 @@ CREATE TABLE `config`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 8
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of config
@@ -99,7 +99,7 @@ CREATE TABLE `permission`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 46
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of permission
@@ -174,7 +174,7 @@ CREATE TABLE `product`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 10
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of product
@@ -214,7 +214,7 @@ CREATE TABLE `product_category`
     CONSTRAINT `product_category_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of product_category
@@ -236,7 +236,7 @@ CREATE TABLE `role`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of role
@@ -260,7 +260,7 @@ CREATE TABLE `role_permission`
     CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of role_permission
@@ -312,7 +312,7 @@ CREATE TABLE `role_user`
     CONSTRAINT `role_user_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of role_user
@@ -342,7 +342,7 @@ CREATE TABLE `user`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 8
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of user
