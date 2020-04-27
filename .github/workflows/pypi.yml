@@ -22,14 +22,3 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.pypi_password }}
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /root/fastapi-admin/
-            git pull
-            supervisorctl restart fastapi-admin
