@@ -135,7 +135,8 @@
         v-if="model"
         :value="model"
         @input="model = arguments[0]"
-        :options="{modes:['tree','view','form','code','text','preview']}" ref="editor"/>
+        :options="{modes:['tree','view','form','code','text','preview']}"
+        ref="editor"/>
     </div>
     <div v-else-if="field.fields">
       <div v-if="['array'].includes(field.type) || field.is_array || parent.is_array">

@@ -22,7 +22,6 @@ export default {
     [types.FETCH_LOCALE]({commit}){
       const cachedLocale = storage.get('locale')
       if (cachedLocale) {
-        
         commit(types.SET_LOCALE, cachedLocale)
       }
     }

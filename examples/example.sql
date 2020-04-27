@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : home
- Source Server Type    : MariaDB
- Source Server Version : 100322
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 80019
  Source Host           : localhost:3306
  Source Schema         : fastapi-admin
 
- Target Server Type    : MariaDB
- Target Server Version : 100322
+ Target Server Type    : MySQL
+ Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 26/04/2020 16:05:06
+ Date: 27/04/2020 23:26:07
 */
 
 SET NAMES utf8mb4;
@@ -23,14 +23,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`
 (
-    `id`         int(11)      NOT NULL AUTO_INCREMENT,
+    `id`         int          NOT NULL AUTO_INCREMENT,
     `slug`       varchar(200) NOT NULL,
     `name`       varchar(200) NOT NULL,
     `created_at` datetime(6)  NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 10
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of category
@@ -57,19 +58,48 @@ VALUES (9, 'test', 'test', '2020-04-13 15:16:25.000000');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for config
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config`
+(
+    `id`     int         NOT NULL AUTO_INCREMENT,
+    `label`  varchar(20) NOT NULL,
+    `key`    varchar(50) NOT NULL,
+    `value`  longtext    NOT NULL,
+    `status` tinyint(1)  NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `key` (`key`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 8
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+BEGIN;
+INSERT INTO `config`
+VALUES (1, 'test', 'test',
+        '{\"status\":200,\"error\":\"\",\"data\":[{\"news_id\":51184,\"title\":\"iPhone X Review: Innovative future with real black technology\",\"source\":\"Netease phone\"},{\"news_id\":51183,\"title\":\"Traffic paradise: How to design streets for people and unmanned vehicles in the future?\",\"source\":\"Netease smart\"},{\"news_id\":51182,\"title\":\"Teslamask\'s American Business Relations: The government does not pay billions to build factories\",\"source\":\"AI Finance\",\"members\":[\"Daniel\",\"Mike\",\"John\"]}]}',
+        1);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for permission
 -- ----------------------------
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission`
 (
-    `id`     int(11)     NOT NULL AUTO_INCREMENT,
+    `id`     int         NOT NULL AUTO_INCREMENT,
     `label`  varchar(50) NOT NULL,
     `model`  varchar(50) NOT NULL,
-    `action` smallint(6) NOT NULL COMMENT 'create: 1\ndelete: 2\nupdate: 3\nread: 4',
+    `action` smallint    NOT NULL COMMENT 'create: 1\ndelete: 2\nupdate: 3\nread: 4',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 42
-  DEFAULT CHARSET = utf8mb4;
+  AUTO_INCREMENT = 46
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of permission
@@ -115,6 +145,14 @@ INSERT INTO `permission`
 VALUES (40, 'Read Role', 'Role', 4);
 INSERT INTO `permission`
 VALUES (41, 'Create Category', 'Category', 1);
+INSERT INTO `permission`
+VALUES (42, 'Create Config', 'Config', 1);
+INSERT INTO `permission`
+VALUES (43, 'Delete Config', 'Config', 2);
+INSERT INTO `permission`
+VALUES (44, 'Update Config', 'Config', 3);
+INSERT INTO `permission`
+VALUES (45, 'Read Config', 'Config', 4);
 COMMIT;
 
 -- ----------------------------
@@ -123,19 +161,20 @@ COMMIT;
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int          NOT NULL AUTO_INCREMENT,
     `name`        varchar(50)  NOT NULL,
-    `view_num`    int(11)      NOT NULL,
-    `sort`        int(11)      NOT NULL,
+    `view_num`    int          NOT NULL,
+    `sort`        int          NOT NULL,
     `is_reviewed` tinyint(1)   NOT NULL,
-    `type`        smallint(6)  NOT NULL COMMENT 'article: 1\npage: 2',
+    `type`        smallint     NOT NULL COMMENT 'article: 1\npage: 2',
     `image`       varchar(200) NOT NULL,
     `body`        longtext     NOT NULL,
     `created_at`  datetime(6)  NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 10
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of product
@@ -167,14 +206,15 @@ COMMIT;
 DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category`
 (
-    `product_id`  int(11) NOT NULL,
-    `category_id` int(11) NOT NULL,
+    `product_id`  int NOT NULL,
+    `category_id` int NOT NULL,
     KEY `product_id` (`product_id`),
     KEY `category_id` (`category_id`),
     CONSTRAINT `product_category_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
     CONSTRAINT `product_category_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of product_category
@@ -190,12 +230,13 @@ COMMIT;
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`
 (
-    `id`    int(11)     NOT NULL AUTO_INCREMENT,
+    `id`    int         NOT NULL AUTO_INCREMENT,
     `label` varchar(50) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 2
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of role
@@ -211,14 +252,15 @@ COMMIT;
 DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission`
 (
-    `role_id`       int(11) NOT NULL,
-    `permission_id` int(11) NOT NULL,
+    `role_id`       int NOT NULL,
+    `permission_id` int NOT NULL,
     KEY `role_id` (`role_id`),
     KEY `permission_id` (`permission_id`),
     CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE,
     CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of role_permission
@@ -246,6 +288,14 @@ INSERT INTO `role_permission`
 VALUES (1, 40);
 INSERT INTO `role_permission`
 VALUES (1, 41);
+INSERT INTO `role_permission`
+VALUES (1, 42);
+INSERT INTO `role_permission`
+VALUES (1, 43);
+INSERT INTO `role_permission`
+VALUES (1, 44);
+INSERT INTO `role_permission`
+VALUES (1, 45);
 COMMIT;
 
 -- ----------------------------
@@ -254,14 +304,15 @@ COMMIT;
 DROP TABLE IF EXISTS `role_user`;
 CREATE TABLE `role_user`
 (
-    `role_id` int(11) NOT NULL,
-    `user_id` int(11) NOT NULL,
+    `role_id` int NOT NULL,
+    `user_id` int NOT NULL,
     KEY `role_id` (`role_id`),
     KEY `user_id` (`user_id`),
     CONSTRAINT `role_user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE,
     CONSTRAINT `role_user_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of role_user
@@ -277,7 +328,7 @@ COMMIT;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
-    `id`           int(11)      NOT NULL AUTO_INCREMENT,
+    `id`           int          NOT NULL AUTO_INCREMENT,
     `username`     varchar(20)  NOT NULL,
     `password`     varchar(200) NOT NULL,
     `last_login`   datetime(6)  NOT NULL COMMENT 'Last Login',
@@ -290,7 +341,8 @@ CREATE TABLE `user`
     UNIQUE KEY `username` (`username`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 8
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user
@@ -304,35 +356,6 @@ INSERT INTO `user`
 VALUES (2, 'admin', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0ptG', '2020-04-14 16:54:40.510165', 1,
         'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
         'test', '2020-04-14 16:54:40.510555', 0);
-COMMIT;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
--- ----------------------------
--- Table structure for config
--- ----------------------------
-DROP TABLE IF EXISTS `config`;
-CREATE TABLE `config`
-(
-    `id`     int(11)     NOT NULL AUTO_INCREMENT,
-    `label`  varchar(20) NOT NULL,
-    `key`    varchar(50) NOT NULL,
-    `value`  longtext    NOT NULL,
-    `status` tinyint(1)  NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `key` (`key`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 8
-  DEFAULT CHARSET = utf8mb4;
-
--- ----------------------------
--- Records of config
--- ----------------------------
-BEGIN;
-INSERT INTO `config`
-VALUES (1, 'test', 'test',
-        '{"status":200,"error":"","data":[{"news_id":51184,"title":"iPhone X Review: Innovative future with real black technology","source":"Netease phone"},{"news_id":51183,"title":"Traffic paradise: How to design streets for people and unmanned vehicles in the future?","source":"Netease smart"},{"news_id":51182,"title":"Teslamask''s American Business Relations: The government does not pay billions to build factories","source":"AI Finance","members":["Daniel","Mike","John"]}]}',
-        1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
