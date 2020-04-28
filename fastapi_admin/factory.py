@@ -114,7 +114,7 @@ class AdminApp(FastAPI):
                     sortable=name in sort_fields
                 )
             }
-        if not exclude_actions:
+        if not exclude_actions and menu.actions:
             fields['_actions'] = menu.actions
 
         for data_field in data_fields:
@@ -186,12 +186,14 @@ class AdminApp(FastAPI):
         pk, fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
                                                                                    exclude_pk, exclude_m2m_field,
                                                                                    exclude_actions)
+        menu = self.model_menu_mapping[resource]
         return Resource(
             title=model_describe.get('description') or resource.title(),
             fields=fields,
             searchFields=search_fields,
             pk=pk,
-            bulk_actions=self.model_menu_mapping[resource].bulk_actions,
+            bulk_actions=menu.bulk_actions,
+            export=menu.export
         )
 
 

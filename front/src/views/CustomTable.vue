@@ -46,7 +46,7 @@
               type="button"
               @click="searchAndExport"
               variant="success"
-              v-if="_.get(actions, 'export')"
+              v-if="this.export"
             >{{$t('actions.search_and_export')}}
             </b-button>
           </div>
@@ -83,15 +83,6 @@
         :sort-desc.sync="sortDesc"
         :sort-direction="sortDirection"
       >
-        <template v-for="(field, key) in table.fields" :slot="`HEAD_${key}`">
-          <div
-            :key="key"
-            class="table-header"
-            :class="{'text-right': ['number'].includes(field.type)}"
-          >{{field.label || key}}
-          </div>
-        </template>
-
         <template v-slot:cell()="data">
           <template v-if="['datetime', 'date'].includes(data.field.type)">
             {{$d(new Date(data.value), 'long')}}
@@ -117,7 +108,9 @@
             {{ _.find(data.field.options,{value:data.value}).text }}
           </template>
           <template v-else>
+            <span class="d-inline-block text-truncate" style="max-width: 200px;">
             {{ data.value}}
+            </span>
           </template>
         </template>
 
@@ -205,11 +198,10 @@
         sortDirection: null,
         perPage: 10,
         where: {},
-        pk: null,
         selected_pk_list: [],
         bulkActions: {},
         selectBulkAction: null,
-        pages: [10, 50, 100]
+        pages: [10, 50, 100],
       };
     },
     watch: {
@@ -232,6 +224,12 @@
             ...field,
           }
         })
+      },
+      pk() {
+        return _.get(this.table, "pk");
+      },
+      export() {
+        return _.get(this.table, "export");
       },
       populate() {
         return _(this.table.fields || {})
@@ -363,7 +361,6 @@
           });
 
           this.table = res.data;
-          this.pk = res.data.pk;
 
           if (_.get(this.table, "fields._actions") !== false) {
             _.set(

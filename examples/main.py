@@ -65,6 +65,7 @@ def create_app():
             login_description='FastAPI Admin Dashboard',
             locale='en-US',
             locale_switcher=True,
+            theme_switcher=True,
             menus=[
                 Menu(
                     name='Home',

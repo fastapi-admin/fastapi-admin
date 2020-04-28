@@ -26,9 +26,8 @@ class Menu(BaseModel):
     sort_fields: Optional[Set[str]] = set()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
-    actions: Dict = {
-        'export': True
-    }
+    export: bool = True
+    actions: Optional[Dict]
     bulk_actions: List[Dict] = [{
         'value': 'delete',
         'text': 'delete_all',
@@ -80,6 +79,7 @@ class Resource(BaseModel):
     resource_fields: Dict[str, Union[Field, Dict]]
     searchFields: Optional[Dict[str, Field]]
     bulk_actions: Optional[List[Dict]]
+    export: bool
 
     class Config:
         fields = {
