@@ -26,7 +26,9 @@ class Menu(BaseModel):
     sort_fields: Optional[Set[str]] = set()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
+    # define field attr,like cols which in bootstrap table
     attrs: Dict[str, Dict] = {}
+    # active table export
     export: bool = True
     actions: Optional[Dict]
     bulk_actions: List[Dict] = [{

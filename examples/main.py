@@ -114,7 +114,7 @@ def create_app():
                 Menu(
                     name='Config',
                     url='/rest/Config',
-                    icon='fa fa-pencil'
+                    icon='fa fa-pencil',
                 ),
                 Menu(
                     name='External',
@@ -143,17 +143,26 @@ def create_app():
                 Menu(
                     name='Role',
                     url='/rest/Role',
-                    icon='fa fa-group'
+                    icon='fa fa-group',
+                    actions={
+                        'delete': False
+                    }
                 ),
                 Menu(
                     name='Permission',
                     url='/rest/Permission',
-                    icon='fa fa-user-plus'
+                    icon='fa fa-user-plus',
+                    actions={
+                        'delete': False
+                    }
                 ),
                 Menu(
                     name='Logout',
                     url='/logout',
-                    icon='fa fa-lock'
+                    icon='fa fa-lock',
+                    actions={
+                        'delete': False
+                    }
                 )
             ]
         )

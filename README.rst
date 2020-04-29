@@ -39,8 +39,8 @@ Screenshots
 Quick Start
 ===========
 
-Example
-~~~~~~~
+Run Example Local
+~~~~~~~~~~~~~~~~~
 Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/examples>`_.
 
 1. ``git clone https://github.com/long2ice/fastapi-admin.git``.
@@ -74,14 +74,27 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
 
 Open ``http://localhost:8080/`` in browser and enjoy it!
 
-Backend
-~~~~~~~
+Backend Integration
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: shell
 
-    $  pip3 install fastapi-admin
+    $ pip3 install fastapi-admin
 
-Only you should do is running a fastapi app and mount admin app from fastapi-admin,then call ``init(...)``.
+.. code-block:: python
+
+    fast_app = FastAPI()
+
+    register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
+
+    fast_app.mount('/admin', admin_app)
+    admin_app.init(
+        user_model='User',
+        admin_secret='test',
+        models='examples.models',
+        permission=True,
+        site=Site(...)
+    )
 
 Front
 ~~~~~
@@ -177,7 +190,7 @@ Defined ``menu.search_fields`` in ``menu`` will render a search form by fields.
 
 Xlsx Export
 ~~~~~~~~~~~
-FastAPI-admin can export searched data to excel file when define ``{export : True}`` in ``menu.actions``.
+FastAPI-admin can export searched data to excel file when define ``export=True`` in ``menu``.
 
 Bulk Actions
 ~~~~~~~~~~~~
@@ -203,7 +216,7 @@ Current FastAPI-admin support builtin bulk action ``delete_all``,if you want wri
     from fastapi_admin.factory import app as admin_app
 
     @admin_app.post(
-        '/{resource}/bulk/delete' # delete is defined before.
+        '/rest/{resource}/bulk/delete' # `delete` is defined in Menu before.
     )
     async def bulk_delete(
             bulk_in: BulkIn,
