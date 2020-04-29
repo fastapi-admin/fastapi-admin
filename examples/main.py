@@ -28,7 +28,7 @@ templates = Jinja2Templates(directory='examples/templates')
 
 
 @admin_app.post(
-    '/{resource}/bulk/test_bulk'
+    '/rest/{resource}/bulk/test_bulk'
 )
 async def test_bulk(
         bulk_in: BulkIn,

@@ -44,7 +44,7 @@ async def jwt_optional(request: Request):
 class QueryItem(BaseModel):
     page: int = 1
     sort: dict
-    where: dict
+    where: dict = {}
     with_: dict = {}
     size: int = 10
     sort: dict = {}
