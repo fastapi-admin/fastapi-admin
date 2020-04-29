@@ -1,9 +1,12 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_queryset_creator
+
 from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
 from fastapi_admin.schemas import BulkIn
@@ -11,7 +14,7 @@ from fastapi_admin.site import Site, Menu
 
 TORTOISE_ORM = {
     'connections': {
-        'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'
+        'default': os.getenv('DATABASE_URL')
     },
     'apps': {
         'models': {
