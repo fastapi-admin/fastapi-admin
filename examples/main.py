@@ -94,7 +94,14 @@ def create_app():
                             'value': 'test_bulk',
                             'text': 'TestBulk'
                         }
-                    ]
+                    ],
+                    attrs={
+                        'name': {'cols': 6},
+                        'view_num': {'cols': 3},
+                        'sort': {'cols': 3},
+                        'created_at': {'cols': 6},
+                        'categories': {'cols': 6},
+                    }
                 ),
                 Menu(
                     name='Category',

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import store from '../store'
+import store from '../store'
 
 import ResourceIndex from "../views/ResourceIndex";
 import ResourceEdit from "../views/ResourceEdit";
@@ -18,7 +18,7 @@ Vue.use(Router);
 
 const router = new Router({
   scrollBehavior() {
-    return { x: 0, y: 0 };
+    return {x: 0, y: 0};
   },
 
   routes: [
@@ -98,12 +98,12 @@ const router = new Router({
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   // if (!store.state.auth.token && !to.meta.isPublic) {
-//   if (!to.meta.isPublic) {
-//     return next({name: 'login'})
-//   }
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  if (!store.state.auth.token && !to.meta.isPublic) {
+    next({name: 'login'})
+  } else {
+    next()
+  }
+})
 
 export default router;

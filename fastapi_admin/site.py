@@ -26,6 +26,7 @@ class Menu(BaseModel):
     sort_fields: Optional[Set[str]] = set()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
+    attrs: Dict[str, Dict] = {}
     export: bool = True
     actions: Optional[Dict]
     bulk_actions: List[Dict] = [{

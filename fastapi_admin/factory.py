@@ -111,7 +111,8 @@ class AdminApp(FastAPI):
                     label=pk_field.get('name').title(),
                     required=True,
                     type=self._get_field_type(menu, name, pk_field.get('field_type')),
-                    sortable=name in sort_fields
+                    sortable=name in sort_fields,
+                    **menu.attrs.get(name) or {}
                 )
             }
         if not exclude_actions and menu.actions:
@@ -137,7 +138,8 @@ class AdminApp(FastAPI):
                 type=type_,
                 options=options,
                 sortable=name in sort_fields,
-                disabled=readonly
+                disabled=readonly,
+                **menu.attrs.get(name) or {}
             )
             fields[name] = field
             if name in search_fields:
@@ -157,7 +159,8 @@ class AdminApp(FastAPI):
                         required=True,
                         type='select',
                         options=options,
-                        sortable=name in sort_fields
+                        sortable=name in sort_fields,
+                        **menu.attrs.get(name) or {}
                     )
                     fields[raw_field] = field
                     if name in search_fields:
@@ -175,6 +178,7 @@ class AdminApp(FastAPI):
                         type='tree',
                         options=options,
                         multiple=True,
+                        **menu.attrs.get(name) or {}
                     )
         return pk, fields, search_fields_ret
 
