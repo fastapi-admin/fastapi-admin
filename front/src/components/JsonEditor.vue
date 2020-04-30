@@ -2,29 +2,31 @@
   <div ref="editor"></div>
 </template>
 <script>
-import 'jsoneditor/dist/jsoneditor.min.css'
-import JSONEditor from "jsoneditor";
-export default {
-  name: "b-json-editor",
-  props: {
-    value: null,
-    options: {}
-  },
-  data() {
-    return {
-      editor: null
-    };
-  },
-  mounted() {
-    this.editor = new JSONEditor(this.$refs.editor, this.options);
-    if (typeof this.value === "string") {
-      this.value = JSON.parse(this.value);
+  import 'jsoneditor/dist/jsoneditor.min.css'
+  import JSONEditor from "jsoneditor";
+
+  export default {
+    name: "b-json-editor",
+    props: {
+      value: null,
+      options: {}
+    },
+    data() {
+      return {
+        editor: null
+      };
+    },
+    mounted() {
+      this.options.onChange = () => {
+        this.$emit("input", this.editor.get());
+      }
+      this.editor = new JSONEditor(this.$refs.editor, this.options);
+      if (typeof this.value === "string") {
+        this.value = JSON.parse(this.value);
+      }
+      this.editor.set(this.value || {});
+    },
+    created() {
     }
-    this.editor.set(this.value || {});
-    this.editor._onChange = v => {
-      this.$emit("input", this.editor.get());
-    }
-  },
-  created() {}
-};
+  };
 </script>

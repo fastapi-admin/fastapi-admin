@@ -132,10 +132,11 @@
     </div>
     <div v-else-if="['json'].includes(field.type)">
       <b-json-editor
-        v-if="model"
+        v-bind="field"
+        v-model="model"
         :value="model"
         @input="model = arguments[0]"
-        :options="{modes:['tree','view','form','code','text','preview']}"
+        :options="{modes:['tree','view','form','code','text','preview'],language:currentLanguage}"
         ref="editor"/>
     </div>
     <div v-else-if="field.fields">
@@ -437,7 +438,7 @@
             this.field.is_array ||
             this.field.type == "array" ||
             this.field.is_table;
-          const isObject = this.field.type == "object";
+          const isObject = this.field.type == "object" || this.field.type == "json";
           let ret = this.value;
           if (!this.value) {
             if (isArray) {
