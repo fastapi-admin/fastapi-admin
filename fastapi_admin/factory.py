@@ -1,8 +1,7 @@
-import importlib
-from typing import Type, List, Dict
+from typing import Type, List, Dict, Any
 
 from fastapi import FastAPI, HTTPException
-from tortoise import Model
+from tortoise import Model, Tortoise
 from tortoise.fields import IntField, BooleanField, DatetimeField, DateField
 from tortoise.fields.data import IntEnumFieldInstance, CharEnumFieldInstance, DecimalField, FloatField, TextField, \
     SmallIntField, JSONField
@@ -12,7 +11,7 @@ from .site import Site, Resource, Field, Menu
 
 
 class AdminApp(FastAPI):
-    models: str
+    models: Any
     admin_secret: str
     user_model: Model
     site: Site
@@ -40,11 +39,11 @@ class AdminApp(FastAPI):
             else:
                 self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
 
-    def init(self, site: Site, user_model: str, admin_secret: str, models: str, permission: bool = False):
+    def init(self, site: Site, user_model: str, tortoise_app: str, admin_secret: str, permission: bool = False):
         """
         init admin site
+        :param tortoise_app:
         :param permission: active builtin permission
-        :param models:
         :param site:
         :param user_model: admin user model path,like admin.models.user
         :param admin_secret: admin jwt secret.
@@ -53,8 +52,8 @@ class AdminApp(FastAPI):
         self.site = site
         self.permission = permission
         self.admin_secret = admin_secret
-        self.models = importlib.import_module(models)
-        self.user_model = getattr(self.models, user_model)
+        self.models = Tortoise.apps.get(tortoise_app)
+        self.user_model = self.models.get(user_model)
         self._inited = True
         self._get_model_menu_mapping(site.menus)
 
@@ -185,7 +184,7 @@ class AdminApp(FastAPI):
     async def get_resource(self, resource: str, exclude_pk=False, exclude_m2m_field=True,
                            exclude_actions=False) -> Resource:
         assert self._inited, 'must call init() first!'
-        model = getattr(self.models, resource)  # type:Type[Model]
+        model = self.models.get(resource)  # type:Type[Model]
         model_describe = model.describe(serializable=False)
         pk, fields, search_fields = await self._build_resource_from_model_describe(resource, model, model_describe,
                                                                                    exclude_pk, exclude_m2m_field,

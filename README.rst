@@ -88,13 +88,16 @@ Backend Integration
     register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
 
     fast_app.mount('/admin', admin_app)
-    admin_app.init(
-        user_model='User',
-        admin_secret='test',
-        models='examples.models',
-        permission=True,
-        site=Site(...)
-    )
+
+    @fast_app.on_event('startup')
+    async def startup():
+        admin_app.init(
+            user_model='User',
+            tortoise_app='models',
+            admin_secret='test',
+            permission=True,
+            site=Site(...)
+        )
 
 Front
 ~~~~~

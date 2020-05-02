@@ -61,7 +61,7 @@ def get_query(query=Query(...)):
 
 
 def get_model(resource: str = Path(...)):
-    model = getattr(app.models, resource)
+    model = app.models.get(resource)
     return model
 
 

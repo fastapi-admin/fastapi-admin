@@ -51,15 +51,30 @@ async def home():
 
 def create_app():
     fast_app = FastAPI(debug=False)
-
     register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
-
     fast_app.mount('/admin', admin_app)
+
+    fast_app.add_middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*'],
+    )
+
+    return fast_app
+
+
+app = create_app()
+
+
+@app.on_event('startup')
+async def start_up():
     admin_app.debug = False
     admin_app.init(
         user_model='User',
+        tortoise_app='models',
         admin_secret='test',
-        models='examples.models',
         permission=True,
         site=Site(
             name='FastAPI-admin Demo',
@@ -168,18 +183,6 @@ def create_app():
         )
     )
 
-    fast_app.add_middleware(
-        CORSMiddleware,
-        allow_origins=['*'],
-        allow_credentials=True,
-        allow_methods=['*'],
-        allow_headers=['*'],
-    )
-
-    return fast_app
-
-
-app = create_app()
 
 if __name__ == '__main__':
     uvicorn.run('main:app', port=8000, debug=False, reload=False, lifespan='on')
