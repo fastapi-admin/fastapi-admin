@@ -152,7 +152,8 @@ async def start_up():
                     exclude=('password',),
                     search_fields=('username',),
                     fields_type={
-                        'avatar': 'image'
+                        'avatar': 'image',
+                        'intro': 'html'
                     },
                 ),
                 Menu(
