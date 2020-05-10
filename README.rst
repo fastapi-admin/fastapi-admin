@@ -38,6 +38,11 @@ Screenshots
 .. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/view.png
 .. image:: https://github.com/long2ice/fastapi-admin/raw/master/images/create.png
 
+Requirements
+============
+
+* `FastAPI <https://github.com/tiangolo/fastapi>`_ framework as your backend framework.
+* `Tortoise-ORM <https://github.com/tortoise/tortoise-orm>`_ as your orm framework, by the way, which is best asyncio orm so far and I'm one of the contributors😋.
 
 Quick Start
 ===========
