@@ -237,7 +237,7 @@ Current FastAPI-Admin support builtin bulk action ``delete_all``,if you want wri
         return {'success': True}
 
 Default Menus
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 Default, FastAPI-Admin provide default menus by your models, without doing tedious works.
 
 Deployment
