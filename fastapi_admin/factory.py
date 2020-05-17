@@ -111,10 +111,6 @@ class AdminApp(FastAPI):
                     icon='fa fa-user',
                     exclude=('password',),
                     search_fields=('username',),
-                    fields_type={
-                        'avatar': 'image',
-                        'intro': 'html'
-                    },
                 ),
                 Menu(
                     name='Role',
@@ -136,9 +132,6 @@ class AdminApp(FastAPI):
                     name='Logout',
                     url='/logout',
                     icon='fa fa-lock',
-                    actions={
-                        'delete': False
-                    }
                 )
             ]
             menus += permission_menus
