@@ -2,7 +2,7 @@ import datetime
 
 from tortoise import fields, Model
 
-from fastapi_admin.models import User as AdminUser, Permission, Role
+from fastapi_admin.models import User as AdminUser
 from .enums import ProductType, Status
 
 

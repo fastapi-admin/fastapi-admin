@@ -91,6 +91,8 @@ Backend Integration
 
 .. code-block:: python
 
+    from fastapi_admin.factory import app as admin_app
+
     fast_app = FastAPI()
 
     register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
@@ -118,11 +120,9 @@ Builtin Auth And Permissions Control
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Inherit ``fastapi_admin.models.User`` and add you own fields,must contains ``is_active`` and ``is_superuser``.
 
-And you must import ``Permission`` and ``Role``, just import and do nothing:
-
 .. code-block:: python
 
-    from fastapi_admin.models import User as AdminUser, Permission, Role
+    from fastapi_admin.models import User as AdminUser
 
     class AdminUser(AdminUser,Model):
         is_active = fields.BooleanField(default=False, description='Is Active')
@@ -131,21 +131,21 @@ And you must import ``Permission`` and ``Role``, just import and do nothing:
         created_at = fields.DatetimeField(auto_now_add=True)
         updated_at = fields.DatetimeField(auto_now=True)
 
+Then add ``fastapi_admin.models`` to ``Tortoise-ORM`` config, example:
 
-Then register permissions and createsuperuser:
+.. code-block:: python
 
-.. code-block:: shell
-
-    $ fastapi-admin -h
-    usage: fastapi-admin [-h] -c CONFIG {register_permissions,createsuperuser} ...
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            Tortoise-orm config dict import path,like settings.TORTOISE_ORM.
-
-    subcommands:
-      {register_permissions,createsuperuser}
+    TORTOISE_ORM = {
+        'connections': {
+            'default': os.getenv('DATABASE_URL')
+        },
+        'apps': {
+            'models': {
+                'models': ['examples.models', 'fastapi_admin.models'],
+                'default_connection': 'default',
+            }
+        }
+    }
 
 And set ``permission=True`` to active it:
 
@@ -160,6 +160,22 @@ And set ``permission=True`` to active it:
                 ...
             )
         )
+
+And register permissions and createsuperuser:
+
+.. code-block:: shell
+
+    $ fastapi-admin -h
+    usage: fastapi-admin [-h] -c CONFIG {register_permissions,createsuperuser} ...
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            Tortoise-orm config dict import path,like settings.TORTOISE_ORM.
+
+    subcommands:
+      {register_permissions,createsuperuser}
+
 
 Enum Support
 ~~~~~~~~~~~~

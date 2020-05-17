@@ -18,7 +18,7 @@ TORTOISE_ORM = {
     },
     'apps': {
         'models': {
-            'models': ['examples.models'],
+            'models': ['examples.models', 'fastapi_admin.models'],
             'default_connection': 'default',
         }
     }
@@ -77,7 +77,7 @@ async def start_up():
         admin_secret='test',
         permission=True,
         site=Site(
-            name='FastAPI-admin Demo',
+            name='FastAPI-Admin DEMO',
             logo='https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png',
             login_footer='FASTAPI ADMIN - FastAPI Admin Dashboard',
             login_description='FastAPI Admin Dashboard',
