@@ -10,7 +10,7 @@ from tortoise.contrib.pydantic import pydantic_queryset_creator
 from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
 from fastapi_admin.schemas import BulkIn
-from fastapi_admin.site import Site, Menu
+from fastapi_admin.site import Site
 
 TORTOISE_ORM = {
     'connections': {
@@ -84,103 +84,6 @@ async def start_up():
             locale='en-US',
             locale_switcher=True,
             theme_switcher=True,
-            menus=[
-                Menu(
-                    name='Home',
-                    url='/',
-                    icon='fa fa-home'
-                ),
-                Menu(
-                    name='Content',
-                    title=True
-                ),
-                Menu(
-                    name='Product',
-                    url='/rest/Product',
-                    icon='icon-list',
-                    search_fields=('type',),
-                    fields_type={
-                        'type': 'radiolist',
-                        'image': 'link'
-                    },
-                    bulk_actions=[
-                        {
-                            'value': 'delete',
-                            'text': 'delete_all',
-                        },
-                        {
-                            'value': 'test_bulk',
-                            'text': 'TestBulk'
-                        }
-                    ],
-                    attrs={
-                        'name': {'cols': 6},
-                        'view_num': {'cols': 3},
-                        'sort': {'cols': 3},
-                        'created_at': {'cols': 6},
-                        'categories': {'cols': 6},
-                    }
-                ),
-                Menu(
-                    name='Category',
-                    url='/rest/Category',
-                    icon='icon-list'
-                ),
-                Menu(
-                    name='Config',
-                    url='/rest/Config',
-                    icon='fa fa-pencil',
-                ),
-                Menu(
-                    name='External',
-                    title=True
-                ),
-                Menu(
-                    name='Github',
-                    url='https://github.com/long2ice/fastapi-admin',
-                    icon='fa fa-github',
-                    external=True
-                ),
-                Menu(
-                    name='Auth',
-                    title=True
-                ),
-                Menu(
-                    name='User',
-                    url='/rest/User',
-                    icon='fa fa-user',
-                    exclude=('password',),
-                    search_fields=('username',),
-                    fields_type={
-                        'avatar': 'image',
-                        'intro': 'html'
-                    },
-                ),
-                Menu(
-                    name='Role',
-                    url='/rest/Role',
-                    icon='fa fa-group',
-                    actions={
-                        'delete': False
-                    }
-                ),
-                Menu(
-                    name='Permission',
-                    url='/rest/Permission',
-                    icon='fa fa-user-plus',
-                    actions={
-                        'delete': False
-                    }
-                ),
-                Menu(
-                    name='Logout',
-                    url='/logout',
-                    icon='fa fa-lock',
-                    actions={
-                        'delete': False
-                    }
-                )
-            ]
         )
     )
 

@@ -56,7 +56,7 @@ class Site(BaseModel):
     # custom css
     css: Optional[List[HttpUrl]]
     # menu define
-    menus: List[Menu]
+    menus: Optional[List[Menu]]
     # custom footer with html
     footer: Optional[str]
 

@@ -20,10 +20,10 @@
 </script>
 <style lang="scss">
   .app-footer {
-    position: relative;
-    width: 100%;
+    position: absolute;
     bottom: 0;
-    height: 50px;
+    left: 0;
+    width: 100%;
     text-align: center;
   }
 </style>

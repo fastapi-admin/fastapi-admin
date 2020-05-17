@@ -17,9 +17,9 @@ FastAPI Admin
 Introduction
 ============
 
-FastAPI-admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ and `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+FastAPI-Admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ and `rest-admin <https://github.com/wxs77577/rest-admin>`_.
 
-FastAPI-admin provide crud feature out-of-the-box with just a few config.
+FastAPI-Admin provide crud feature out-of-the-box with just a few config.
 
 Live Demo
 =========
@@ -54,7 +54,7 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
 1. ``git clone https://github.com/long2ice/fastapi-admin.git``.
 2. create database ``fastapi-admin`` and import from ``examples/example.sql``.
 3. ``python setup.py install``.
-4. ``env PYTHONPATH=./ DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin python3 examples/main.py``,then you can see:
+4. ``env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin python3 examples/main.py``,then you can see:
 
 .. code-block:: python
 
@@ -164,7 +164,7 @@ And set ``permission=True`` to active it:
 Enum Support
 ~~~~~~~~~~~~
 When you define a enum field of tortoise-orm,like ``IntEnumField``,you can inherit ``fastapi_admin.enums.EnumMixin`` and impl ``choices()`` method,
-FastAPI-admin will auto read and display and render a ``select`` widget in front.
+FastAPI-Admin will auto read and display and render a ``select`` widget in front.
 
 .. code-block:: python
 
@@ -181,19 +181,19 @@ FastAPI-admin will auto read and display and render a ``select`` widget in front
 
 Verbose Name
 ~~~~~~~~~~~~
-FastAPI-admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
+FastAPI-Admin will auto read ``description`` defined in tortoise-orm model ``Field`` and display in front.
 
 ForeignKeyField Support
 ~~~~~~~~~~~~~~~~~~~~~~~
-If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-admin will get all related objects and display ``select`` in front with ``Model.__str__``.
+If ``ForeignKeyField`` not passed in ``menu.raw_id_fields``,FastAPI-Admin will get all related objects and display ``select`` in front with ``Model.__str__``.
 
 ManyToManyField Support
 ~~~~~~~~~~~~~~~~~~~~~~~
-FastAPI-admin will render ``ManyToManyField`` with multiple ``select`` in ``form`` edit with ``Model.__str__``.
+FastAPI-Admin will render ``ManyToManyField`` with multiple ``select`` in ``form`` edit with ``Model.__str__``.
 
 JSONField Render
 ~~~~~~~~~~~~~~~~
-FastAPI-admin will render ``JSONField`` with ``jsoneditor`` as beauty interface.
+FastAPI-Admin will render ``JSONField`` with ``jsoneditor`` as beauty interface.
 
 Search Fields
 ~~~~~~~~~~~~~
@@ -201,11 +201,11 @@ Defined ``menu.search_fields`` in ``menu`` will render a search form by fields.
 
 Xlsx Export
 ~~~~~~~~~~~
-FastAPI-admin can export searched data to excel file when define ``export=True`` in ``menu``.
+FastAPI-Admin can export searched data to excel file when define ``export=True`` in ``menu``.
 
 Bulk Actions
 ~~~~~~~~~~~~
-Current FastAPI-admin support builtin bulk action ``delete_all``,if you want write your own bulk actions:
+Current FastAPI-Admin support builtin bulk action ``delete_all``,if you want write your own bulk actions:
 
 1. pass ``bulk_actions`` in ``Menu``,example:
 
@@ -235,6 +235,10 @@ Current FastAPI-admin support builtin bulk action ``delete_all``,if you want wri
     ):
         await model.filter(pk__in=bulk_in.pk_list).delete()
         return {'success': True}
+
+Default Menus
+~~~~~~~~~~~~
+Default, FastAPI-Admin provide default menus by your models, without doing tedious works.
 
 Deployment
 ==========

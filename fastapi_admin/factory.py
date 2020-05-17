@@ -1,10 +1,8 @@
-from typing import Type, List, Dict, Any
+from copy import deepcopy
+from typing import Type, List, Dict, Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from tortoise import Model, Tortoise
-from tortoise.fields import IntField, BooleanField, DatetimeField, DateField
-from tortoise.fields.data import IntEnumFieldInstance, CharEnumFieldInstance, DecimalField, FloatField, TextField, \
-    SmallIntField, JSONField
 
 from .exceptions import exception_handler
 from .site import Site, Resource, Field, Menu
@@ -18,17 +16,17 @@ class AdminApp(FastAPI):
     permission: bool
     _inited: bool = False
     _field_type_mapping = {
-        IntField: 'number',
-        BooleanField: 'checkbox',
-        DatetimeField: 'datetime',
-        DateField: 'date',
-        IntEnumFieldInstance: 'select',
-        CharEnumFieldInstance: 'select',
-        DecimalField: 'number',
-        FloatField: 'number',
-        TextField: 'textarea',
-        SmallIntField: 'number',
-        JSONField: 'json',
+        'IntField': 'number',
+        'BooleanField': 'checkbox',
+        'DatetimeField': 'datetime',
+        'DateField': 'date',
+        'IntEnumFieldInstance': 'select',
+        'CharEnumFieldInstance': 'select',
+        'DecimalField': 'number',
+        'FloatField': 'number',
+        'TextField': 'textarea',
+        'SmallIntField': 'number',
+        'JSONField': 'json',
     }
     model_menu_mapping: Dict[str, Menu] = {}
 
@@ -38,6 +36,113 @@ class AdminApp(FastAPI):
                 self._get_model_menu_mapping(menu.children)
             else:
                 self.model_menu_mapping[menu.url.split('?')[0].split('/')[-1]] = menu
+
+    def _get_model_fields_type(self, model: Type[Model]) -> Dict:
+        model_describe = model.describe()
+        ret = {}
+        data_fields = model_describe.get('data_fields')
+        pk_field = model_describe.get('pk_field')
+        fk_fields = model_describe.get('fk_fields')
+        m2m_fields = model_describe.get('m2m_fields')
+        fields = [pk_field] + data_fields + fk_fields + m2m_fields
+        for field in fields:
+            ret[field.get('name')] = self._get_field_type(field.get('name'), field.get('field_type'))
+        return ret
+
+    def _build_content_menus(self) -> List[Menu]:
+        models = deepcopy(self.models)  # type:Dict[str,Type[Model]]
+        models.pop('Role')
+        models.pop('User')
+        models.pop('Permission')
+        menus = []
+        for k, v in models.items():
+            menu = Menu(
+                name=v._meta.table_description or k,
+                url=f'/rest/{k}',
+                fields_type=self._get_model_fields_type(v),
+                icon='icon-list',
+                bulk_actions=[
+                    {
+                        'value': 'delete',
+                        'text': 'delete_all',
+                    },
+                ]
+            )
+            menus.append(menu)
+        return menus
+
+    def _build_default_menus(self, permission=True):
+        """
+        build default menus when menus config not set
+        :return:
+        """
+
+        menus = [
+            Menu(
+                name='Home',
+                url='/',
+                icon='fa fa-home'
+            ),
+            Menu(
+                name='Content',
+                title=True
+            ),
+            *self._build_content_menus(),
+            Menu(
+                name='External',
+                title=True
+            ),
+            Menu(
+                name='Github',
+                url='https://github.com/long2ice/fastapi-admin',
+                icon='fa fa-github',
+                external=True
+            ),
+        ]
+        if permission:
+            permission_menus = [
+                Menu(
+                    name='Auth',
+                    title=True
+                ),
+                Menu(
+                    name='User',
+                    url='/rest/User',
+                    icon='fa fa-user',
+                    exclude=('password',),
+                    search_fields=('username',),
+                    fields_type={
+                        'avatar': 'image',
+                        'intro': 'html'
+                    },
+                ),
+                Menu(
+                    name='Role',
+                    url='/rest/Role',
+                    icon='fa fa-group',
+                    actions={
+                        'delete': False
+                    }
+                ),
+                Menu(
+                    name='Permission',
+                    url='/rest/Permission',
+                    icon='fa fa-user-plus',
+                    actions={
+                        'delete': False
+                    }
+                ),
+                Menu(
+                    name='Logout',
+                    url='/logout',
+                    icon='fa fa-lock',
+                    actions={
+                        'delete': False
+                    }
+                )
+            ]
+            menus += permission_menus
+        return menus
 
     def init(self, site: Site, user_model: str, tortoise_app: str, admin_secret: str, permission: bool = False):
         """
@@ -55,6 +160,8 @@ class AdminApp(FastAPI):
         self.models = Tortoise.apps.get(tortoise_app)
         self.user_model = self.models.get(user_model)
         self._inited = True
+        if not site.menus:
+            site.menus = self._build_default_menus(permission)
         self._get_model_menu_mapping(site.menus)
 
     def _exclude_field(self, resource: str, field: str):
@@ -73,14 +180,16 @@ class AdminApp(FastAPI):
                 return True
         return False
 
-    def _get_field_type(self, menu: Menu, name: str, field_type: str) -> str:
+    def _get_field_type(self, name: str, field_type: str, menu: Optional[Menu] = None) -> str:
         """
         get field display type
         :param menu:
         :param field_type:
         :return:
         """
-        field_type = menu.fields_type.get(name) or self._field_type_mapping.get(field_type) or 'text'
+        field_type = self._field_type_mapping.get(field_type) or 'text'
+        if menu:
+            field_type = menu.fields_type.get(name) or field_type
         return field_type
 
     async def _build_resource_from_model_describe(self, resource: str, model: Type[Model], model_describe: dict,
@@ -109,7 +218,7 @@ class AdminApp(FastAPI):
                 name: Field(
                     label=pk_field.get('name').title(),
                     required=True,
-                    type=self._get_field_type(menu, name, pk_field.get('field_type')),
+                    type=self._get_field_type(name, pk_field.get('field_type'), menu),
                     sortable=name in sort_fields,
                     **menu.attrs.get(name) or {}
                 )
@@ -124,7 +233,7 @@ class AdminApp(FastAPI):
             if self._exclude_field(resource, name):
                 continue
 
-            type_ = self._get_field_type(menu, name, field_type)
+            type_ = self._get_field_type(name, field_type, menu)
             options = []
             if type_ == 'select' or type_ == 'radiolist':
                 for k, v in model._meta.fields_map[name].enum_type.choices().items():
