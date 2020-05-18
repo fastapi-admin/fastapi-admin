@@ -51,9 +51,9 @@ class AdminApp(FastAPI):
 
     def _build_content_menus(self) -> List[Menu]:
         models = deepcopy(self.models)  # type:Dict[str,Type[Model]]
-        models.pop('Role')
-        models.pop('User')
-        models.pop('Permission')
+        models.pop('Role', None)
+        models.pop('User', None)
+        models.pop('Permission', None)
         menus = []
         for k, v in models.items():
             menu = Menu(

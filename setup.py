@@ -40,6 +40,5 @@ setup(
     keywords=(
         'fastapi admin dashboard'
     ),
-    dependency_links=['https://github.com/long2ice/tortoise-orm.git@long2ice#egg=tortoise-orm'],
     install_requires=requirements(),
 )
