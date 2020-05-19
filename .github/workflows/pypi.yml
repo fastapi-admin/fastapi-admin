@@ -1,9 +1,8 @@
 name: pypi
 on:
-  push:
-    paths:
-      - 'fastapi_admin/__init__.py'
-      - '.github/workflows/pypi.yml'
+  release:
+    types:
+      - created
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,11 +11,9 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
-
       - name: Build dists
         run: |
           python3 setup.py sdist
-
       - name: Pypi Publish
         uses: pypa/gh-action-pypi-publish@master
         with:
