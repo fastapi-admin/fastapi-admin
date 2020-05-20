@@ -3,7 +3,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
   runtimeCompiler: true,
   productionSourceMap: false,
-  publicPath: process.env.BASE_URL || '/admin/',
+  publicPath: process.env.BASE_URL || '/',
 
   css: {
     extract: true
