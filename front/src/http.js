@@ -3,7 +3,7 @@ import axios from 'axios'
 import store, {types} from './store'
 import _ from 'lodash'
 
-const API_URI = process.env.VUE_APP_API_URL || '/admin/api/'
+const API_URI = process.env.VUE_APP_API_URL || 'http://127.0.0.1:8000/admin/'
 global.API_URI = API_URI
 axios.defaults.baseURL = API_URI
 global.LOADING_ENABLED = true

@@ -54,7 +54,7 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
 1. ``git clone https://github.com/long2ice/fastapi-admin.git``.
 2. create database ``fastapi-admin`` and import from ``examples/example.sql``.
 3. ``python setup.py install``.
-4. ``env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin python3 examples/main.py``,then you can see:
+4. ``env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin PYTHONPATH=./ python3 examples/main.py``,then you can see:
 
 .. code-block:: python
 
