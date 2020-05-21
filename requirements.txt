@@ -13,7 +13,7 @@ click==7.1.2
 colorama==0.4.3
 cryptography==2.9.2
 dnspython==1.16.0
-email-validator==1.1.0
+email-validator==1.1.1
 fastapi==0.54.2
 graphene==2.1.8
 graphql-core==2.3.2
@@ -25,7 +25,7 @@ iso8601==0.1.12; sys_platform == "win32" or implementation_name != "cpython"
 itsdangerous==1.1.0
 jinja2==2.11.2
 markupsafe==1.1.1
-orjson==3.0.0
+orjson==3.0.1
 passlib==1.7.2
 promise==2.3
 prompt-toolkit==3.0.5

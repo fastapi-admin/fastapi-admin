@@ -211,7 +211,7 @@ class AdminApp(FastAPI):
                 name: Field(
                     label=pk_field.get('name').title(),
                     required=True,
-                    type=self._get_field_type(name, pk_field.get('field_type'), menu),
+                    type=self._get_field_type(name, pk_field.get('field_type').__name__, menu),
                     sortable=name in sort_fields,
                     **menu.attrs.get(name) or {}
                 )
@@ -221,7 +221,7 @@ class AdminApp(FastAPI):
 
         for data_field in data_fields:
             readonly = data_field.get('constraints').get('readOnly')
-            field_type = data_field.get('field_type')
+            field_type = data_field.get('field_type').__name__
             name = data_field.get('name')
             if self._exclude_field(resource, name):
                 continue
