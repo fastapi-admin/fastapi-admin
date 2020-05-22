@@ -14,5 +14,5 @@ async def get_object_or_404(model: Generic[MODEL], **kwargs):
     """
     obj = await model.filter(**kwargs).first()  # type:model
     if not obj:
-        raise HTTPException(HTTP_404_NOT_FOUND, 'Not Found')
+        raise HTTPException(HTTP_404_NOT_FOUND, "Not Found")
     return obj

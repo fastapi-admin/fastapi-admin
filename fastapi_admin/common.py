@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=True, pk=None):

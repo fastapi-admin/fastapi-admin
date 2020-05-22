@@ -7,6 +7,7 @@ ChangeLog
 0.2.6
 -----
 - Fix createsuperuser error.
+- Update cli.
 
 0.2.5
 -----

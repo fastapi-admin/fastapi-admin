@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Dict, Union, List, Set
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import BaseModel, HttpUrl
 
@@ -11,7 +11,7 @@ class Menu(BaseModel):
     url: Optional[str]
     icon: Optional[str]
     # children menu
-    children: Optional[List['Menu']] = []
+    children: Optional[List["Menu"]] = []
     # include fields
     include: Optional[Tuple[str]]
     # exclude fields
@@ -31,10 +31,7 @@ class Menu(BaseModel):
     # active table export
     export: bool = True
     actions: Optional[Dict]
-    bulk_actions: List[Dict] = [{
-        'value': 'delete',
-        'text': 'delete_all',
-    }]
+    bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all",}]
 
 
 Menu.update_forward_refs()
@@ -86,5 +83,5 @@ class Resource(BaseModel):
 
     class Config:
         fields = {
-            'resource_fields': 'fields',
+            "resource_fields": "fields",
         }

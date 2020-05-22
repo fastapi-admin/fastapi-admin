@@ -18,8 +18,8 @@ class PermissionAction(EnumMixin, IntEnum):
     @classmethod
     def choices(cls):
         return {
-            cls.create: 'Create',
-            cls.delete: 'Delete',
-            cls.update: 'Update',
-            cls.read: 'Read',
+            cls.create: "Create",
+            cls.delete: "Delete",
+            cls.update: "Update",
+            cls.read: "Read",
         }

@@ -9,10 +9,7 @@ class ProductType(EnumMixin, IntEnum):
 
     @classmethod
     def choices(cls):
-        return {
-            cls.article: 'Article',
-            cls.page: 'Page'
-        }
+        return {cls.article: "Article", cls.page: "Page"}
 
 
 class Status(EnumMixin, IntEnum):
@@ -21,7 +18,4 @@ class Status(EnumMixin, IntEnum):
 
     @classmethod
     def choices(cls):
-        return {
-            cls.on: 'On',
-            cls.off: 'Off'
-        }
+        return {cls.on: "On", cls.off: "Off"}

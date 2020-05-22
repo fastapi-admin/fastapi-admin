@@ -1,4 +1,5 @@
-from typing import Sequence, Dict
+from typing import Dict, Sequence
+
 from pydantic import BaseModel
 
 

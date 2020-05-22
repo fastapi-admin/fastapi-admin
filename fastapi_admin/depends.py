@@ -1,7 +1,7 @@
 import json
 
 import jwt
-from fastapi import Query, Path, Depends, HTTPException
+from fastapi import Depends, HTTPException, Path, Query
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.security.utils import get_authorization_scheme_param
 from pydantic import BaseModel
@@ -14,16 +14,18 @@ from .factory import app
 auth_schema = HTTPBearer()
 
 
-async def jwt_required(request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)):
+async def jwt_required(
+    request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)
+):
     credentials_exception = HTTPException(HTTP_401_UNAUTHORIZED)
     try:
         payload = jwt.decode(token.credentials, app.admin_secret)
-        user_id = payload.get('user_id')
+        user_id = payload.get("user_id")
         if user_id is None:
             raise credentials_exception
     except jwt.PyJWTError:
         raise credentials_exception
-    request.scope['user_id'] = user_id
+    request.scope["user_id"] = user_id
     return user_id
 
 
@@ -33,8 +35,8 @@ async def jwt_optional(request: Request):
     if credentials:
         try:
             payload = jwt.decode(credentials, app.admin_secret)
-            user_id = payload.get('user_id')
-            request.scope['user_id'] = user_id
+            user_id = payload.get("user_id")
+            request.scope["user_id"] = user_id
             return user_id
         except jwt.PyJWTError:
             pass
@@ -50,9 +52,7 @@ class QueryItem(BaseModel):
     sort: dict = {}
 
     class Config:
-        fields = {
-            'with_': 'with'
-        }
+        fields = {"with_": "with"}
 
 
 def get_query(query=Query(...)):
@@ -94,7 +94,7 @@ class PermissionsChecker:
         if not user.is_active:
             raise HTTPException(status_code=HTTP_403_FORBIDDEN)
         has_permission = False
-        await user.fetch_related('roles')
+        await user.fetch_related("roles")
         for role in user.roles:
             if await role.permissions.filter(model=resource, action=self.action):
                 has_permission = True

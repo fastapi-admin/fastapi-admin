@@ -10,25 +10,20 @@ from ..shortcuts import get_object_or_404
 router = APIRouter()
 
 
-@router.post(
-    '/login',
-)
-async def login(
-        login_in: LoginIn
-):
+@router.post("/login",)
+async def login(login_in: LoginIn):
     user_model = app.user_model
     user = await get_object_or_404(user_model, username=login_in.username)
     if not user.is_active:
-        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='User is not Active!')
+        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="User is not Active!")
     if not pwd_context.verify(login_in.password, user.password):
-        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='Incorrect Password!')
+        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="Incorrect Password!")
     ret = {
-        'user': {
-            'username': user.username,
-            'is_superuser': user.is_superuser,
-            'avatar': user.avatar if hasattr(user, 'avatar') else None
-
+        "user": {
+            "username": user.username,
+            "is_superuser": user.is_superuser,
+            "avatar": user.avatar if hasattr(user, "avatar") else None,
         },
-        'token': jwt.encode({'user_id': user.pk}, app.admin_secret, algorithm='HS256')
+        "token": jwt.encode({"user_id": user.pk}, app.admin_secret, algorithm="HS256"),
     }
     return ret
