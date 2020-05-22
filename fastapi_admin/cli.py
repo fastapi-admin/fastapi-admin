@@ -28,8 +28,10 @@ class Logger:
 
 
 def import_obj(path):
-    module_name, class_name = path.rsplit('.', 1)
-    return getattr(importlib.import_module(module_name), class_name)
+    splits = path.split(".")
+    module = ".".join(splits[:-1])
+    class_name = splits[-1]
+    return getattr(importlib.import_module(module), class_name)
 
 
 async def init_tortoise(args):
@@ -63,7 +65,7 @@ async def register_permissions(args):
 async def createsuperuser(args):
     await init_tortoise(args)
 
-    user_model = import_obj(args.user_model)
+    user_model = Tortoise.apps.get('models').get(args.user_model)
     prompt = PromptSession()
     while True:
         try:
@@ -104,6 +106,6 @@ def cli():
     run_async(parse_args.func(parse_args))
 
 
-if __name__ == '__main__':
+def main():
     sys.path.insert(0, ".")
     cli()

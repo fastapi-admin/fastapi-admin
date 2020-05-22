@@ -34,7 +34,7 @@ setup(
     include_package_data=True,
     zip_safe=True,
     entry_points={
-        'console_scripts': ['fastapi-admin = fastapi_admin.cli:cli'],
+        'console_scripts': ['fastapi-admin = fastapi_admin.cli:main'],
     },
     platforms='any',
     keywords=(
