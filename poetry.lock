@@ -249,7 +249,7 @@ description = "FastAPI framework, high performance, easy to learn, fast to code,
 name = "fastapi"
 optional = false
 python-versions = ">=3.6"
-version = "0.54.2"
+version = "0.55.1"
 
 [package.dependencies]
 pydantic = ">=0.32.2,<2.0.0"
@@ -319,7 +319,7 @@ description = "the modular source code checker: pep8 pyflakes and co"
 name = "flake8"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "3.8.1"
+version = "3.8.2"
 
 [package.dependencies]
 mccabe = ">=0.6.0,<0.7.0"
@@ -478,7 +478,7 @@ description = "Fast, correct Python JSON library supporting dataclasses, datetim
 name = "orjson"
 optional = false
 python-versions = ">=3.6"
-version = "3.0.1"
+version = "3.0.2"
 
 [[package]]
 category = "dev"
@@ -633,7 +633,7 @@ description = "A SQL query builder API for Python"
 name = "pypika"
 optional = false
 python-versions = "*"
-version = "0.37.6"
+version = "0.37.7"
 
 [[package]]
 category = "dev"
@@ -801,7 +801,7 @@ description = "Easy async ORM for python, built with relations in mind"
 name = "tortoise-orm"
 optional = false
 python-versions = "*"
-version = "0.16.11"
+version = "0.16.12"
 
 [package.dependencies]
 aiosqlite = ">=0.11.0"
@@ -875,11 +875,11 @@ version = "0.14.0"
 
 [[package]]
 category = "main"
-description = "Measures number of Terminal column cells of wide-character codes"
+description = "Measures the displayed width of unicode strings in a terminal"
 name = "wcwidth"
 optional = false
 python-versions = "*"
-version = "0.1.9"
+version = "0.2.2"
 
 [[package]]
 category = "main"
@@ -895,7 +895,7 @@ description = "A Python module for creating Excel XLSX files."
 name = "xlsxwriter"
 optional = false
 python-versions = "*"
-version = "1.2.8"
+version = "1.2.9"
 
 [metadata]
 content-hash = "136bc2fdede1a36872a4d17b125eb604420fe935f2291156bf593fbf52ae6bc4"
@@ -1053,12 +1053,12 @@ execnet = [
     {file = "execnet-1.7.1.tar.gz", hash = "sha256:cacb9df31c9680ec5f95553976c4da484d407e85e41c83cb812aa014f0eddc50"},
 ]
 fastapi = [
-    {file = "fastapi-0.54.2-py3-none-any.whl", hash = "sha256:c8651f8316956240c2ffe5bc05c334c8359a3887e642720a9b23319c51e82907"},
-    {file = "fastapi-0.54.2.tar.gz", hash = "sha256:fff1b4a7fdf4812abb4507fb7aa30ef4206a0435839626ebe3b2871ec9aa367f"},
+    {file = "fastapi-0.55.1-py3-none-any.whl", hash = "sha256:b1a96ea772f10cd0235eb09d6e282b1f5e6135dad5121ed80d6beb8fa932e075"},
+    {file = "fastapi-0.55.1.tar.gz", hash = "sha256:912bc1a1b187146fd74dd45e17ea10aede3d962c921142c412458e911c50dc4c"},
 ]
 flake8 = [
-    {file = "flake8-3.8.1-py2.py3-none-any.whl", hash = "sha256:6c1193b0c3f853ef763969238f6c81e9e63ace9d024518edc020d5f1d6d93195"},
-    {file = "flake8-3.8.1.tar.gz", hash = "sha256:ea6623797bf9a52f4c9577d780da0bb17d65f870213f7b5bcc9fca82540c31d5"},
+    {file = "flake8-3.8.2-py2.py3-none-any.whl", hash = "sha256:ccaa799ef9893cebe69fdfefed76865aeaefbb94cb8545617b2298786a4de9a5"},
+    {file = "flake8-3.8.2.tar.gz", hash = "sha256:c69ac1668e434d37a2d2880b3ca9aafd54b3a10a3ac1ab101d22f29e29cf8634"},
 ]
 graphene = [
     {file = "graphene-2.1.8-py2.py3-none-any.whl", hash = "sha256:09165f03e1591b76bf57b133482db9be6dac72c74b0a628d3c93182af9c5a896"},
@@ -1150,21 +1150,21 @@ more-itertools = [
     {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
 ]
 orjson = [
-    {file = "orjson-3.0.1-cp36-cp36m-macosx_10_7_x86_64.whl", hash = "sha256:5bf352dac1a9433a55b3558cea484f3548e58e137f883eabbf7a8eb489389fca"},
-    {file = "orjson-3.0.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:6ecdb764a81260bb65fc37b1733bbb02666c5aa97835a87febbad130c6b4b9ac"},
-    {file = "orjson-3.0.1-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:ad625dc8360f667dd811e2b45b618bc5ca6aa997e23bdec7cf4adccda6962083"},
-    {file = "orjson-3.0.1-cp36-none-win_amd64.whl", hash = "sha256:9a8db5baab84171c7ff600849a4760ff81673a7fbc586e00208b70975b3d5a21"},
-    {file = "orjson-3.0.1-cp37-cp37m-macosx_10_7_x86_64.whl", hash = "sha256:35e4c9b44727aaaeaae7ac058e8d68dcb653497ca6a860c7dddc3b33e0ee3d3f"},
-    {file = "orjson-3.0.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:416acc46a92a7d78b69b61b0f777f64d7abe6c6c6229eb946de1494cc07f2ba2"},
-    {file = "orjson-3.0.1-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:e986d35402ea9a10b7074d8457f6310a158c61e625c49c8446c685a430933401"},
-    {file = "orjson-3.0.1-cp37-none-win_amd64.whl", hash = "sha256:da84e0ba0ed646e92852d4c142f27b4d52724d6460f579eba14fbcfcd5173a1e"},
-    {file = "orjson-3.0.1-cp38-cp38-macosx_10_7_x86_64.whl", hash = "sha256:2b94b4cb6aeb65a0fc1444192dffbc395a7e309012163fc9d239b15aaa4cab7c"},
-    {file = "orjson-3.0.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:36cf210ff2771d4d4b325abb3989d3b6162b0862212ef605aa5a46f5c471701a"},
-    {file = "orjson-3.0.1-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:c2d8223f26ccbc71899c4dab07e0fac556dd820777ecb220395114811d2c1ffe"},
-    {file = "orjson-3.0.1-cp38-none-win_amd64.whl", hash = "sha256:53f998a5f5ee6e2002568aa4dc40d015d8e621cfa363787f44c6388432913713"},
-    {file = "orjson-3.0.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:5051856c962375fd245ffea957bafb3f1bdf65595fa12c0128dd90aaba0971c8"},
-    {file = "orjson-3.0.1-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:b9c0f7d14cac42a41084d784b93288ebdf61537fa2d160610c1f1dd9a6f1d62f"},
-    {file = "orjson-3.0.1.tar.gz", hash = "sha256:a75f72c8a7cb0602c2fc7e9806554912b70bf79bbe559e55e1951b1f279c0ad2"},
+    {file = "orjson-3.0.2-cp36-cp36m-macosx_10_7_x86_64.whl", hash = "sha256:d6001985c41f14ed966937f4ae6a514677041c7bc56a8782c035f7765d74f35d"},
+    {file = "orjson-3.0.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:1304588cc6a3d471f25a3fc490dd4579c091a782323a3ae80b1f08cda9f353bf"},
+    {file = "orjson-3.0.2-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:20da2478ee1ecf3ac8ab513888a52c97dfb3a2c9ac5669805d919cb80da4d242"},
+    {file = "orjson-3.0.2-cp36-none-win_amd64.whl", hash = "sha256:15d5826376a08b3c8776f785d06173d5aeefe0e388f62231da749391f44ead48"},
+    {file = "orjson-3.0.2-cp37-cp37m-macosx_10_7_x86_64.whl", hash = "sha256:7986f23e2d2a30a2a7f6db88288046b8cc9df3cc4b7f2376df27618c26a71483"},
+    {file = "orjson-3.0.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:09a024829a3b4628b74ba627357e0e7b40596476bac913a52f9ac8fa10728bd5"},
+    {file = "orjson-3.0.2-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:0d815b2f9507c9ed543d220f4edfeac987812eaa6240345ae5089c8da0781223"},
+    {file = "orjson-3.0.2-cp37-none-win_amd64.whl", hash = "sha256:b6033bae98b742edb01c0dd30ea45c7b5f154251c2f4ccdb5a39156a7e4d09ff"},
+    {file = "orjson-3.0.2-cp38-cp38-macosx_10_7_x86_64.whl", hash = "sha256:db7ba3acc1c0cec7c10740af4021ff15b9103c4f024e9d2b10d5e77fbe82ca6f"},
+    {file = "orjson-3.0.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:d55088e8c1f7dd301500d19c58d05d8df5da1523acbf11c6ba302424b6dbf366"},
+    {file = "orjson-3.0.2-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:15ce6f35df481539e03ab7557e8deba088b990f8f3b1c67e1b12dd1a2d33184a"},
+    {file = "orjson-3.0.2-cp38-none-win_amd64.whl", hash = "sha256:18154aa8b0a6685d17879c2d1d7ec575e13643e08644e6247d07ff1af491e474"},
+    {file = "orjson-3.0.2-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:cb427a52ef1b29d87378c90aac6a8daf11416d66f510a53529ce88320188b4ee"},
+    {file = "orjson-3.0.2-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:a66a62637e88021c6d7451cc26304f1d4282ccd2c684b7e5670641722ed13cbb"},
+    {file = "orjson-3.0.2.tar.gz", hash = "sha256:4117175a24761dc8248ff91ce2065fc0e690305261460869418295e129ed5a99"},
 ]
 packaging = [
     {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
@@ -1237,7 +1237,7 @@ pyparsing = [
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pypika = [
-    {file = "PyPika-0.37.6.tar.gz", hash = "sha256:64510fa36667e8bb654bdc1be5a3a77bac1dbc2f03d4848efac08e39d9cac6f5"},
+    {file = "PyPika-0.37.7.tar.gz", hash = "sha256:20bebc05983cd401d428e3beb62d037e5f0271daab2bb5aba82f4e092d4a3694"},
 ]
 pytest = [
     {file = "pytest-5.4.2-py3-none-any.whl", hash = "sha256:95c710d0a72d91c13fae35dce195633c929c3792f54125919847fdcdf7caa0d3"},
@@ -1350,7 +1350,7 @@ toml = [
     {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
 ]
 tortoise-orm = [
-    {file = "tortoise-orm-0.16.11.tar.gz", hash = "sha256:08a25c59a171bdabe9469d1606f8c4ae41516504cc501f5d60c1b953f3e186bb"},
+    {file = "tortoise-orm-0.16.12.tar.gz", hash = "sha256:170e4bbfe1c98223ad1fba33d7fded7923e4bb49c9d74c78bd173a0ebc861658"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:73d785a950fc82dd2a25897d525d003f6378d1cb23ab305578394694202a58c3"},
@@ -1409,8 +1409,8 @@ uvloop = [
     {file = "uvloop-0.14.0.tar.gz", hash = "sha256:123ac9c0c7dd71464f58f1b4ee0bbd81285d96cdda8bc3519281b8973e3a461e"},
 ]
 wcwidth = [
-    {file = "wcwidth-0.1.9-py2.py3-none-any.whl", hash = "sha256:cafe2186b3c009a04067022ce1dcd79cb38d8d65ee4f4791b8888d6599d1bbe1"},
-    {file = "wcwidth-0.1.9.tar.gz", hash = "sha256:ee73862862a156bf77ff92b09034fc4825dd3af9cf81bc5b360668d425f3c5f1"},
+    {file = "wcwidth-0.2.2-py2.py3-none-any.whl", hash = "sha256:b651b6b081476420e4e9ae61239ac4c1b49d0c5ace42b2e81dc2ff49ed50c566"},
+    {file = "wcwidth-0.2.2.tar.gz", hash = "sha256:3de2e41158cb650b91f9654cbf9a3e053cee0719c9df4ddc11e4b568669e9829"},
 ]
 websockets = [
     {file = "websockets-8.1-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:3762791ab8b38948f0c4d281c8b2ddfa99b7e510e46bd8dfa942a5fff621068c"},
@@ -1437,6 +1437,6 @@ websockets = [
     {file = "websockets-8.1.tar.gz", hash = "sha256:5c65d2da8c6bce0fca2528f69f44b2f977e06954c8512a952222cea50dad430f"},
 ]
 xlsxwriter = [
-    {file = "XlsxWriter-1.2.8-py2.py3-none-any.whl", hash = "sha256:97ab487b81534415c5313154203f3e8a637d792b1e6a8201e8f7f71da0203c2a"},
-    {file = "XlsxWriter-1.2.8.tar.gz", hash = "sha256:488e1988ab16ff3a9cd58c7656d0a58f8abe46ee58b98eecea78c022db28656b"},
+    {file = "XlsxWriter-1.2.9-py2.py3-none-any.whl", hash = "sha256:82a3b0e73e3913483da23791d1a25e4d2dbb3837d1be4129473526b9a270a5cc"},
+    {file = "XlsxWriter-1.2.9.tar.gz", hash = "sha256:828b3285fc95105f5b1946a6a015b31cf388bd5378fdc6604e4d1b7839df2e77"},
 ]

@@ -3,6 +3,16 @@ name = "fastapi-admin"
 version = "0.2.6"
 description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
 authors = ["long2ice <long2ice@gmail.com>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://github.com/long2ice/fastapi-admin"
+repository = "git@github.com:long2ice/fastapi-admin.git"
+documentation = "https://github.com/long2ice/fastapi-admin"
+keywords = ["fastapi", "admin", "dashboard"]
+packages = [
+    { include = "fastapi_admin" }
+]
+include = ["CHANGELOG.rst", "LICENSE", "README.rst"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -33,6 +43,5 @@ pytest-xdist = "*"
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
-[tool.taskipy.tasks]
-export = "poetry export -f requirements.txt --without-hashes > requirements.txt"
-export-dev = "poetry export -f requirements.txt --dev --without-hashes > requirements-dev.txt"
+[tool.poetry.scripts]
+fastapi-admin = "fastapi_admin.cli:main"

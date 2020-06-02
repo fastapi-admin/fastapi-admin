@@ -13,8 +13,11 @@ help:
 	@echo  "    test		Runs all tests"
 	@echo  "    style		Auto-formats the code"
 
+up:
+	@poetry update
+
 deps:
-	@pip install -r requirements-dev.txt
+	@poetry install
 
 style: deps
 	isort -rc $(checkfiles)
@@ -33,10 +36,8 @@ endif
 test: deps
 	$(py_warn) py.test
 
-publish: deps
-	rm -fR dist/
-	python setup.py sdist
-	twine upload dist/*
+build: deps
+	@poetry build
 
-ci:
-	@act -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 -b
+publish: deps
+	@poetry publish
