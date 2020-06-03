@@ -39,7 +39,7 @@ Menu.update_forward_refs()
 
 class Site(BaseModel):
     name: str
-    logo: HttpUrl
+    logo: Optional[HttpUrl]
     login_logo: Optional[HttpUrl]
     login_footer: Optional[str]
     login_description: Optional[str]

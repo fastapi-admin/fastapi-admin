@@ -67,7 +67,6 @@ async def start_up():
         permission=True,
         site=Site(
             name="FastAPI-Admin DEMO",
-            logo="https://github.com/long2ice/fastapi-admin/raw/master/front/static/img/logo.png",
             login_footer="FASTAPI ADMIN - FastAPI Admin Dashboard",
             login_description="FastAPI Admin Dashboard",
             locale="en-US",
