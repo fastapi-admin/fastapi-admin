@@ -17,7 +17,7 @@ FastAPI Admin
 Introduction
 ============
 
-FastAPI-Admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ and `rest-admin <https://github.com/wxs77577/rest-admin>`_.
+FastAPI-Admin is a admin dashboard based on `fastapi <https://github.com/tiangolo/fastapi>`_ and `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_.
 
 FastAPI-Admin provide crud feature out-of-the-box with just a few config.
 
