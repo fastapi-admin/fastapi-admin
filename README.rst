@@ -69,19 +69,6 @@ Look at `examples <https://github.com/long2ice/fastapi-admin/tree/master/example
     INFO:     Tortoise-ORM generating schema
     INFO:     Application startup complete.
 
-5. ``cd front && npm install && npm run serve``,then you can see:
-
-.. code-block:: shell
-
-    App running at:
-    - Local:   http://localhost:8080/
-    - Network: http://192.168.10.23:8080/
-
-    Note that the development build is not optimized.
-    To create a production build, run yarn build.
-
-Open ``http://localhost:8080/`` in browser and enjoy it!
-
 Backend Integration
 ~~~~~~~~~~~~~~~~~~~
 
@@ -111,7 +98,7 @@ Backend Integration
 
 Front
 ~~~~~
-``cd front && cp .env.example .env`` and modify,then just run ``npm run serve``.
+see `vue-front <https://github.com/fastapi-admin/vue-front>`_ for reference.
 
 Features
 ========
@@ -258,15 +245,13 @@ Default, FastAPI-Admin provide default menus by your models, without doing tedio
 
 Deployment
 ==========
-1. Deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com/deployment/.
-2. ``cp .env.example .env`` and modify,run ``npm run build`` in ``front`` dir,then copy static files in ``dists`` to you server,deployment by ``nginx``.
+Deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com/deployment/.
 
 ThanksTo
 ========
 
 * `fastapi <https://github.com/tiangolo/fastapi>`_ ,high performance async api framework.
 * `tortoise-orm <https://github.com/tortoise/tortoise-orm>`_ ,familiar asyncio ORM for python.
-* `rest-admin <https://github.com/wxs77577/rest-admin>`_,restful Admin Dashboard Based on Vue and Boostrap 4.
 
 License
 =======
