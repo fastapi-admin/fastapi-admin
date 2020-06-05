@@ -6,7 +6,7 @@ from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app
 from fastapi_admin.schemas import BulkIn
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="examples/templates")
 router = APIRouter()
 
 

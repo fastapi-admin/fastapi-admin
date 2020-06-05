@@ -98,7 +98,7 @@ Backend Integration
 
 Front
 ~~~~~
-see `vue-front <https://github.com/fastapi-admin/vue-front>`_ for reference.
+See `fastapi-admin-front <https://github.com/long2ice/fastapi-admin-front>`_ for reference.
 
 Features
 ========
@@ -163,6 +163,29 @@ And register permissions and createsuperuser:
     subcommands:
       {register_permissions,createsuperuser}
 
+Custom Login
+~~~~~~~~~~~~
+You can write your own login view logic:
+
+.. code-block:: python
+
+    admin_app.init(
+        ...
+        login_view="examples.routes.login"
+    )
+
+And must return json like:
+
+.. code-block:: json
+
+    {
+        "user": {
+            "username": "admin",
+            "is_superuser": False,
+            "avatar": "https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4",
+        },
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.HSlcYkOEQewxyPuaqcVwCcw_wkbLB50Ws1-ZxfPoLAQ",
+    }
 
 Enum Support
 ~~~~~~~~~~~~
