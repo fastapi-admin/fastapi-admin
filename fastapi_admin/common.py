@@ -1,3 +1,4 @@
+import importlib
 from copy import deepcopy
 
 from passlib.context import CryptContext
@@ -33,3 +34,15 @@ async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=Tru
         m2m_objs = await m2m_model.filter(pk__in=v)
         await m2m_related.add(*m2m_objs)
     return obj
+
+
+def import_obj(path: str):
+    """
+    import obj from module path
+    :param path:
+    :return:
+    """
+    splits = path.split(".")
+    module = ".".join(splits[:-1])
+    class_name = splits[-1]
+    return getattr(importlib.import_module(module), class_name)

@@ -1,5 +1,4 @@
 import argparse
-import importlib
 import sys
 
 from colorama import Fore, init
@@ -7,7 +6,7 @@ from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
 
 from fastapi_admin import enums
-from fastapi_admin.common import pwd_context
+from fastapi_admin.common import import_obj, pwd_context
 from fastapi_admin.models import Permission
 
 init(autoreset=True)
@@ -25,13 +24,6 @@ class Logger:
     @classmethod
     def error(cls, text):
         print(Fore.RED + text)
-
-
-def import_obj(path):
-    splits = path.split(".")
-    module = ".".join(splits[:-1])
-    class_name = splits[-1]
-    return getattr(importlib.import_module(module), class_name)
 
 
 async def init_tortoise(args):

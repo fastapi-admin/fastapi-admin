@@ -1,11 +1,34 @@
 from copy import deepcopy
 from typing import Any, Dict, List, Optional, Type
 
+import jwt
 from fastapi import FastAPI, HTTPException
+from starlette.status import HTTP_403_FORBIDDEN
 from tortoise import Model, Tortoise
 
+from .common import import_obj, pwd_context
 from .exceptions import exception_handler
+from .schemas import LoginIn
+from .shortcuts import get_object_or_404
 from .site import Field, Menu, Resource, Site
+
+
+async def login(login_in: LoginIn):
+    user_model = app.user_model
+    user = await get_object_or_404(user_model, username=login_in.username)
+    if not user.is_active:
+        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="User is not Active!")
+    if not pwd_context.verify(login_in.password, user.password):
+        raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="Incorrect Password!")
+    ret = {
+        "user": {
+            "username": user.username,
+            "is_superuser": user.is_superuser,
+            "avatar": user.avatar if hasattr(user, "avatar") else None,
+        },
+        "token": jwt.encode({"user_id": user.pk}, app.admin_secret, algorithm="HS256"),
+    }
+    return ret
 
 
 class AdminApp(FastAPI):
@@ -115,9 +138,11 @@ class AdminApp(FastAPI):
         tortoise_app: str,
         admin_secret: str,
         permission: bool = False,
+        login_view: Optional[str] = None,
     ):
         """
         init admin site
+        :param login_view:
         :param tortoise_app:
         :param permission: active builtin permission
         :param site:
@@ -134,6 +159,10 @@ class AdminApp(FastAPI):
         if not site.menus:
             site.menus = self._build_default_menus(permission)
         self._get_model_menu_mapping(site.menus)
+        if login_view:
+            self.add_api_route("/login", import_obj(login_view), methods=["POST"])
+        else:
+            self.add_api_route("/login", login, methods=["POST"])
 
     def _exclude_field(self, resource: str, field: str):
         """

@@ -4,6 +4,10 @@ ChangeLog
 
 0.2
 ===
+0.2.7
+-----
+- Add custom login_view.
+
 0.2.6
 -----
 - Fix createsuperuser error.
