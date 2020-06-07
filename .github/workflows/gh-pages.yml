@@ -1,0 +1,25 @@
+name: gh-pages
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'docs/*'
+      - '.github/workflows/gh-pages.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - uses: dschep/install-poetry-action@v1.3
+      - name: build
+        run: make docs
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build
+          cname: fastapi-admin-docs.long2ice.cn

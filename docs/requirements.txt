@@ -1,0 +1,4 @@
+sphinx-rtd-theme
+sphinx-autodoc-typehints
+pygments
+sphinx

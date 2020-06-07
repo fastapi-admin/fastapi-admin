@@ -1,6 +1,6 @@
-=============
-FastAPI Admin
-=============
+===============
+Getting started
+===============
 
 .. image:: https://img.shields.io/pypi/v/fastapi-admin.svg?style=flat
    :target: https://pypi.python.org/pypi/fastapi-admin
@@ -273,10 +273,6 @@ Deploy fastapi app by gunicorn+uvicorn or reference https://fastapi.tiangolo.com
 Restful API Docs
 ================
 See `restful api <https://api-fastapi-admin.long2ice.cn:8443/admin/docs>`_ docs.
-
-Documents
-=========
-See `documents <https://fastapi-admin-docs.long2ice.cn>`_ for reference.
 
 ThanksTo
 ========

@@ -134,10 +134,10 @@ class AdminApp(FastAPI):
     def init(
         self,
         site: Site,
-        user_model: str,
-        tortoise_app: str,
         admin_secret: str,
+        user_model: str = "User",
         permission: bool = False,
+        tortoise_app: str = "models",
         login_view: Optional[str] = None,
     ):
         """
@@ -317,5 +317,10 @@ class AdminApp(FastAPI):
         )
 
 
-app = AdminApp(openapi_prefix="/admin",)
+app = AdminApp(
+    openapi_prefix="/admin",
+    debug=False,
+    title="FastAPI-Admin",
+    description="FastAPI Admin Dashboard based on FastAPI and Tortoise ORM.",
+)
 app.add_exception_handler(HTTPException, exception_handler)

@@ -40,10 +40,7 @@ app = create_app()
 
 @app.on_event("startup")
 async def start_up():
-    admin_app.debug = False
     admin_app.init(
-        user_model="User",
-        tortoise_app="models",
         admin_secret="test",
         permission=True,
         site=Site(
