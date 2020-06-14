@@ -1,3 +1,12 @@
+import re
+
 from . import routes
 
-__version__ = "0.2.5"
+
+def version():
+    with open("pyproject.toml") as f:
+        ret = re.findall('version = "(\d+\.\d+\.\d+)"', f.read())
+        return ret[0]
+
+
+__version__ = version()

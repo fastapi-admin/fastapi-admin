@@ -5,7 +5,7 @@ from colorama import Fore, init
 from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
 
-from fastapi_admin import enums
+from fastapi_admin import __version__, enums
 from fastapi_admin.common import import_obj, pwd_context
 from fastapi_admin.models import Permission
 
@@ -79,7 +79,13 @@ def cli():
         required=True,
         help="Tortoise-orm config dict import path,like settings.TORTOISE_ORM.",
     )
-
+    parser.add_argument(
+        "--version",
+        "-V",
+        action="version",
+        version=f"fastapi-admin version, {__version__}",
+        help="show the version",
+    )
     parser_register_permissions = subparsers.add_parser("register_permissions")
     parser_register_permissions.add_argument(
         "--clean", required=False, action="store_true", help="Clean up old permissions then renew."

@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "fastapi-admin"
-version = "0.2.6"
+version = "0.2.7"
 description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
 homepage = "https://github.com/long2ice/fastapi-admin"
-repository = "git@github.com:long2ice/fastapi-admin.git"
+repository = "https://github.com/long2ice/fastapi-admin.git"
 documentation = "https://github.com/long2ice/fastapi-admin"
 keywords = ["fastapi", "admin", "dashboard"]
 packages = [
@@ -15,7 +15,7 @@ packages = [
 include = ["LICENSE", "README.rst"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 tortoise-orm = "*"
 aiomysql = "*"
 python-dotenv = "*"
