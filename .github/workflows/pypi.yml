@@ -12,7 +12,10 @@ jobs:
         with:
           python-version: '3.x'
       - uses: dschep/install-poetry-action@v1.3
+      - name: Build dists
+        run: make build
       - name: Pypi Publish
-        run: |
-          make build
-          make publish
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
