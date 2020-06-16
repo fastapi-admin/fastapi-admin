@@ -5,7 +5,7 @@ from colorama import Fore, init
 from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
 
-from fastapi_admin import __version__, enums
+from fastapi_admin import enums, version
 from fastapi_admin.common import import_obj, pwd_context
 from fastapi_admin.models import Permission
 
@@ -83,7 +83,7 @@ def cli():
         "--version",
         "-V",
         action="version",
-        version=f"fastapi-admin version, {__version__}",
+        version=f"fastapi-admin version, {version()}",
         help="show the version",
     )
     parser_register_permissions = subparsers.add_parser("register_permissions")

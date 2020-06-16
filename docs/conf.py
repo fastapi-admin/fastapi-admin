@@ -16,14 +16,14 @@
 
 
 # -- Project information -----------------------------------------------------
-from fastapi_admin import __version__
+from fastapi_admin import version
 
 project = 'fastapi-admin'
 copyright = '2020, long2ice'
 author = 'long2ice'
 
-release = f'v{__version__}'
-version = f'v{__version__}'
+release = f'v{version()}'
+version = f'v{version()}'
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

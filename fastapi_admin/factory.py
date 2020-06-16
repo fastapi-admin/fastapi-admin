@@ -318,7 +318,6 @@ class AdminApp(FastAPI):
 
 
 app = AdminApp(
-    openapi_prefix="/admin",
     debug=False,
     title="FastAPI-Admin",
     description="FastAPI Admin Dashboard based on FastAPI and Tortoise ORM.",
