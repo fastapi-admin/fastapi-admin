@@ -7,10 +7,9 @@ from fastapi_admin.factory import app
 from fastapi_admin.schemas import BulkIn
 
 templates = Jinja2Templates(directory="examples/templates")
-router = APIRouter()
 
 
-@router.post("/rest/{resource}/bulk/test_bulk")
+@app.post("/rest/{resource}/bulk/test_bulk")
 async def test_bulk(bulk_in: BulkIn, model=Depends(get_model)):
     qs = model.filter(pk__in=bulk_in.pk_list)
     pydantic = pydantic_queryset_creator(model)
@@ -18,7 +17,7 @@ async def test_bulk(bulk_in: BulkIn, model=Depends(get_model)):
     return ret.dict()
 
 
-@router.get("/home",)
+@app.get("/home",)
 async def home():
     return {"html": templates.get_template("home.html").render()}
 
@@ -32,6 +31,3 @@ async def login():
         },
         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.HSlcYkOEQewxyPuaqcVwCcw_wkbLB50Ws1-ZxfPoLAQ",
     }
-
-
-app.include_router(router)
