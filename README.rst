@@ -278,6 +278,29 @@ Documents
 =========
 See `documents <https://fastapi-admin-docs.long2ice.cn>`_ for reference.
 
+Support this project
+====================
+
+- Just give a star!
+- Donation.
+
+AliPay
+~~~~~~
+
+.. image:: https://github.com/long2ice/fastapi-admin/raw/dev/images/alipay.jpeg
+   :width: 200
+
+WeChat Pay
+~~~~~~~~~~
+
+.. image:: https://github.com/long2ice/fastapi-admin/raw/dev/images/wechatpay.jpeg
+   :width: 200
+
+PayPal
+~~~~~~
+
+Donate money by [paypal](https://www.paypal.me/long2ice) to my account long2ice.
+
 ThanksTo
 ========
 
