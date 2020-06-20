@@ -6,9 +6,12 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=True, pk=None):
+async def handle_m2m_fields_create_or_update(
+    body, m2m_fields, model, user_model, create=True, pk=None
+):
     """
     handle m2m update or create
+    :param user_model:
     :param body:
     :param m2m_fields:
     :param model:
@@ -17,6 +20,8 @@ async def handle_m2m_fields_create_or_update(body, m2m_fields, model, create=Tru
     :return:
     """
     copy_body = deepcopy(body)
+    if model == user_model:
+        copy_body["password"] = pwd_context.hash(copy_body.pop("password"))
     m2m_body = {}
     for k, v in body.items():
         if k in m2m_fields:

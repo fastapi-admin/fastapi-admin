@@ -4,6 +4,12 @@ ChangeLog
 
 0.2
 ===
+
+0.2.8
+-----
+- Add password auto hash.
+- `Field` description as help text for form.
+
 0.2.7
 -----
 - Add custom login_view.

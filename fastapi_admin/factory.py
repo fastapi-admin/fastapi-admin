@@ -113,11 +113,7 @@ class AdminApp(FastAPI):
             permission_menus = [
                 Menu(name="Auth", title=True),
                 Menu(
-                    name="User",
-                    url="/rest/User",
-                    icon="fa fa-user",
-                    exclude=("password",),
-                    search_fields=("username",),
+                    name="User", url="/rest/User", icon="fa fa-user", search_fields=("username",),
                 ),
                 Menu(name="Role", url="/rest/Role", icon="fa fa-group", actions={"delete": False}),
                 Menu(
@@ -221,15 +217,15 @@ class AdminApp(FastAPI):
         fields = {}
         pk = name = pk_field.get("name")
         if not exclude_pk and not self._exclude_field(resource, name):
-            fields = {
-                name: Field(
-                    label=pk_field.get("name").title(),
-                    required=True,
-                    type=self._get_field_type(name, pk_field.get("field_type").__name__, menu),
-                    sortable=name in sort_fields,
-                    **menu.attrs.get(name) or {},
-                )
-            }
+            field = Field(
+                label=pk_field.get("name").title(),
+                required=True,
+                type=self._get_field_type(name, pk_field.get("field_type").__name__, menu),
+                sortable=name in sort_fields,
+                description=pk_field.get("description"),
+            )
+            field = field.copy(update=menu.attrs.get(name) or {})
+            fields = {name: field}
         if not exclude_actions and menu.actions:
             fields["_actions"] = menu.actions
 
@@ -246,7 +242,7 @@ class AdminApp(FastAPI):
                 for k, v in model._meta.fields_map[name].enum_type.choices().items():
                     options.append({"text": v, "value": k})
 
-            label = data_field.get("description") or data_field.get("name").title()
+            label = data_field.get("name").title()
             field = Field(
                 label=label,
                 required=not data_field.get("nullable"),
@@ -254,8 +250,9 @@ class AdminApp(FastAPI):
                 options=options,
                 sortable=name in sort_fields,
                 disabled=readonly,
-                **menu.attrs.get(name) or {},
+                description=data_field.get("description"),
             )
+            field = field.copy(update=menu.attrs.get(name) or {})
             fields[name] = field
             if name in search_fields:
                 search_fields_ret[name] = field
@@ -267,7 +264,7 @@ class AdminApp(FastAPI):
                     fk_model_class = fk_field.get("python_type")
                     objs = await fk_model_class.all()
                     raw_field = fk_field.get("raw_field")
-                    label = fk_field.get("description") or name.title()
+                    label = name.title()
                     options = list(map(lambda x: {"text": str(x), "value": x.pk}, objs))
                     field = Field(
                         label=label,
@@ -275,8 +272,9 @@ class AdminApp(FastAPI):
                         type="select",
                         options=options,
                         sortable=name in sort_fields,
-                        **menu.attrs.get(name) or {},
+                        description=fk_field.get("description"),
                     )
+                    field = field.copy(update=menu.attrs.get(name) or {})
                     fields[raw_field] = field
                     if name in search_fields:
                         search_fields_ret[raw_field] = field
@@ -284,7 +282,7 @@ class AdminApp(FastAPI):
             for m2m_field in m2m_fields:
                 name = m2m_field.get("name")
                 if not self._exclude_field(resource, name):
-                    label = m2m_field.get("description") or name.title()
+                    label = name.title()
                     m2m_model_class = m2m_field.get("python_type")
                     objs = await m2m_model_class.all()
                     options = list(map(lambda x: {"text": str(x), "value": x.pk}, objs))
@@ -293,6 +291,7 @@ class AdminApp(FastAPI):
                         type="tree",
                         options=options,
                         multiple=True,
+                        description=m2m_field.get("description"),
                         **menu.attrs.get(name) or {},
                     )
         return pk, fields, search_fields_ret

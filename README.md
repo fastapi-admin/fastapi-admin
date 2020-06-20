@@ -210,10 +210,10 @@ class Status(EnumMixin, IntEnum):
         }
 ```
 
-### Verbose Name
+### Help Text
 
 FastAPI-Admin will auto read `description` defined in tortoise-orm model
-`Field` and display in front.
+`Field` and display in front with form help text.
 
 ### ForeignKeyField Support
 

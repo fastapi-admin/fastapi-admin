@@ -51,7 +51,6 @@ async def start_up():
             locale_switcher=True,
             theme_switcher=True,
         ),
-        login_view="examples.routes.login",
     )
 
 

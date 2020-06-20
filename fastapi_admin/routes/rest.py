@@ -120,7 +120,9 @@ async def update_one(id: int, parsed=Depends(parse_body), model=Depends(get_mode
     body, resource_fields = parsed
     m2m_fields = model._meta.m2m_fields
     try:
-        obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model, False, id)
+        obj = await handle_m2m_fields_create_or_update(
+            body, m2m_fields, model, app.user_model, False, id
+        )
     except IntegrityError as e:
         return UJSONResponse(
             status_code=HTTP_409_CONFLICT, content=dict(message=f"Update Error,{e}")
@@ -135,7 +137,7 @@ async def create_one(parsed=Depends(parse_body), model=Depends(get_model)):
     m2m_fields = model._meta.m2m_fields
     creator = pydantic_model_creator(model, include=resource_fields, exclude=m2m_fields)
     try:
-        obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model)
+        obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model, app.user_model)
     except IntegrityError as e:
         return UJSONResponse(
             status_code=HTTP_409_CONFLICT, content=dict(message=f"Create Error,{e}")
