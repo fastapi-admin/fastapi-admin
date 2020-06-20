@@ -4,7 +4,7 @@ version = "0.2.7"
 description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "Apache-2.0"
-readme = "README.rst"
+readme = "README.md"
 homepage = "https://github.com/long2ice/fastapi-admin"
 repository = "https://github.com/long2ice/fastapi-admin.git"
 documentation = "https://github.com/long2ice/fastapi-admin"
@@ -12,7 +12,7 @@ keywords = ["fastapi", "admin", "dashboard"]
 packages = [
     { include = "fastapi_admin" }
 ]
-include = ["LICENSE", "README.rst"]
+include = ["LICENSE", "README.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
