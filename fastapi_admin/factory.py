@@ -319,6 +319,7 @@ class AdminApp(FastAPI):
 app = AdminApp(
     debug=False,
     title="FastAPI-Admin",
+    root_path="/admin",
     description="FastAPI Admin Dashboard based on FastAPI and Tortoise ORM.",
 )
 app.add_exception_handler(HTTPException, exception_handler)
