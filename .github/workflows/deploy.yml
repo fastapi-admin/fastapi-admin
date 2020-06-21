@@ -13,5 +13,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/fastapi-admin/
+            source venv/bin/activate.fish
             git pull
+            make up
             supervisorctl restart fastapi-admin
