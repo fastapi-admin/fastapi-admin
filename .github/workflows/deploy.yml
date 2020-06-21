@@ -15,5 +15,5 @@ jobs:
             cd /root/fastapi-admin/
             source venv/bin/activate.fish
             git pull
-            make up
+            make deps
             supervisorctl restart fastapi-admin
