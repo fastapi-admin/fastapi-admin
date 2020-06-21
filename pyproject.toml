@@ -20,8 +20,9 @@ tortoise-orm = "*"
 aiomysql = "*"
 python-dotenv = "*"
 uvloop = "*"
+uvicorn = "*"
 python-rapidjson = "*"
-fastapi = {version = "*", extras = ["all"]}
+fastapi = "*"
 aiosqlite = "*"
 passlib = "*"
 bcrypt = "*"
@@ -29,6 +30,7 @@ pyjwt = "*"
 xlsxwriter = "*"
 colorama = "*"
 prompt_toolkit = "*"
+jinja2 = "*"
 
 [tool.poetry.dev-dependencies]
 taskipy = "*"
