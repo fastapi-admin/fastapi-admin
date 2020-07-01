@@ -9,6 +9,7 @@ ChangeLog
 -----
 - Add password auto hash.
 - `Field` description as help text for form.
+- Make `uvloop` dependency optional.
 
 0.2.7
 -----
