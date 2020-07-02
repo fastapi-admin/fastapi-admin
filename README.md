@@ -112,13 +112,13 @@ for reference.
 
 ### Builtin Auth And Permissions Control
 
-Inherit `fastapi_admin.models.User` and add you own fields,must contains
+You should inherit `fastapi_admin.models.AbstractUser` and add you own fields,must contains
 `is_active` and `is_superuser`.
 
 ```python
-from fastapi_admin.models import User as AdminUser
+from fastapi_admin.models import AbstractUser
 
-class AdminUser(AdminUser,Model):
+class AdminUser(AbstractUser,Model):
     is_active = fields.BooleanField(default=False, description='Is Active')
     is_superuser = fields.BooleanField(default=False, description='Is Superuser')
     status = fields.IntEnumField(Status, description='User Status')
