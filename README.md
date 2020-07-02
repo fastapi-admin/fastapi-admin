@@ -89,11 +89,16 @@ fast_app.mount('/admin', admin_app)
 @fast_app.on_event('startup')
 async def startup():
     admin_app.init(
-        user_model='User',
-        tortoise_app='models',
-        admin_secret='test',
+        admin_secret="test",
         permission=True,
-        site=Site(...)
+        site=Site(
+            name="FastAPI-Admin DEMO",
+            login_footer="FASTAPI ADMIN - FastAPI Admin Dashboard",
+            login_description="FastAPI Admin Dashboard",
+            locale="en-US",
+            locale_switcher=True,
+            theme_switcher=True,
+        ),
     )
 ```
 
@@ -141,13 +146,11 @@ And set `permission=True` to active it:
 
 ```python
 admin_app.init(
-    user_model='AdminUser',
-    admin_secret='123456',
-    models='examples.models',
+    ...
     permission=True,
     site=Site(
         ...
-    )
+    ),
 )
 ```
 
@@ -183,7 +186,7 @@ And must return json like:
 {
   "user": {
     "username": "admin",
-    "is_superuser": False,
+    "is_superuser": false,
     "avatar": "https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4"
   },
   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.HSlcYkOEQewxyPuaqcVwCcw_wkbLB50Ws1-ZxfPoLAQ"
