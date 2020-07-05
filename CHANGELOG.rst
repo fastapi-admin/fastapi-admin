@@ -5,6 +5,10 @@ ChangeLog
 0.2
 ===
 
+0.2.9
+-----
+- Rename `fastapi_admin.models.User` to `fastapi_admin.models.AbstractUser`.
+
 0.2.8
 -----
 - Add password auto hash.

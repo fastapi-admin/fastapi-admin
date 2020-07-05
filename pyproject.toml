@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-admin"
-version = "0.2.8"
+version = "0.2.9"
 description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "Apache-2.0"

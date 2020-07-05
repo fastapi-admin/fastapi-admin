@@ -2,12 +2,12 @@ import datetime
 
 from tortoise import Model, fields
 
-from fastapi_admin.models import User as AdminUser
+from fastapi_admin.models import AbstractUser
 
 from .enums import ProductType, Status
 
 
-class User(AdminUser):
+class User(AbstractUser):
     last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
     is_active = fields.BooleanField(default=True, description="Is Active")
     is_superuser = fields.BooleanField(default=False, description="Is SuperUser")
