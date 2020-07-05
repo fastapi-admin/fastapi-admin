@@ -1,4 +1,4 @@
-from . import routes
+from . import routes  # noqa: F401
 
 
 def version():

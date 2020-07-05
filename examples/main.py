@@ -59,7 +59,7 @@ app = create_app()
 
 @app.on_event("startup")
 async def start_up():
-    admin_app.init(
+    admin_app.init(  # nosec
         admin_secret="test",
         permission=True,
         site=Site(

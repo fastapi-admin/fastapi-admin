@@ -31,7 +31,7 @@ class Menu(BaseModel):
     # active table export
     export: bool = True
     actions: Optional[Dict]
-    bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all",}]
+    bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all"}]
 
 
 Menu.update_forward_refs()

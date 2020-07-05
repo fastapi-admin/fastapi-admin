@@ -66,7 +66,7 @@ async def createsuperuser(args):
             except Exception as e:
                 Logger.error(f"Create superuser {username} error,{e}")
         except (EOFError, KeyboardInterrupt):
-            Logger.success(f"Exit success!")
+            Logger.success("Exit success!")
             return
 
 

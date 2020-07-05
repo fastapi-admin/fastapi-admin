@@ -77,7 +77,7 @@ class AdminApp(FastAPI):
     def _build_content_menus(self) -> List[Menu]:
         models = deepcopy(self.models)  # type:Dict[str,Type[Model]]
         models.pop("Role", None)
-        models.pop("User", None)
+        models.pop(self.user_model.__name__, None)
         models.pop("Permission", None)
         menus = []
         for k, v in models.items():
@@ -86,7 +86,7 @@ class AdminApp(FastAPI):
                 url=f"/rest/{k}",
                 fields_type=self._get_model_fields_type(v),
                 icon="icon-list",
-                bulk_actions=[{"value": "delete", "text": "delete_all",},],
+                bulk_actions=[{"value": "delete", "text": "delete_all"}],
             )
             menus.append(menu)
         return menus
@@ -299,7 +299,8 @@ class AdminApp(FastAPI):
     async def get_resource(
         self, resource: str, exclude_pk=False, exclude_m2m_field=True, exclude_actions=False
     ) -> Resource:
-        assert self._inited, "must call init() first!"
+        if not self._inited:
+            raise Exception("must call init() first!")
         model = self.models.get(resource)  # type:Type[Model]
         model_describe = model.describe(serializable=False)
         pk, fields, search_fields = await self._build_resource_from_model_describe(
