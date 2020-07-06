@@ -105,7 +105,7 @@ async def startup():
 ### Front
 
 See
-[fastapi-admin-front](https://github.com/long2ice/fastapi-admin-front)
+[restful-admin](https://github.com/long2ice/restful-admin)
 for reference.
 
 ## Features
