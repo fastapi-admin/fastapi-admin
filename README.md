@@ -54,8 +54,8 @@ Look at
 1. `git clone https://github.com/long2ice/fastapi-admin.git`.
 2. create database `fastapi-admin` and import from
    `examples/example.sql`.
-3. `python setup.py install`.
-4. `env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin PYTHONPATH=./ python3 examples/main.py`,then
+3. run `poetry install`, you must install [poetry](https://github.com/python-poetry/poetry) first.
+4. `env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin PYTHONPATH=./ python3 examples/main.py`, then
    you can see:
 
 ```log
