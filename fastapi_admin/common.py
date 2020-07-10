@@ -20,8 +20,6 @@ async def handle_m2m_fields_create_or_update(
     :return:
     """
     copy_body = deepcopy(body)
-    if model == user_model:
-        copy_body["password"] = pwd_context.hash(copy_body.pop("password"))
     m2m_body = {}
     for k, v in body.items():
         if k in m2m_fields:
@@ -29,6 +27,11 @@ async def handle_m2m_fields_create_or_update(
     if create:
         obj = await model.create(**copy_body)
     else:
+        password = copy_body.pop("password", None)
+        if model == user_model:
+            user = await user_model.get(pk=pk)
+            if user.password != password:
+                copy_body["password"] = pwd_context.hash(password)
         await model.filter(pk=pk).update(**copy_body)
         obj = await model.get(pk=pk)
     for k, v in m2m_body.items():

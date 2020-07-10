@@ -5,7 +5,9 @@ from fastapi_admin import enums
 
 class AbstractUser(Model):
     username = fields.CharField(max_length=20, unique=True)
-    password = fields.CharField(max_length=200, description="Will auto hash with raw password")
+    password = fields.CharField(
+        max_length=200, description="Will auto hash with raw password when change"
+    )
 
     class Meta:
         abstract = True
