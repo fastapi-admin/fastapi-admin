@@ -303,6 +303,7 @@ See [documents](https://fastapi-admin-docs.long2ice.cn) for reference.
 
 - Just give a star!
 - Donation.
+- Click [Ads](https://tracking.gitads.io/?repo=fastapi-admin)
 
 ### AliPay
 
