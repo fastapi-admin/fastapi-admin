@@ -9,8 +9,6 @@ from .enums import ProductType, Status
 
 class User(AbstractUser):
     last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
-    is_active = fields.BooleanField(default=True, description="Is Active")
-    is_superuser = fields.BooleanField(default=False, description="Is SuperUser")
     avatar = fields.CharField(max_length=200, default="")
     intro = fields.TextField(default="")
     created_at = fields.DatetimeField(auto_now_add=True)

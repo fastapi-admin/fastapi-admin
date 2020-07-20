@@ -8,6 +8,7 @@ ChangeLog
 0.2.9
 -----
 - Rename `fastapi_admin.models.User` to `fastapi_admin.models.AbstractUser`.
+- Move `is_superuser` and `is_active` to base `AbstractUser`.
 
 0.2.8
 -----

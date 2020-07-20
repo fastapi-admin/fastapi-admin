@@ -8,6 +8,8 @@ class AbstractUser(Model):
     password = fields.CharField(
         max_length=200, description="Will auto hash with raw password when change"
     )
+    is_active = fields.BooleanField(default=True,)
+    is_superuser = fields.BooleanField(default=False)
 
     class Meta:
         abstract = True
