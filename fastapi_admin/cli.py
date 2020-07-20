@@ -51,7 +51,7 @@ async def register_permissions(args):
 async def createsuperuser(args):
     await init_tortoise(args)
 
-    user_model = Tortoise.apps.get("models").get(args.user_model)
+    user_model = Tortoise.apps.get("models").get(args.user)
     prompt = PromptSession()
     while True:
         try:
@@ -94,7 +94,7 @@ def cli():
 
     parser_createsuperuser = subparsers.add_parser("createsuperuser")
     parser_createsuperuser.add_argument(
-        "--user", required=True, help="User model name, like User or Admin."
+        "-u", "--user", required=True, help="User model name, like User or Admin."
     )
     parser_createsuperuser.set_defaults(func=createsuperuser)
 

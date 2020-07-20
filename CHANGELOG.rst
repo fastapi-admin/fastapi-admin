@@ -9,6 +9,7 @@ ChangeLog
 -----
 - Rename `fastapi_admin.models.User` to `fastapi_admin.models.AbstractUser`.
 - Move `is_superuser` and `is_active` to base `AbstractUser`.
+- Fix `createsuperuser` error.
 
 0.2.8
 -----
