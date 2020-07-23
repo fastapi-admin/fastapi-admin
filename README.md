@@ -284,6 +284,36 @@ async def bulk_delete(
 Default, FastAPI-Admin provide default menus by your models, without
 doing tedious works.
 
+### Table Variant
+
+You can define `RowVariant` and `CellVariants` in `computed` of `tortoise-orm`, which will effect table rows and cells variant.
+
+```python
+class User(AbstractUser):
+    last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
+    avatar = fields.CharField(max_length=200, default="")
+    intro = fields.TextField(default="")
+    created_at = fields.DatetimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.pk}#{self.username}"
+
+    def rowVariant(self) -> str:
+        if not self.is_active:
+            return "warning"
+        return ""
+
+    def cellVariants(self) -> dict:
+        if self.is_active:
+            return {
+                "intro": "info",
+            }
+        return {}
+
+    class PydanticMeta:
+        computed = ("rowVariant", "cellVariants")
+```
+
 ## Deployment
 
 Deploy fastapi app by gunicorn+uvicorn or reference

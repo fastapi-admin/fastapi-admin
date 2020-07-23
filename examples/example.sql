@@ -356,6 +356,10 @@ INSERT INTO `user`
 VALUES (2, 'admin', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0ptG', '2020-04-14 16:54:40.510165', 1,
         'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
         'test', '2020-04-14 16:54:40.510555', 0);
+INSERT INTO `user`
+VALUES (2, 'test', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0ptG', '2020-04-14 16:54:40.510165', 0,
+        'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
+        'test', '2020-04-14 16:54:40.510555', 0);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

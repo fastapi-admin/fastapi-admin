@@ -16,6 +16,21 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.pk}#{self.username}"
 
+    def rowVariant(self) -> str:
+        if not self.is_active:
+            return "warning"
+        return ""
+
+    def cellVariants(self) -> dict:
+        if self.is_active:
+            return {
+                "intro": "info",
+            }
+        return {}
+
+    class PydanticMeta:
+        computed = ("rowVariant", "cellVariants")
+
 
 class Category(Model):
     slug = fields.CharField(max_length=200)

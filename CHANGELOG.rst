@@ -7,8 +7,9 @@ ChangeLog
 
 0.3.0
 -----
-- search_fields not required.
-- bug fix.
+- Search_fields not required.
+- Bug fix.
+- Add `_rowVariant` and `_cellVariants`.
 
 0.2.9
 -----

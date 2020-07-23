@@ -3,6 +3,7 @@ import io
 import xlsxwriter
 from fastapi import APIRouter, Depends
 from fastapi.responses import UJSONResponse
+from pydantic import Field
 from starlette.responses import StreamingResponse
 from starlette.status import HTTP_409_CONFLICT
 from tortoise import Model
@@ -78,9 +79,13 @@ async def get_resource(
     creator = pydantic_model_creator(
         model, include=resource.resource_fields.keys(), exclude=model._meta.m2m_fields
     )
-    return GetManyOut(
-        total=await qs.count(), data=list(map(lambda x: creator.from_orm(x).dict(), result))
-    )
+    data = []
+    for item in result:
+        item_dict = creator.from_orm(item).dict()
+        item_dict["_rowVariant"] = item_dict.pop("rowVariant", None)
+        item_dict["_cellVariants"] = item_dict.pop("cellVariants", None)
+        data.append(item_dict)
+    return GetManyOut(total=await qs.count(), data=data)
 
 
 @router.get("/{resource}/form", dependencies=[Depends(read_checker)])
