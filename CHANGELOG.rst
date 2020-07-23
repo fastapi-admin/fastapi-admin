@@ -10,6 +10,7 @@ ChangeLog
 - Search_fields not required.
 - Bug fix.
 - Add `_rowVariant` and `_cellVariants`.
+- Add update password.
 
 0.2.9
 -----

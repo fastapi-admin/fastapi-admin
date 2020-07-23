@@ -64,7 +64,7 @@ async def start_up():
         permission=True,
         site=Site(
             name="FastAPI-Admin DEMO",
-            login_footer="FASTAPI ADMIN - FastAPI Admin Dashboard",
+            login_footer="FASweTAPI ADMIN - FastAPI Admin Dashboard",
             login_description="FastAPI Admin Dashboard",
             locale="en-US",
             locale_switcher=True,

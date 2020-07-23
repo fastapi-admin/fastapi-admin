@@ -11,3 +11,9 @@ class LoginIn(BaseModel):
 
 class BulkIn(BaseModel):
     pk_list: List = Body(..., example=[1, 2, 3])
+
+
+class UpdatePasswordIn(BaseModel):
+    old_password: str
+    new_password: str
+    confirm_password: str
