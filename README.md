@@ -9,8 +9,6 @@
 
 [中文文档](https://blog.long2ice.cn/2020/05/fastapi-admin%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E5%9F%BA%E4%BA%8Efastapi%E4%B8%8Etortoise-orm%E7%9A%84%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0/)
 
-**Looking for front-end collaborator to make this project better, because I'm not good at front development.**
-
 ## Introduction
 
 FastAPI-Admin is a admin dashboard based on
