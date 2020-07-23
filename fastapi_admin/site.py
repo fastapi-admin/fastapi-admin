@@ -23,7 +23,7 @@ class Menu(BaseModel):
     # searchable fields
     search_fields: Optional[Tuple[str, ...]] = tuple()
     # sortable fields
-    sort_fields: Optional[Set[str, ...]] = set()
+    sort_fields: Optional[Tuple[str, ...]] = tuple()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
     # define field attr,like cols which in bootstrap table
