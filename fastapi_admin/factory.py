@@ -255,7 +255,7 @@ class AdminApp(FastAPI):
             field = field.copy(update=menu.attrs.get(name) or {})
             fields[name] = field
             if name in search_fields:
-                search_fields_ret[name] = field
+                search_fields_ret[name] = field.copy(update=dict(required=False))
 
         for fk_field in fk_fields:
             name = fk_field.get("name")
@@ -277,7 +277,7 @@ class AdminApp(FastAPI):
                     field = field.copy(update=menu.attrs.get(name) or {})
                     fields[raw_field] = field
                     if name in search_fields:
-                        search_fields_ret[raw_field] = field
+                        search_fields_ret[raw_field] = field.copy(update=dict(required=False))
         if not exclude_m2m_field:
             for m2m_field in m2m_fields:
                 name = m2m_field.get("name")
