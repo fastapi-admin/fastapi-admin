@@ -5,6 +5,11 @@ ChangeLog
 0.2
 ===
 
+0.3.0
+-----
+- search_fields not required.
+- bug fix.
+
 0.2.9
 -----
 - Rename `fastapi_admin.models.User` to `fastapi_admin.models.AbstractUser`.
