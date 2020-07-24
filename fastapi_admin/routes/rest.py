@@ -3,7 +3,6 @@ import io
 import xlsxwriter
 from fastapi import APIRouter, Depends
 from fastapi.responses import UJSONResponse
-from pydantic import Field
 from starlette.responses import StreamingResponse
 from starlette.status import HTTP_409_CONFLICT
 from tortoise import Model

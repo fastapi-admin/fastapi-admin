@@ -11,6 +11,7 @@ ChangeLog
 - Bug fix.
 - Add `_rowVariant` and `_cellVariants`.
 - Add update password.
+- Fix user create password hash.
 
 0.2.9
 -----
