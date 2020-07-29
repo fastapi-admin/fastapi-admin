@@ -2,7 +2,7 @@ import io
 
 import xlsxwriter
 from fastapi import APIRouter, Depends
-from fastapi.responses import UJSONResponse
+from fastapi.responses import JSONResponse
 from starlette.responses import StreamingResponse
 from starlette.status import HTTP_409_CONFLICT
 from tortoise import Model
@@ -128,7 +128,7 @@ async def update_one(id: int, parsed=Depends(parse_body), model=Depends(get_mode
             body, m2m_fields, model, app.user_model, False, id
         )
     except IntegrityError as e:
-        return UJSONResponse(
+        return JSONResponse(
             status_code=HTTP_409_CONFLICT, content=dict(message=f"Update Error,{e}")
         )
     creator = pydantic_model_creator(model, include=resource_fields, exclude=m2m_fields)
@@ -143,7 +143,7 @@ async def create_one(parsed=Depends(parse_body), model=Depends(get_model)):
     try:
         obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model, app.user_model)
     except IntegrityError as e:
-        return UJSONResponse(
+        return JSONResponse(
             status_code=HTTP_409_CONFLICT, content=dict(message=f"Create Error,{e}")
         )
     return creator.from_orm(obj).dict()
