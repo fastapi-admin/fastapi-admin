@@ -24,10 +24,13 @@ async def handle_m2m_fields_create_or_update(
     for k, v in body.items():
         if k in m2m_fields:
             m2m_body[k] = copy_body.pop(k)
-    if model == user_model and not create:
+    if model == user_model:
         password = copy_body.get("password")
-        user = await user_model.get(pk=pk)
-        if user.password != password:
+        if not create:
+            user = await user_model.get(pk=pk)
+            if user.password != password:
+                copy_body["password"] = pwd_context.hash(password)
+        else:
             copy_body["password"] = pwd_context.hash(password)
     if create:
         obj = await model.create(**copy_body)
