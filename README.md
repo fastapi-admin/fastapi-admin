@@ -114,10 +114,10 @@ for reference.
 
 ### Builtin Auth And Permissions Control
 
-You should inherit `fastapi_admin.models.AbstractUser` and add extra fields.
+You should inherit `fastapi_admin.models.AbstractUser`,`fastapi_admin.models.AbstractPermission`,`fastapi_admin.models.AbstractRole` and add extra fields.
 
 ```python
-from fastapi_admin.models import AbstractUser
+from fastapi_admin.models import AbstractUser,AbstractPermission,AbstractRole
 
 class AdminUser(AbstractUser,Model):
     is_active = fields.BooleanField(default=False, description='Is Active')
@@ -125,22 +125,12 @@ class AdminUser(AbstractUser,Model):
     status = fields.IntEnumField(Status, description='User Status')
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
-```
 
-Then add `fastapi_admin.models` to `Tortoise-ORM` config, example:
+class Permission(AbstractPermission):
+    pass
 
-```python
-TORTOISE_ORM = {
-    'connections': {
-        'default': os.getenv('DATABASE_URL')
-    },
-    'apps': {
-        'models': {
-            'models': ['examples.models', 'fastapi_admin.models'],
-            'default_connection': 'default',
-        }
-    }
-}
+class Role(AbstractRole):
+    pass
 ```
 
 And set `permission=True` to active it:

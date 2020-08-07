@@ -2,7 +2,7 @@ import datetime
 
 from tortoise import Model, fields
 
-from fastapi_admin.models import AbstractUser
+from fastapi_admin.models import AbstractPermission, AbstractRole, AbstractUser
 
 from .enums import ProductType, Status
 
@@ -30,6 +30,18 @@ class User(AbstractUser):
 
     class PydanticMeta:
         computed = ("rowVariant", "cellVariants")
+
+
+class Permission(AbstractPermission):
+    """
+    must inheritance AbstractPermission
+    """
+
+
+class Role(AbstractRole):
+    """
+    must inheritance AbstractRole
+    """
 
 
 class Category(Model):

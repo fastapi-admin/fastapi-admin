@@ -1,5 +1,4 @@
-from copy import deepcopy
-from typing import Any, Dict, List, Optional, Type
+from typing import Dict, List, Optional, Type
 
 import jwt
 from fastapi import FastAPI, HTTPException
@@ -8,6 +7,7 @@ from tortoise import Model, Tortoise
 
 from .common import import_obj, pwd_context
 from .exceptions import exception_handler
+from .models import AbstractPermission, AbstractRole, AbstractUser
 from .schemas import LoginIn
 from .shortcuts import get_object_or_404
 from .site import Field, Menu, Resource, Site
@@ -32,9 +32,9 @@ async def login(login_in: LoginIn):
 
 
 class AdminApp(FastAPI):
-    models: Any
+    models: Dict[str, Type[Model]] = {}
     admin_secret: str
-    user_model: Model
+    user_model: Type[Model]
     site: Site
     permission: bool
     _inited: bool = False
@@ -75,16 +75,14 @@ class AdminApp(FastAPI):
         return ret
 
     def _build_content_menus(self) -> List[Menu]:
-        models = deepcopy(self.models)  # type:Dict[str,Type[Model]]
-        models.pop("Role", None)
-        models.pop(self.user_model.__name__, None)
-        models.pop("Permission", None)
         menus = []
-        for k, v in models.items():
+        for model_name, model in self._get_all_models():
+            if issubclass(model, (AbstractUser, AbstractPermission, AbstractRole)):
+                continue
             menu = Menu(
-                name=v._meta.table_description or k,
-                url=f"/rest/{k}",
-                fields_type=self._get_model_fields_type(v),
+                name=model._meta.table_description or model_name,
+                url=f"/rest/{model_name}",
+                fields_type=self._get_model_fields_type(model),
                 icon="icon-list",
                 bulk_actions=[{"value": "delete", "text": "delete_all"}],
             )
@@ -131,9 +129,7 @@ class AdminApp(FastAPI):
         self,
         site: Site,
         admin_secret: str,
-        user_model: str = "User",
         permission: bool = False,
-        tortoise_app: str = "models",
         login_view: Optional[str] = None,
     ):
         """
@@ -149,8 +145,10 @@ class AdminApp(FastAPI):
         self.site = site
         self.permission = permission
         self.admin_secret = admin_secret
-        self.models = Tortoise.apps.get(tortoise_app)
-        self.user_model = self.models.get(user_model)
+        for model_name, model in self._get_all_models():
+            if issubclass(model, AbstractUser):
+                self.user_model = model
+            self.models[model_name] = model
         self._inited = True
         if not site.menus:
             site.menus = self._build_default_menus(permission)
@@ -159,6 +157,11 @@ class AdminApp(FastAPI):
             self.add_api_route("/login", import_obj(login_view), methods=["POST"])
         else:
             self.add_api_route("/login", login, methods=["POST"])
+
+    def _get_all_models(self):
+        for tortoise_app, models in Tortoise.apps.items():
+            for model_item in models.items():
+                yield model_item
 
     def _exclude_field(self, resource: str, field: str):
         """

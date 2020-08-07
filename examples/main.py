@@ -14,12 +14,7 @@ from fastapi_admin.site import Site
 
 TORTOISE_ORM = {
     "connections": {"default": os.getenv("DATABASE_URL")},
-    "apps": {
-        "models": {
-            "models": ["examples.models", "fastapi_admin.models"],
-            "default_connection": "default",
-        }
-    },
+    "apps": {"models": {"models": ["examples.models"], "default_connection": "default"}},
 }
 
 templates = Jinja2Templates(directory="examples/templates")

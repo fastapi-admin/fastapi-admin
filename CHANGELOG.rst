@@ -12,6 +12,7 @@ ChangeLog
 - Add `_rowVariant` and `_cellVariants`.
 - Add update password.
 - Fix user create password hash.
+- Make `Role`,`Permission` abstract.
 
 0.2.9
 -----
