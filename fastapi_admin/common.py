@@ -2,6 +2,7 @@ import importlib
 from copy import deepcopy
 
 from passlib.context import CryptContext
+from tortoise import Tortoise
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -57,3 +58,13 @@ def import_obj(path: str):
     module = ".".join(splits[:-1])
     class_name = splits[-1]
     return getattr(importlib.import_module(module), class_name)
+
+
+def get_all_models():
+    """
+    get all tortoise models
+    :return:
+    """
+    for tortoise_app, models in Tortoise.apps.items():
+        for model_item in models.items():
+            yield model_item

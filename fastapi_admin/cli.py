@@ -6,8 +6,8 @@ from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
 
 from fastapi_admin import enums, version
-from fastapi_admin.common import import_obj, pwd_context
-from fastapi_admin.models import Permission
+from fastapi_admin.common import get_all_models, import_obj, pwd_context
+from fastapi_admin.models import AbstractPermission
 
 init(autoreset=True)
 
@@ -33,17 +33,23 @@ async def init_tortoise(args):
 async def register_permissions(args):
     await init_tortoise(args)
     await Tortoise.generate_schemas()
-
+    permission_model = None
+    for model_name, model in get_all_models():
+        if issubclass(model, AbstractPermission):
+            permission_model = model
+            break
+    if not permission_model:
+        Logger.error("No Permission Model Founded.")
+        return
     if args.clean:
-        await Permission.all().delete()
+        await permission_model.all().delete()
         Logger.waring("Cleaned all permissions success.")
-    models = Tortoise.apps.get("models").keys()
-    models = list(models)
-    for model in models:
+
+    for model, _ in get_all_models():
         for action in enums.PermissionAction:
             label = f"{enums.PermissionAction.choices().get(action)} {model}"
             defaults = dict(label=label, model=model, action=action,)
-            _, created = await Permission.get_or_create(**defaults,)
+            _, created = await permission_model.get_or_create(**defaults,)
             if created:
                 Logger.success(f"Create permission {label} success.")
 

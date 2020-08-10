@@ -3,9 +3,9 @@ from typing import Dict, List, Optional, Type
 import jwt
 from fastapi import FastAPI, HTTPException
 from starlette.status import HTTP_403_FORBIDDEN
-from tortoise import Model, Tortoise
+from tortoise import Model
 
-from .common import import_obj, pwd_context
+from .common import get_all_models, import_obj, pwd_context
 from .exceptions import exception_handler
 from .models import AbstractPermission, AbstractRole, AbstractUser
 from .schemas import LoginIn
@@ -35,6 +35,8 @@ class AdminApp(FastAPI):
     models: Dict[str, Type[Model]] = {}
     admin_secret: str
     user_model: Type[Model]
+    permission_model: Type[Model]
+    role_model: Type[Model]
     site: Site
     permission: bool
     _inited: bool = False
@@ -76,7 +78,7 @@ class AdminApp(FastAPI):
 
     def _build_content_menus(self) -> List[Menu]:
         menus = []
-        for model_name, model in self._get_all_models():
+        for model_name, model in get_all_models():
             if issubclass(model, (AbstractUser, AbstractPermission, AbstractRole)):
                 continue
             menu = Menu(
@@ -145,7 +147,7 @@ class AdminApp(FastAPI):
         self.site = site
         self.permission = permission
         self.admin_secret = admin_secret
-        for model_name, model in self._get_all_models():
+        for model_name, model in get_all_models():
             if issubclass(model, AbstractUser):
                 self.user_model = model
             self.models[model_name] = model
@@ -157,11 +159,6 @@ class AdminApp(FastAPI):
             self.add_api_route("/login", import_obj(login_view), methods=["POST"])
         else:
             self.add_api_route("/login", login, methods=["POST"])
-
-    def _get_all_models(self):
-        for tortoise_app, models in Tortoise.apps.items():
-            for model_item in models.items():
-                yield model_item
 
     def _exclude_field(self, resource: str, field: str):
         """
