@@ -5,6 +5,10 @@ ChangeLog
 0.2
 ===
 
+0.3.1
+-----
+- Auto register permission.
+
 0.3.0
 -----
 - Search_fields not required.

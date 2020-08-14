@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from starlette.status import HTTP_403_FORBIDDEN
 from tortoise import Model
 
+from . import enums
 from .common import get_all_models, import_obj, pwd_context
 from .exceptions import exception_handler
 from .models import AbstractPermission, AbstractRole, AbstractUser
@@ -127,7 +128,7 @@ class AdminApp(FastAPI):
             menus += permission_menus
         return menus
 
-    def init(
+    async def init(
         self,
         site: Site,
         admin_secret: str,
@@ -137,10 +138,8 @@ class AdminApp(FastAPI):
         """
         init admin site
         :param login_view:
-        :param tortoise_app:
         :param permission: active builtin permission
         :param site:
-        :param user_model: admin user model path,like admin.models.user
         :param admin_secret: admin jwt secret.
         :return:
         """
@@ -154,11 +153,28 @@ class AdminApp(FastAPI):
         self._inited = True
         if not site.menus:
             site.menus = self._build_default_menus(permission)
+        if permission:
+            await self._register_permissions()
         self._get_model_menu_mapping(site.menus)
         if login_view:
             self.add_api_route("/login", import_obj(login_view), methods=["POST"])
         else:
             self.add_api_route("/login", login, methods=["POST"])
+
+    async def _register_permissions(self):
+        permission_model = None
+        for model_name, model in get_all_models():
+            if issubclass(model, AbstractPermission):
+                permission_model = model
+                break
+        if not permission_model:
+            raise Exception("No Permission Model Founded.")
+
+        for model, _ in get_all_models():
+            for action in enums.PermissionAction:
+                label = f"{enums.PermissionAction.choices().get(action)} {model}"
+                defaults = dict(label=label, model=model, action=action,)
+                await permission_model.get_or_create(**defaults,)
 
     def _exclude_field(self, resource: str, field: str):
         """

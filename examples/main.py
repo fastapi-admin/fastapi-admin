@@ -28,14 +28,14 @@ async def test_bulk(bulk_in: BulkIn, model=Depends(get_model)):
     return ret.dict()
 
 
-@admin_app.get("/home",)
+@admin_app.get("/home", )
 async def home():
     return {"html": templates.get_template("home.html").render()}
 
 
 def create_app():
     fast_app = FastAPI(debug=False)
-    register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
+    register_tortoise(fast_app, config=TORTOISE_ORM)
     fast_app.mount("/admin", admin_app)
 
     fast_app.add_middleware(
@@ -54,7 +54,7 @@ app = create_app()
 
 @app.on_event("startup")
 async def start_up():
-    admin_app.init(  # nosec
+    await admin_app.init(  # nosec
         admin_secret="test",
         permission=True,
         site=Site(

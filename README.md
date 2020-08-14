@@ -90,7 +90,7 @@ fast_app.mount('/admin', admin_app)
 
 @fast_app.on_event('startup')
 async def startup():
-    admin_app.init(
+    await admin_app.init(
         admin_secret="test",
         permission=True,
         site=Site(
@@ -136,7 +136,7 @@ class Role(AbstractRole):
 And set `permission=True` to active it:
 
 ```python
-admin_app.init(
+await admin_app.init(
     ...
     permission=True,
     site=Site(
@@ -145,19 +145,20 @@ admin_app.init(
 )
 ```
 
-And register permissions and createsuperuser:
+And createsuperuser:
 
 ```shell
 > fastapi-admin -h
-usage: fastapi-admin [-h] -c CONFIG {register_permissions,createsuperuser} ...
+usage: fastapi-admin [-h] -c CONFIG [--version] {createsuperuser} ...
 
 optional arguments:
   -h, --help            show this help message and exit
   -c CONFIG, --config CONFIG
                         Tortoise-orm config dict import path,like settings.TORTOISE_ORM.
+  --version, -V         show the version
 
 subcommands:
-  {register_permissions,createsuperuser}
+  {createsuperuser}
 ```
 
 ### Custom Login
@@ -165,7 +166,7 @@ subcommands:
 You can write your own login view logic:
 
 ```python
-admin_app.init(
+await admin_app.init(
     ...
     login_view="examples.routes.login"
 )
