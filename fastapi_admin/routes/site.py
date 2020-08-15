@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from fastapi import APIRouter, Depends
 
+from ..common import check_has_permission
 from ..depends import jwt_optional
 from ..factory import app
 from ..shortcuts import get_object_or_404
@@ -15,23 +16,18 @@ async def site(user_id=Depends(jwt_optional)):
     user = None
     if user_id:
         user = await get_object_or_404(app.user_model, pk=user_id)
+    site_copy = deepcopy(site_)
     if user and app.permission and not user.is_superuser:
-        site_ = deepcopy(site_)
         await user.fetch_related("roles")
-        filter_menus = filter(lambda x: (x.url and "rest" in x.url) or x.children, site_.menus)
-        hide_menus = []
-        for menu in filter_menus:
-            has_permission = False
-            for role in user.roles:
-                if not has_permission:
-                    model = menu.url.split("/")[-1]
-                    permission = await role.permissions.filter(model=model)
-                    if permission:
-                        has_permission = True
-            if not has_permission:
-                hide_menus.append(menu.url)
-        for menu in app.site.menus:
-            if menu.url in hide_menus:
-                site_.menus.remove(menu)
-
-    return site_.dict(by_alias=True, exclude_unset=True)
+        for index, menu in enumerate(site_.menus):
+            if menu.url and ("/rest" in menu.url or "/page" in menu.url):
+                model = menu.url.split("/")[-1]
+                if not await check_has_permission(user, model):
+                    site_copy.menus.remove(menu)
+            elif menu.children:
+                for index_child, child in enumerate(menu.children):
+                    if child.url and ("/rest" in child.url or "/page" in child.url):
+                        model = child.url.split("/")[-1]
+                        if not await check_has_permission(user, model):
+                            site_copy.menus[index].children.remove(child)
+    return site_copy.dict(by_alias=True, exclude_unset=True)

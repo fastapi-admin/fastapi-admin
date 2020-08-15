@@ -68,3 +68,19 @@ def get_all_models():
     for tortoise_app, models in Tortoise.apps.items():
         for model_item in models.items():
             yield model_item
+
+
+async def check_has_permission(user, model: str):
+    """
+    check user has permission for model
+    :param user:
+    :param model:
+    :return:
+    """
+    has_permission = False
+    for role in user.roles:
+        permission = await role.permissions.filter(model=model).exists()
+        if permission:
+            has_permission = True
+            break
+    return has_permission
