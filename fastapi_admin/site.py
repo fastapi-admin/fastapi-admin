@@ -5,8 +5,6 @@ from pydantic import BaseModel, HttpUrl
 
 class Menu(BaseModel):
     name: str
-    # whether is it a title or a model resource.
-    title: Optional[bool]
     # must be format with /rest/<Model> if it's a model resource.
     url: Optional[str]
     icon: Optional[str]
@@ -27,7 +25,7 @@ class Menu(BaseModel):
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
     # define field attr,like cols which in bootstrap table
-    attrs: Dict[str, Dict] = {}
+    attrs: Dict[str, Dict] = {"created_at": {"label": "CreatedAt"}}
     # active table export
     export: bool = True
     actions: Optional[Dict]
@@ -49,7 +47,6 @@ class Site(BaseModel):
     theme_switcher: bool = False
     theme: Optional[str]
     url: Optional[HttpUrl]
-    grid_style: int = 1
     # custom css
     css: Optional[List[HttpUrl]]
     # menu define

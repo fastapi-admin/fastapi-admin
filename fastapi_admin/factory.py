@@ -100,30 +100,45 @@ class AdminApp(FastAPI):
 
         menus = [
             Menu(name="Home", url="/", icon="fa fa-home"),
-            Menu(name="Content", title=True),
-            *self._build_content_menus(),
-            Menu(name="External", title=True),
+            Menu(name="Content", children=self._build_content_menus()),
             Menu(
-                name="Github",
-                url="https://github.com/long2ice/fastapi-admin",
-                icon="fa fa-github",
-                external=True,
+                name="External",
+                children=[
+                    Menu(
+                        name="Github",
+                        url="https://github.com/long2ice/fastapi-admin",
+                        icon="fa fa-github",
+                        external=True,
+                    ),
+                ],
             ),
         ]
         if permission:
             permission_menus = [
-                Menu(name="Auth", title=True),
                 Menu(
-                    name="User", url="/rest/User", icon="fa fa-user", search_fields=("username",),
+                    name="Auth",
+                    children=[
+                        Menu(
+                            name="User",
+                            url="/rest/User",
+                            icon="fa fa-user",
+                            search_fields=("username",),
+                        ),
+                        Menu(
+                            name="Role",
+                            url="/rest/Role",
+                            icon="fa fa-group",
+                            actions={"delete": False},
+                        ),
+                        Menu(
+                            name="Permission",
+                            url="/rest/Permission",
+                            icon="fa fa-user-plus",
+                            actions={"delete": False},
+                        ),
+                        Menu(name="Logout", url="/logout", icon="fa fa-lock",),
+                    ],
                 ),
-                Menu(name="Role", url="/rest/Role", icon="fa fa-group", actions={"delete": False}),
-                Menu(
-                    name="Permission",
-                    url="/rest/Permission",
-                    icon="fa fa-user-plus",
-                    actions={"delete": False},
-                ),
-                Menu(name="Logout", url="/logout", icon="fa fa-lock",),
             ]
             menus += permission_menus
         return menus
@@ -171,7 +186,7 @@ class AdminApp(FastAPI):
             raise Exception("No Permission Model Founded.")
 
         for model, _ in get_all_models():
-            for action in enums.PermissionAction:
+            for action in enums.PermissionAction.choices():
                 label = f"{enums.PermissionAction.choices().get(action)} {model}"
                 defaults = dict(label=label, model=model, action=action,)
                 await permission_model.get_or_create(**defaults,)

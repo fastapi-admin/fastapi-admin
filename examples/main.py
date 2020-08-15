@@ -28,7 +28,7 @@ async def test_bulk(bulk_in: BulkIn, model=Depends(get_model)):
     return ret.dict()
 
 
-@admin_app.get("/home", )
+@admin_app.get("/home",)
 async def home():
     return {"html": templates.get_template("home.html").render()}
 
