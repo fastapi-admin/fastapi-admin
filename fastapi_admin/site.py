@@ -68,7 +68,7 @@ class Field(BaseModel):
     ref: Optional[str]
     description: Optional[str]
     disabled: Optional[bool] = False
-    step: str = 'any'
+    step: str = "any"
 
 
 class Resource(BaseModel):

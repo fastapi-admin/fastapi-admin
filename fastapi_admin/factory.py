@@ -273,6 +273,8 @@ class AdminApp(FastAPI):
                 disabled=readonly,
                 description=data_field.get("description"),
             )
+            if field_type == "DecimalField" or field_type == "FloatField":
+                field.step = "any"
             field = field.copy(update=menu.attrs.get(name) or {})
             fields[name] = field
             if name in search_fields:
