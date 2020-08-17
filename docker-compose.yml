@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mysql:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    healthcheck:
+      test: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+  api:
+    build: .
+    environment:
+      DATABASE_URL: mysql://root:123456@mysql:3306/fastapi-admin
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mysql
+    image: prismspay
+    command: uvicorn examples.main:app --port 8000 --host 0.0.0.0
