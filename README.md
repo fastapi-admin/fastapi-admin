@@ -48,32 +48,23 @@ Data in database will restore every day.
 
 ## Quick Start
 
-### Run Example Local
+### Run Backend
 
-Look at
-[examples](https://github.com/long2ice/fastapi-admin/tree/master/examples).
+Look full example at
+[examples](https://github.com/long2ice/fastapi-admin/tree/dev/examples).
 
 1. `git clone https://github.com/long2ice/fastapi-admin.git`.
-2. create database `fastapi-admin` and import from
-   `examples/example.sql`.
-3. run `poetry install`, you must install [poetry](https://github.com/python-poetry/poetry) first.
-4. `env DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin PYTHONPATH=./ python3 examples/main.py`, then
-   you can see:
+2. `docker-compose up -d --build`.
+3. `docker-compose exec -T mysql mysql -uroot -p123456 < examples/example.sql fastapi-admin`.
+4. That's just all, api server is listen at [http://127.0.0.1:8000](http://127.0.0.1:8000) now.
 
-```log
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [89005]
-INFO:     Started server process [89009]
-INFO:     Waiting for application startup.
-INFO:     Tortoise-ORM startup
-    connections: {'default': 'mysql://root:123456@127.0.0.1:3306/fastapi-admin'}
-    apps: {'models': {'models': ['examples.models'], 'default_connection': 'default'}}
-INFO:     Tortoise-ORM started, {'default': <tortoise.backends.mysql.client.MySQLClient object at 0x110ed6760>}, {'models': {'Category': <class 'examples.models.Category'>, 'Product': <class 'examples.models.Product'>, 'User': <class 'examples.models.User'>}}
-INFO:     Tortoise-ORM generating schema
-INFO:     Application startup complete.
-```
+### Run Front
 
-### Backend Integration
+See
+[restful-admin](https://github.com/long2ice/restful-admin)
+for reference.
+
+## Backend Integration
 
 ```shell
 > pip3 install fastapi-admin
@@ -103,12 +94,6 @@ async def startup():
         ),
     )
 ```
-
-### Front
-
-See
-[restful-admin](https://github.com/long2ice/restful-admin)
-for reference.
 
 ## Features
 
