@@ -1,13 +1,15 @@
 version: '3'
 services:
   mysql:
-    image: mariadb
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: fastapi-admin
     healthcheck:
       test: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
   api:
     build: .
+    restart: always
     environment:
       DATABASE_URL: mysql://root:123456@mysql:3306/fastapi-admin
     ports:
