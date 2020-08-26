@@ -10,7 +10,7 @@ from tortoise.contrib.pydantic import pydantic_queryset_creator
 from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
 from fastapi_admin.schemas import BulkIn
-from fastapi_admin.site import Site
+from fastapi_admin.site import Menu, Site
 
 TORTOISE_ORM = {
     "connections": {"default": os.getenv("DATABASE_URL")},
@@ -64,6 +64,57 @@ async def start_up():
             locale="en-US",
             locale_switcher=True,
             theme_switcher=True,
+            menus=[
+                Menu(name="Home", url="/", icon="fa fa-home"),
+                Menu(
+                    name="Content",
+                    children=[
+                        Menu(
+                            name="Category",
+                            url="/rest/Category",
+                            icon="fa fa-list",
+                            search_fields=("slug",),
+                        ),
+                        Menu(
+                            name="Config",
+                            url="/rest/Config",
+                            icon="fa fa-gear",
+                            search_fields=("key",),
+                        ),
+                        Menu(
+                            name="Product",
+                            url="/rest/Product",
+                            icon="fa fa-table",
+                            search_fields=("name",),
+                        ),
+                    ],
+                ),
+                Menu(
+                    name="External",
+                    children=[
+                        Menu(
+                            name="Github",
+                            url="https://github.com/long2ice/fastapi-admin",
+                            icon="fa fa-github",
+                            external=True,
+                        ),
+                    ],
+                ),
+                Menu(
+                    name="Auth",
+                    children=[
+                        Menu(
+                            name="User",
+                            url="/rest/User",
+                            icon="fa fa-user",
+                            search_fields=("username",),
+                        ),
+                        Menu(name="Role", url="/rest/Role", icon="fa fa-group",),
+                        Menu(name="Permission", url="/rest/Permission", icon="fa fa-user-plus",),
+                        Menu(name="Logout", url="/logout", icon="fa fa-lock",),
+                    ],
+                ),
+            ],
         ),
     )
 
