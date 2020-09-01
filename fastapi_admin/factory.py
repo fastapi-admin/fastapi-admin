@@ -337,6 +337,7 @@ class AdminApp(FastAPI):
             pk=pk,
             bulk_actions=menu.bulk_actions,
             export=menu.export,
+            import_=menu.import_,
         )
 
 

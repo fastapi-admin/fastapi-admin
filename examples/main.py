@@ -79,6 +79,7 @@ async def start_up():
                             name="Config",
                             url="/rest/Config",
                             icon="fa fa-gear",
+                            import_=True,
                             search_fields=("key",),
                         ),
                         Menu(

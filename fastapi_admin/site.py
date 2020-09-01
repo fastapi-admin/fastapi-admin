@@ -28,6 +28,7 @@ class Menu(BaseModel):
     attrs: Dict[str, Dict] = {"created_at": {"label": "CreatedAt"}}
     # active table export
     export: bool = True
+    import_: bool = False
     actions: Optional[Dict]
     bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all"}]
 
@@ -78,6 +79,7 @@ class Resource(BaseModel):
     searchFields: Optional[Dict[str, Field]]
     bulk_actions: Optional[List[Dict]]
     export: bool
+    import_: bool
 
     class Config:
         fields = {
