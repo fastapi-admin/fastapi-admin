@@ -13,6 +13,9 @@ from tortoise.fields import ManyToManyRelation
 from ..common import handle_m2m_fields_create_or_update
 from ..depends import (
     QueryItem,
+    admin_log_create,
+    admin_log_delete,
+    admin_log_update,
     create_checker,
     delete_checker,
     get_model,
@@ -107,19 +110,23 @@ async def view(resource: str,):
     return resource.dict(by_alias=True, exclude_unset=True)
 
 
-@router.post("/{resource}/bulk/delete", dependencies=[Depends(delete_checker)])
+@router.post(
+    "/{resource}/bulk/delete", dependencies=[Depends(delete_checker), Depends(admin_log_delete)]
+)
 async def bulk_delete(bulk_in: BulkIn, model=Depends(get_model)):
     await model.filter(pk__in=bulk_in.pk_list).delete()
     return {"success": True}
 
 
-@router.delete("/{resource}/{id}", dependencies=[Depends(delete_checker)])
+@router.delete(
+    "/{resource}/{id}", dependencies=[Depends(delete_checker), Depends(admin_log_delete)]
+)
 async def delete_one(id: int, model=Depends(get_model)):
     await model.filter(pk=id).delete()
     return {"success": True}
 
 
-@router.put("/{resource}/{id}", dependencies=[Depends(update_checker)])
+@router.put("/{resource}/{id}", dependencies=[Depends(update_checker), Depends(admin_log_update)])
 async def update_one(id: int, parsed=Depends(parse_body), model=Depends(get_model)):
     body, resource_fields = parsed
     m2m_fields = model._meta.m2m_fields
@@ -135,7 +142,7 @@ async def update_one(id: int, parsed=Depends(parse_body), model=Depends(get_mode
     return creator.from_orm(obj).dict()
 
 
-@router.post("/{resource}", dependencies=[Depends(create_checker)])
+@router.post("/{resource}", dependencies=[Depends(create_checker), Depends(admin_log_create)])
 async def create_one(parsed=Depends(parse_body), model=Depends(get_model)):
     body, resource_fields = parsed
     m2m_fields = model._meta.m2m_fields

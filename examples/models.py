@@ -2,7 +2,7 @@ import datetime
 
 from tortoise import Model, fields
 
-from fastapi_admin.models import AbstractPermission, AbstractRole, AbstractUser
+from fastapi_admin.models import AbstractAdminLog, AbstractPermission, AbstractRole, AbstractUser
 
 from .enums import ProductType, Status
 
@@ -41,6 +41,12 @@ class Permission(AbstractPermission):
 class Role(AbstractRole):
     """
     must inheritance AbstractRole
+    """
+
+
+class AdminLog(AbstractAdminLog):
+    """
+    must inheritance AbstractAdminLog
     """
 
 

@@ -57,6 +57,7 @@ async def start_up():
     await admin_app.init(  # nosec
         admin_secret="test",
         permission=True,
+        admin_log=True,
         site=Site(
             name="FastAPI-Admin DEMO",
             login_footer="FASweTAPI ADMIN - FastAPI Admin Dashboard",
@@ -112,6 +113,12 @@ async def start_up():
                         ),
                         Menu(name="Role", url="/rest/Role", icon="fa fa-group",),
                         Menu(name="Permission", url="/rest/Permission", icon="fa fa-user-plus",),
+                        Menu(
+                            name="AdminLog",
+                            url="/rest/AdminLog",
+                            icon="fa fa-align-left",
+                            search_fields=("action", "admin", "model"),
+                        ),
                         Menu(name="Logout", url="/logout", icon="fa fa-lock",),
                     ],
                 ),

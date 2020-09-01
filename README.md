@@ -290,6 +290,10 @@ class User(AbstractUser):
         computed = ("rowVariant", "cellVariants")
 ```
 
+### Admin log
+
+You can log each admin action like `delete`,`create` and `update`,just set `admin_log=True` in `admin_app.init()` and inherit `fastapi_admin.models.AbstractAdminLog`.
+
 ## Deployment
 
 Deploy fastapi app by gunicorn+uvicorn or reference

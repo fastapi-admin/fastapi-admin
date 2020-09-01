@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import jwt
 from fastapi import Depends, HTTPException, Path, Query
@@ -107,3 +108,27 @@ read_checker = PermissionsChecker(action=enums.PermissionAction.read)
 create_checker = PermissionsChecker(action=enums.PermissionAction.create)
 update_checker = PermissionsChecker(action=enums.PermissionAction.update)
 delete_checker = PermissionsChecker(action=enums.PermissionAction.delete)
+
+
+class AdminLog:
+    def __init__(self, action: str):
+        self.action = action
+
+    async def __call__(
+        self, request: Request, resource: str = Path(...), admin_id=Depends(jwt_required),
+    ):
+        if app.admin_log:
+            content = None
+            if request.method in ["POST", "PUT"]:
+                content = await request.json()
+            elif request.method == "DELETE":
+                content = {"pk": request.path_params.get("id")}
+            if content:
+                await app.admin_log_model.create(
+                    admin_id=admin_id, action=self.action, model=resource, content=content
+                )
+
+
+admin_log_create = AdminLog(action="create")
+admin_log_update = AdminLog(action="update")
+admin_log_delete = AdminLog(action="delete")

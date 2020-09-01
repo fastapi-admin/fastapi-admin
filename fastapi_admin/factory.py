@@ -8,7 +8,7 @@ from tortoise import Model
 from . import enums
 from .common import get_all_models, import_obj, pwd_context
 from .exceptions import exception_handler
-from .models import AbstractPermission, AbstractRole, AbstractUser
+from .models import AbstractAdminLog, AbstractPermission, AbstractRole, AbstractUser
 from .schemas import LoginIn
 from .shortcuts import get_object_or_404
 from .site import Field, Menu, Resource, Site
@@ -38,8 +38,10 @@ class AdminApp(FastAPI):
     user_model: Type[Model]
     permission_model: Type[Model]
     role_model: Type[Model]
+    admin_log_model: Type[Model]
     site: Site
     permission: bool
+    admin_log: bool
     _inited: bool = False
     _field_type_mapping = {
         "IntField": "number",
@@ -138,10 +140,12 @@ class AdminApp(FastAPI):
         site: Site,
         admin_secret: str,
         permission: bool = False,
+        admin_log: bool = False,
         login_view: Optional[str] = None,
     ):
         """
         init admin site
+        :param admin_log:
         :param login_view:
         :param permission: active builtin permission
         :param site:
@@ -151,9 +155,12 @@ class AdminApp(FastAPI):
         self.site = site
         self.permission = permission
         self.admin_secret = admin_secret
+        self.admin_log = admin_log
         for model_name, model in get_all_models():
             if issubclass(model, AbstractUser):
                 self.user_model = model
+            elif issubclass(model, AbstractAdminLog):
+                self.admin_log_model = model
             self.models[model_name] = model
         self._inited = True
         if not site.menus:

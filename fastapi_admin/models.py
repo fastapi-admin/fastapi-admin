@@ -40,3 +40,14 @@ class AbstractRole(Model):
 
     class Meta:
         abstract = True
+
+
+class AbstractAdminLog(Model):
+    admin_log_id = fields.IntField(pk=True)
+    admin = fields.ForeignKeyField("models.User")
+    action = fields.CharField(max_length=20)
+    model = fields.CharField(max_length=50)
+    content = fields.JSONField()
+
+    class Meta:
+        abstract = True

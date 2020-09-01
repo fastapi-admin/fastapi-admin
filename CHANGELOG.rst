@@ -8,6 +8,7 @@ ChangeLog
 0.3.1
 -----
 - Auto register permission.
+- Add admin log.
 
 0.3.0
 -----

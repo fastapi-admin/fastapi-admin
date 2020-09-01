@@ -153,6 +153,14 @@ INSERT INTO `permission`
 VALUES (44, 'Update Config', 'Config', 3);
 INSERT INTO `permission`
 VALUES (45, 'Read Config', 'Config', 4);
+INSERT INTO `permission`
+VALUES (46, 'Create AdminLog', 'AdminLog', 1);
+INSERT INTO `permission`
+VALUES (47, 'Delete AdminLog', 'AdminLog', 2);
+INSERT INTO `permission`
+VALUES (48, 'Update AdminLog', 'AdminLog', 3);
+INSERT INTO `permission`
+VALUES (49, 'Read AdminLog', 'AdminLog', 4);
 COMMIT;
 
 -- ----------------------------
@@ -296,6 +304,8 @@ INSERT INTO `role_permission`
 VALUES (1, 44);
 INSERT INTO `role_permission`
 VALUES (1, 45);
+INSERT INTO `role_permission`
+VALUES (1, 49);
 COMMIT;
 
 -- ----------------------------
@@ -361,5 +371,23 @@ VALUES (3, 'test', '$2b$12$mrRdNt8n5V8Lsmdh8OGCEOh3.xkUzJRbTo0Ew8IcdyNHjRTfJ0ptG
         'https://avatars2.githubusercontent.com/u/13377178?s=460&u=d150d522579f41a52a0b3dd8ea997e0161313b6e&v=4',
         'test', '2020-04-14 16:54:40.510555', 0);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for adminlog
+-- ----------------------------
+DROP TABLE IF EXISTS `adminlog`;
+CREATE TABLE `adminlog`
+(
+    `admin_log_id` int         NOT NULL AUTO_INCREMENT,
+    `action`       varchar(20) NOT NULL,
+    `model`        varchar(50) NOT NULL,
+    `content`      text        NOT NULL,
+    `admin_id`     int         NOT NULL,
+    PRIMARY KEY (`admin_log_id`),
+    KEY `fk_adminlog_user_50bc034f` (`admin_id`),
+    CONSTRAINT `fk_adminlog_user_50bc034f` FOREIGN KEY (`admin_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
