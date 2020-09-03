@@ -1,8 +1,10 @@
 import io
+from typing import Type
 
 import xlsxwriter
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
+from starlette.requests import Request
 from starlette.responses import StreamingResponse
 from starlette.status import HTTP_409_CONFLICT
 from tortoise import Model
@@ -59,6 +61,20 @@ async def export(resource: str, query: QueryItem = Depends(get_query), model=Dep
     output.seek(0)
 
     return StreamingResponse(output)
+
+
+@router.post("/{resource}/import")
+async def import_data(request: Request, model: Type[Model] = Depends(get_model)):
+    items = await request.json()
+    objs = []
+    for item in items:
+        obj = model(**item)
+        objs.append(obj)
+    try:
+        await model.bulk_create(objs)
+        return {"success": True, "data": len(objs)}
+    except IntegrityError as e:
+        return JSONResponse(status_code=HTTP_409_CONFLICT, content=dict(msg=f"Import Error,{e}"))
 
 
 @router.get("/{resource}", dependencies=[Depends(read_checker)])
@@ -135,9 +151,7 @@ async def update_one(id: int, parsed=Depends(parse_body), model=Depends(get_mode
             body, m2m_fields, model, app.user_model, False, id
         )
     except IntegrityError as e:
-        return JSONResponse(
-            status_code=HTTP_409_CONFLICT, content=dict(message=f"Update Error,{e}")
-        )
+        return JSONResponse(status_code=HTTP_409_CONFLICT, content=dict(msg=f"Update Error,{e}"))
     creator = pydantic_model_creator(model, include=resource_fields, exclude=m2m_fields)
     return creator.from_orm(obj).dict()
 
@@ -150,9 +164,7 @@ async def create_one(parsed=Depends(parse_body), model=Depends(get_model)):
     try:
         obj = await handle_m2m_fields_create_or_update(body, m2m_fields, model, app.user_model)
     except IntegrityError as e:
-        return JSONResponse(
-            status_code=HTTP_409_CONFLICT, content=dict(message=f"Create Error,{e}")
-        )
+        return JSONResponse(status_code=HTTP_409_CONFLICT, content=dict(msg=f"Create Error,{e}"))
     return creator.from_orm(obj).dict()
 
 

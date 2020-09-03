@@ -292,6 +292,10 @@ class User(AbstractUser):
 
 You can log each admin action like `delete`,`create` and `update`,just set `admin_log=True` in `admin_app.init()` and inherit `fastapi_admin.models.AbstractAdminLog`.
 
+### Import from excel
+
+You can enable `import` by set `import_=True` in `Menu` definition, and data format must same as `Model` fields.
+
 ## Deployment
 
 Deploy fastapi app by gunicorn+uvicorn or reference

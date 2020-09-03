@@ -9,6 +9,7 @@ ChangeLog
 -----
 - Auto register permission.
 - Add admin log.
+- Add file import.
 
 0.3.0
 -----
