@@ -312,10 +312,6 @@ See [documents](https://fastapi-admin-docs.long2ice.cn) for reference.
 
 ## Support this project
 
-- Just give a star!
-- Donation.
-- Click [Ads](https://tracking.gitads.io/?repo=fastapi-admin)
-
 ### AliPay
 
 <img width="200" src="https://github.com/long2ice/fastapi-admin/raw/dev/images/alipay.jpeg"/>
