@@ -306,10 +306,6 @@ Deploy fastapi app by gunicorn+uvicorn or reference
 See [restful api](https://api-fastapi-admin.long2ice.cn:8443/admin/docs)
 docs.
 
-## Documents
-
-See [documents](https://fastapi-admin-docs.long2ice.cn) for reference.
-
 ## Support this project
 
 | AliPay                                                                                        | WeChatPay                                                                                        | PayPal                                                           |

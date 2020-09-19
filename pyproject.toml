@@ -12,7 +12,7 @@ keywords = ["fastapi", "admin", "dashboard"]
 packages = [
     { include = "fastapi_admin" }
 ]
-include = ["LICENSE", "README.md"]
+include = ["LICENSE", "README.md","CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
