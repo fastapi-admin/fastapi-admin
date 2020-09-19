@@ -16,5 +16,5 @@ services:
       - '8000:8000'
     depends_on:
       - mysql
-    image: prismspay
+    image: fastapi-admin
     command: uvicorn examples.main:app --port 8000 --host 0.0.0.0
