@@ -13,7 +13,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/fastapi-admin/
-            source venv/bin/activate.fish
             git pull
-            make deps
-            supervisorctl restart fastapi-admin
+            docker-compose up -d --build
