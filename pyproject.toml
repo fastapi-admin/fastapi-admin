@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastapi-admin"
 version = "0.3.1"
-description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
+description = "Fast Admin Dashboard based on fastapi and tortoise-orm."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -38,6 +38,8 @@ isort = "*"
 black = "^19.10b0"
 pytest = "*"
 bandit = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [build-system]
 requires = ["poetry>=0.12"]
