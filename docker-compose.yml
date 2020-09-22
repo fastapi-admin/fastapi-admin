@@ -12,6 +12,7 @@ services:
     restart: always
     environment:
       DATABASE_URL: mysql://root:123456@mysql:3306/fastapi-admin
+      TZ: Asia/Shanghai
     ports:
       - '8000:8000'
     depends_on:
