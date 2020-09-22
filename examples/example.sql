@@ -20,6 +20,21 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------
+DROP TABLE IF EXISTS `visitor`;
+CREATE TABLE `visitor`
+(
+    `id`         int          NOT NULL AUTO_INCREMENT,
+    `ip`         varchar(200) NOT NULL UNIQUE,
+    `updated_at` datetime(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    `created_at` datetime(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`
 (

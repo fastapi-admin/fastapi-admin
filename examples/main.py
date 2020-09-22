@@ -3,10 +3,14 @@ import os
 import uvicorn
 from fastapi import Depends, FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_queryset_creator
+from tortoise.exceptions import IntegrityError
 
+from examples.common import get_client_ip
+from examples.models import Visitor
 from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
 from fastapi_admin.schemas import BulkIn
@@ -52,6 +56,18 @@ def create_app():
 app = create_app()
 
 
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    ip = get_client_ip(request)
+    v = await Visitor.get_or_none(ip=ip)
+    try:
+        await v.save() if v else await Visitor.create(ip=ip)
+    except IntegrityError:
+        pass
+    response = await call_next(request)
+    return response
+
+
 @app.on_event("startup")
 async def start_up():
     await admin_app.init(  # nosec
@@ -88,6 +104,9 @@ async def start_up():
                             url="/rest/Product",
                             icon="fa fa-table",
                             search_fields=("name",),
+                        ),
+                        Menu(
+                            name="Visitor", url="/rest/Visitor", icon="fa fa-child", exclude=("ip",)
                         ),
                     ],
                 ),
