@@ -10,10 +10,9 @@ theme:
     repo: fontawesome/brands/github
 markdown_extensions:
   - pymdownx.highlight
+  - pymdownx.inlinehilite
   - pymdownx.superfences
 nav:
   - index.md
-  - features.md
   - tutorial.md
-  - site_define.md
-  - menu_define.md
+  - features.md

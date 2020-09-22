@@ -35,5 +35,7 @@ build: deps
 	@poetry build
 
 docs: deps
-	@pip install -r docs/requirements.txt
-	@sphinx-build docs/ docs/_build
+	@mkdocs build
+
+deploy-docs: docs
+	@mkdocs gh-deploy

@@ -93,6 +93,10 @@ async def startup():
     )
 ```
 
+## Documentation
+
+See documentation at [https://long2ice.github.io/fastapi-admin](https://long2ice.github.io/fastapi-admin).
+
 ## Deployment
 
 Deploy fastapi app by gunicorn+uvicorn or reference
