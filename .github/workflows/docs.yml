@@ -1,20 +1,16 @@
-name: docs
+name: Publish docs via GitHub Pages
 on:
   push:
-    paths:
-      - 'docs/**'
-  pull_request:
-    paths:
-      - 'docs/**'
+    branches:
+      - master
 jobs:
   build:
+    name: Deploy docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
-        with:
-          python-version: '3.x'
-      - uses: dschep/install-poetry-action@v1.3
+      - name: Checkout master
+        uses: actions/checkout@v1
       - name: Deploy docs
-        run: make deploy-docs
-
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
