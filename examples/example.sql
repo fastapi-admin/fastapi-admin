@@ -176,6 +176,14 @@ INSERT INTO `permission`
 VALUES (48, 'Update AdminLog', 'AdminLog', 3);
 INSERT INTO `permission`
 VALUES (49, 'Read AdminLog', 'AdminLog', 4);
+INSERT INTO `permission`
+VALUES (50, 'Create Visitor', 'Visitor', 1);
+INSERT INTO `permission`
+VALUES (51, 'Delete Visitor', 'Visitor', 2);
+INSERT INTO `permission`
+VALUES (52, 'Update Visitor', 'Visitor', 3);
+INSERT INTO `permission`
+VALUES (53, 'Read Visitor', 'Visitor', 4);
 COMMIT;
 
 -- ----------------------------
@@ -321,6 +329,8 @@ INSERT INTO `role_permission`
 VALUES (1, 45);
 INSERT INTO `role_permission`
 VALUES (1, 49);
+INSERT INTO `role_permission`
+VALUES (1, 53);
 COMMIT;
 
 -- ----------------------------
