@@ -212,3 +212,56 @@ You can log each admin action like `delete`,`create` and `update`,just set `admi
 ## Import from excel
 
 You can enable `import` by set `import_=True` in `Menu` definition, and data format must same as `Model` fields.
+
+## Custom filters
+
+There are two kinds of filters named `Filter` and `SearchFilter`.
+
+`Filter` use to filter view list default, and `SearchFilter` add a custom search input in front.
+
+To use `Filter` you should only inherit `fastapi_admin.filters.Filter` then implement `get_queryset`, for example:
+
+```py
+from fastapi_admin.filters import Filter
+
+class CustomFilter(Filter):
+    @classmethod
+    def get_queryset(cls, queryset: QuerySet) -> QuerySet:
+        return queryset.filter(~Q(key="test"))
+```
+
+Then add it to `Menu.custom_filters`.
+
+```py
+Menu(
+    name="Config",
+    url="/rest/Config",
+    icon="fa fa-gear",
+    import_=True,
+    search_fields=("key",),
+    custom_filters=[CustomFilter],
+)
+```
+
+And to use `SearchFilter`, like `Filter` but inherit `fastapi_admin.filters.SearchFilter`, note that you show register it by `register_filter`, for example:
+
+```py
+from fastapi_admin.filters import SearchFilter, register_filter
+from fastapi_admin.site import Field
+
+@register_filter
+class LikeFilter(SearchFilter):
+    @classmethod
+    def get_queryset(cls, queryset: QuerySet, value: Any) -> QuerySet:
+        return queryset.filter(name__icontains=value)
+
+    @classmethod
+    async def get_field(cls) -> Field:
+        return Field(label="NameLike", type="text")
+
+    @classmethod
+    def get_name(cls) -> str:
+        return "filter"
+```
+
+`get_name` must return an unque `name` for all `SearchFilter` and `get_field` should return a `Field` instance.

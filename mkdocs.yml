@@ -15,4 +15,4 @@ markdown_extensions:
 nav:
   - index.md
   - tutorial.md
-  - features.md
+  - content.md
