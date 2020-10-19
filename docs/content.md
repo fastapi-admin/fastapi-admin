@@ -22,15 +22,12 @@ class Role(AbstractRole):
     """
     must inheritance AbstractRole
     """
-    users = fields.ManyToManyField("models.AdminUser")
 
 
 class AdminLog(AbstractAdminLog):
     """
     must inheritance AbstractAdminLog
     """
-    users = fields.ManyToManyField("models.AdminUser")
-
 ```
 
 And set `permission=True` to active it:
