@@ -8,6 +8,7 @@ from tortoise import Model
 from . import enums
 from .common import get_all_models, import_obj, pwd_context
 from .exceptions import exception_handler
+from .filters import SearchFilter
 from .models import AbstractAdminLog, AbstractPermission, AbstractRole, AbstractUser
 from .schemas import LoginIn
 from .shortcuts import get_object_or_404
@@ -244,6 +245,11 @@ class AdminApp(FastAPI):
         sort_fields = menu.sort_fields
         fields = {}
         pk = name = pk_field.get("name")
+        # CustomSearchFilters
+        for search_filter in filter(
+            lambda x: type(x).__name__ == "type" and issubclass(x, SearchFilter), search_fields
+        ):
+            search_fields_ret[search_filter.get_name()] = await search_filter.get_field()
         if not exclude_pk and not self._exclude_field(resource, name):
             field = Field(
                 label=pk_field.get("name").title(),

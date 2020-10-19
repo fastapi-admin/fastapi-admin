@@ -27,6 +27,7 @@ from ..depends import (
     update_checker,
 )
 from ..factory import app
+from ..filters import get_filter_by_name
 from ..responses import GetManyOut
 from ..schemas import BulkIn
 from ..shortcuts import get_object_or_404
@@ -83,8 +84,15 @@ async def get_resource(
 ):
     menu = app.model_menu_mapping[resource]
     qs = model.all()
+    for filter_ in menu.custom_filters:
+        qs = filter_.get_queryset(qs)
     if query.where:
-        qs = qs.filter(**query.where)
+        for name, value in query.where.items():
+            filter_cls = get_filter_by_name(name)
+            if filter_cls:
+                qs = filter_cls.get_queryset(qs, value)
+            else:
+                qs = qs.filter(**{name: value})
     sort = query.sort
     for k, v in sort.items():
         if k in menu.sort_fields:

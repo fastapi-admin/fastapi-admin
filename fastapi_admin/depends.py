@@ -1,5 +1,4 @@
 import json
-from typing import Optional
 
 import jwt
 from fastapi import Depends, HTTPException, Path, Query

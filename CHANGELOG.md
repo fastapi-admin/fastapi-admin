@@ -2,6 +2,11 @@
 
 ## 0.3
 
+### 0.3.2
+
+- Hide menu when no children menu.
+- Add custom filters.
+
 ### 0.3.1
 
 - Auto register permission.
