@@ -82,9 +82,3 @@ class Config(Model):
 
     def __str__(self):
         return f"{self.pk}#{self.label}"
-
-
-class Visitor(Model):
-    ip = fields.CharField(max_length=200, unique=True)
-    updated_at = fields.DatetimeField(auto_now=True)
-    created_at = fields.DatetimeField(auto_now_add=True)

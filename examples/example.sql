@@ -20,21 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------
-DROP TABLE IF EXISTS `visitor`;
-CREATE TABLE `visitor`
-(
-    `id`         int          NOT NULL AUTO_INCREMENT,
-    `ip`         varchar(200) NOT NULL UNIQUE,
-    `updated_at` datetime(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    `created_at` datetime(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci;
-
--- ----------------------------
--- Table structure for category
--- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`
 (
@@ -176,15 +161,6 @@ INSERT INTO `permission`
 VALUES (48, 'Update AdminLog', 'AdminLog', 3);
 INSERT INTO `permission`
 VALUES (49, 'Read AdminLog', 'AdminLog', 4);
-INSERT INTO `permission`
-VALUES (50, 'Create Visitor', 'Visitor', 1);
-INSERT INTO `permission`
-VALUES (51, 'Delete Visitor', 'Visitor', 2);
-INSERT INTO `permission`
-VALUES (52, 'Update Visitor', 'Visitor', 3);
-INSERT INTO `permission`
-VALUES (53, 'Read Visitor', 'Visitor', 4);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for product
