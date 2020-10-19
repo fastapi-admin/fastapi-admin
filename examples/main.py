@@ -83,7 +83,7 @@ async def start_up():
                             icon="fa fa-gear",
                             import_=True,
                             search_fields=("key",),
-                            custom_filters=[CustomFilter,],
+                            custom_filters=[CustomFilter],
                         ),
                         Menu(
                             name="Product",
