@@ -7,6 +7,7 @@ from starlette.templating import Jinja2Templates
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_queryset_creator
 
+from examples.filters import CustomFilter, LikeFilter
 from fastapi_admin.depends import get_model
 from fastapi_admin.factory import app as admin_app
 from fastapi_admin.schemas import BulkIn
@@ -74,7 +75,7 @@ async def start_up():
                             name="Category",
                             url="/rest/Category",
                             icon="fa fa-list",
-                            search_fields=("slug",),
+                            search_fields=("slug", LikeFilter),
                         ),
                         Menu(
                             name="Config",
@@ -82,6 +83,7 @@ async def start_up():
                             icon="fa fa-gear",
                             import_=True,
                             search_fields=("key",),
+                            custom_filters=[CustomFilter,],
                         ),
                         Menu(
                             name="Product",

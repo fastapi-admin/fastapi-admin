@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseModel, HttpUrl
 
@@ -19,7 +19,7 @@ class Menu(BaseModel):
     # raw id fields
     raw_id_fields: Optional[Tuple[str, ...]] = tuple()
     # searchable fields
-    search_fields: Optional[Tuple[str, ...]] = tuple()
+    search_fields = tuple()
     # sortable fields
     sort_fields: Optional[Tuple[str, ...]] = tuple()
     # define field type,like select,radiolist,text,date
@@ -31,6 +31,7 @@ class Menu(BaseModel):
     import_: bool = False
     actions: Optional[Dict]
     bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all"}]
+    custom_filters: List = []
 
 
 Menu.update_forward_refs()
