@@ -3,7 +3,7 @@
 You should inherit `fastapi_admin.models.AbstractUser`,`fastapi_admin.models.AbstractPermission`,`fastapi_admin.models.AbstractRole` and add extra fields.
 
 ```python
-from fastapi_admin.models import AbstractUser,AbstractPermission,AbstractRole
+from fastapi_admin.models import AbstractUser, AbstractPermission, AbstractRole
 
 class AdminUser(AbstractUser):
     is_active = fields.BooleanField(default=False, description='Is Active')
@@ -58,13 +58,58 @@ subcommands:
   {createsuperuser}
 ```
 
+Before you use this command - remember that you have to define your own user model that inherits from fastapi-admin `AbstractUser`.
+eg.
+```python
+from fastapi_admin.models import AbstractUser
+from tortoise import fields
+
+class User(AbstractUser):
+    id = fields.BigIntField(pk=True)
+
+```
+
+Here's an example of how createsuperuser command can look like: 
+
+```shell
+fastapi-admin -c "db.DB_CONFIG" createsuperuser -u User
+```
+The code above assumes that in your module's dir you have an `db.py` file in which there's, or that you provide a correct path on your own.
+`-c` flag proceeds the path to your database config dict. It can look something like this.
+
+```python
+# db.py file
+import os
+
+DB_CONFIG: dict = {
+    "connections": {
+        "default": {
+            "engine": "tortoise.backends.asyncpg",
+            "credentials": {
+                "host": os.environ.get("DB_HOST", "localhost"),
+                "port": os.environ.get("DB_PORT", 5432),
+                "user": os.environ.get("DB_USER", "user"),
+                "password": os.environ.get("DB_PASSWORD", "secret_pass"),
+                "database": os.environ.get("DB_DATABASE_NAME", "db"),
+            },
+        }
+        # alternatively, probably only for testing purposes
+        # "default": "sqlite://db.sqlite3",
+    },
+    "apps": {"models": {"models": ["app.db_models"]}},
+}
+```
+[Read more about configs and initialization in tortoise orm](https://tortoise-orm.readthedocs.io/en/latest/setup.html?highlight=config#tortoise.Tortoise.init)
+
+After `-u` you can tell fastapi-admin which model inherits from AdminUser.
+
 ## Custom Login
 
 You can write your own login view logic:
 
 ```python
 await admin_app.init(
-    ...
+    ...,
     login_view="examples.routes.login"
 )
 ```
@@ -109,7 +154,7 @@ FastAPI-Admin will auto read `description` defined in tortoise-orm model
 
 ## ForeignKeyField Support
 
-If `ForeignKeyField` not passed in `menu.raw_id_fields`,FastAPI-Admin
+If `ForeignKeyField` is not passed in `menu.raw_id_fields`,FastAPI-Admin
 will get all related objects and display `select` in front with
 `Model.__str__`.
 
@@ -135,8 +180,8 @@ FastAPI-Admin can export searched data to excel file when define
 
 ## Bulk Actions
 
-Current FastAPI-Admin support builtin bulk action `delete_all`,if you
-want write your own bulk actions:
+Current FastAPI-Admin supports builtin bulk action `delete_all`,if you
+want to write your own bulk actions:
 
 1. pass `bulk_actions` in `Menu`,example:
 
@@ -170,7 +215,75 @@ async def bulk_delete(
 ## Default Menus
 
 Default, FastAPI-Admin provide default menus by your models, without
-doing tedious works.
+doing tedious works. Therefore you do not need to fill the optional argument `menus` in Site definition.
+
+
+## Custom Menus
+You can define a custom menu that'll be used by fastapi-admin. Here's an example of how that might look.
+
+```python
+
+menus = [
+    Menu(name="Home", url="/", icon="fa fa-home"),
+    Menu(
+        name="Content",
+        children=[
+            Menu(name="Category", url="/rest/Category", icon="fa fa-list", search_fields=("slug",)),
+            Menu(name="Config", url="/rest/Config", icon="fa fa-gear", import_=True, search_fields=("key",)),
+            Menu(name="Product", url="/rest/Product", icon="fa fa-table", search_fields=("name",)),
+        ],
+    ),
+    Menu(
+        name="External",
+        children=[
+            Menu(name="Github", url="https://github.com/long2ice/fastapi-admin", icon="fa fa-github", external=True),
+        ],
+    ),
+    Menu(
+        name="Auth",
+        children=[
+            Menu(name="User", url="/rest/User", icon="fa fa-user", search_fields=("username",),),
+            Menu(name="Role", url="/rest/Role", icon="fa fa-group", ),
+            Menu(name="Permission", url="/rest/Permission", icon="fa fa-user-plus", ),
+            Menu(name="Logout", url="/logout", icon="fa fa-lock", ),
+            Menu(
+                name="AdminLog",
+                url="/rest/AdminLog",
+                icon="fa fa-align-left",
+                search_fields=("action", "admin", "model"),
+            ),
+        ],
+    ),
+]
+
+```
+Each menu can either be a single element menu that'll only link to a given resource, or it can be a gathering of multiple links, that you add by using the `children` optional argument.
+
+`children` should be a list of `Menu` objects.
+
+Now that you have your menus you can use them during the app initialization.
+
+```python
+
+menus = ...  # look at the code above. You can define it here or in separate file to make things neat
+
+@app.on_event("startup")
+async def start_up():
+    await admin_app.init(  # nosec
+        admin_secret="test",
+        permission=True,
+        admin_log=True,
+        site=Site(
+            name="FastAPI-Admin DEMO",
+            login_footer="FASweTAPI ADMIN - FastAPI Admin Dashboard",
+            login_description="FastAPI Admin Dashboard",
+            locale="en-US",
+            locale_switcher=True,
+            theme_switcher=True,
+            menus=menus
+        ),
+    )
+```
 
 ## Table Variant
 
@@ -204,7 +317,7 @@ class User(AbstractUser):
 
 ## Admin log
 
-You can log each admin action like `delete`,`create` and `update`,just set `admin_log=True` in `admin_app.init()` and inherit `fastapi_admin.models.AbstractAdminLog`.
+You can log each admin action like `delete`,`create` and `update`,just set `admin_log=True` in `admin_app.init()` and just create a model in your app that inherits from `fastapi_admin.models.AbstractAdminLog`.
 
 ## Import from excel
 
