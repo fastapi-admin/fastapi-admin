@@ -39,64 +39,6 @@ async def start_up():
             locale="en-US",
             locale_switcher=True,
             theme_switcher=True,
-            menus=[
-                Menu(name="Home", url="/", icon="fa fa-home"),
-                Menu(
-                    name="Content",
-                    children=[
-                        Menu(
-                            name="Category",
-                            url="/rest/Category",
-                            icon="fa fa-list",
-                            search_fields=("slug",),
-                        ),
-                        Menu(
-                            name="Config",
-                            url="/rest/Config",
-                            icon="fa fa-gear",
-                            import_=True,
-                            search_fields=("key",),
-                        ),
-                        Menu(
-                            name="Product",
-                            url="/rest/Product",
-                            icon="fa fa-table",
-                            search_fields=("name",),
-                        ),
-                    ],
-                ),
-                Menu(
-                    name="External",
-                    children=[
-                        Menu(
-                            name="Github",
-                            url="https://github.com/long2ice/fastapi-admin",
-                            icon="fa fa-github",
-                            external=True,
-                        ),
-                    ],
-                ),
-                Menu(
-                    name="Auth",
-                    children=[
-                        Menu(
-                            name="User",
-                            url="/rest/User",
-                            icon="fa fa-user",
-                            search_fields=("username",),
-                        ),
-                        Menu(name="Role", url="/rest/Role", icon="fa fa-group",),
-                        Menu(name="Permission", url="/rest/Permission", icon="fa fa-user-plus",),
-                        Menu(
-                            name="AdminLog",
-                            url="/rest/AdminLog",
-                            icon="fa fa-align-left",
-                            search_fields=("action", "admin", "model"),
-                        ),
-                        Menu(name="Logout", url="/logout", icon="fa fa-lock",),
-                    ],
-                ),
-            ],
         ),
     )
 ```
