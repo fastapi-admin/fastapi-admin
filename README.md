@@ -104,7 +104,7 @@ Deploy fastapi app by gunicorn+uvicorn or reference
 
 ## Restful API Docs
 
-See [restful api](https://api-fastapi-admin.long2ice.cn/admin/docs)
+See [restful api](https://fastapi-admin.long2ice.cn/admin/docs)
 docs.
 
 ## Support this project
