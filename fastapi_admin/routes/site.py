@@ -30,5 +30,5 @@ async def site(user_id=Depends(jwt_optional)):
                         model = child.url.split("/")[-1]
                         if not await check_has_permission(user, model):
                             site_copy.menus[index].children.remove(child)
-    site_copy.menus = list(filter(lambda x: x.children != [], site_copy.menus))
+    site_copy.menus = list(filter(lambda x: x.children != [] or x.url, site_copy.menus))
     return site_copy.dict(by_alias=True, exclude_unset=True)
