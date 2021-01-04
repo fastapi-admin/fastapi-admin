@@ -14,12 +14,10 @@ from .factory import app
 auth_schema = HTTPBearer()
 
 
-async def jwt_required(
-    request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)
-):
+async def jwt_required(request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)):
     credentials_exception = HTTPException(HTTP_401_UNAUTHORIZED)
     try:
-        payload = jwt.decode(token.credentials, app.admin_secret)
+        payload = jwt.decode(token.credentials, app.admin_secret, algorithms=["HS256"])
         user_id = payload.get("user_id")
         if user_id is None:
             raise credentials_exception
@@ -34,7 +32,7 @@ async def jwt_optional(request: Request):
     scheme, credentials = get_authorization_scheme_param(authorization)
     if credentials:
         try:
-            payload = jwt.decode(credentials, app.admin_secret)
+            payload = jwt.decode(credentials, app.admin_secret, algorithms=["HS256"])
             user_id = payload.get("user_id")
             request.scope["user_id"] = user_id
             return user_id
