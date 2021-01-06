@@ -1,7 +1,7 @@
 from typing import Any
 
-from tortoise import QuerySet
 from tortoise.query_utils import Q
+from tortoise.queryset import QuerySet
 
 from fastapi_admin.filters import Filter, SearchFilter, register_filter
 from fastapi_admin.site import Field

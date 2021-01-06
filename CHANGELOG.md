@@ -2,6 +2,11 @@
 
 ## 0.3
 
+### 0.3.3
+
+- Fix latest tortoise error.
+- Fix home menu and update version.
+
 ### 0.3.2
 
 - Hide menu when no children menu.

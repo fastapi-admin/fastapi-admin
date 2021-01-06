@@ -14,7 +14,9 @@ from .factory import app
 auth_schema = HTTPBearer()
 
 
-async def jwt_required(request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)):
+async def jwt_required(
+    request: Request, token: HTTPAuthorizationCredentials = Depends(auth_schema)
+):
     credentials_exception = HTTPException(HTTP_401_UNAUTHORIZED)
     try:
         payload = jwt.decode(token.credentials, app.admin_secret, algorithms=["HS256"])

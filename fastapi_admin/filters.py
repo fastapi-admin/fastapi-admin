@@ -1,6 +1,6 @@
 from typing import Any
 
-from tortoise import QuerySet
+from tortoise.queryset import QuerySet
 
 from fastapi_admin.site import Field
 
