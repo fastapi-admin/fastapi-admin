@@ -43,7 +43,6 @@ class Site(BaseModel):
     login_logo: Optional[HttpUrl]
     login_footer: Optional[str]
     login_description: Optional[str]
-    footer: Optional[str]
     locale: str
     locale_switcher: bool = False
     theme_switcher: bool = False
@@ -55,7 +54,9 @@ class Site(BaseModel):
     menus: Optional[List[Menu]]
     # custom footer with html
     footer: Optional[str]
-
+    # custom header - require html beginning with a <div> due to being rendered in a <custom-component>
+    header: Optional[str]
+    page_header: Optional[str]
 
 class Field(BaseModel):
     label: str
