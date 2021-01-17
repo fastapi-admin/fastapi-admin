@@ -131,3 +131,27 @@ class AdminLog:
 admin_log_create = AdminLog(action="create")
 admin_log_update = AdminLog(action="update")
 admin_log_delete = AdminLog(action="delete")
+
+
+class HasPermission:
+    def __init__(self, action: enums.PermissionAction):
+        self.action = action
+
+    async def __call__(self, resource: str = Path(...), user=Depends(get_current_user)):
+        if not app.permission or user.is_superuser:
+            return True #Hmm. Should superuser really cirumvent all permission checks. not a good practice!?!?!?!!?!!!
+        if not user.is_active:
+            return False
+        has_permission = False
+        await user.fetch_related("roles")
+        for role in user.roles:
+            if await role.permissions.filter(model=resource, action=self.action):
+                return True
+        if not has_permission:
+            return False
+
+
+has_read_permission = HasPermission(action=enums.PermissionAction.read)
+has_create_permission = HasPermission(action=enums.PermissionAction.create)
+has_update_permission = HasPermission(action=enums.PermissionAction.update)
+has_delete_permission = HasPermission(action=enums.PermissionAction.delete)

@@ -25,7 +25,13 @@ from ..depends import (
     parse_body,
     read_checker,
     update_checker,
+    has_create_permission,
+    has_read_permission,
+    has_update_permission,
+    has_delete_permission,
+    get_current_user,
 )
+
 from ..factory import app
 from ..filters import get_filter_by_name
 from ..responses import GetManyOut
@@ -123,9 +129,14 @@ async def form(resource: str,):
 
 
 @router.get("/{resource}/grid", dependencies=[Depends(read_checker)])
-async def grid(resource: str,):
+async def grid(resource: str,user=Depends(get_current_user)):
     resource = await app.get_resource(resource)
-    return resource.dict(by_alias=True, exclude_unset=True)
+    resource = resource.dict(by_alias=True, exclude_unset=True)
+    resource['fields']['_actions'] = \
+        {'delete': await has_delete_permission(resource, user),
+         'edit': await has_update_permission(resource, user),
+         'toolbar': {'create': await has_create_permission(resource, user)}}
+    return resource
 
 
 @router.get("/{resource}/view", dependencies=[Depends(read_checker)])
