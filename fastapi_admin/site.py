@@ -58,6 +58,7 @@ class Site(BaseModel):
     header: Optional[str]
     page_header: Optional[str]
 
+
 class Field(BaseModel):
     label: str
     cols: Optional[int]

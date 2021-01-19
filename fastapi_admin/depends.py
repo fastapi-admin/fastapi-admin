@@ -139,7 +139,7 @@ class HasPermission:
 
     async def __call__(self, resource: str = Path(...), user=Depends(get_current_user)):
         if not app.permission or user.is_superuser:
-            return True #Hmm. Should superuser really cirumvent all permission checks. not a good practice!?!?!?!!?!!!
+            return True  # Hmm. Should superuser really cirumvent all permission checks. not a good practice!?!?!?!!?!!!
         if not user.is_active:
             return False
         has_permission = False
