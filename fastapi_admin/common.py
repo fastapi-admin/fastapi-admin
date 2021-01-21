@@ -1,6 +1,7 @@
 import importlib
 from copy import deepcopy
 
+from fastapi import HTTPException
 from passlib.context import CryptContext
 from tortoise import Tortoise
 
