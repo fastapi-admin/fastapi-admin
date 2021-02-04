@@ -6,6 +6,7 @@
 
 - Fix latest tortoise error.
 - Fix home menu and update version.
+- Only show action buttons if user has permission.
 
 ### 0.3.2
 
