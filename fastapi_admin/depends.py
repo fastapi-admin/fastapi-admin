@@ -10,6 +10,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN, HTTP_404
 
 from . import enums
 from .factory import app
+from .models import AbstractUser
 
 auth_schema = HTTPBearer()
 
@@ -131,3 +132,18 @@ class AdminLog:
 admin_log_create = AdminLog(action="create")
 admin_log_update = AdminLog(action="update")
 admin_log_delete = AdminLog(action="delete")
+
+
+class HasPermission:
+    def __init__(self, action: enums.PermissionAction):
+        self.action = action
+
+
+async def has_resource_permission(
+    action: enums.PermissionAction, resource: str, user: AbstractUser
+) -> bool:
+    try:
+        await PermissionsChecker(action=action)(resource, user)
+        return True
+    except HTTPException:
+        return False
