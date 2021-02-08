@@ -4,6 +4,7 @@ First of all suppose you have a fastapi+tortoise-orm project and running normall
 
 ```python hl_lines="6"
 from fastapi_admin.factory import app as admin_app
+from fastapi_admin.site import Site
 
 def create_app():
     fast_app = FastAPI(debug=False)
