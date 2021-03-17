@@ -1,0 +1,18 @@
+site_name: FastAPI Admin
+site_url: https://github.com/long2ice/fastapi-admin
+repo_url: https://github.com/long2ice/fastapi-admin
+site_description: Fast Admin Dashboard based on fastapi and tortoise-orm
+repo_name: long2ice/fastapi-admin
+site_author: long2ice
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+nav:
+  - index.md
+  - tutorial.md
+  - content.md

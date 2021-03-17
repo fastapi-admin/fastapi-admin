@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastapi-admin"
-version = "0.3.0"
-description = "Fast Admin Dashboard based on fastapi and tortoise-orm and rest-admin."
+version = "0.3.3"
+description = "Fast Admin Dashboard based on fastapi and tortoise-orm."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -12,7 +12,7 @@ keywords = ["fastapi", "admin", "dashboard"]
 packages = [
     { include = "fastapi_admin" }
 ]
-include = ["LICENSE", "README.md"]
+include = ["LICENSE", "README.md","CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -38,6 +38,8 @@ isort = "*"
 black = "^19.10b0"
 pytest = "*"
 bandit = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [build-system]
 requires = ["poetry>=0.12"]

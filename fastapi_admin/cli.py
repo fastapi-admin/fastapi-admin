@@ -5,9 +5,8 @@ from colorama import Fore, init
 from prompt_toolkit import PromptSession
 from tortoise import Tortoise, run_async
 
-from fastapi_admin import enums, version
+from fastapi_admin import version
 from fastapi_admin.common import import_obj, pwd_context
-from fastapi_admin.models import Permission
 
 init(autoreset=True)
 
@@ -28,24 +27,6 @@ class Logger:
 
 async def init_tortoise(args):
     await Tortoise.init(config=import_obj(args.config))
-
-
-async def register_permissions(args):
-    await init_tortoise(args)
-    await Tortoise.generate_schemas()
-
-    if args.clean:
-        await Permission.all().delete()
-        Logger.waring("Cleaned all permissions success.")
-    models = Tortoise.apps.get("models").keys()
-    models = list(models)
-    for model in models:
-        for action in enums.PermissionAction:
-            label = f"{enums.PermissionAction.choices().get(action)} {model}"
-            defaults = dict(label=label, model=model, action=action,)
-            _, created = await Permission.get_or_create(**defaults,)
-            if created:
-                Logger.success(f"Create permission {label} success.")
 
 
 async def createsuperuser(args):
@@ -86,11 +67,6 @@ def cli():
         version=f"fastapi-admin version, {version()}",
         help="show the version",
     )
-    parser_register_permissions = subparsers.add_parser("register_permissions")
-    parser_register_permissions.add_argument(
-        "--clean", required=False, action="store_true", help="Clean up old permissions then renew."
-    )
-    parser_register_permissions.set_defaults(func=register_permissions)
 
     parser_createsuperuser = subparsers.add_parser("createsuperuser")
     parser_createsuperuser.add_argument(

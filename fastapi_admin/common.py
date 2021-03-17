@@ -1,7 +1,9 @@
 import importlib
 from copy import deepcopy
 
+from fastapi import HTTPException
 from passlib.context import CryptContext
+from tortoise import Tortoise
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -57,3 +59,29 @@ def import_obj(path: str):
     module = ".".join(splits[:-1])
     class_name = splits[-1]
     return getattr(importlib.import_module(module), class_name)
+
+
+def get_all_models():
+    """
+    get all tortoise models
+    :return:
+    """
+    for tortoise_app, models in Tortoise.apps.items():
+        for model_item in models.items():
+            yield model_item
+
+
+async def check_has_permission(user, model: str):
+    """
+    check user has permission for model
+    :param user:
+    :param model:
+    :return:
+    """
+    has_permission = False
+    for role in user.roles:
+        permission = await role.permissions.filter(model=model).exists()
+        if permission:
+            has_permission = True
+            break
+    return has_permission

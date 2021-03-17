@@ -15,7 +15,7 @@ class AbstractUser(Model):
         abstract = True
 
 
-class Permission(Model):
+class AbstractPermission(Model):
     label = fields.CharField(max_length=50)
     model = fields.CharField(max_length=50)
     action: enums.PermissionAction = fields.IntEnumField(
@@ -25,12 +25,29 @@ class Permission(Model):
     def __str__(self):
         return self.label
 
+    class Meta:
+        abstract = True
 
-class Role(Model):
+
+class AbstractRole(Model):
     label = fields.CharField(max_length=50)
     users = fields.ManyToManyField("models.User")
 
-    permissions: fields.ManyToManyRelation[Permission] = fields.ManyToManyField("models.Permission")
+    permissions = fields.ManyToManyField("models.Permission")
 
     def __str__(self):
         return self.label
+
+    class Meta:
+        abstract = True
+
+
+class AbstractAdminLog(Model):
+    admin_log_id = fields.IntField(pk=True)
+    admin = fields.ForeignKeyField("models.User")
+    action = fields.CharField(max_length=20)
+    model = fields.CharField(max_length=50)
+    content = fields.JSONField()
+
+    class Meta:
+        abstract = True

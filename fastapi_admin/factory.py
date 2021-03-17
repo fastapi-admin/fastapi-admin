@@ -1,13 +1,15 @@
-from copy import deepcopy
-from typing import Any, Dict, List, Optional, Type
+from typing import Dict, List, Optional, Type
 
 import jwt
 from fastapi import FastAPI, HTTPException
 from starlette.status import HTTP_403_FORBIDDEN
-from tortoise import Model, Tortoise
+from tortoise import Model
 
-from .common import import_obj, pwd_context
+from . import enums
+from .common import get_all_models, import_obj, pwd_context
 from .exceptions import exception_handler
+from .filters import SearchFilter
+from .models import AbstractAdminLog, AbstractPermission, AbstractRole, AbstractUser
 from .schemas import LoginIn
 from .shortcuts import get_object_or_404
 from .site import Field, Menu, Resource, Site
@@ -32,11 +34,15 @@ async def login(login_in: LoginIn):
 
 
 class AdminApp(FastAPI):
-    models: Any
+    models: Dict[str, Type[Model]] = {}
     admin_secret: str
-    user_model: Model
+    user_model: Type[Model]
+    permission_model: Type[Model]
+    role_model: Type[Model]
+    admin_log_model: Type[Model]
     site: Site
     permission: bool
+    admin_log: bool
     _inited: bool = False
     _field_type_mapping = {
         "IntField": "number",
@@ -75,16 +81,14 @@ class AdminApp(FastAPI):
         return ret
 
     def _build_content_menus(self) -> List[Menu]:
-        models = deepcopy(self.models)  # type:Dict[str,Type[Model]]
-        models.pop("Role", None)
-        models.pop(self.user_model.__name__, None)
-        models.pop("Permission", None)
         menus = []
-        for k, v in models.items():
+        for model_name, model in get_all_models():
+            if issubclass(model, (AbstractUser, AbstractPermission, AbstractRole)):
+                continue
             menu = Menu(
-                name=v._meta.table_description or k,
-                url=f"/rest/{k}",
-                fields_type=self._get_model_fields_type(v),
+                name=model._meta.table_description or model_name,
+                url=f"/rest/{model_name}",
+                fields_type=self._get_model_fields_type(model),
                 icon="icon-list",
                 bulk_actions=[{"value": "delete", "text": "delete_all"}],
             )
@@ -99,66 +103,91 @@ class AdminApp(FastAPI):
 
         menus = [
             Menu(name="Home", url="/", icon="fa fa-home"),
-            Menu(name="Content", title=True),
-            *self._build_content_menus(),
-            Menu(name="External", title=True),
+            Menu(name="Content", children=self._build_content_menus()),
             Menu(
-                name="Github",
-                url="https://github.com/long2ice/fastapi-admin",
-                icon="fa fa-github",
-                external=True,
+                name="External",
+                children=[
+                    Menu(
+                        name="Github",
+                        url="https://github.com/long2ice/fastapi-admin",
+                        icon="fa fa-github",
+                        external=True,
+                    ),
+                ],
             ),
         ]
         if permission:
             permission_menus = [
-                Menu(name="Auth", title=True),
                 Menu(
-                    name="User", url="/rest/User", icon="fa fa-user", search_fields=("username",),
+                    name="Auth",
+                    children=[
+                        Menu(
+                            name="User",
+                            url="/rest/User",
+                            icon="fa fa-user",
+                            search_fields=("username",),
+                        ),
+                        Menu(name="Role", url="/rest/Role", icon="fa fa-group",),
+                        Menu(name="Permission", url="/rest/Permission", icon="fa fa-user-plus",),
+                        Menu(name="Logout", url="/logout", icon="fa fa-lock",),
+                    ],
                 ),
-                Menu(name="Role", url="/rest/Role", icon="fa fa-group", actions={"delete": False}),
-                Menu(
-                    name="Permission",
-                    url="/rest/Permission",
-                    icon="fa fa-user-plus",
-                    actions={"delete": False},
-                ),
-                Menu(name="Logout", url="/logout", icon="fa fa-lock",),
             ]
             menus += permission_menus
         return menus
 
-    def init(
+    async def init(
         self,
         site: Site,
         admin_secret: str,
-        user_model: str = "User",
         permission: bool = False,
-        tortoise_app: str = "models",
+        admin_log: bool = False,
         login_view: Optional[str] = None,
     ):
         """
         init admin site
+        :param admin_log:
         :param login_view:
-        :param tortoise_app:
         :param permission: active builtin permission
         :param site:
-        :param user_model: admin user model path,like admin.models.user
         :param admin_secret: admin jwt secret.
         :return:
         """
         self.site = site
         self.permission = permission
         self.admin_secret = admin_secret
-        self.models = Tortoise.apps.get(tortoise_app)
-        self.user_model = self.models.get(user_model)
+        self.admin_log = admin_log
+        for model_name, model in get_all_models():
+            if issubclass(model, AbstractUser):
+                self.user_model = model
+            elif issubclass(model, AbstractAdminLog):
+                self.admin_log_model = model
+            self.models[model_name] = model
         self._inited = True
         if not site.menus:
             site.menus = self._build_default_menus(permission)
+        if permission:
+            await self._register_permissions()
         self._get_model_menu_mapping(site.menus)
         if login_view:
             self.add_api_route("/login", import_obj(login_view), methods=["POST"])
         else:
             self.add_api_route("/login", login, methods=["POST"])
+
+    async def _register_permissions(self):
+        permission_model = None
+        for model_name, model in get_all_models():
+            if issubclass(model, AbstractPermission):
+                permission_model = model
+                break
+        if not permission_model:
+            raise Exception("No Permission Model Founded.")
+
+        for model, _ in get_all_models():
+            for action in enums.PermissionAction.choices():
+                label = f"{enums.PermissionAction.choices().get(action)} {model}"
+                defaults = dict(label=label, model=model, action=action,)
+                await permission_model.get_or_create(**defaults,)
 
     def _exclude_field(self, resource: str, field: str):
         """
@@ -216,6 +245,11 @@ class AdminApp(FastAPI):
         sort_fields = menu.sort_fields
         fields = {}
         pk = name = pk_field.get("name")
+        # CustomSearchFilters
+        for search_filter in filter(
+            lambda x: type(x).__name__ == "type" and issubclass(x, SearchFilter), search_fields
+        ):
+            search_fields_ret[search_filter.get_name()] = await search_filter.get_field()
         if not exclude_pk and not self._exclude_field(resource, name):
             field = Field(
                 label=pk_field.get("name").title(),
@@ -252,6 +286,8 @@ class AdminApp(FastAPI):
                 disabled=readonly,
                 description=data_field.get("description"),
             )
+            if field_type == "DecimalField" or field_type == "FloatField":
+                field.step = "any"
             field = field.copy(update=menu.attrs.get(name) or {})
             fields[name] = field
             if name in search_fields:
@@ -314,6 +350,7 @@ class AdminApp(FastAPI):
             pk=pk,
             bulk_actions=menu.bulk_actions,
             export=menu.export,
+            import_=menu.import_,
         )
 
 

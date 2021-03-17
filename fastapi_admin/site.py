@@ -5,8 +5,6 @@ from pydantic import BaseModel, HttpUrl
 
 class Menu(BaseModel):
     name: str
-    # whether is it a title or a model resource.
-    title: Optional[bool]
     # must be format with /rest/<Model> if it's a model resource.
     url: Optional[str]
     icon: Optional[str]
@@ -21,17 +19,19 @@ class Menu(BaseModel):
     # raw id fields
     raw_id_fields: Optional[Tuple[str, ...]] = tuple()
     # searchable fields
-    search_fields: Optional[Tuple[str, ...]] = tuple()
+    search_fields = tuple()
     # sortable fields
     sort_fields: Optional[Tuple[str, ...]] = tuple()
     # define field type,like select,radiolist,text,date
     fields_type: Dict = {}
     # define field attr,like cols which in bootstrap table
-    attrs: Dict[str, Dict] = {}
+    attrs: Dict[str, Dict] = {"created_at": {"label": "CreatedAt"}}
     # active table export
     export: bool = True
+    import_: bool = False
     actions: Optional[Dict]
     bulk_actions: List[Dict] = [{"value": "delete", "text": "delete_all"}]
+    custom_filters: List = []
 
 
 Menu.update_forward_refs()
@@ -43,19 +43,20 @@ class Site(BaseModel):
     login_logo: Optional[HttpUrl]
     login_footer: Optional[str]
     login_description: Optional[str]
-    footer: Optional[str]
     locale: str
     locale_switcher: bool = False
     theme_switcher: bool = False
     theme: Optional[str]
     url: Optional[HttpUrl]
-    grid_style: int = 1
     # custom css
     css: Optional[List[HttpUrl]]
     # menu define
     menus: Optional[List[Menu]]
     # custom footer with html
     footer: Optional[str]
+    # custom header - require html beginning with a <div> due to being rendered in a <custom-component>
+    header: Optional[str]
+    page_header: Optional[str]
 
 
 class Field(BaseModel):
@@ -71,6 +72,7 @@ class Field(BaseModel):
     ref: Optional[str]
     description: Optional[str]
     disabled: Optional[bool] = False
+    step: str = "any"
 
 
 class Resource(BaseModel):
@@ -80,6 +82,7 @@ class Resource(BaseModel):
     searchFields: Optional[Dict[str, Field]]
     bulk_actions: Optional[List[Dict]]
     export: bool
+    import_: bool
 
     class Config:
         fields = {
