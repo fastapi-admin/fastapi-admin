@@ -162,6 +162,8 @@ class AdminApp(FastAPI):
                 self.user_model = model
             elif issubclass(model, AbstractAdminLog):
                 self.admin_log_model = model
+            elif issubclass(model, AbstractPermission):
+                self.permission_model = model
             self.models[model_name] = model
         self._inited = True
         if not site.menus:

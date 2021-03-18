@@ -13,7 +13,7 @@ from tortoise.exceptions import IntegrityError
 from tortoise.fields import ManyToManyRelation
 
 from .. import enums
-from ..common import handle_m2m_fields_create_or_update
+from ..common import handle_m2m_fields_create_or_update, check_has_permission
 from ..depends import (
     QueryItem,
     admin_log_create,
@@ -34,6 +34,7 @@ from ..filters import get_filter_by_name
 from ..responses import GetManyOut
 from ..schemas import BulkIn
 from ..shortcuts import get_object_or_404
+from ..site import Field
 
 router = APIRouter()
 
@@ -118,11 +119,21 @@ async def get_resource(
 
 
 @router.get("/{resource}/form", dependencies=[Depends(read_checker)])
-async def form(resource: str,):
-    resource = await app.get_resource(
+async def form(resource: str, user=Depends(get_current_user)):
+    resource_response = await app.get_resource(
         resource, exclude_pk=True, exclude_m2m_field=False, exclude_actions=True
     )
-    return resource.dict(by_alias=True, exclude_unset=True)
+    if resource == app.permission_model.__name__:
+        models = app.models.keys()
+        options = []
+        await user.fetch_related("roles")
+        for model in models:
+            if not app.permission or user.is_superuser or await check_has_permission(user, model):
+                options.append({"text": model, "value": model})
+        field: Field = resource_response.resource_fields["model"]
+        field.options = options
+        field.type = "select"
+    return resource_response.dict(by_alias=True, exclude_unset=True)
 
 
 @router.get("/{resource}/grid", dependencies=[Depends(read_checker)])
