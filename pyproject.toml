@@ -12,15 +12,15 @@ keywords = ["fastapi", "admin", "dashboard"]
 packages = [
     { include = "fastapi_admin" }
 ]
-include = ["LICENSE", "README.md","CHANGELOG.md"]
+include = ["LICENSE", "README.md", "CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 tortoise-orm = "*"
 aiomysql = "*"
 python-dotenv = "*"
-uvloop = {version = "*", optional = true}
-uvicorn = "*"
+uvloop = { version = "*", optional = true }
+uvicorn = { version = "*", extras = ["standard"] }
 python-rapidjson = "*"
 fastapi = "*"
 aiosqlite = "*"
