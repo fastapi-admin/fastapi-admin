@@ -13,8 +13,7 @@ FastAPI-Admin is a admin dashboard based on
 [fastapi](https://github.com/tiangolo/fastapi) and
 [tortoise-orm](https://github.com/tortoise/tortoise-orm).
 
-FastAPI-Admin provide crud feature out-of-the-box with just a few
-config.
+FastAPI-Admin provide crud feature out-of-the-box with just a few config.
 
 ## Live Demo
 
@@ -38,11 +37,9 @@ Data in database will restore every day.
 
 ## Requirements
 
-- [FastAPI](https://github.com/tiangolo/fastapi) framework as your
-  backend framework.
-- [Tortoise-ORM](https://github.com/tortoise/tortoise-orm) as your orm
-  framework, by the way, which is best asyncio orm so far and I\'m one
-  of the contributors😋.
+- [FastAPI](https://github.com/tiangolo/fastapi) framework as your backend framework.
+- [Tortoise-ORM](https://github.com/tortoise/tortoise-orm) as your orm framework, by the way, which is best asyncio orm
+  so far and I\'m one of the contributors😋.
 
 ## Quick Start
 
@@ -77,6 +74,7 @@ register_tortoise(fast_app, config=TORTOISE_ORM, generate_schemas=True)
 
 fast_app.mount('/admin', admin_app)
 
+
 @fast_app.on_event('startup')
 async def startup():
     await admin_app.init(
@@ -106,12 +104,6 @@ Deploy fastapi app by gunicorn+uvicorn or reference
 
 See [restful api](https://fastapi-admin-api.long2ice.cn/admin/docs)
 docs.
-
-## Support this project
-
-| AliPay                                                                                        | WeChatPay                                                                                        | PayPal                                                           |
-| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| <img width="200" src="https://github.com/long2ice/fastapi-admin/raw/dev/images/alipay.jpeg"/> | <img width="200" src="https://github.com/long2ice/fastapi-admin/raw/dev/images/wechatpay.jpeg"/> | [PayPal](https://www.paypal.me/long2ice) to my account long2ice. |
 
 ## License
 
