@@ -16,8 +16,8 @@ include = ["LICENSE", "README.md", "CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-tortoise-orm = { git = "https://github.com/tortoise/tortoise-orm", branch = "develop" }
-aiomysql = "*"
+tortoise-orm = "^0.17.0"
+asyncmy = "*"
 python-dotenv = "*"
 uvloop = { version = "*", optional = true }
 uvicorn = { version = "*", extras = ["standard"] }
