@@ -304,7 +304,7 @@ class AdminApp(FastAPI):
                     options = list(map(lambda x: {"text": str(x), "value": x.pk}, objs))
                     field = Field(
                         label=label,
-                        required=True,
+                        required=not fk_field.get("nullable"),
                         type="select",
                         options=options,
                         sortable=name in sort_fields,
