@@ -40,6 +40,7 @@ pytest = "*"
 bandit = "*"
 mkdocs = "*"
 mkdocs-material = "*"
+mike = "*"
 
 [build-system]
 requires = ["poetry>=0.12"]
