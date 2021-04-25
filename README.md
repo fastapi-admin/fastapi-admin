@@ -7,6 +7,23 @@
 
 ## Introduction
 
+`fastapi-admin` is a fast admin dashboard based on FastAPI and TortoiseORM with [tabler](https://github.com/tabler/tabler) ui, inspired by Django admin.
+
+**Looking for old version? See branch [v1](https://github.com/fastapi-admin/fastapi-admin/tree/v1)**.
+
+## Live Demo
+
+You can check a online demo [here](https://fastapi-admin.long2ice.cn).
+
+- username: `admin`
+- password: `123456`
+
+## Screenshots
+
+![](./images/login.png)
+
+![](./images/dashboard.png)
+
 ## Documentation
 
 See documentation at [https://fastapi-admin.github.io/fastapi-admin](https://fastapi-admin.github.io/fastapi-admin).

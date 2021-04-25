@@ -48,7 +48,7 @@ class Datetime(Filter):
         self,
         name: str,
         label: str,
-        format_: str = constants.DATE_FORMAT_MONENT,
+        format_: str = constants.DATE_FORMAT_MOMENT,
     ):
         """
         Datetime filter
@@ -76,7 +76,7 @@ class Date(Datetime):
         self,
         name: str,
         label: str,
-        format_: str = constants.DATE_FORMAT_MONENT,
+        format_: str = constants.DATE_FORMAT_MOMENT,
     ):
         super().__init__(
             name,
@@ -110,7 +110,12 @@ class Select(Filter):
 
 class Enum(Select):
     def __init__(
-        self, enum: Type[EnumCLS], name: str, label: str, enum_type: Type = int, null: bool = False
+        self,
+        enum: Type[EnumCLS],
+        name: str,
+        label: str,
+        enum_type: Type = int,
+        null: bool = False,
     ):
         super().__init__(name, label, null)
         self.enum = enum
