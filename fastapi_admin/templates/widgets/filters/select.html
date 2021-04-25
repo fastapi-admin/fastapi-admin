@@ -1,0 +1,12 @@
+<div class="text-muted">
+    {{ label }}:
+    <div class="mx-2 d-inline-block">
+        <select class="form-select" name="{{ name }}">
+            {% for option in options %}
+                <option value="{{ option[1] }}" {% if option[1] == value %}
+                        selected
+                {% endif %} >{{ option[0] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

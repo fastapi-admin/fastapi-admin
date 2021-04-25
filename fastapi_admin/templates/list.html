@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+{% block page_body %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ resource_label }}</h3>
+                {% if model_resource.can_create %}
+                    <a class="btn btn-dark ms-auto"
+                       href="{{ request.app.admin_path }}/create/{{ resource }}">{{ _('create') }}</a>
+                {% endif %}
+            </div>
+            <div class="card-body border-bottom py-3">
+                <form action="{{ request.app.admin_path }}/list/{{ resource }}" method="get">
+                    <div class="d-flex">
+                        <div class="text-muted">
+                            {{ _('show') }}
+                            <div class="mx-2 d-inline-block">
+                                <input type="text" class="form-control" value="{{ page_size }}" size="1"
+                                       name="page_size"
+                                       aria-label="entries count">
+                            </div>
+                            {{ _('entries') }}
+                        </div>
+                        <div class="d-flex ms-auto">
+                            {% for filter in filters %}
+                                <div class="mx-2">
+                                    {{ filter|safe }}
+                                </div>
+                            {% endfor %}
+                            <div class="ms-2">
+                                <button type="submit" class="btn btn-primary">{{ _('submit') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap datatable">
+                    <thead>
+                    <tr>
+                        <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox"
+                                               aria-label="Select all entities"></th>
+                        {% for label in fields_label %}
+                            <th>{{ label }}</th>
+                        {% endfor %}
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in values %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input m-0 align-middle" type="checkbox"
+                                       aria-label="Select invoice">
+                            </td>
+                            {% for v in value %}
+                                <td>{{ v|safe }}</td>
+                            {% endfor %}
+                            {% if  model_resource.can_edit or model_resource.can_delete %}
+                                <td class="text-end">
+                                <span class="dropdown">
+                                  <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
+                                          data-bs-toggle="dropdown">{{ _('actions') }}</button>
+                                  <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                      {% if model_resource.can_edit %}
+                                          <a class="dropdown-item"
+                                             href="{{ request.app.admin_path }}/edit/{{ resource }}/{{ value[0] }}">
+                                        <i class="ti ti-edit me-2"></i>
+                                      {{ _('edit') }}
+                                    </a>
+                                      {% endif %}
+                                      {% if  model_resource.can_delete %}
+                                          <a class="dropdown-item"
+                                             href="{{ request.app.admin_path }}/delete/{{ resource }}/{{ value[0] }}">
+                                        <i class="ti ti-trash me-2"></i>
+                                      {{ _('delete') }}
+                                        </a>
+                                      {% endif %}
+                                  </div>
+                                </span>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer d-flex align-items-center">
+                <p class="m-0 text-muted">{{ _('Showing %(from)s to %(to)s of %(total)s entries')|format(from=from,to=to,total=total) }}</p>
+                <ul class="pagination m-0 ms-auto">
+                    <li class="page-item {% if page_num <= 1 %}
+                       disabled
+                    {% endif %} ">
+                        <a class="page-link" href="{{ {'page_num':page_num - 1}|current_page_with_params }}" tabindex="-1"
+                           aria-disabled="true">
+                            <i class="ti ti-chevron-left"></i>
+                            {{ _('prev_page') }}
+                        </a>
+                    </li>
+                    {% with total_page = (total/page_size)|round(0,'ceil')|int,start_page = (1 if page_num <=3 else page_num - 2 ) %}
+                        {% for i in range(start_page,[start_page + 5,total_page + 1]|min) %}
+                            <li class="page-item {% if i == (page_num or 1) %}
+                            active
+                        {% endif %} "><a class="page-link"
+                                         href="{{ {'page_num':i}|current_page_with_params }}">{{ i }}</a></li>
+                        {% endfor %}
+                        <li class="page-item {% if page_num >= total_page %}
+                        disabled
+                    {% endif %} ">
+                            <a class="page-link" href="{{ {'page_num':page_num + 1}|current_page_with_params }}">
+                                {{ _('next_page') }}
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+                        </li>
+                    {% endwith %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

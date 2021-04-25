@@ -2,12 +2,15 @@ import datetime
 
 from tortoise import Model, fields
 
-from fastapi_admin.models import AbstractAdminLog, AbstractPermission, AbstractRole, AbstractUser
+from examples.enums import Action, ProductType, Status
+from fastapi_admin.providers.login import UserMixin
 
-from .enums import ProductType, Status
 
-
-class User(AbstractUser):
+class User(UserMixin):
+    is_active = fields.BooleanField(
+        default=True,
+    )
+    is_superuser = fields.BooleanField(default=False)
     last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
     avatar = fields.CharField(max_length=200, default="")
     intro = fields.TextField(default="")
@@ -16,47 +19,11 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.pk}#{self.username}"
 
-    def rowVariant(self) -> str:
-        if not self.is_active:
-            return "warning"
-        return ""
-
-    def cellVariants(self) -> dict:
-        if self.is_active:
-            return {
-                "intro": "info",
-            }
-        return {}
-
-    class PydanticMeta:
-        computed = ("rowVariant", "cellVariants")
-
-
-class Permission(AbstractPermission):
-    """
-    must inheritance AbstractPermission
-    """
-
-
-class Role(AbstractRole):
-    """
-    must inheritance AbstractRole
-    """
-
-
-class AdminLog(AbstractAdminLog):
-    """
-    must inheritance AbstractAdminLog
-    """
-
 
 class Category(Model):
     slug = fields.CharField(max_length=200)
     name = fields.CharField(max_length=200)
     created_at = fields.DatetimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.pk}#{self.name}"
 
 
 class Product(Model):
@@ -70,15 +37,20 @@ class Product(Model):
     body = fields.TextField()
     created_at = fields.DatetimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.pk}#{self.name}"
-
 
 class Config(Model):
     label = fields.CharField(max_length=200)
-    key = fields.CharField(max_length=20)
+    key = fields.CharField(max_length=20, unique=True, description="Unique key for config")
     value = fields.JSONField()
     status: Status = fields.IntEnumField(Status, default=Status.on)
 
-    def __str__(self):
-        return f"{self.pk}#{self.label}"
+
+class Log(Model):
+    user = fields.ForeignKeyField("models.User")
+    content = fields.TextField()
+    resource = fields.CharField(max_length=50)
+    action = fields.CharEnumField(Action, default=Action.create)
+    created_at = fields.DatetimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-id"]

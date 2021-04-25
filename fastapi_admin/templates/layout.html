@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="wrapper min-vh-100">
+        <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <h1 class="navbar-brand navbar-brand-autodark">
+                    <a href="{{ request.app.admin_path }}">
+                        <img src="{{ request.app.logo_url }}" width="110" height="32" alt="Tabler"
+                             class="navbar-brand-image">
+                    </a>
+                </h1>
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="navbar-nav pt-lg-3">
+                        {% for resource in resources %}
+                            {% if resource.type == 'link' %}
+                                {% include 'components/link.html' %}
+                            {% elif resource.type == 'model' %}
+                                {% include 'components/model.html' %}
+                            {% elif resource.type == 'dropdown' %}
+                                {% include 'components/dropdown.html' %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <div class="page-wrapper min-vh-100">
+            <div class="container-fluid">
+                <div class="page-header d-print-none">
+                    {% block page_header %}
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="page-pretitle">
+                                    {{ page_pre_title or '' }}
+                                </div>
+                                <h2 class="page-title">
+                                    {{ page_title or '' }}
+                                </h2>
+                            </div>
+                            <div class="col-auto ms-auto d-print-none">
+                                <div class="btn-list">
+                                  <span class="d-none d-sm-inline">
+                                      <span class="dropdown">
+                                              <button class="btn dropdown-toggle align-text-top"
+                                                      data-bs-boundary="viewport"
+                                                      data-bs-toggle="dropdown"
+                                                      aria-expanded="false">{{ _('language_switch') }}</button>
+                                              <div class="dropdown-menu dropdown-menu-end" style="">
+                                                <a class="dropdown-item"
+                                                   href="{{ {'language':'zh_CN'}|current_page_with_params }}">
+                                                    <span class="me-2">🇨🇳</span>简体中文
+                                                </a>
+                                                <a class="dropdown-item"
+                                                   href="{{ {'language':'en_US'}|current_page_with_params }}">
+                                                    <span class="me-2">🇺🇸</span>English
+                                                </a>
+                                              </div>
+                                      </span>
+                                  </span>
+                                    <a href="{{ request.app.admin_path }}{{ request.app.login_provider.logout_path }}" class="btn btn-primary">
+                                        {{ _('logout') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="page-body flex-grow-1">
+                <div class="container-fluid">
+                    <div class="row row-deck row-cards">
+                        {% block page_body %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container">
+                    <div class="row text-center align-items-center flex-row-reverse">
+                        <div class="col-lg-auto ms-lg-auto">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item"><a href="#" class="link-secondary">Documentation</a>
+                                </li>
+                                <li class="list-inline-item"><a href="#" class="link-secondary">License</a>
+                                </li>
+                                <li class="list-inline-item"><a href="https://github.com/long2ice/fastadmin"
+                                                                target="_blank"
+                                                                class="link-secondary" rel="noopener">Source code</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://sponsor.long2ice.cn" target="_blank"
+                                       class="link-secondary" rel="noopener">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon text-pink icon-filled icon-inline" width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                                        </svg>
+                                        Sponsor
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item">
+                                    Copyright © {{ 2021 }} - {{ NOW_YEAR }}
+                                    <a href="." class="link-secondary">FastAdmin</a>.
+                                    All rights reserved.
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="link-secondary" rel="noopener">v{{ VERSION }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+{% endblock %}

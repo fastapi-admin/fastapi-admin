@@ -1,0 +1,10 @@
+<div class="form-group mb-3">
+    <div class="form-label">{{ label }}</div>
+    <select class="form-select" name="{{ name }}">
+        {% for option in options %}
+            <option value="{{ option[1] }}" {% if option[1] == value %}
+                    selected
+            {% endif %} >{{ option[0] }}</option>
+        {% endfor %}
+    </select>
+</div>

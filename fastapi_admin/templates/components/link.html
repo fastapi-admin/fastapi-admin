@@ -1,0 +1,12 @@
+<li class="nav-item {% if resource_label == resource.label %}
+active
+{% endif %} ">
+    <a class="nav-link" href="{{ resource.url }}" target="{{ resource.target }}">
+                              <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="{{ resource.icon }}"></i>
+                              </span>
+        <span class="nav-link-title">
+                                {{ resource.label }}
+                              </span>
+    </a>
+</li>

@@ -1,0 +1,32 @@
+<script src="https://cdn.jsdelivr.net/npm/jsoneditor@9.4.0/dist/jsoneditor.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsoneditor@9.4.0/dist/jsoneditor.min.css">
+<div class="form-label">{{ label }}</div>
+<div id="{{ name }}" class="form-group mb-3"></div>
+<input  {% if not null %}required{% endif %} type="text" name="{{ name }}" value='{{ value|safe }}' hidden>
+<style>
+    .jsoneditor {
+        border: 1px solid #dadcde;
+        border-radius: 4px;
+
+    }
+
+    .jsoneditor-menu {
+        background-color: rgba(35, 46, 60, .7);
+        border-bottom: #dadcde;
+    }
+
+</style>
+<script>
+    const container = document.getElementById("{{name}}")
+    let options = {{options|safe}};
+    if (Object.keys(options).length === 0) {
+        options = {
+            modes: ['tree', 'view', 'form', 'code', 'text', 'preview']
+        }
+    }
+    options.onChangeText = function (json) {
+        $('input[name={{ name }}]').val(json);
+    }
+    const editor = new JSONEditor(container, options)
+    editor.set({{ value|safe }})
+</script>

@@ -1,0 +1,126 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-04-23 22:20+0800\n"
+"PO-Revision-Date: 2021-04-16 22:46+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: fastadmin/providers/login.py:98
+msgid "no_such_user"
+msgstr "未找到该用户"
+
+#: fastadmin/providers/login.py:102
+#, fuzzy
+msgid "password_error"
+msgstr "密码错误"
+
+#: fastadmin/templates/create.html:14 fastadmin/templates/edit.html:14
+msgid "save"
+msgstr "保存"
+
+#: fastadmin/templates/create.html:16
+msgid "save_and_add_another"
+msgstr "保存并新增"
+
+#: fastadmin/templates/create.html:18 fastadmin/templates/edit.html:18
+msgid "return"
+msgstr "返回"
+
+#: fastadmin/templates/edit.html:16
+msgid "save_and_return"
+msgstr "保存并返回"
+
+#: fastadmin/templates/layout.html:47
+msgid "language_switch"
+msgstr "语言"
+
+#: fastadmin/templates/layout.html:61
+msgid "logout"
+msgstr "退出登录"
+
+#: fastadmin/templates/list.html:9
+msgid "create"
+msgstr "创建"
+
+#: fastadmin/templates/list.html:16
+msgid "show"
+msgstr "显示"
+
+#: fastadmin/templates/list.html:22
+msgid "entries"
+msgstr "项"
+
+#: fastadmin/templates/list.html:31
+msgid "submit"
+msgstr "提交"
+
+#: fastadmin/templates/list.html:63
+msgid "actions"
+msgstr "动作"
+
+#: fastadmin/templates/list.html:69
+msgid "edit"
+msgstr "编辑"
+
+#: fastadmin/templates/list.html:76
+msgid "delete"
+msgstr "删除"
+
+#: fastadmin/templates/list.html:89
+#, python-format
+msgid "Showing %(from)s to %(to)s of %(total)s entries"
+msgstr "显示 %(from)s 到 %(to)s 共 %(total)s 项"
+
+#: fastadmin/templates/list.html:97
+msgid "prev_page"
+msgstr "上一页"
+
+#: fastadmin/templates/list.html:111
+msgid "next_page"
+msgstr "下一页"
+
+#: fastadmin/templates/login.html:24
+msgid "login_title"
+msgstr "登录管理台"
+
+#: fastadmin/templates/login.html:26
+msgid "username"
+msgstr "用户名"
+
+#: fastadmin/templates/login.html:27
+msgid "login_username_placeholder"
+msgstr "请输入用户名"
+
+#: fastadmin/templates/login.html:31
+msgid "password"
+msgstr "密码"
+
+#: fastadmin/templates/login.html:36
+msgid "login_password_placeholder"
+msgstr "请输入密码"
+
+#: fastadmin/templates/login.html:44
+msgid "remember_me"
+msgstr "记住我"
+
+#: fastadmin/templates/login.html:48
+msgid "sign_in"
+msgstr "登录"
+
+#: fastadmin/templates/errors/404.html:21
+#: fastadmin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "返回首页"

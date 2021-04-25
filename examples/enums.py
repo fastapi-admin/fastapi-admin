@@ -1,21 +1,17 @@
-from enum import IntEnum
-
-from fastapi_admin.enums import EnumMixin
+from enum import Enum, IntEnum
 
 
-class ProductType(EnumMixin, IntEnum):
+class ProductType(IntEnum):
     article = 1
     page = 2
 
-    @classmethod
-    def choices(cls):
-        return {cls.article: "Article", cls.page: "Page"}
 
-
-class Status(EnumMixin, IntEnum):
+class Status(IntEnum):
     on = 1
     off = 0
 
-    @classmethod
-    def choices(cls):
-        return {cls.on: "On", cls.off: "Off"}
+
+class Action(str, Enum):
+    create = "create"
+    delete = "delete"
+    edit = "edit"

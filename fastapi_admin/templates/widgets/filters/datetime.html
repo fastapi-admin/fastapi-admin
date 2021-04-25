@@ -1,0 +1,47 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<div class="text-muted">
+    {{ label }}:
+    <div class="d-inline-block">
+        <input class="form-control" type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}">
+    </div>
+</div>
+<script>
+    $(function () {
+        let value = "{{value}}";
+        let start, end;
+        if (value !== '') {
+            let s = value.split(' - ')
+            start = moment(s[0]);
+            end = moment(s[1]);
+        } else {
+            start = moment().subtract(7, 'days');
+            end = moment().subtract(-1, 'days');
+        }
+
+        let format = '{{ format }}';
+
+        function cb(start, end) {
+            $('#{{name}} span').html(start.format(format) + ' - ' + end.format(format));
+        }
+
+        $('#{{name}}').daterangepicker({
+            startDate: start,
+            endDate: end,
+            timePicker: true,
+            timePicker24Hour: true,
+            locale: {
+                format: format
+            },
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+        cb(start, end);
+    });
+</script>

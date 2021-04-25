@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 1.0
+
+### 1.0.0
+
+**This is a completely different version and rewrite all code. If you are using old version, you can't upgrade directly,
+but completely rewrite your code. So just consider try it in your new project.**
+
 ## 0.3
 
 ### 0.3.3

@@ -1,0 +1,11 @@
+<div class="form-group mb-3">
+    <div class="form-label">{{ label }}</div>
+    {% for option in options %}
+        <label class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" name="{{ name }}" {% if disabled %}disabled{% endif %}
+                   value="{{ option[1] }}"
+                   {% if option[1] == value %}checked{% endif %}>
+            <span class="form-check-label">{{ option[0] }}</span>
+        </label>
+    {% endfor %}
+</div>
