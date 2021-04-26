@@ -44,6 +44,8 @@ asyncmy = "*"
 mkdocs = "*"
 mkdocs-material = "*"
 mike = "*"
+mkdocs-static-i18n = "*"
+mkdocs-git-revision-date-localized-plugin = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

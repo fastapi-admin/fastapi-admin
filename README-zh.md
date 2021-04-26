@@ -5,31 +5,16 @@
 [![image](https://github.com/fastapi-admin/fastapi-admin/workflows/gh-pages/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:gh-pages)
 [![image](https://github.com/fastapi-admin/fastapi-admin/workflows/pypi/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:pypi)
 
-## Introduction
+## 简介
 
-`fastapi-admin` is a fast admin dashboard based on [FastAPI](https://github.com/tiangolo/fastapi) and [TortoiseORM](https://github.com/tortoise/tortoise-orm/) with [tabler](https://github.com/tabler/tabler) ui, inspired by Django admin.
+## 线上 DEMO
 
-Looking for old version? See branch [v1](https://github.com/fastapi-admin/fastapi-admin/tree/v1).
-
-## Online Demo
-
-You can check a online demo [here](https://fastapi-admin.long2ice.cn).
-
-- username: `admin`
-- password: `123456`
-
-## Screenshots
+## 截图
 
 ![](https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/login.png)
 
 ![](https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/dashboard.png)
 
-## Documentation
+## 文档
 
-See documentation at [https://fastapi-admin.github.io/fastapi-admin](https://fastapi-admin.github.io/fastapi-admin).
-
-## License
-
-This project is licensed under the
-[Apache-2.0](https://github.com/fastapi-admin/fastapi-admin/blob/master/LICENSE)
-License.
+## 开源许可
