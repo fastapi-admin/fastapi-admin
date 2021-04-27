@@ -89,10 +89,6 @@ async def startup():
     )
 ```
 
-## Documentation
-
-See documentation [here](https://fastapi-admin.github.io/fastapi-admin/0.3.3).
-
 ## Deployment
 
 Deploy fastapi app by gunicorn+uvicorn or reference
