@@ -7,9 +7,17 @@
 
 ## Introduction
 
-`fastapi-admin` is a fast admin dashboard based on [FastAPI](https://github.com/tiangolo/fastapi) and [TortoiseORM](https://github.com/tortoise/tortoise-orm/) with [tabler](https://github.com/tabler/tabler) ui, inspired by Django admin.
+`fastapi-admin` is a fast admin dashboard based on [FastAPI](https://github.com/tiangolo/fastapi)
+and [TortoiseORM](https://github.com/tortoise/tortoise-orm/) with [tabler](https://github.com/tabler/tabler) ui,
+inspired by Django admin.
 
 Looking for old version? See branch [v1](https://github.com/fastapi-admin/fastapi-admin/tree/v1).
+
+## Installation
+
+```shell
+> pip install fastapi-admin
+```
 
 ## Online Demo
 

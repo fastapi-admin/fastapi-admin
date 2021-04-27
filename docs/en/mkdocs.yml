@@ -5,35 +5,52 @@ site_description: A fast admin dashboard based on FastAPI and TortoiseORM with t
 repo_name: fastapi-admin/fastapi-admin
 site_author: long2ice
 theme:
+  logo: https://fastapi.tiangolo.com/img/icon-white.svg
+  favicon: https://fastapi.tiangolo.com/img/favicon.png
   name: material
+  language: en
   icon:
     repo: fontawesome/brands/github
   palette:
-    primary: deep purple
+    - scheme: default
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to default mode
+    - scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
   features:
     - navigation.instant
     - navigation.tabs
     - search.suggest
     - search.highlight
+    - navigation.top
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.superfences
 nav:
-  - index.md
   - Getting Started:
-      - getting_started.md
-  - Pro Features:
+      - getting_started/index.md
+      - getting_started/installation.md
+      - getting_started/quickstart.md
+  - Reference:
+      - reference/index.md
+  - Pro Version For Sponsor:
+      - pro/index.md
       - pro/sponsor.md
-
+      - pro/installation.md
 extra:
   alternate:
     - name: English
-      link: /latest/en/
-      lang: en
+      link: /
     - name: 简体中文
-      link: /latest/zh/
-      lang: zh
+      link: /zh/
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/long2ice
@@ -41,12 +58,6 @@ extra:
 copyright: Copyright &copy; 2021 long2ice
 
 plugins:
-  - mike:
-      version_selector: true
-  - i18n:
-      default_language: en
-      languages:
-        en: English
-        zh: 简体中文
   - git-revision-date-localized:
-      type: date
+      type: datetime
+  - markdownextradata
