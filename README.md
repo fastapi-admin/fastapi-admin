@@ -5,8 +5,6 @@
 [![image](https://github.com/long2ice/fastapi-admin/workflows/gh-pages/badge.svg)](https://github.com/long2ice/fastapi-admin/actions?query=workflow:gh-pages)
 [![image](https://github.com/long2ice/fastapi-admin/workflows/pypi/badge.svg)](https://github.com/long2ice/fastapi-admin/actions?query=workflow:pypi)
 
-[中文文档](https://blog.long2ice.cn/2020/05/fastapi-admin%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E5%9F%BA%E4%BA%8Efastapi%E4%B8%8Etortoise-orm%E7%9A%84%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0/)
-
 ## Introduction
 
 FastAPI-Admin is a admin dashboard based on
@@ -18,7 +16,7 @@ FastAPI-Admin provide crud feature out-of-the-box with just a few config.
 ## Live Demo
 
 Check a live Demo here
-[https://fastapi-admin.long2ice.cn](https://fastapi-admin.long2ice.cn/).
+[https://fastapi-admin-v1.long2ice.cn](https://fastapi-admin-v1.long2ice.cn/).
 
 - username: `admin`
 - password: `123456`
@@ -93,7 +91,7 @@ async def startup():
 
 ## Documentation
 
-See documentation at [https://long2ice.github.io/fastapi-admin](https://long2ice.github.io/fastapi-admin).
+See documentation [here](https://fastapi-admin.github.io/fastapi-admin/0.3.3).
 
 ## Deployment
 
@@ -102,11 +100,11 @@ Deploy fastapi app by gunicorn+uvicorn or reference
 
 ## Restful API Docs
 
-See [restful api](https://fastapi-admin-api.long2ice.cn/admin/docs)
+See [restful api](https://fastapi-admin-api-v1.long2ice.cn/admin/docs)
 docs.
 
 ## License
 
 This project is licensed under the
-[Apache-2.0](https://github.com/long2ice/fastapi-admin/blob/master/LICENSE)
+[Apache-2.0](https://github.com/long2ice/fastapi-admin/blob/v1/LICENSE)
 License.
