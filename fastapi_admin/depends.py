@@ -48,3 +48,7 @@ def _get_resources(resources: List[Type[Resource]]):
 def get_resources(request: Request) -> List[dict]:
     resources = request.app.resources
     return _get_resources(resources)
+
+
+def get_redis(request: Request):
+    return request.app.redis

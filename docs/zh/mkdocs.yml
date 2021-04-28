@@ -8,7 +8,7 @@ theme:
   logo: https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/icon-white.svg
   favicon: https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/favicon.png
   name: material
-  language: en
+  language: zh
   icon:
     repo: fontawesome/brands/github
   palette:
@@ -49,7 +49,11 @@ nav:
       - reference/file_upload.md
       - reference/middleware.md
   - 自定义:
-      - custom/index.md
+      - custom/page.md
+      - custom/overwrite.md
+      - custom/login.md
+      - custom/file.md
+      - custom/widget.md
   - 赞助者 Pro 版本:
       - pro/index.md
       - pro/sponsor.md
@@ -69,5 +73,4 @@ copyright: Copyright &copy; 2021 long2ice
 plugins:
   - git-revision-date-localized:
       type: datetime
-  - markdownextradata
 dev_addr: 127.0.0.1:7999

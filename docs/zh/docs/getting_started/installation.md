@@ -1,6 +1,6 @@
-# Installation
+# 安装
 
-## From pypi
+## 从 pypi
 
 You can install from pypi.
 
@@ -8,7 +8,7 @@ You can install from pypi.
 > pip install fastapi-admin
 ```
 
-## From source
+## 从源码
 
 Or you can install from source with latest code.
 
@@ -16,7 +16,7 @@ Or you can install from source with latest code.
 > pip install git+https://github.com/fastapi-admin/fastapi-admin.git
 ```
 
-### With requirements.txt
+### 使用 requirements.txt
 
 Add the following line.
 
@@ -24,7 +24,7 @@ Add the following line.
 -e https://github.com/fastapi-admin/fastapi-admin.git@develop#egg=fastapi-admin
 ```
 
-### With poetry
+### 使用 poetry
 
 Add the following line in section `[tool.poetry.dependencies]`.
 

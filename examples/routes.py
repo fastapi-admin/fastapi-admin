@@ -12,7 +12,7 @@ async def home(
     resources=Depends(get_resources),
 ):
     return templates.TemplateResponse(
-        "main.html",
+        "home.html",
         context={
             "request": request,
             "resources": resources,

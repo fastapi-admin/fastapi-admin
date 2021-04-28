@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional, Type
 
+from aioredis import Redis
 from fastapi import FastAPI
 from starlette.middleware.base import BaseHTTPMiddleware
 from tortoise import Model
@@ -14,22 +15,25 @@ from .routes import router
 
 class FastAdmin(FastAPI):
     logo_url: str
+    login_logo_url: str
     admin_path: str
     resources: List[Type[Resource]] = []
     model_resources: Dict[Type[Model], Type[Resource]] = {}
     login_provider: Optional[Type[LoginProvider]] = LoginProvider
+    redis: Redis
 
     def configure(
         self,
+        redis: Redis,
         logo_url: str = None,
+        login_logo_url: str = None,
         default_locale: str = "en_US",
         admin_path: str = "/admin",
         template_folders: Optional[List[str]] = None,
-        login_provider: Optional[Type[LoginProvider]] = LoginProvider,
+        login_provider: Optional[LoginProvider] = None,
     ):
         """
         Config FastAdmin
-        :param maintenance: If set True, all request will redirect to maintenance page
         :param logo_url:
         :param default_locale:
         :param admin_path:
@@ -37,6 +41,8 @@ class FastAdmin(FastAPI):
         :param login_provider:
         :return:
         """
+        self.redis = redis
+        self.login_logo_url = login_logo_url
         template.set_locale(default_locale)
         self.admin_path = admin_path
         self.logo_url = logo_url

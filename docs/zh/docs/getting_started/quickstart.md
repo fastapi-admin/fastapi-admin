@@ -1,4 +1,4 @@
-# Quickstart
+# 入门指南
 
 `FastAPI-Admin` is easy to mount your `FastAPI` app, just need a few configs.
 

@@ -32,7 +32,6 @@ def create_app():
             login_logo_url="https://preview.tabler.io/static/logo.svg",
             template_folders=[os.path.join(BASE_DIR, "templates")],
             login_provider=login_provider,
-            maintenance=False,
             redis=redis,
         )
 
@@ -49,7 +48,12 @@ def create_app():
         app,
         config={
             "connections": {"default": settings.DATABASE_URL},
-            "apps": {"models": {"models": ["examples.models"], "default_connection": "default"}},
+            "apps": {
+                "models": {
+                    "models": ["examples.models"],
+                    "default_connection": "default",
+                }
+            },
         },
         generate_schemas=True,
     )
