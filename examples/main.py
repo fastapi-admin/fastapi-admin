@@ -27,7 +27,7 @@ def create_app():
 
     @app.get("/")
     async def index():
-        return RedirectResponse(path="/admin")
+        return RedirectResponse(url="/admin")
 
     @app.on_event("startup")
     async def startup():

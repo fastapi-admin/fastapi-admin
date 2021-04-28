@@ -7,3 +7,4 @@ ENV POETRY_VIRTUALENVS_CREATE false
 RUN poetry install --no-root
 COPY . /fastapi-admin
 RUN poetry install
+RUN make compile
