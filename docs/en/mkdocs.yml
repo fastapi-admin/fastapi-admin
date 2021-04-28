@@ -61,3 +61,4 @@ plugins:
   - git-revision-date-localized:
       type: datetime
   - markdownextradata
+dev_addr: 0.0.0.0:7999
