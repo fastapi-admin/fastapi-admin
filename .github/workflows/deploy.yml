@@ -1,0 +1,41 @@
+name: deploy
+on: [push, pull_request]
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /root/fastapi-admin/
+            git pull
+            docker-compose up -d --build
+  gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1.1.1
+        with:
+          virtualenvs-create: false
+      - name: Install deps
+        run: make deps
+      - name: Build en
+        run: cd docs/en && mkdocs build
+      - name: Deploy en
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/en/site
+      - name: Build zh
+        run: cd docs/zh && mkdocs build
+      - name: Deploy zh
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/zh/site
+          destination_dir: zh

@@ -66,11 +66,11 @@ class Home(Link):
     url = "/admin"
 ```
 
-### Model
-
-#### Field
+### Field
 
 The `Field` is used in `Model` resource to define how to display and input every field in model page.
+
+### Model
 
 The `Model` make a TortoiseORM model as a menu with CURD page.
 

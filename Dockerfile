@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3
 RUN mkdir -p /fastapi-admin
 WORKDIR /fastapi-admin
 COPY pyproject.toml poetry.lock /fastapi-admin/

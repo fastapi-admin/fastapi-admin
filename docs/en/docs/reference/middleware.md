@@ -1,1 +1,3 @@
 # Middleware
+
+## LoginPasswordMaxTryMiddleware (💗 Pro only)

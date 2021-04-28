@@ -48,8 +48,12 @@ nav:
           - reference/widget/input.md
       - reference/file_upload.md
       - reference/middleware.md
-  - Extension:
-      - extension/index.md
+  - Custom:
+      - custom/page.md
+      - custom/overwrite.md
+      - custom/login.md
+      - custom/file.md
+      - custom/widget.md
   - Pro Version For Sponsor:
       - pro/index.md
       - pro/sponsor.md
@@ -67,7 +71,7 @@ extra:
 copyright: Copyright &copy; 2021 long2ice
 
 plugins:
+  - search
   - git-revision-date-localized:
       type: datetime
-  - markdownextradata
 dev_addr: 127.0.0.1:7999

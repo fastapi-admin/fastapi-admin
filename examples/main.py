@@ -1,5 +1,6 @@
 import os
 
+import aioredis
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -11,7 +12,6 @@ from examples.constants import BASE_DIR
 from examples.models import User
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
-import aioredis
 
 login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
 
