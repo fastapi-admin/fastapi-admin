@@ -20,7 +20,7 @@ Or you can install from source with latest code.
 
 Add the following line.
 
-```shell
+```
 -e https://github.com/fastapi-admin/fastapi-admin.git@develop#egg=fastapi-admin
 ```
 

@@ -6,9 +6,14 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 from tortoise.contrib.fastapi import register_tortoise
 
-from examples import providers, settings
+from examples import settings
 from examples.constants import BASE_DIR
+from examples.models import User
 from fastapi_admin.app import app as admin_app
+from fastapi_admin.providers.login import UsernamePasswordProvider
+import aioredis
+
+login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
 
 
 def create_app():
@@ -18,11 +23,19 @@ def create_app():
         StaticFiles(directory=os.path.join(BASE_DIR, "static")),
         name="static",
     )
-    admin_app.configure(
-        logo_url="https://preview.tabler.io/static/logo-white.svg",
-        template_folders=[os.path.join(BASE_DIR, "templates")],
-        login_provider=providers.Login,
-    )
+
+    @app.on_event("startup")
+    async def startup():
+        redis = await aioredis.create_redis_pool("redis://localhost", encoding="utf8")
+        admin_app.configure(
+            logo_url="https://preview.tabler.io/static/logo-white.svg",
+            login_logo_url="https://preview.tabler.io/static/logo.svg",
+            template_folders=[os.path.join(BASE_DIR, "templates")],
+            login_provider=login_provider,
+            maintenance=False,
+            redis=redis,
+        )
+
     app.mount("/admin", admin_app)
     app.add_middleware(
         CORSMiddleware,

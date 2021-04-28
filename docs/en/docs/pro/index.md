@@ -1,6 +1,8 @@
 # Content
 
-## Login Captcha and failed IP limitation
+## Login Captcha
+
+## Failed Login IP Limitation
 
 ## Additional File Upload Providers
 

@@ -24,6 +24,7 @@ jinja2 = "*"
 Babel = "*"
 python-multipart = "*"
 bcrypt = "*"
+aioredis = "*"
 
 [tool.poetry.dev-dependencies]
 # test
@@ -49,6 +50,3 @@ mkdocs-markdownextradata-plugin = "*"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.extras]
-accel = ["uvloop"]

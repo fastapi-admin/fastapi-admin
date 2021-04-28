@@ -19,6 +19,10 @@ Looking for old version? See branch [v1](https://github.com/fastapi-admin/fastap
 > pip install fastapi-admin
 ```
 
+## Requirements
+
+- [Redis](https://redis.io)
+
 ## Online Demo
 
 You can check a online demo [here](https://fastapi-admin.long2ice.cn).

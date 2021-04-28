@@ -5,8 +5,8 @@ site_description: A fast admin dashboard based on FastAPI and TortoiseORM with t
 repo_name: fastapi-admin/fastapi-admin
 site_author: long2ice
 theme:
-  logo: https://fastapi.tiangolo.com/img/icon-white.svg
-  favicon: https://fastapi.tiangolo.com/img/favicon.png
+  logo: https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/icon-white.svg
+  favicon: https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/favicon.png
   name: material
   language: en
   icon:
@@ -40,7 +40,16 @@ nav:
       - getting_started/installation.md
       - getting_started/quickstart.md
   - Reference:
-      - reference/index.md
+      - reference/configuration.md
+      - reference/resource.md
+      - Widget:
+          - reference/widget/filter.md
+          - reference/widget/display.md
+          - reference/widget/input.md
+      - reference/file_upload.md
+      - reference/middleware.md
+  - Extension:
+      - extension/index.md
   - Pro Version For Sponsor:
       - pro/index.md
       - pro/sponsor.md
@@ -61,4 +70,4 @@ plugins:
   - git-revision-date-localized:
       type: datetime
   - markdownextradata
-dev_addr: 0.0.0.0:7999
+dev_addr: 127.0.0.1:7999
