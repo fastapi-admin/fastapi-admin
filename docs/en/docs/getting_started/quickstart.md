@@ -4,7 +4,7 @@
 
 ## Mount Admin App
 
-First, you need mount the app from `FastAPI-Admin` as a sub application of `FastAPI`.
+First, you need mount the admin app from `FastAPI-Admin` as a sub application of `FastAPI`.
 
 ```python
 from fastapi_admin.app import app as admin_app
@@ -22,8 +22,13 @@ There are some configs to configure the admin app, and you need to configure it 
 ```python
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
+from examples.models import User
+import aioredis
+from fastapi import FastAPI
 
 login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
+
+app = FastAPI()
 
 
 @app.on_event("startup")
@@ -39,8 +44,36 @@ async def startup():
     )
 ```
 
-The full list of configs can be found in
+The full list of configs and detail can be found in [Configuration](/reference/configuration).
 
 ## Define And Register Resource
 
-## Start App
+There are three kinds of resources, which are `Link`,`Model`, and `Dropdown`.
+
+### Link
+
+The `Link` will display a menu in sidebar with custom page or third page.
+
+```python
+from fastapi_admin.app import app
+from fastapi_admin.resources import Link
+
+
+@app.register
+class Home(Link):
+    label = "Home"
+    icon = "ti ti-home"
+    url = "/admin"
+```
+
+### Field
+
+The `Field` is used in `Model` resource to define how to display and input every field in model.
+
+### Model
+
+The `Model` make a TortoiseORM model as a menu with CURD actions.
+
+### Dropdown
+
+The `Dropdown` can contains both `Link` and `Model`, which can be nested.
