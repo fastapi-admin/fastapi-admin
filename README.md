@@ -13,16 +13,6 @@ FastAPI-Admin is a admin dashboard based on
 
 FastAPI-Admin provide crud feature out-of-the-box with just a few config.
 
-## Live Demo
-
-Check a live Demo here
-[https://fastapi-admin-v1.long2ice.cn](https://fastapi-admin-v1.long2ice.cn/).
-
-- username: `admin`
-- password: `123456`
-
-Data in database will restore every day.
-
 ## Screenshots
 
 ![image](https://github.com/long2ice/fastapi-admin/raw/master/images/login.png)
@@ -93,11 +83,6 @@ async def startup():
 
 Deploy fastapi app by gunicorn+uvicorn or reference
 <https://fastapi.tiangolo.com/deployment/>.
-
-## Restful API Docs
-
-See [restful api](https://fastapi-admin-api-v1.long2ice.cn/admin/docs)
-docs.
 
 ## License
 
