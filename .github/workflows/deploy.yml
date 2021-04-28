@@ -18,6 +18,10 @@ jobs:
   gh-pages:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.x"
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1.1.1
         with:
