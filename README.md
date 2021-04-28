@@ -25,7 +25,12 @@ Looking for old version? See branch [v1](https://github.com/fastapi-admin/fastap
 
 ## Online Demo
 
-You can check a online demo [here](https://fastapi-admin.long2ice.cn).
+You can check a online demo [here](https://fastapi-admin.long2ice.cn/admin/login).
+
+- username: `admin`
+- password: `123456`
+
+Or Pro version demo [here](https://fastapi-admin-pro.long2ice.cn/admin/login).
 
 - username: `admin`
 - password: `123456`

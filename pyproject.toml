@@ -1,51 +1,51 @@
 [tool.poetry]
-name = "fastapi-admin"
-version = "1.0.0"
-description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
 authors = ["long2ice <long2ice@gmail.com>"]
-license = "Apache-2.0"
-readme = "README.md"
-homepage = "https://github.com/fastapi-admin/fastapi-admin"
-repository = "https://github.com/fastapi-admin/fastapi-admin.git"
+description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
 documentation = "https://github.com/fastapi-admin/fastapi-admin"
-keywords = ["fastapi", "admin", "dashboard"]
-packages = [
-    { include = "fastapi_admin" }
-]
+homepage = "https://github.com/fastapi-admin/fastapi-admin"
 include = ["LICENSE", "README.md", "CHANGELOG.md"]
+keywords = ["fastapi", "admin", "dashboard"]
+license = "Apache-2.0"
+name = "fastapi-admin"
+packages = [
+  {include = "fastapi_admin"},
+]
+readme = "README.md"
+repository = "https://github.com/fastapi-admin/fastapi-admin.git"
+version = "1.0.0"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-tortoise-orm = "*"
-fastapi = "*"
-uvicorn = "*"
-aiofiles = "*"
-jinja2 = "*"
 Babel = "*"
-python-multipart = "*"
-bcrypt = "*"
+aiofiles = "*"
 aioredis = "*"
+bcrypt = "*"
+fastapi = "*"
+jinja2 = "*"
+python = "^3.7"
+python-multipart = "*"
+tortoise-orm = "*"
+uvicorn = {version = "*", extras = ["standard"]}
 
 [tool.poetry.dev-dependencies]
 # test
 pytest = "*"
-pytest-xdist = "*"
 pytest-asyncio = "*"
 pytest-mock = "*"
+pytest-xdist = "*"
 # lint
+black = "^20.8b1"
 flake8 = "*"
 isort = "*"
-black = "^20.8b1"
 mypy = "*"
 pylint = "*"
 # example
-python-dotenv = "*"
 asyncmy = "*"
+python-dotenv = "*"
 # docs
 mkdocs = "*"
-mkdocs-material = "*"
 mkdocs-git-revision-date-localized-plugin = "*"
+mkdocs-material = "*"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]

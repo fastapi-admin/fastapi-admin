@@ -4,6 +4,7 @@ import aioredis
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 from tortoise.contrib.fastapi import register_tortoise
 
@@ -13,7 +14,7 @@ from examples.models import User
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
 
-login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
+login_provider = UsernamePasswordProvider(user_model=User)
 
 
 def create_app():
@@ -23,6 +24,10 @@ def create_app():
         StaticFiles(directory=os.path.join(BASE_DIR, "static")),
         name="static",
     )
+
+    @app.get("/")
+    async def index():
+        return RedirectResponse(path="/admin")
 
     @app.on_event("startup")
     async def startup():

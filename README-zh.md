@@ -9,6 +9,16 @@
 
 ## 线上 DEMO
 
+你可以在[此处](https://fastapi-admin.long2ice.cn/admin/login)查看线上 demo。
+
+- 用户名： `admin`
+- 密码： `123456`
+
+或者在[此处](https://fastapi-admin-pro.long2ice.cn/admin/login) 查看 Pro 版本 demo。
+
+- 用户名： `admin`
+- 密码： `123456`
+
 ## 截图
 
 ![](https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/login.png)
