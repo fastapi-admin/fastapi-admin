@@ -5,20 +5,19 @@ from typing import Callable, Type
 import bcrypt
 from aioredis import Redis
 from fastapi import Depends
-from fastapi_admin import constants
-from fastapi_admin.depends import get_redis
-from fastapi_admin.template import templates
 from pydantic import EmailStr
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER, HTTP_401_UNAUTHORIZED
 from tortoise import Model, fields
 
+from fastapi_admin import constants
+from fastapi_admin.depends import get_redis
+from fastapi_admin.template import templates
+
 
 class LoginProvider:
-    def __init__(
-        self, login_path="/login", logout_path="/logout", template="login.html"
-    ):
+    def __init__(self, login_path="/login", logout_path="/logout", template="login.html"):
         self.template = template
         self.logout_path = logout_path
         self.login_path = login_path
@@ -69,7 +68,7 @@ class UsernamePasswordProvider(LoginProvider):
 
     def __init__(
         self,
-        user_model: Type[UserMixin],
+        user_model: Type[AbstractUser],
         login_path="/login",
         logout_path="/logout",
         template="login.html",
@@ -90,9 +89,7 @@ class UsernamePasswordProvider(LoginProvider):
                 status_code=HTTP_401_UNAUTHORIZED,
                 context={"request": request, "error": _("login_failed")},
             )
-        response = RedirectResponse(
-            url=request.app.admin_path, status_code=HTTP_303_SEE_OTHER
-        )
+        response = RedirectResponse(url=request.app.admin_path, status_code=HTTP_303_SEE_OTHER)
         if remember_me == "on":
             expire = 3600 * 24 * 30
             response.set_cookie("remember_me", "on")
@@ -107,9 +104,7 @@ class UsernamePasswordProvider(LoginProvider):
             path=request.app.admin_path,
             httponly=True,
         )
-        await redis.set(
-            constants.LOGIN_USER.format(token=token), user.pk, expire=expire
-        )
+        await redis.set(constants.LOGIN_USER.format(token=token), user.pk, expire=expire)
         return response
 
     async def logout(self, request: Request, redis: Redis = Depends(get_redis)):
@@ -139,15 +134,13 @@ class UsernamePasswordProvider(LoginProvider):
                 return response
         else:
             if path == self.login_path:
-                return RedirectResponse(
-                    url=request.app.admin_path, status_code=HTTP_303_SEE_OTHER
-                )
+                return RedirectResponse(url=request.app.admin_path, status_code=HTTP_303_SEE_OTHER)
         request.state.user = user
 
         response = await call_next(request)
         return response
 
-    def check_password(self, user: UserMixin, password: str):
+    def check_password(self, user: AbstractUser, password: str):
         return bcrypt.checkpw(password.encode(), user.password.encode())
 
     def hash_password(self, password: str):
@@ -160,6 +153,6 @@ class UsernamePasswordProvider(LoginProvider):
             email=email,
         )
 
-    async def update_password(self, user: UserMixin, password: str):
+    async def update_password(self, user: AbstractUser, password: str):
         user.password = self.hash_password(password)
         await user.save(update_fields=["password"])

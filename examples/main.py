@@ -3,8 +3,6 @@ import os
 import aioredis
 import uvicorn
 from fastapi import FastAPI
-from fastapi_admin.app import app as admin_app
-from fastapi_admin.providers.login import UsernamePasswordProvider
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
@@ -13,6 +11,8 @@ from tortoise.contrib.fastapi import register_tortoise
 from examples import settings
 from examples.constants import BASE_DIR
 from examples.models import User
+from fastapi_admin.app import app as admin_app
+from fastapi_admin.providers.login import UsernamePasswordProvider
 
 login_provider = UsernamePasswordProvider(user_model=User)
 

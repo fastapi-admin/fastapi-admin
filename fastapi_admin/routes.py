@@ -13,11 +13,6 @@ from fastapi_admin.template import render_values, templates
 router = APIRouter()
 
 
-@router.get("/maintenance")
-async def maintenance(request: Request):
-    return templates.TemplateResponse("errors/maintenance.html", context={"request": request})
-
-
 @router.get("/list/{resource}")
 async def list_view(
     request: Request,
@@ -25,7 +20,7 @@ async def list_view(
     resources=Depends(get_resources),
     model_resource: ModelResource = Depends(get_model_resource),
     resource: str = Path(...),
-    page_size: Optional[int] = None,
+    page_size: int = 10,
     page_num: int = 1,
 ):
     fields_name = model_resource.get_fields_name()
