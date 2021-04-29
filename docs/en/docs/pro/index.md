@@ -4,7 +4,7 @@
 
 You can set captcha in admin login page, just set `enable_captcha=True`.
 
-```python
+```python3
 login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
 ```
 
@@ -13,8 +13,10 @@ login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
 If you want limit login failed ip with error password, you can use `LoginPasswordMaxTryMiddleware`.
 
 ```python
-admin_app.add_middleware(BaseHTTPMiddleware, dispatch=LoginPasswordMaxTryMiddleware(max_times = 3, after_seconds = 360))
+admin_app.add_middleware(BaseHTTPMiddleware, dispatch=LoginPasswordMaxTryMiddleware(max_times=3, after_seconds=360))
 ```
+
+## Permission Control
 
 ## Additional File Upload Providers
 
@@ -54,6 +56,9 @@ If your site is in maintenance, you can set `true` to `admin_app.configure(...)`
 admin_app.configure(maintenance=True)
 ```
 
+## Admin Log
+
 ## Free consultation
 
-Whenever you have any questions, you can send email to <long2ice@gmai.com> or open `issue` in `fastapi-admin-pro` repository, I will answer your questions as soon as possible.
+Whenever you have any questions, you can send email to <long2ice@gmai.com> or open `issue` in `fastapi-admin-pro`
+repository, I will answer your questions as soon as possible.

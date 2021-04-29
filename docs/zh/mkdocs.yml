@@ -35,8 +35,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
 nav:
+  - 首页: index.md
   - 入门指南:
-      - getting_started/index.md
       - getting_started/installation.md
       - getting_started/quickstart.md
   - 参考:
