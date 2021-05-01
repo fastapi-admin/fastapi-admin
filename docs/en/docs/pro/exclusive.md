@@ -26,6 +26,17 @@ admin_app.add_middleware(BaseHTTPMiddleware, dispatch=LoginPasswordMaxTryMiddlew
 
 ## Error pages
 
+### 403
+
+You can catch all `403` error to show builtin `403` page.
+
+```python
+from fastapi_admin.exceptions import forbidden_error_exception
+from starlette.status import HTTP_403_FORBIDDEN
+
+admin_app.add_exception_handler(HTTP_403_FORBIDDEN, forbidden_error_exception)
+```
+
 ### 404
 
 You can catch all `404` error to show builtin `404` page.
@@ -57,8 +68,3 @@ admin_app.configure(maintenance=True)
 ```
 
 ## Admin Log
-
-## Free consultation
-
-Whenever you have any questions, you can send email to <long2ice@gmai.com> or open `issue` in `fastapi-admin-pro`
-repository, I will answer your questions as soon as possible.

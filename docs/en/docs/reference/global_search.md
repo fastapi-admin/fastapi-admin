@@ -1,0 +1,1 @@
+# Global Search (💗 Pro only)

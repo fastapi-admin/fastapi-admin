@@ -40,7 +40,7 @@ nav:
       - getting_started/installation.md
       - getting_started/quick_start.md
   - Reference:
-      - reference/configuration.md
+      - reference/index.md
       - reference/resource.md
       - Widget:
           - reference/widget/filter.md
@@ -50,16 +50,20 @@ nav:
       - reference/middleware.md
       - reference/permission.md
       - reference/admin_log.md
-  - Custom:
+      - reference/global_search.md
+      - reference/actions.md
+      - reference/bulk_actions.md
+  - Customization:
       - custom/page.md
       - custom/overwrite.md
       - custom/login.md
       - custom/file.md
       - custom/widget.md
   - Pro Version For Sponsor:
-      - pro/index.md
       - pro/sponsor.md
+      - pro/exclusive.md
       - pro/installation.md
+      - pro/support.md
 extra:
   alternate:
     - name: English
