@@ -1,11 +1,14 @@
 from typing import List, Optional, Type, Union
 
+from pydantic import BaseModel
 from tortoise import ForeignKeyFieldInstance
 from tortoise import Model as TortoiseModel
 from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
 from tortoise.fields.data import CharEnumFieldInstance, IntEnumFieldInstance, IntField, TextField
 
 from fastapi_admin.exceptions import NoSuchFieldFound
+from fastapi_admin.i18n import _
+from fastapi_admin.utils import ClassProperty
 from fastapi_admin.widgets import Widget, displays, inputs
 from fastapi_admin.widgets.filters import Filter
 
@@ -51,6 +54,14 @@ class Field:
         self.input = input_
 
 
+class Action(BaseModel):
+    icon: str
+    label: str
+    name: str
+    method: str = "POST"
+    ajax: bool = True
+
+
 class Model(Resource):
     model: Type[TortoiseModel]
     fields: List[Union[str, Field]] = []
@@ -62,6 +73,19 @@ class Model(Resource):
     can_delete: bool = True
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
+
+    @ClassProperty
+    def actions(self) -> List[Action]:
+        return [
+            Action(label=_("update"), icon="ti ti-edit", name="update", ajax=False),
+            Action(label=_("delete"), icon="ti ti-trash", name="delete", method="DELETE"),
+        ]
+
+    @ClassProperty
+    def bulk_actions(self) -> List[Action]:
+        return [
+            Action(label=_("delete_selected"), icon="ti ti-trash", name="delete", method="DELETE"),
+        ]
 
     @classmethod
     async def get_inputs(cls, obj: Optional[TortoiseModel] = None):
@@ -127,7 +151,7 @@ class Model(Resource):
         fields_map = cls.model._meta.fields_map
         field = fields_map.get(field_name)
         if not field:
-            raise NoSuchFieldFound(f"Can't found field '{field}' in model {cls.model}")
+            raise NoSuchFieldFound(f"Can't found field '{field_name}' in model {cls.model}")
         label = field_name
         null = field.null
         placeholder = field.description or ""

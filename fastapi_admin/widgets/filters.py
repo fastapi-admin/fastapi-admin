@@ -88,7 +88,7 @@ class Date(Datetime):
 class Select(Filter):
     template = "widgets/filters/select.html"
 
-    def __init__(self, name: str, label: str, null: bool = False):
+    def __init__(self, name: str, label: str, null: bool = True):
         super().__init__(name, label)
         self.null = null
 
@@ -115,7 +115,7 @@ class Enum(Select):
         name: str,
         label: str,
         enum_type: Type = int,
-        null: bool = False,
+        null: bool = True,
     ):
         super().__init__(name, label, null)
         self.enum = enum
@@ -132,13 +132,8 @@ class Enum(Select):
 
 
 class ForeignKey(Select):
-    def __init__(
-        self,
-        model: Type[Model],
-        name: str,
-        label: str,
-    ):
-        super().__init__(name=name, label=label)
+    def __init__(self, model: Type[Model], name: str, label: str, null: bool = True):
+        super().__init__(name=name, label=label, null=null)
         self.model = model
 
     async def get_options(self):
@@ -150,7 +145,7 @@ class ForeignKey(Select):
             )
             for x in ret
         ]
-        if self.context.get("null"):
+        if self.null:
             options = [("", "")] + options
         return options
 

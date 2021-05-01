@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block page_body %}
+<div class="col-12">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ resource_label }}</h3>
+    </div>
+    <div class="card-body border-bottom py-3">
+      <form
+        method="post"
+        action="{{ request.app.admin_path }}/{{ resource }}/update/{{ pk }}"
+        enctype="{{ model_resource.enctype }}"
+      >
+        {% for input in inputs %} {{ input|safe }} {% endfor %}
+        <div class="form-footer">
+          <button type="submit" name="save" class="btn btn-primary">
+            {{ _('save') }}
+          </button>
+          <button
+            type="submit"
+            name="save_and_return"
+            class="btn btn-info mx-2"
+          >
+            {{ _('save_and_return') }}
+          </button>
+          <a
+            type="button"
+            class="btn btn-secondary"
+            href="{{ request.app.admin_path }}/{{ resource }}/list"
+            >{{ _('return') }}</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

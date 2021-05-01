@@ -1,5 +1,4 @@
 import uuid
-from gettext import gettext as _
 from typing import Callable, Type
 
 import bcrypt
@@ -13,6 +12,7 @@ from tortoise import Model, fields
 
 from fastapi_admin import constants
 from fastapi_admin.depends import get_redis
+from fastapi_admin.i18n import _
 from fastapi_admin.template import templates
 
 
@@ -55,7 +55,7 @@ class LoginProvider:
         return self.redirect_login(request)
 
 
-class AbstractUser(Model):
+class AbstractAdmin(Model):
     username = fields.CharField(max_length=50, unique=True)
     password = fields.CharField(max_length=200)
 
@@ -68,22 +68,21 @@ class UsernamePasswordProvider(LoginProvider):
 
     def __init__(
         self,
-        user_model: Type[AbstractUser],
+        admin_model: Type[AbstractAdmin],
         login_path="/login",
         logout_path="/logout",
         template="login.html",
     ):
         super().__init__(login_path, logout_path, template)
-        self.user_model = user_model
+        self.admin_model = admin_model
 
     async def post(self, request: Request, redis: Redis = Depends(get_redis)):
         form = await request.form()
         username = form.get("username")
         password = form.get("password")
         remember_me = form.get("remember_me")
-
-        user = await self.user_model.get_or_none(username=username)
-        if not user or not self.check_password(user, password):
+        admin = await self.admin_model.get_or_none(username=username)
+        if not admin or not self.check_password(admin, password):
             return templates.TemplateResponse(
                 self.template,
                 status_code=HTTP_401_UNAUTHORIZED,
@@ -104,7 +103,7 @@ class UsernamePasswordProvider(LoginProvider):
             path=request.app.admin_path,
             httponly=True,
         )
-        await redis.set(constants.LOGIN_USER.format(token=token), user.pk, expire=expire)
+        await redis.set(constants.LOGIN_USER.format(token=token), admin.pk, expire=expire)
         return response
 
     async def logout(self, request: Request, redis: Redis = Depends(get_redis)):
@@ -126,8 +125,8 @@ class UsernamePasswordProvider(LoginProvider):
         user_id = await redis.get(token_key)
         if not user_id and path != self.login_path:
             return self.redirect_login(request)
-        user = await self.user_model.get_or_none(pk=user_id)
-        if not user:
+        admin = await self.admin_model.get_or_none(pk=user_id)
+        if not admin:
             if path != self.login_path:
                 response = self.redirect_login(request)
                 response.delete_cookie(self.access_token)
@@ -135,24 +134,24 @@ class UsernamePasswordProvider(LoginProvider):
         else:
             if path == self.login_path:
                 return RedirectResponse(url=request.app.admin_path, status_code=HTTP_303_SEE_OTHER)
-        request.state.user = user
+        request.state.admin = admin
 
         response = await call_next(request)
         return response
 
-    def check_password(self, user: AbstractUser, password: str):
-        return bcrypt.checkpw(password.encode(), user.password.encode())
+    def check_password(self, admin: AbstractAdmin, password: str):
+        return bcrypt.checkpw(password.encode(), admin.password.encode())
 
     def hash_password(self, password: str):
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-    async def create_user(self, username: str, password: str, email: EmailStr):
-        return await self.user_model.create(
+    async def create_admin(self, username: str, password: str, email: EmailStr):
+        return await self.admin_model.create(
             username=username,
             password=self.hash_password(password),
             email=email,
         )
 
-    async def update_password(self, user: AbstractUser, password: str):
-        user.password = self.hash_password(password)
-        await user.save(update_fields=["password"])
+    async def update_password(self, admin: AbstractAdmin, password: str):
+        admin.password = self.hash_password(password)
+        await admin.save(update_fields=["password"])

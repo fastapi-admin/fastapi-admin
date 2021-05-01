@@ -6,7 +6,7 @@
                 <h3 class="card-title">{{ resource_label }}</h3>
             </div>
             <div class="card-body border-bottom py-3">
-                <form method="post" action="{{ request.app.admin_path }}/create/{{ resource }}" enctype="{{ model_resource.enctype }}">
+                <form method="post" action="{{ request.app.admin_path }}/{{ resource }}/create" enctype="{{ model_resource.enctype }}">
                     {% for input in inputs %}
                         {{ input|safe }}
                     {% endfor %}
@@ -15,7 +15,7 @@
                         <button type="submit" name="save_and_add_another"
                                 class="btn btn-info mx-2">{{ _('save_and_add_another') }}</button>
                         <a type="button" class="btn btn-secondary"
-                           href="{{ request.app.admin_path }}/list/{{ resource }}">{{ _('return') }}</a>
+                           href="{{ request.app.admin_path }}/{{ resource }}/list">{{ _('return') }}</a>
                     </div>
                 </form>
             </div>

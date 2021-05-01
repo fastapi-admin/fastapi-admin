@@ -2,11 +2,11 @@ import datetime
 
 from tortoise import Model, fields
 
-from examples.enums import Action, ProductType, Status
-from fastapi_admin.providers.login import AbstractUser
+from examples.enums import ProductType, Status
+from fastapi_admin.providers.login import AbstractAdmin
 
 
-class User(AbstractUser):
+class Admin(AbstractAdmin):
     last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
     email = fields.CharField(max_length=200)
     avatar = fields.CharField(max_length=200, default="")
@@ -40,14 +40,3 @@ class Config(Model):
     key = fields.CharField(max_length=20, unique=True, description="Unique key for config")
     value = fields.JSONField()
     status: Status = fields.IntEnumField(Status, default=Status.on)
-
-
-class Log(Model):
-    user = fields.ForeignKeyField("models.User")
-    content = fields.TextField()
-    resource = fields.CharField(max_length=50)
-    action = fields.CharEnumField(Action, default=Action.create)
-    created_at = fields.DatetimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-id"]

@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Path
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
+from starlette.status import HTTP_303_SEE_OTHER
 from tortoise import Model
 
 from fastapi_admin.depends import get_model, get_model_resource, get_resources
@@ -13,7 +14,7 @@ from fastapi_admin.template import render_values, templates
 router = APIRouter()
 
 
-@router.get("/list/{resource}")
+@router.get("/{resource}/list")
 async def list_view(
     request: Request,
     model: Model = Depends(get_model),
@@ -60,8 +61,8 @@ async def list_view(
     )
 
 
-@router.post("/edit/{resource}/{pk}")
-async def edit(
+@router.post("/{resource}/update/{pk}")
+async def update(
     request: Request,
     resource: str = Path(...),
     pk: int = Path(...),
@@ -76,7 +77,7 @@ async def edit(
     inputs = await model_resource.get_inputs(obj)
     if "save" in form.keys():
         return templates.TemplateResponse(
-            "edit.html",
+            "update.html",
             context={
                 "request": request,
                 "resources": resources,
@@ -92,8 +93,8 @@ async def edit(
     return redirect(request, "list_view", resource=resource)
 
 
-@router.get("/edit/{resource}/{pk}")
-async def edit_view(
+@router.get("/{resource}/update/{pk}")
+async def update_view(
     request: Request,
     resource: str = Path(...),
     pk: int = Path(...),
@@ -104,7 +105,7 @@ async def edit_view(
     obj = await model.get(pk=pk)
     inputs = await model_resource.get_inputs(obj)
     return templates.TemplateResponse(
-        "edit.html",
+        "update.html",
         context={
             "request": request,
             "resources": resources,
@@ -119,7 +120,7 @@ async def edit_view(
     )
 
 
-@router.get("/create/{resource}")
+@router.get("/{resource}/create")
 async def create_view(
     request: Request,
     resource: str = Path(...),
@@ -142,7 +143,7 @@ async def create_view(
     )
 
 
-@router.post("/create/{resource}")
+@router.post("/{resource}/create")
 async def create(
     request: Request,
     resource: str = Path(...),
@@ -171,7 +172,13 @@ async def create(
     )
 
 
-@router.get("/delete/{resource}/{pk}")
-async def delete_view(request: Request, pk: int, model: Model = Depends(get_model)):
+@router.delete("/{resource}/delete/{pk}")
+async def delete(request: Request, pk: int, model: Model = Depends(get_model)):
     await model.filter(pk=pk).delete()
-    return RedirectResponse(url=request.headers.get("referer"))
+    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
+
+
+@router.delete("/{resource}/bulk_actions/delete")
+async def bulk_delete(request: Request, ids: str, model: Model = Depends(get_model)):
+    await model.filter(pk__in=ids.split(",")).delete()
+    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)

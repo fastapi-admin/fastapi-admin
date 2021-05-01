@@ -2,7 +2,7 @@ from typing import Callable
 
 from starlette.requests import Request
 
-from fastapi_admin import template
+from fastapi_admin import i18n, template
 
 
 async def language_processor(request: Request, call_next: Callable):
@@ -15,7 +15,7 @@ async def language_processor(request: Request, call_next: Callable):
                 locale = accept_language.split(",")[0].replace("-", "_")
             else:
                 locale = None
-    template.set_locale(locale)
+    i18n.set_locale(locale)
     response = await call_next(request)
     if locale:
         response.set_cookie(key="language", value=locale)

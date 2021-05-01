@@ -22,7 +22,6 @@ There are some configs to configure the admin app, and you need to configure it 
 ```python
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
-from examples.models import User
 import aioredis
 from fastapi import FastAPI
 

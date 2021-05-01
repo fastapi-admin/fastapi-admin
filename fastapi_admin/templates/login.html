@@ -1,58 +1,91 @@
-{% extends "base.html" %}
-{% block outer_body %}
-    <body class="border-primary d-flex flex-column">
-    <div class="page page-center">
-        <div class="container-tight py-4">
-            <div class="text-center mb-4">
-                <a href="."><img src="https://preview.tabler.io/static/logo.svg" height="36" alt=""></a>
-            </div>
-            {% if error %}
-                <div class="alert alert-important alert-danger alert-dismissible" role="alert">
-                    <div class="d-flex">
-                        <div>
-                            <i class="ti ti-alert-circle"></i>
-                        </div>
-                        <div>
-                            {{ error }}
-                        </div>
-                    </div>
-                    <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
-                </div>
-            {% endif %}
-            <form class="card card-md" action="{{ request.app.admin_path }}{{ request.app.login_provider.login_path }}"
-                  method="post" autocomplete="off">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">{{ _('login_title') }}</h2>
-                    <div class="mb-3">
-                        <label class="form-label">{{ _('username') }}</label>
-                        <input name="username" type="text" class="form-control"
-                               placeholder="{{ _('login_username_placeholder') }}">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">
-                            {{ _('password') }}
-                            <span class="form-label-description">
-                </span>
-                        </label>
-                        <div class="input-group input-group-flat">
-                            <input placeholder="{{ _('login_password_placeholder') }}" name="password" type="password"
-                                   class="form-control" autocomplete="off">
-                            <span class="input-group-text">
-                </span>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input"/>
-                            <span class="form-check-label">{{ _('remember_me') }}</span>
-                        </label>
-                    </div>
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn-primary w-100">{{ _('sign_in') }}</button>
-                    </div>
-                </div>
-            </form>
+{% extends "base.html" %} {% block outer_body %}
+<body class="border-primary d-flex flex-column">
+  <div class="page page-center">
+    <div class="container-tight py-4">
+      <div class="text-center mb-4">
+        <a href="."
+          ><img
+            src="https://preview.tabler.io/static/logo.svg"
+            height="36"
+            alt=""
+        /></a>
+      </div>
+      {% if error %}
+      <div
+        class="alert alert-important alert-danger alert-dismissible"
+        role="alert"
+      >
+        <div class="d-flex">
+          <div>
+            <i class="ti ti-alert-circle"></i>
+          </div>
+          <div>{{ error }}</div>
         </div>
+        <a
+          class="btn-close btn-close-white"
+          data-bs-dismiss="alert"
+          aria-label="close"
+        ></a>
+      </div>
+      {% endif %}
+      <form
+        class="card card-md"
+        action="{{ request.app.admin_path }}{{ request.app.login_provider.login_path }}"
+        method="post"
+        autocomplete="off"
+      >
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">{{ _('login_title') }}</h2>
+          <div class="mb-3">
+            <label class="form-label">{{ _('username') }}</label>
+            <input
+              name="username"
+              type="text"
+              class="form-control"
+              placeholder="{{ _('login_username_placeholder') }}"
+            />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">
+              {{ _('password') }}
+              <span class="form-label-description"> </span>
+            </label>
+            <div class="input-group input-group-flat">
+              <input
+                placeholder="{{ _('login_password_placeholder') }}"
+                name="password"
+                type="password"
+                class="form-control"
+                autocomplete="off"
+              />
+              <span class="input-group-text"> </span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <label class="form-check">
+              <input
+                type="checkbox"
+                name="remember_me"
+                class="form-check-input"
+              />
+              <span class="form-check-label">{{ _('remember_me') }}</span>
+            </label>
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary w-100">
+              {{ _('sign_in') }}
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-    </body>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <script>
+    let on = Cookies.get("remember_me");
+    if (on !== "") {
+      $('input[name="remember_me"]').attr("checked", true);
+    }
+  </script>
+</body>
 {% endblock %}

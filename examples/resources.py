@@ -2,7 +2,7 @@ import os
 
 from examples import enums
 from examples.constants import BASE_DIR
-from examples.models import Category, Config, Log, Product, User
+from examples.models import Admin, Category, Config, Product
 from fastapi_admin.app import app
 from fastapi_admin.providers.file_upload import FileUploadProvider
 from fastapi_admin.resources import Dropdown, Field, Link, Model
@@ -19,12 +19,12 @@ class Home(Link):
 
 
 @app.register
-class UserResource(Model):
-    label = "User"
-    model = User
+class AdminResource(Model):
+    label = "Admin"
+    model = Admin
     icon = "ti ti-user"
-    page_pre_title = "user list"
-    page_title = "user model"
+    page_pre_title = "admin list"
+    page_title = "admin model"
     filters = [
         filters.Search(
             name="username", label="Name", search_mode="contains", placeholder="Search for username"
@@ -47,8 +47,6 @@ class UserResource(Model):
             display=displays.Image(width="40"),
             input_=inputs.Image(null=True, upload_provider=upload_provider),
         ),
-        "is_superuser",
-        "is_active",
         "created_at",
     ]
 
@@ -103,25 +101,6 @@ class ConfigResource(Model):
             label="Status",
             input_=inputs.RadioEnum(enums.Status, default=enums.Status.on),
         ),
-    ]
-
-
-@app.register
-class LogResource(Model):
-    label = "Log"
-    model = Log
-    icon = "ti ti-file-report"
-    fields = [
-        "id",
-        "user",
-        "resource",
-        "content",
-        "action",
-        "created_at",
-    ]
-    filters = [
-        filters.ForeignKey(name="user_id", label="User", model=User),
-        filters.Date(name="created_at", label="CreatedAt"),
     ]
 
 

@@ -1,0 +1,5 @@
+{% if resource_label in resource.resources|map(attribute='label') %}
+    show
+{% elif resource_label not in resource.resources|map(attribute='label') and resource.expand %}
+    show
+{% endif %}

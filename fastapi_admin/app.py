@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from starlette.middleware.base import BaseHTTPMiddleware
 from tortoise import Model
 
+from fastapi_admin import i18n
+
 from . import middlewares, template
 from .providers.login import LoginProvider
 from .resources import Dropdown
@@ -43,7 +45,7 @@ class FastAdmin(FastAPI):
         """
         self.redis = redis
         self.login_logo_url = login_logo_url
-        template.set_locale(default_locale)
+        i18n.set_locale(default_locale)
         self.admin_path = admin_path
         self.logo_url = logo_url
         if template_folders:

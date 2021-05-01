@@ -52,3 +52,7 @@ def get_resources(request: Request) -> List[dict]:
 
 def get_redis(request: Request):
     return request.app.redis
+
+
+def get_current_admin(request: Request):
+    return request.state.admin

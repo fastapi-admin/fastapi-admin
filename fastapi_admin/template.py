@@ -4,7 +4,6 @@ from datetime import date
 from typing import Any, List, Tuple
 from urllib.parse import urlencode
 
-from babel.support import Translations
 from jinja2 import contextfilter
 from starlette.requests import Request
 from starlette.templating import Jinja2Templates
@@ -23,11 +22,6 @@ templates.env.add_extension("jinja2.ext.autoescape")
 templates.env.add_extension("jinja2.ext.with_")
 templates.env.add_extension("jinja2.ext.do")
 
-TRANSLATIONS = {
-    "zh_CN": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["zh_CN"]),
-    "en_US": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["en_US"]),
-}
-
 
 @contextfilter
 def current_page_with_params(context: dict, params: dict):
@@ -42,10 +36,8 @@ def current_page_with_params(context: dict, params: dict):
 templates.env.filters["current_page_with_params"] = current_page_with_params
 
 
-def set_locale(locale: str):
-    translations = TRANSLATIONS.get(locale) or TRANSLATIONS.get("en_US")
-    templates.env.install_gettext_translations(translations)
-    translations.install(locale)
+def set_global_env(name: str, value: Any):
+    templates.env.globals[name] = value
 
 
 def add_template_folder(*folders: str):

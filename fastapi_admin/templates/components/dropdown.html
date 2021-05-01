@@ -1,18 +1,17 @@
 <li class="nav-item dropdown {% if resource_label in resource.resources|map(attribute='label') %}
                         active
                         {% endif %}">
-    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-       role="button" aria-expanded="false">
+    <a class="nav-link dropdown-toggle {% include 'components/dropdown-show.html' %}" href="#"
+       data-bs-toggle="dropdown"
+       role="button">
                                   <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <i class="ti ti-package"></i>
+                                    <i class="{{ resource.icon }}"></i>
                                   </span>
         <span class="nav-link-title">
                                     {{ resource.label }}
                                     </span>
     </a>
-    <div class="dropdown-menu {% if resource_label in resource.resources|map(attribute='label') %}
-                        show
-                        {% endif %}">
+    <div class="dropdown-menu {% include 'components/dropdown-show.html' %}">
         <div class="dropdown-menu-columns">
             <div class="dropdown-menu-column">
                 {% for item in resource.resources %}
@@ -21,7 +20,7 @@
                         active
                         {% endif %}" target="{{ item.target }}">{{ item.label }}</a>
                     {% elif item.type == 'model' %}
-                        <a href="{{ request.app.admin_path }}/list/{{ item.model }}"
+                        <a href="{{ request.app.admin_path }}/{{ item.model }}/list"
                            class="dropdown-item {% if resource_label == item.label %}
                         active
                         {% endif %}">{{ item.label }}</a>

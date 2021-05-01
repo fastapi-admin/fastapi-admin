@@ -1,0 +1,15 @@
+<script>
+    new Choices(el = document.getElementById('{{ id }}'), {
+        classNames: {
+            containerInner: el.className,
+            input: 'form-control',
+            inputCloned: 'form-control-sm',
+            listDropdown: 'dropdown-menu',
+            itemChoice: 'dropdown-item',
+            activeState: 'show',
+            selectedState: 'active',
+        },
+        shouldSort: false,
+        searchEnabled: false,
+    });
+</script>

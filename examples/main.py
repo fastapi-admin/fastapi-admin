@@ -10,11 +10,11 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from examples import settings
 from examples.constants import BASE_DIR
-from examples.models import User
+from examples.models import Admin
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
 
-login_provider = UsernamePasswordProvider(user_model=User)
+login_provider = UsernamePasswordProvider(admin_model=Admin)
 
 
 def create_app():
