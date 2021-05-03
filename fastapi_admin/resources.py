@@ -25,8 +25,6 @@ class Resource:
 class Link(Resource):
     url: str
     target: str = "_self"
-    page_pre_title: Optional[str] = None
-    page_title: Optional[str] = None
 
 
 class Field:
@@ -36,11 +34,11 @@ class Field:
     input: inputs.Input
 
     def __init__(
-        self,
-        name: str,
-        label: str,
-        display: Optional[displays.Display] = None,
-        input_: Optional[Widget] = None,
+            self,
+            name: str,
+            label: str,
+            display: Optional[displays.Display] = None,
+            input_: Optional[Widget] = None,
     ):
         self.name = name
         self.label = label
@@ -205,7 +203,7 @@ class Model(Resource):
                 ret.append(field)
             else:
                 if (is_display and isinstance(field.display, displays.InputOnly)) or (
-                    not is_display and isinstance(field.input, inputs.DisplayOnly)
+                        not is_display and isinstance(field.input, inputs.DisplayOnly)
                 ):
                     continue
                 ret.append(field)

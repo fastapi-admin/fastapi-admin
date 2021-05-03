@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-01 20:13+0800\n"
+"POT-Creation-Date: 2021-05-02 14:00+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -40,7 +40,7 @@ msgstr "旧密码错误"
 
 #: fastapi_admin/routes/password.py:41
 msgid "new_password_different"
-msgstr ""
+msgstr "新密码不一致"
 
 #: fastapi_admin/templates/create.html:14
 #: fastapi_admin/templates/update.html:16
@@ -56,15 +56,16 @@ msgstr "保存并新增"
 msgid "return"
 msgstr "返回"
 
-#: fastapi_admin/templates/layout.html:66
+#: fastapi_admin/templates/layout.html:68
 msgid "welcome"
-msgstr ""
+msgstr "欢迎"
 
-#: fastapi_admin/templates/layout.html:71
+#: fastapi_admin/templates/layout.html:73
+#: fastapi_admin/templates/password.html:6
 msgid "update_password"
 msgstr "修改密码"
 
-#: fastapi_admin/templates/layout.html:74
+#: fastapi_admin/templates/layout.html:76
 msgid "logout"
 msgstr "退出登录"
 
@@ -132,6 +133,34 @@ msgstr "记住我"
 #: fastapi_admin/templates/login.html:76
 msgid "sign_in"
 msgstr "登录"
+
+#: fastapi_admin/templates/password.html:12
+msgid "old_password"
+msgstr "旧密码"
+
+#: fastapi_admin/templates/password.html:15
+msgid "old_password_placeholder"
+msgstr "请输入旧密码"
+
+#: fastapi_admin/templates/password.html:19
+msgid "new_password"
+msgstr "新密码"
+
+#: fastapi_admin/templates/password.html:22
+msgid "new_password_placeholder"
+msgstr "请输入新密码"
+
+#: fastapi_admin/templates/password.html:26
+msgid "re_new_password"
+msgstr "确认新密码"
+
+#: fastapi_admin/templates/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "请再次输入新密码"
+
+#: fastapi_admin/templates/password.html:32
+msgid "submit"
+msgstr "提交"
 
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"

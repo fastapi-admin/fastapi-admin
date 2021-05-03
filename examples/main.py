@@ -31,7 +31,12 @@ def create_app():
 
     @app.on_event("startup")
     async def startup():
-        redis = await aioredis.create_redis_pool("redis://localhost", encoding="utf8")
+        redis = await aioredis.create_redis_pool(
+            f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
+            db=settings.REDIS_DB,
+            password=settings.REDIS_PASSWORD,
+            encoding="utf8",
+        )
         admin_app.configure(
             logo_url="https://preview.tabler.io/static/logo-white.svg",
             login_logo_url="https://preview.tabler.io/static/logo.svg",

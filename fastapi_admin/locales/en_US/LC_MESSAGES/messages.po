@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-01 20:13+0800\n"
+"POT-Creation-Date: 2021-05-02 14:00+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -56,15 +56,16 @@ msgstr "Save and add another"
 msgid "return"
 msgstr "Return"
 
-#: fastapi_admin/templates/layout.html:66
+#: fastapi_admin/templates/layout.html:68
 msgid "welcome"
 msgstr "Welcome"
 
-#: fastapi_admin/templates/layout.html:71
+#: fastapi_admin/templates/layout.html:73
+#: fastapi_admin/templates/password.html:6
 msgid "update_password"
 msgstr "Update password"
 
-#: fastapi_admin/templates/layout.html:74
+#: fastapi_admin/templates/layout.html:76
 msgid "logout"
 msgstr "Logout"
 
@@ -132,6 +133,34 @@ msgstr "Remember me"
 #: fastapi_admin/templates/login.html:76
 msgid "sign_in"
 msgstr "Sign in"
+
+#: fastapi_admin/templates/password.html:12
+msgid "old_password"
+msgstr "Old password"
+
+#: fastapi_admin/templates/password.html:15
+msgid "old_password_placeholder"
+msgstr "Enter old password"
+
+#: fastapi_admin/templates/password.html:19
+msgid "new_password"
+msgstr "New password"
+
+#: fastapi_admin/templates/password.html:22
+msgid "new_password_placeholder"
+msgstr "Enter new password"
+
+#: fastapi_admin/templates/password.html:26
+msgid "re_new_password"
+msgstr "Confirm new password"
+
+#: fastapi_admin/templates/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "Enter new password again"
+
+#: fastapi_admin/templates/password.html:32
+msgid "submit"
+msgstr "Submit"
 
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"

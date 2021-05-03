@@ -30,7 +30,7 @@ You can check a online demo [here](https://fastapi-admin.long2ice.cn/admin/login
 - username: `admin`
 - password: `123456`
 
-Or Pro version demo [here](https://fastapi-admin-pro.long2ice.cn/admin/login).
+Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/login).
 
 - username: `admin`
 - password: `123456`
