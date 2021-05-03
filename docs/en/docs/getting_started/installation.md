@@ -21,7 +21,7 @@ Or you can install from source with latest code.
 Add the following line.
 
 ```
--e https://github.com/fastapi-admin/fastapi-admin.git@develop#egg=fastapi-admin
+-e https://github.com/fastapi-admin/fastapi-admin.git@dev#egg=fastapi-admin
 ```
 
 ### With poetry
@@ -29,5 +29,11 @@ Add the following line.
 Add the following line in section `[tool.poetry.dependencies]`.
 
 ```toml
-fastapi-admin = { git = 'https://github.com/fastapi-admin/fastapi-admin.git', branch = 'develop' }
+fastapi-admin = { git = 'https://github.com/fastapi-admin/fastapi-admin.git', branch = 'dev' }
+```
+
+You can also run the following in your terminal
+
+```toml
+poetry add git+https://github.com/fastapi-admin/fastapi-admin.git#dev
 ```
