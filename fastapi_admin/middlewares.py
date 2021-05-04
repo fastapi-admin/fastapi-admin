@@ -2,7 +2,7 @@ from typing import Callable
 
 from starlette.requests import Request
 
-from fastapi_admin import i18n, template
+from fastapi_admin import i18n
 
 
 async def language_processor(request: Request, call_next: Callable):

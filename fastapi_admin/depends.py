@@ -19,7 +19,12 @@ def get_model(resource: Optional[str] = Path(...)):
 
 
 def get_model_resource(request: Request, model=Depends(get_model)):
-    return request.app.get_model_resource(model)
+    model_resource = request.app.get_model_resource(model)  # type:Model
+    actions = model_resource.get_actions()
+    bulk_actions = model_resource.get_bulk_actions()
+    model_resource.actions = actions
+    model_resource.bulk_actions = bulk_actions
+    return model_resource
 
 
 def _get_resources(resources: List[Type[Resource]]):

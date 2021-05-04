@@ -16,7 +16,7 @@
                                         type="text"
                                         class="form-control"
                                         value="{{ page_size }}"
-                                        size="1"
+                                        size="2"
                                         name="page_size"
                                         aria-label="entries count"
                                 />
@@ -89,29 +89,35 @@
                 <table class="table card-table table-vcenter text-nowrap datatable">
                     <thead>
                     <tr>
-                        <th class="w-1">
-                            <input
-                                    class="form-check-input m-0 align-middle"
-                                    type="checkbox"
-                                    id="checkbox-select-all"
-                            />
-                        </th>
+                        {% if model_resource.bulk_actions %}
+                            <th class="w-1">
+                                <input
+                                        class="form-check-input m-0 align-middle"
+                                        type="checkbox"
+                                        id="checkbox-select-all"
+                                />
+                            </th>
+                        {% endif %}
                         {% for label in fields_label %}
                             <th>{{ label }}</th>
                         {% endfor %}
-                        <th></th>
+                        {% if model_resource.actions %}
+                            <th></th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
                     {% for value in values %}
                         <tr>
-                            <td>
-                                <input
-                                        data-id="{{ value[0]|int }}"
-                                        class="form-check-input m-0 align-middle checkbox-select-item"
-                                        type="checkbox"
-                                />
-                            </td>
+                            {% if model_resource.bulk_actions %}
+                                <td>
+                                    <input
+                                            data-id="{{ value[0]|int }}"
+                                            class="form-check-input m-0 align-middle checkbox-select-item"
+                                            type="checkbox"
+                                    />
+                                </td>
+                            {% endif %}
                             {% for v in value %}
                                 <td>{{ v|safe }}</td>
                             {% endfor %}
@@ -169,8 +175,8 @@
                         </a>
                     </li>
                     {% with total_page = (total/page_size)|round(0,'ceil')|int,start_page =
-                (1 if page_num <=3 else page_num - 2 ) %} {% for i in
-                range(start_page,[start_page + 5,total_page + 1]|min) %}
+        (1 if page_num <=3 else page_num - 2 ) %} {% for i in
+        range(start_page,[start_page + 5,total_page + 1]|min) %}
                         <li class="page-item {% if i == (page_num or 1) %} active {% endif %}">
                             <a
                                     class="page-link"

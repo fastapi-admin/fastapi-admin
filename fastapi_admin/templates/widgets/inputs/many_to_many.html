@@ -1,0 +1,21 @@
+{% with id = 'form-select-' + name %}
+    <div class="form-group mb-3">
+        <div class="form-label">{{ label }}</div>
+        <select multiple class="form-select" name="{{ name }}" id="{{ id }}">
+        </select>
+    </div>
+    <script>
+        new Choices(el = document.getElementById('{{ id }}'), {
+            classNames: {
+                containerInner: el.className,
+                listDropdown: 'dropdown-menu',
+                itemChoice: 'dropdown-item',
+                activeState: 'show',
+                selectedState: 'active',
+                inputCloned: 'bg-white',
+            },
+            removeItemButton: true,
+            choices:{{ options|safe }}
+        });
+    </script>
+{% endwith %}

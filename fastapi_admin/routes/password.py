@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, Form
-from pydantic import BaseModel
 from starlette.requests import Request
 
 from fastapi_admin.depends import get_current_admin, get_resources

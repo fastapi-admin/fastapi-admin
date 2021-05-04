@@ -21,7 +21,7 @@ class FastAdmin(FastAPI):
     admin_path: str
     resources: List[Type[Resource]] = []
     model_resources: Dict[Type[Model], Type[Resource]] = {}
-    login_provider: Optional[Type[LoginProvider]] = LoginProvider
+    login_provider: Optional[LoginProvider]
     redis: Redis
 
     def configure(
@@ -77,7 +77,7 @@ class FastAdmin(FastAPI):
         self.resources.append(resource)
 
     def get_model_resource(self, model: Type[Model]):
-        return self.model_resources[model]
+        return self.model_resources[model]()
 
 
 app = FastAdmin(

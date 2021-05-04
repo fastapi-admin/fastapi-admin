@@ -1,11 +1,12 @@
 import os
+from typing import List
 
 from examples import enums
 from examples.constants import BASE_DIR
 from examples.models import Admin, Category, Config, Product
 from fastapi_admin.app import app
 from fastapi_admin.providers.file_upload import FileUploadProvider
-from fastapi_admin.resources import Dropdown, Field, Link, Model
+from fastapi_admin.resources import Action, Dropdown, Field, Link, Model
 from fastapi_admin.widgets import displays, filters, inputs
 
 upload_provider = FileUploadProvider(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
@@ -14,7 +15,7 @@ upload_provider = FileUploadProvider(uploads_dir=os.path.join(BASE_DIR, "static"
 @app.register
 class Home(Link):
     label = "Home"
-    icon = "ti ti-home"
+    icon = "fas fa-home"
     url = "/admin"
 
 
@@ -22,7 +23,7 @@ class Home(Link):
 class AdminResource(Model):
     label = "Admin"
     model = Admin
-    icon = "ti ti-user"
+    icon = "fas fa-user"
     page_pre_title = "admin list"
     page_title = "admin model"
     filters = [
@@ -49,6 +50,13 @@ class AdminResource(Model):
         ),
         "created_at",
     ]
+    can_create = False
+
+    def get_actions(self) -> List[Action]:
+        return []
+
+    def get_bulk_actions(self) -> List[Action]:
+        return []
 
 
 @app.register
@@ -78,7 +86,7 @@ class Content(Dropdown):
         ]
 
     label = "Content"
-    icon = "ti ti-package"
+    icon = "fas fa-bars"
     resources = [ProductResource, CategoryResource]
 
 
@@ -86,7 +94,7 @@ class Content(Dropdown):
 class ConfigResource(Model):
     label = "Config"
     model = Config
-    icon = "ti ti-settings"
+    icon = "fas fa-cogs"
     filters = [
         filters.Enum(enum=enums.Status, name="status", label="Status"),
         filters.Search(name="key", label="Key", search_mode="equal"),
@@ -107,8 +115,8 @@ class ConfigResource(Model):
 @app.register
 class GithubLink(Link):
     label = "Github"
-    url = "https://github.com/long2ice"
-    icon = "ti ti-brand-github"
+    url = "https://github.com/fastapi-admin/fastapi-admin"
+    icon = "fab fa-github"
     target = "_blank"
 
 
@@ -116,5 +124,5 @@ class GithubLink(Link):
 class DocumentationLink(Link):
     label = "Documentation"
     url = "https://long2ice.github.io/fastadmin"
-    icon = "ti ti-file-text"
+    icon = "fas fa-file-code"
     target = "_blank"

@@ -42,7 +42,7 @@ def set_global_env(name: str, value: Any):
 
 def add_template_folder(*folders: str):
     for folder in folders:
-        templates.env.loader.searchpath.append(folder)
+        templates.env.loader.searchpath.insert(0, folder)
 
 
 async def render_values(

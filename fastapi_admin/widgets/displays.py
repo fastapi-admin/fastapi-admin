@@ -50,5 +50,5 @@ class Json(Display):
 
     async def render(self, value: dict):
         return self.templates.get_template(self.template).render(
-            value=json.dumps(value, indent=4, sort_keys=True),
+            value=json.dumps(value),
         )

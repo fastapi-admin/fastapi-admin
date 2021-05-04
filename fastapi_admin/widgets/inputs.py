@@ -96,6 +96,35 @@ class ForeignKey(Select):
         return await self.model.all()
 
 
+class ManyToMany(Select):
+    template = "widgets/inputs/many_to_many.html"
+
+    def __init__(
+        self,
+        model: Type[Model],
+        disabled: bool = False,
+    ):
+        super().__init__(disabled=disabled)
+        self.model = model
+
+    async def get_options(self):
+        ret = await self.get_queryset()
+        options = [dict(label=str(x), value=x.pk) for x in ret]
+        return options
+
+    async def get_queryset(self):
+        return await self.model.all()
+
+    async def render(self, value: Any):
+        options = await self.get_options()
+        selected = list(map(lambda x: x.pk, value.related_objects if value else []))
+        for option in options:
+            if option.get("value") in selected:
+                option["selected"] = True
+        self.context.update(options=json.dumps(options))
+        return await super(Input, self).render(value)
+
+
 class Enum(Select):
     def __init__(
         self,

@@ -1,14 +1,14 @@
 from typing import List, Optional, Type, Union
 
 from pydantic import BaseModel
-from tortoise import ForeignKeyFieldInstance
+from starlette.datastructures import FormData
+from tortoise import ForeignKeyFieldInstance, ManyToManyFieldInstance
 from tortoise import Model as TortoiseModel
 from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
 from tortoise.fields.data import CharEnumFieldInstance, IntEnumFieldInstance, IntField, TextField
 
 from fastapi_admin.exceptions import NoSuchFieldFound
 from fastapi_admin.i18n import _
-from fastapi_admin.utils import ClassProperty
 from fastapi_admin.widgets import Widget, displays, inputs
 from fastapi_admin.widgets.filters import Filter
 
@@ -34,11 +34,11 @@ class Field:
     input: inputs.Input
 
     def __init__(
-            self,
-            name: str,
-            label: str,
-            display: Optional[displays.Display] = None,
-            input_: Optional[Widget] = None,
+        self,
+        name: str,
+        label: str,
+        display: Optional[displays.Display] = None,
+        input_: Optional[Widget] = None,
     ):
         self.name = name
         self.label = label
@@ -67,20 +67,16 @@ class Model(Resource):
     page_pre_title: Optional[str] = None
     page_title: Optional[str] = None
     filters: Optional[List[Union[str, Filter]]] = []
-    can_edit: bool = True
-    can_delete: bool = True
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
 
-    @ClassProperty
-    def actions(self) -> List[Action]:
+    def get_actions(self) -> List[Action]:
         return [
             Action(label=_("update"), icon="ti ti-edit", name="update", ajax=False),
             Action(label=_("delete"), icon="ti ti-trash", name="delete", method="DELETE"),
         ]
 
-    @ClassProperty
-    def bulk_actions(self) -> List[Action]:
+    def get_bulk_actions(self) -> List[Action]:
         return [
             Action(label=_("delete_selected"), icon="ti ti-trash", name="delete", method="DELETE"),
         ]
@@ -109,16 +105,23 @@ class Model(Resource):
         return ret
 
     @classmethod
-    async def resolve_data(cls, data: dict):
+    async def resolve_data(cls, data: FormData):
         ret = {}
+        m2m_ret = {}
         for field in cls.get_fields(is_display=False):
             input_ = field.input
             if input_.context.get("disabled") or isinstance(input_, inputs.DisplayOnly):
                 continue
             name = input_.context.get("name")
-            v = data.get(name)
-            ret[name] = await input_.parse_value(v)
-        return ret
+            if isinstance(input_, inputs.ManyToMany):
+                v = data.getlist(name)
+                value = await input_.parse_value(v)
+                m2m_ret[name] = await input_.model.filter(pk__in=value)
+            else:
+                v = data.get(name)
+                value = await input_.parse_value(v)
+                ret[name] = value
+        return ret, m2m_ret
 
     @classmethod
     async def get_filters(cls, values: Optional[dict] = None):
@@ -191,7 +194,8 @@ class Model(Resource):
                 field.related_model, null=null, default=field.default
             )
             field_name = field.source_field
-
+        elif isinstance(field, ManyToManyFieldInstance):
+            display, input_ = displays.InputOnly(), inputs.ManyToMany(field.related_model)
         return Field(name=field_name, label=label.title(), display=display, input_=input_)
 
     @classmethod
@@ -203,7 +207,7 @@ class Model(Resource):
                 ret.append(field)
             else:
                 if (is_display and isinstance(field.display, displays.InputOnly)) or (
-                        not is_display and isinstance(field.input, inputs.DisplayOnly)
+                    not is_display and isinstance(field.input, inputs.DisplayOnly)
                 ):
                     continue
                 ret.append(field)
@@ -212,6 +216,14 @@ class Model(Resource):
     @classmethod
     def get_fields_label(cls, display: bool = True):
         return cls._get_fields_attr("label", display)
+
+    @classmethod
+    def get_m2m_field(cls):
+        ret = []
+        for field in cls.fields or cls.model._meta.fields:
+            if field in cls.model._meta.m2m_fields:
+                ret.append(field)
+        return ret
 
 
 class Dropdown(Resource):
