@@ -62,7 +62,7 @@ from fastapi_admin.resources import Link
 @app.register
 class Home(Link):
     label = "Home"
-    icon = "ti ti-home"
+    icon = "fas fa-home"
     url = "/admin"
 ```
 
@@ -76,19 +76,22 @@ The `Model` make a TortoiseORM model as a menu with CURD page.
 
 ```python
 
-from examples.models import User
+from examples.models import Admin
 from fastapi_admin.app import app
-from fastapi_admin.resources import Field, Model
+from fastapi_admin.resources import Field, Model,Action
 from fastapi_admin.widgets import displays, filters, inputs
+from typing import List
+from fastapi_admin.providers.file_upload import FileUploadProvider
 
+upload_provider = FileUploadProvider(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
 
 @app.register
-class UserResource(Model):
-    label = "User"
-    model = User
-    icon = "ti ti-user"
-    page_pre_title = "user list"
-    page_title = "user model"
+class AdminResource(Model):
+    label = "Admin"
+    model = Admin
+    icon = "fas fa-user"
+    page_pre_title = "admin list"
+    page_title = "admin model"
     filters = [
         filters.Search(
             name="username", label="Name", search_mode="contains", placeholder="Search for username"
@@ -111,10 +114,15 @@ class UserResource(Model):
             display=displays.Image(width="40"),
             input_=inputs.Image(null=True, upload_provider=upload_provider),
         ),
-        "is_superuser",
-        "is_active",
         "created_at",
     ]
+    can_create = False
+
+    def get_actions(self) -> List[Action]:
+        return []
+
+    def get_bulk_actions(self) -> List[Action]:
+        return []
 ```
 
 ### Dropdown
@@ -158,7 +166,7 @@ class Content(Dropdown):
         ]
 
     label = "Content"
-    icon = "ti ti-package"
+    icon = "fas fa-bars"
     resources = [ProductResource, CategoryResource]
 ```
 

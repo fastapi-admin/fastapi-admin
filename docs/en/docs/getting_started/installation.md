@@ -10,7 +10,7 @@ You can install from pypi.
 
 ## From source
 
-Or you can install from source with latest code.
+Or you can install from source with the latest code.
 
 ```shell
 > pip install git+https://github.com/fastapi-admin/fastapi-admin.git
@@ -21,7 +21,7 @@ Or you can install from source with latest code.
 Add the following line.
 
 ```
--e https://github.com/fastapi-admin/fastapi-admin.git@develop#egg=fastapi-admin
+-e https://github.com/fastapi-admin/fastapi-admin.git#egg=fastapi-admin
 ```
 
 ### With poetry
@@ -29,5 +29,5 @@ Add the following line.
 Add the following line in section `[tool.poetry.dependencies]`.
 
 ```toml
-fastapi-admin = { git = 'https://github.com/fastapi-admin/fastapi-admin.git', branch = 'develop' }
+fastapi-admin = { git = 'https://github.com/fastapi-admin/fastapi-admin.git' }
 ```

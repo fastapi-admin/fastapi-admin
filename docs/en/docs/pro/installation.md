@@ -22,7 +22,7 @@ In order to access the repository programmatically (from the command line or Git
 Add the following line in section `[tool.poetry.dependencies]`.
 
 ```toml
-fastapi-admin-pro = { git = 'https://${GH_TOKEN}@github.com/fastapi-admin/fastapi-admin-pro.git', branch = 'develop' }
+fastapi-admin-pro = { git = 'https://${GH_TOKEN}@github.com/fastapi-admin/fastapi-admin-pro.git'}
 ```
 
 ## In requirements.txt
@@ -30,5 +30,5 @@ fastapi-admin-pro = { git = 'https://${GH_TOKEN}@github.com/fastapi-admin/fastap
 Add the following line.
 
 ```shell
--e https://${GH_TOKEN}@github.com/fastapi-admin/fastapi-admin-pro.git@develop#egg=fastapi-admin-pro
+-e https://${GH_TOKEN}@github.com/fastapi-admin/fastapi-admin-pro.git#egg=fastapi-admin-pro
 ```

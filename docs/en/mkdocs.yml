@@ -53,12 +53,16 @@ nav:
       - reference/global_search.md
       - reference/actions.md
       - reference/bulk_actions.md
+      - reference/errors.md
   - Customization:
       - custom/page.md
       - custom/overwrite.md
+      - custom/widget.md
       - custom/login.md
       - custom/file.md
-      - custom/widget.md
+      - custom/search.md
+      - custom/admin_log.md
+      - custom/permission.md
   - Pro Version For Sponsor:
       - pro/sponsor.md
       - pro/exclusive.md

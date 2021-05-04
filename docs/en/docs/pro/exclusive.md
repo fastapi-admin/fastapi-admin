@@ -68,3 +68,17 @@ admin_app.configure(maintenance=True)
 ```
 
 ## Admin Log
+
+If you want to log all `create/update/delete` actions, you can set `admin_log_provider` to `admin_app.configure(...)`.
+
+```python
+admin_app.configure(admin_log_provider=AdminLogProvider(Log))
+```
+
+## Site Search
+
+You can enable site search by set `search_provider` to `admin_app.configure(...)`.
+
+```python
+admin_app.configure(search_provider=SearchProvider())
+```

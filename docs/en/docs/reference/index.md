@@ -28,7 +28,7 @@ Current support `zh` and `en`, default is `en`.
 
 ## template_folders
 
-Template folders used to override builtin templates.
+Template folders registered to jinja2 and also can be used to override builtin templates.
 
 ## login_provider
 
@@ -45,7 +45,8 @@ Show captcha in admin login page.
 
 ## permission_provider (💗 Pro only)
 
-You can enable permission control by setting `permission_provider`.
+You can enable permission control by setting `permission_provider`, which is instance
+of `fastapi_admin.providers.permission.PermissionProvider` of its subclass.
 
 ### admin_model
 
@@ -59,14 +60,11 @@ Subclass of `fastapi_admin.models.AbstractResource`.
 
 Subclass of `fastapi_admin.models.AbstractPermission`.
 
-### role_model
+## admin_log_provider
 
-Subclass of `fastapi_admin.models.AbstractRole`.
-
-## log_model
-
-You can enable action log by set `log_model`, which is subclass of `fastapi_admin.models.AbstractLog`. After set that,
-all `delete/create/update` for model will be recorded.
+You can enable action log by set `admin_log_provider`, which is instance
+of `fastapi_admin.providers.admin_log.AdminLogProvider` or its subclass. After set that, all `delete/create/update` for
+model will be recorded.
 
 ## search_provider  (💗 Pro only)
 

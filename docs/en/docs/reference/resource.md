@@ -12,7 +12,7 @@ Nav bar menu name.
 
 ### icon
 
-Icon name comes from <https://tabler-icons.io>, like `ti ti-user` will display a user icon in menu.
+Icon name comes from <https://fontawesome.com>, like `fas fa-user` will display a user icon in menu.
 
 ## Link
 
