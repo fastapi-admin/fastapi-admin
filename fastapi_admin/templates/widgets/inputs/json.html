@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsoneditor@9.4.0/dist/jsoneditor.min.css">
 <div class="form-label">{{ label }}</div>
 <div id="{{ name }}" class="form-group mb-3"></div>
-<input {% if not null %}required{% endif %} type="text" name="{{ name }}" value="{{ value|safe }}" hidden>
+<input {% if not null %}required{% endif %} type="text" name="{{ name }}" value='{{ value|safe }}' hidden>
 <style>
     .jsoneditor {
         border: 1px solid #dadcde;
