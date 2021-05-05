@@ -3,28 +3,33 @@ from typing import Dict, List, Optional, Type
 from aioredis import Redis
 from fastapi import FastAPI
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.status import HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from tortoise import Model
 
 from fastapi_admin import i18n
+from fastapi_admin.exceptions import (
+    forbidden_error_exception,
+    not_found_error_exception,
+    server_error_exception,
+)
 
 from . import middlewares, template
-from .providers.login import LoginProvider
+from .providers import Provider
 from .resources import Dropdown
 from .resources import Model as ModelResource
 from .resources import Resource
 from .routes import router
 
 
-class FastAdmin(FastAPI):
+class FastAPIAdmin(FastAPI):
     logo_url: str
     login_logo_url: str
     admin_path: str
     resources: List[Type[Resource]] = []
     model_resources: Dict[Type[Model], Type[Resource]] = {}
-    login_provider: Optional[LoginProvider]
     redis: Redis
 
-    def configure(
+    async def configure(
         self,
         redis: Redis,
         logo_url: str = None,
@@ -32,17 +37,8 @@ class FastAdmin(FastAPI):
         default_locale: str = "en_US",
         admin_path: str = "/admin",
         template_folders: Optional[List[str]] = None,
-        login_provider: Optional[LoginProvider] = None,
+        providers: Optional[List[Provider]] = None,
     ):
-        """
-        Config FastAdmin
-        :param logo_url:
-        :param default_locale:
-        :param admin_path:
-        :param template_folders:
-        :param login_provider:
-        :return:
-        """
         self.redis = redis
         self.login_logo_url = login_logo_url
         i18n.set_locale(default_locale)
@@ -50,16 +46,11 @@ class FastAdmin(FastAPI):
         self.logo_url = logo_url
         if template_folders:
             template.add_template_folder(*template_folders)
-        self.login_provider = login_provider
-        self._register_providers()
+        await self._register_providers(providers)
 
-    def _register_providers(self):
-        if self.login_provider:
-            login_path = self.login_provider.login_path
-            app.get(login_path)(self.login_provider.get)
-            app.post(login_path)(self.login_provider.post)
-            app.get(self.login_provider.logout_path)(self.login_provider.logout)
-            app.add_middleware(BaseHTTPMiddleware, dispatch=self.login_provider.authenticate)
+    async def _register_providers(self, providers: Optional[List[Provider]] = None):
+        for p in providers or []:
+            await p.register(self)
 
     def register_resources(self, *resource: Type[Resource]):
         for r in resource:
@@ -80,9 +71,12 @@ class FastAdmin(FastAPI):
         return self.model_resources[model]()
 
 
-app = FastAdmin(
+app = FastAPIAdmin(
     title="FastAdmin",
     description="A fast admin dashboard based on fastapi and tortoise-orm with tabler ui.",
 )
 app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_processor)
+app.add_exception_handler(HTTP_500_INTERNAL_SERVER_ERROR, server_error_exception)
+app.add_exception_handler(HTTP_404_NOT_FOUND, not_found_error_exception)
+app.add_exception_handler(HTTP_403_FORBIDDEN, forbidden_error_exception)
 app.include_router(router)

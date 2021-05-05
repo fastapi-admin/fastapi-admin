@@ -14,8 +14,6 @@ from examples.models import Admin
 from examples.providers import LoginProvider
 from fastapi_admin.app import app as admin_app
 
-login_provider = LoginProvider(admin_model=Admin)
-
 
 def create_app():
     app = FastAPI()
@@ -37,11 +35,11 @@ def create_app():
             password=settings.REDIS_PASSWORD,
             encoding="utf8",
         )
-        admin_app.configure(
+        await admin_app.configure(
             logo_url="https://preview.tabler.io/static/logo-white.svg",
             login_logo_url="https://preview.tabler.io/static/logo.svg",
             template_folders=[os.path.join(BASE_DIR, "templates")],
-            login_provider=login_provider,
+            providers=[LoginProvider(admin_model=Admin)],
             redis=redis,
         )
 

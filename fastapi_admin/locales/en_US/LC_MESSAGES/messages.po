@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-02 14:00+0800\n"
+"POT-Creation-Date: 2021-05-05 14:09+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -18,27 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: fastapi_admin/resources.py:80
+#: fastapi_admin/resources.py:75
 msgid "update"
 msgstr "Update"
 
-#: fastapi_admin/resources.py:81
+#: fastapi_admin/resources.py:76
 msgid "delete"
 msgstr "Delete"
 
-#: fastapi_admin/resources.py:87
+#: fastapi_admin/resources.py:81
 msgid "delete_selected"
 msgstr "Delete Selected"
 
-#: fastapi_admin/providers/login.py:89
+#: fastapi_admin/providers/login.py:68
 msgid "login_failed"
 msgstr "Login to your account failed"
 
-#: fastapi_admin/routes/password.py:39
+#: fastapi_admin/providers/login.py:152
+msgid "confirm_password_different"
+msgstr "Password is different"
+
+#: fastapi_admin/providers/login.py:187 fastapi_admin/routes/password.py:38
 msgid "old_password_error"
 msgstr "Old password error"
 
-#: fastapi_admin/routes/password.py:41
+#: fastapi_admin/providers/login.py:189 fastapi_admin/routes/password.py:40
 msgid "new_password_different"
 msgstr "New password is different"
 
@@ -89,26 +93,22 @@ msgstr "Bulk Actions"
 msgid "create"
 msgstr "Create"
 
-#: fastapi_admin/templates/list.html:126
+#: fastapi_admin/templates/list.html:132
 msgid "actions"
 msgstr "Actions"
 
-#: fastapi_admin/templates/list.html:157
+#: fastapi_admin/templates/list.html:163
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
 msgstr ""
 
-#: fastapi_admin/templates/list.html:168
+#: fastapi_admin/templates/list.html:174
 msgid "prev_page"
 msgstr "Prev"
 
-#: fastapi_admin/templates/list.html:189
+#: fastapi_admin/templates/list.html:195
 msgid "next_page"
 msgstr "Next"
-
-#: fastapi_admin/templates/login.html:38
-msgid "login_title"
-msgstr "Login to your account"
 
 #: fastapi_admin/templates/login.html:40
 msgid "username"
@@ -165,3 +165,10 @@ msgstr "Submit"
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"
 msgstr "Save and return"
+
+#: fastapi_admin/templates/errors/403.html:21
+#: fastapi_admin/templates/errors/404.html:21
+#: fastapi_admin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "Take me home"
+

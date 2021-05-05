@@ -43,6 +43,20 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/lo
 
 ## Run examples in local
 
+1. Clone repo.
+2. Create `.env` file.
+
+   ```dotenv
+   DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
+   REDIS_HOST=localhost
+   REDIS_PORT=6379
+   REDIS_PASSWORD=
+   REDIS_DB=0
+   ```
+
+3. Run `docker-compose up -d --build`.
+4. Visit <http://localhost:8000/admin/init> to create first admin.
+
 ## Documentation
 
 See documentation at [https://fastapi-admin.github.io/fastapi-admin](https://fastapi-admin.github.io/fastapi-admin).

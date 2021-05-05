@@ -35,7 +35,9 @@
         autocomplete="off"
       >
         <div class="card-body">
-          <h2 class="card-title text-center mb-4">{{ _('login_title') }}</h2>
+          <h2 class="card-title text-center mb-4">
+            {{ request.app.login_provider.login_title }}
+          </h2>
           <div class="mb-3">
             <label class="form-label">{{ _('username') }}</label>
             <input

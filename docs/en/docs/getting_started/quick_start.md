@@ -78,12 +78,13 @@ The `Model` make a TortoiseORM model as a menu with CURD page.
 
 from examples.models import Admin
 from fastapi_admin.app import app
-from fastapi_admin.resources import Field, Model,Action
+from fastapi_admin.resources import Field, Model, Action
 from fastapi_admin.widgets import displays, filters, inputs
 from typing import List
-from fastapi_admin.providers.file_upload import FileUploadProvider
+from fastapi_admin.file_upload import FileUpload
 
-upload_provider = FileUploadProvider(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
+upload_provider = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
+
 
 @app.register
 class AdminResource(Model):

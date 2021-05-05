@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-02 14:00+0800\n"
+"POT-Creation-Date: 2021-05-05 14:09+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,27 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: fastapi_admin/resources.py:80
+#: fastapi_admin/resources.py:75
 msgid "update"
 msgstr "编辑"
 
-#: fastapi_admin/resources.py:81
+#: fastapi_admin/resources.py:76
 msgid "delete"
 msgstr "删除"
 
-#: fastapi_admin/resources.py:87
+#: fastapi_admin/resources.py:81
 msgid "delete_selected"
 msgstr "删除选中"
 
-#: fastapi_admin/providers/login.py:89
+#: fastapi_admin/providers/login.py:68
 msgid "login_failed"
 msgstr "登录管理台"
 
-#: fastapi_admin/routes/password.py:39
+#: fastapi_admin/providers/login.py:152
+msgid "confirm_password_different"
+msgstr "密码不一致"
+
+#: fastapi_admin/providers/login.py:187 fastapi_admin/routes/password.py:38
 msgid "old_password_error"
 msgstr "旧密码错误"
 
-#: fastapi_admin/routes/password.py:41
+#: fastapi_admin/providers/login.py:189 fastapi_admin/routes/password.py:40
 msgid "new_password_different"
 msgstr "新密码不一致"
 
@@ -89,26 +93,22 @@ msgstr "批量操作"
 msgid "create"
 msgstr "创建"
 
-#: fastapi_admin/templates/list.html:126
+#: fastapi_admin/templates/list.html:132
 msgid "actions"
 msgstr "动作"
 
-#: fastapi_admin/templates/list.html:157
+#: fastapi_admin/templates/list.html:163
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
 msgstr "显示 %(from)s 到 %(to)s 共 %(total)s 项"
 
-#: fastapi_admin/templates/list.html:168
+#: fastapi_admin/templates/list.html:174
 msgid "prev_page"
 msgstr "上一页"
 
-#: fastapi_admin/templates/list.html:189
+#: fastapi_admin/templates/list.html:195
 msgid "next_page"
 msgstr "下一页"
-
-#: fastapi_admin/templates/login.html:38
-msgid "login_title"
-msgstr "登录管理台"
 
 #: fastapi_admin/templates/login.html:40
 msgid "username"
@@ -165,3 +165,10 @@ msgstr "提交"
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"
 msgstr "保存并返回"
+
+#: fastapi_admin/templates/errors/403.html:21
+#: fastapi_admin/templates/errors/404.html:21
+#: fastapi_admin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "返回首页"
+

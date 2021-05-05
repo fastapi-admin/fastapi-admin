@@ -5,11 +5,11 @@ from examples import enums
 from examples.constants import BASE_DIR
 from examples.models import Admin, Category, Config, Product
 from fastapi_admin.app import app
-from fastapi_admin.providers.file_upload import FileUploadProvider
+from fastapi_admin.file_upload import FileUpload
 from fastapi_admin.resources import Action, Dropdown, Field, Link, Model
 from fastapi_admin.widgets import displays, filters, inputs
 
-upload_provider = FileUploadProvider(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
+upload_provider = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
 
 
 @app.register

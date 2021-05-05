@@ -3,7 +3,7 @@ import datetime
 from tortoise import Model, fields
 
 from examples.enums import ProductType, Status
-from fastapi_admin.providers.login import AbstractAdmin
+from fastapi_admin.models import AbstractAdmin
 
 
 class Admin(AbstractAdmin):

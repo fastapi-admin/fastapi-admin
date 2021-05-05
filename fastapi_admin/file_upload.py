@@ -7,7 +7,7 @@ from starlette.datastructures import UploadFile
 from fastapi_admin.exceptions import FileExtNotAllowed, FileMaxSizeLimit
 
 
-class FileUploadProvider:
+class FileUpload:
     def __init__(
         self,
         uploads_dir: str,

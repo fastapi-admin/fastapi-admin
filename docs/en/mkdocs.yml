@@ -58,11 +58,12 @@ nav:
       - custom/page.md
       - custom/overwrite.md
       - custom/widget.md
-      - custom/login.md
-      - custom/file.md
-      - custom/search.md
-      - custom/admin_log.md
-      - custom/permission.md
+      - custom/file_upload.md
+      - Providers:
+          - custom/providers/login.md
+          - custom/providers/search.md
+          - custom/providers/admin_log.md
+          - custom/providers/permission.md
   - Pro Version For Sponsor:
       - pro/sponsor.md
       - pro/exclusive.md

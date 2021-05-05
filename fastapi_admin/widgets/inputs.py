@@ -6,7 +6,7 @@ from typing import Any, List, Optional, Tuple, Type
 from starlette.datastructures import UploadFile
 from tortoise import Model
 
-from fastapi_admin.providers.file_upload import FileUploadProvider
+from fastapi_admin.file_upload import FileUpload
 from fastapi_admin.widgets import Widget
 
 
@@ -189,7 +189,7 @@ class File(Input):
 
     def __init__(
         self,
-        upload_provider: FileUploadProvider,
+        upload_provider: FileUpload,
         default: Any = None,
         null: bool = False,
         disabled: bool = False,

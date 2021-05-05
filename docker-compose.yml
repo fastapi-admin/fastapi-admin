@@ -3,9 +3,7 @@ services:
   app:
     build: .
     restart: always
-    environment:
-      DATABASE_URL: mysql://root:123456@127.0.0.1:3306/fastapi-admin
-      TZ: Asia/Shanghai
+    env_file: .env
     network_mode: host
     image: fastapi-admin
     command: uvicorn examples.main:app_ --port 8000 --host 0.0.0.0
