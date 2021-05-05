@@ -58,10 +58,10 @@ async def render_values(
     ret = []
     for value in values:
         item = []
-        for i, v in enumerate(value):
+        for i, k in enumerate(value):
             if display:
-                item.append(await fields[i].display.render(v))
+                item.append(await fields[i].display.render(value[k]))
             else:
-                item.append(await fields[i].input.render(v))
+                item.append(await fields[i].input.render(value[k]))
         ret.append(item)
     return ret

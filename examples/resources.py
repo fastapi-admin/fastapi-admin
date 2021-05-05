@@ -28,7 +28,10 @@ class AdminResource(Model):
     page_title = "admin model"
     filters = [
         filters.Search(
-            name="username", label="Name", search_mode="contains", placeholder="Search for username"
+            name="username",
+            label="Name",
+            search_mode="contains",
+            placeholder="Search for username",
         ),
         filters.Date(name="created_at", label="CreatedAt"),
     ]
@@ -51,6 +54,11 @@ class AdminResource(Model):
         "created_at",
     ]
     can_create = False
+
+    def cell_attributes(self, obj: dict, field: Field) -> dict:
+        if field.name == "id":
+            return {"class": "bg-danger"}
+        return super().cell_attributes(obj, field)
 
     def get_actions(self) -> List[Action]:
         return []
@@ -110,6 +118,11 @@ class ConfigResource(Model):
             input_=inputs.RadioEnum(enums.Status, default=enums.Status.on),
         ),
     ]
+
+    def row_attributes(self, obj: dict) -> dict:
+        if obj.get("status") == enums.Status.on:
+            return {"class": "bg-green text-white"}
+        return super(ConfigResource, self).row_attributes(obj)
 
 
 @app.register

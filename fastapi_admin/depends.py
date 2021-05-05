@@ -21,6 +21,8 @@ def get_model(resource: Optional[str] = Path(...)):
 
 def get_model_resource(request: Request, model=Depends(get_model)):
     model_resource = request.app.get_model_resource(model)  # type:Model
+    if not model_resource:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
     actions = model_resource.get_actions()
     bulk_actions = model_resource.get_bulk_actions()
     model_resource.actions = actions

@@ -37,14 +37,15 @@ async def list_view(
     else:
         page_size = model_resource.page_size
     qs = qs.offset((page_num - 1) * page_size)
-    values = await qs.values_list(*fields_name)
-    values = await render_values(fields, values)
+    values = await qs.values(*fields_name)
+    rendered_values = await render_values(fields, values)
     context = {
         "request": request,
         "resources": resources,
         "fields_label": fields_label,
         "fields": fields,
         "values": values,
+        "rendered_values": rendered_values,
         "filters": filters,
         "resource": resource,
         "model_resource": model_resource,

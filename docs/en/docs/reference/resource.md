@@ -26,10 +26,18 @@ General `a` tag menu.
 
 `target` attr of `a` tag, default is `_self`.
 
+## Field
+
+## Action
+
 ## Model
 
-### Field
+### get_actions
 
-### Action
+### get_bulk_actions
+
+### row_attributes
+
+### cell_attributes
 
 ## Dropdown

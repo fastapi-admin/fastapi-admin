@@ -70,6 +70,12 @@ class Model(Resource):
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
 
+    def row_attributes(self, obj: dict) -> dict:
+        return {}
+
+    def cell_attributes(self, obj: dict, field: Field) -> dict:
+        return {}
+
     def get_actions(self) -> List[Action]:
         return [
             Action(label=_("update"), icon="ti ti-edit", name="update", ajax=False),
@@ -78,7 +84,12 @@ class Model(Resource):
 
     def get_bulk_actions(self) -> List[Action]:
         return [
-            Action(label=_("delete_selected"), icon="ti ti-trash", name="delete", method="DELETE"),
+            Action(
+                label=_("delete_selected"),
+                icon="ti ti-trash",
+                name="delete",
+                method="DELETE",
+            ),
         ]
 
     @classmethod

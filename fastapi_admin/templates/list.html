@@ -107,20 +107,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for value in values %}
-                        <tr>
-                            {% if model_resource.bulk_actions %}
-                                <td>
-                                    <input
-                                            data-id="{{ value[0]|int }}"
-                                            class="form-check-input m-0 align-middle checkbox-select-item"
-                                            type="checkbox"
-                                    />
-                                </td>
-                            {% endif %}
-                            {% for v in value %}
-                                <td>{{ v|safe }}</td>
+                    {% for value in rendered_values %}
+                        <tr {% for k,v in model_resource.row_attributes(values[loop.index0]).items() %}{{ k }}="{{ v }}"{% endfor %}>
+                        {% if model_resource.bulk_actions %}
+                            <td>
+                                <input
+                                        data-id="{{ value[0]|int }}"
+                                        class="form-check-input m-0 align-middle checkbox-select-item"
+                                        type="checkbox"
+                                />
+                            </td>
+                        {% endif %}
+                        {% with outer_index = loop.index0 %}
+                            {% for x in value %}
+                                <td
+                                {% for k,v in model_resource.cell_attributes(values[outer_index],fields[loop.index0]).items() %}
+                                    {{ k }}="{{ v }}"{% endfor %}>{{ x|safe }}</td>
                             {% endfor %}
+                        {% endwith %}
                             {% if model_resource.actions %}
                                 <td class="text-end">
               <span class="dropdown">

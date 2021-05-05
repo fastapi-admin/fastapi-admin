@@ -68,7 +68,8 @@ class FastAPIAdmin(FastAPI):
         self.resources.append(resource)
 
     def get_model_resource(self, model: Type[Model]):
-        return self.model_resources[model]()
+        r = self.model_resources.get(model)
+        return r() if r else None
 
 
 app = FastAPIAdmin(
