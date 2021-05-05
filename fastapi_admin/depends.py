@@ -1,8 +1,9 @@
 from typing import List, Optional, Type
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from fastapi.params import Path
 from starlette.requests import Request
+from starlette.status import HTTP_404_NOT_FOUND
 from tortoise import Tortoise
 
 from fastapi_admin.exceptions import InvalidResource
@@ -60,4 +61,7 @@ def get_redis(request: Request):
 
 
 def get_current_admin(request: Request):
-    return request.state.admin
+    admin = request.state.admin
+    if not admin:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+    return admin

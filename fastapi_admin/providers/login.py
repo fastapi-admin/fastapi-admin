@@ -103,11 +103,11 @@ class UsernamePasswordProvider(Provider):
         redis = request.app.redis  # type:Redis
         token = request.cookies.get(self.access_token)
         path = request.scope["path"]
-        if not token and path != self.login_path and path != "/init":
-            return self.redirect_login(request)
-        token_key = constants.LOGIN_USER.format(token=token)
-        admin_id = await redis.get(token_key)
-        admin = await self.admin_model.get_or_none(pk=admin_id)
+        admin = None
+        if token:
+            token_key = constants.LOGIN_USER.format(token=token)
+            admin_id = await redis.get(token_key)
+            admin = await self.admin_model.get_or_none(pk=admin_id)
         request.state.admin = admin
 
         if path == self.login_path and admin:
