@@ -122,7 +122,7 @@ class ConfigResource(Model):
     def row_attributes(self, obj: dict) -> dict:
         if obj.get("status") == enums.Status.on:
             return {"class": "bg-green text-white"}
-        return super(ConfigResource, self).row_attributes(obj)
+        return super().row_attributes(obj)
 
 
 @app.register
