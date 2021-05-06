@@ -1,14 +1,14 @@
 [tool.poetry]
 authors = ["long2ice <long2ice@gmail.com>"]
 description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
-documentation = "https://github.com/fastapi-admin/fastapi-admin"
+documentation = "https://fastapi-admin-docs.long2ice.cn"
 homepage = "https://github.com/fastapi-admin/fastapi-admin"
 include = ["LICENSE", "README.md", "CHANGELOG.md"]
 keywords = ["fastapi", "admin", "dashboard"]
 license = "Apache-2.0"
 name = "fastapi-admin"
 packages = [
-  {include = "fastapi_admin"},
+    { include = "fastapi_admin" },
 ]
 readme = "README.md"
 repository = "https://github.com/fastapi-admin/fastapi-admin.git"
@@ -24,7 +24,7 @@ jinja2 = "*"
 python = "^3.7"
 python-multipart = "*"
 tortoise-orm = "*"
-uvicorn = {version = "*", extras = ["standard"]}
+uvicorn = { version = "*", extras = ["standard"] }
 
 [tool.poetry.dev-dependencies]
 # test

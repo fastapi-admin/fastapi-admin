@@ -1,5 +1,5 @@
 name: deploy
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   example:
     runs-on: ubuntu-latest
@@ -43,3 +43,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/zh/site
           destination_dir: zh
+          cname: fastapi-admin-docs.long2ice.cn
