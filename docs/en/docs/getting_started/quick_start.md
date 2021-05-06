@@ -38,8 +38,7 @@ async def startup():
         logo_url="https://preview.tabler.io/static/logo-white.svg",
         login_logo_url="https://preview.tabler.io/static/logo.svg",
         template_folders=[os.path.join(BASE_DIR, "templates")],
-        login_provider=login_provider,
-        maintenance=False,
+        providers=[login_provider],
         redis=redis,
     )
 ```
@@ -119,10 +118,10 @@ class AdminResource(Model):
     ]
     can_create = False
 
-    def get_actions(self) -> List[Action]:
+    async def get_actions(self,request:Request) -> List[Action]:
         return []
 
-    def get_bulk_actions(self) -> List[Action]:
+    async def get_bulk_actions(self,request:Request) -> List[Action]:
         return []
 ```
 

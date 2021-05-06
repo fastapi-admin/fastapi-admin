@@ -2,6 +2,7 @@ from typing import List, Optional, Type, Union
 
 from pydantic import BaseModel
 from starlette.datastructures import FormData
+from starlette.requests import Request
 from tortoise import ForeignKeyFieldInstance, ManyToManyFieldInstance
 from tortoise import Model as TortoiseModel
 from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
@@ -70,10 +71,10 @@ class Model(Resource):
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
 
-    def row_attributes(self, obj: dict) -> dict:
+    async def row_attributes(self, request: Request, obj: dict) -> dict:
         return {}
 
-    def cell_attributes(self, obj: dict, field: Field) -> dict:
+    async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
         return {}
 
     def get_actions(self) -> List[Action]:
@@ -135,14 +136,14 @@ class Model(Resource):
         return ret, m2m_ret
 
     @classmethod
-    async def get_filters(cls, values: Optional[dict] = None):
+    async def get_filters(cls, request: Request, values: Optional[dict] = None):
         if not values:
             values = {}
         ret = []
         for f in cls.filters:
             name = f.context.get("name")
             value = values.get(name)
-            ret.append(await f.render(value))
+            ret.append(await f.render(request, value))
         return ret
 
     @classmethod

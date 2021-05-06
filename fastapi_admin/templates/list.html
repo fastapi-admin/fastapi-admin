@@ -108,7 +108,7 @@
                     </thead>
                     <tbody>
                     {% for value in rendered_values %}
-                        <tr {% for k,v in model_resource.row_attributes(values[loop.index0]).items() %}{{ k }}="{{ v }}"{% endfor %}>
+                        <tr {% for k,v in row_attributes[loop.index0].items() %}{{ k }}="{{ v }}"{% endfor %}>
                         {% if model_resource.bulk_actions %}
                             <td>
                                 <input
@@ -120,8 +120,7 @@
                         {% endif %}
                         {% with outer_index = loop.index0 %}
                             {% for x in value %}
-                                <td
-                                {% for k,v in model_resource.cell_attributes(values[outer_index],fields[loop.index0]).items() %}
+                                <td {% for k,v in cell_attributes[outer_index][loop.index0].items() %}
                                     {{ k }}="{{ v }}"{% endfor %}>{{ x|safe }}</td>
                             {% endfor %}
                         {% endwith %}

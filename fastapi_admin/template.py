@@ -12,7 +12,7 @@ from fastapi_admin import VERSION
 from fastapi_admin.constants import BASE_DIR
 
 if typing.TYPE_CHECKING:
-    from fastapi_admin.resources import Field
+    from fastapi_admin.resources import Field, Model
 
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 templates.env.globals["VERSION"] = VERSION
@@ -46,22 +46,34 @@ def add_template_folder(*folders: str):
 
 
 async def render_values(
-    fields: List["Field"], values: List[Tuple[Any]], display: bool = True
-) -> List[List[Any]]:
+    request: Request,
+    model: "Model",
+    fields: List["Field"],
+    values: List[typing.Dict[str, Any]],
+    display: bool = True,
+) -> typing.Tuple[List[List[Any]], List[dict], List[List[dict]]]:
     """
     render values with template render
     :param fields:
     :param values:
     :param display:
+    :params request:
+    :params model:
     :return:
     """
     ret = []
+    cell_attributes: List[List[dict]] = []
+    row_attributes: List[dict] = []
     for value in values:
+        row_attributes.append(await model.row_attributes(request, value))
         item = []
+        cell_item = []
         for i, k in enumerate(value):
+            cell_item.append(await model.cell_attributes(request, value, fields[i]))
             if display:
-                item.append(await fields[i].display.render(value[k]))
+                item.append(await fields[i].display.render(request, value[k]))
             else:
-                item.append(await fields[i].input.render(value[k]))
+                item.append(await fields[i].input.render(request, value[k]))
         ret.append(item)
-    return ret
+        cell_attributes.append(cell_item)
+    return ret, row_attributes, cell_attributes

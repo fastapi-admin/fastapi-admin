@@ -29,7 +29,7 @@ async def list_view(
     fields_label = model_resource.get_fields_label()
     fields = model_resource.get_fields()
     params = await model_resource.resolve_query_params(dict(request.query_params))
-    filters = await model_resource.get_filters(params)
+    filters = await model_resource.get_filters(request, params)
     qs = model.filter(**params)
     total = await qs.count()
     if page_size:
@@ -38,13 +38,17 @@ async def list_view(
         page_size = model_resource.page_size
     qs = qs.offset((page_num - 1) * page_size)
     values = await qs.values(*fields_name)
-    rendered_values = await render_values(fields, values)
+    rendered_values, row_attributes, cell_attributes = await render_values(
+        request, model_resource, fields, values
+    )
     context = {
         "request": request,
         "resources": resources,
         "fields_label": fields_label,
         "fields": fields,
         "values": values,
+        "row_attributes": row_attributes,
+        "cell_attributes": cell_attributes,
         "rendered_values": rendered_values,
         "filters": filters,
         "resource": resource,

@@ -1,6 +1,8 @@
 import os
 from typing import List
 
+from starlette.requests import Request
+
 from examples import enums
 from examples.constants import BASE_DIR
 from examples.models import Admin, Category, Config, Product
@@ -55,10 +57,10 @@ class AdminResource(Model):
     ]
     can_create = False
 
-    def cell_attributes(self, obj: dict, field: Field) -> dict:
+    async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
         if field.name == "id":
-            return {"class": "bg-danger"}
-        return super().cell_attributes(obj, field)
+            return {"class": "bg-danger text-white"}
+        return await super().cell_attributes(request, obj, field)
 
     def get_actions(self) -> List[Action]:
         return []
@@ -119,10 +121,10 @@ class ConfigResource(Model):
         ),
     ]
 
-    def row_attributes(self, obj: dict) -> dict:
+    async def row_attributes(self, request: Request, obj: dict) -> dict:
         if obj.get("status") == enums.Status.on:
             return {"class": "bg-green text-white"}
-        return super().row_attributes(obj)
+        return await super().row_attributes(obj)
 
 
 @app.register
