@@ -25,3 +25,8 @@ You will be invited and keep collaborator role for half a year.
 ### $188 - Year
 
 You will be invited and keep collaborator role for a year.
+
+## Waring
+
+After you have be invited, you can read and clone and develop yourself, but please **don't distribute the source code**
+of pro version. Thanks!
