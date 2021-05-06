@@ -11,7 +11,7 @@ from fastapi_admin.file_upload import FileUpload
 from fastapi_admin.resources import Action, Dropdown, Field, Link, Model
 from fastapi_admin.widgets import displays, filters, inputs
 
-upload_provider = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
+upload = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
 
 
 @app.register
@@ -51,7 +51,7 @@ class AdminResource(Model):
             name="avatar",
             label="Avatar",
             display=displays.Image(width="40"),
-            input_=inputs.Image(null=True, upload_provider=upload_provider),
+            input_=inputs.Image(null=True, upload=upload),
         ),
         "created_at",
     ]
