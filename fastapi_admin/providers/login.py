@@ -8,6 +8,7 @@ from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoin
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER, HTTP_401_UNAUTHORIZED
+from tortoise import signals
 
 from fastapi_admin import constants
 from fastapi_admin.depends import get_current_admin, get_redis, get_resources
@@ -57,6 +58,12 @@ class UsernamePasswordProvider(Provider):
         app.post("/init")(self.init)
         app.get("/password")(self.password_view)
         app.post("/password")(self.password)
+        signals.pre_save(self.admin_model)(self.pre_save_admin)
+
+    async def pre_save_admin(self, _, instance: AbstractAdmin, using_db, update_fields):
+        db_obj = await instance.get(pk=instance.pk)
+        if db_obj.password != instance.password:
+            instance.password = hash_password(instance.password)
 
     async def login(self, request: Request, redis: Redis = Depends(get_redis)):
         form = await request.form()
