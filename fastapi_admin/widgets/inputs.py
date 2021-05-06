@@ -234,6 +234,7 @@ class File(Input):
 
 
 class Image(File):
+    template = "widgets/inputs/image.html"
     input_type = "file"
 
 

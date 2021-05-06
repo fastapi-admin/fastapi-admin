@@ -1,0 +1,13 @@
+<div class="form-group mb-3">
+    <label class="form-label">{{ label }}</label>
+    {% if value %}
+        <div class="my-2"><img src="{{ value }}"/></div>
+    {% endif %}
+    <input {% if not null %}required{% endif %} type="{{ input_type }}" class="form-control" name="{{ name }}"
+           placeholder="{{ placeholder }}" {% if disabled %}disabled{% endif %} value="{{ value }}">
+    {% if help_text %}
+        <small class="form-hint">
+            {{ help_text }}
+        </small>
+    {% endif %}
+</div>
