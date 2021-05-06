@@ -10,4 +10,9 @@
         </select>
     </div>
     {% include "components/select.html" %}
+    {% if help_text %}
+        <small class="form-hint">
+            {{ help_text }}
+        </small>
+    {% endif %}
 {% endwith %}

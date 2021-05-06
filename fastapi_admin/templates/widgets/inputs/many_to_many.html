@@ -3,6 +3,11 @@
         <div class="form-label">{{ label }}</div>
         <select multiple class="form-select" name="{{ name }}" id="{{ id }}">
         </select>
+        {% if help_text %}
+            <small class="form-hint">
+                {{ help_text }}
+            </small>
+        {% endif %}
     </div>
     <script>
         new Choices(el = document.getElementById('{{ id }}'), {

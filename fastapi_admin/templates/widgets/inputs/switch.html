@@ -6,5 +6,10 @@
         {% endif %} {% if disabled %}
                disabled
         {% endif %} >
+        {% if help_text %}
+            <small class="form-hint">
+                {{ help_text }}
+            </small>
+        {% endif %}
     </label>
 </div>

@@ -8,4 +8,9 @@
             <span class="form-check-label">{{ option[0] }}</span>
         </label>
     {% endfor %}
+    {% if help_text %}
+        <small class="form-hint">
+            {{ help_text }}
+        </small>
+    {% endif %}
 </div>
