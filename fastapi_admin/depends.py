@@ -19,12 +19,12 @@ def get_model(resource: Optional[str] = Path(...)):
             return model
 
 
-def get_model_resource(request: Request, model=Depends(get_model)):
+async def get_model_resource(request: Request, model=Depends(get_model)):
     model_resource = request.app.get_model_resource(model)  # type:Model
     if not model_resource:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND)
-    actions = model_resource.get_actions()
-    bulk_actions = model_resource.get_bulk_actions()
+    actions = await model_resource.get_actions(request)
+    bulk_actions = await model_resource.get_bulk_actions(request)
     model_resource.actions = actions
     model_resource.bulk_actions = bulk_actions
     return model_resource

@@ -20,9 +20,9 @@ class DatetimeDisplay(Display):
         self.format_ = format_
 
     async def render(self, request: Request, value: datetime):
-        if value:
-            value = value.strftime(self.format_)
-        return await super(DatetimeDisplay, self).render(request, value)
+        return await super(DatetimeDisplay, self).render(
+            request, value.strftime(self.format_) if value else None
+        )
 
 
 class DateDisplay(DatetimeDisplay):

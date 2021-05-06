@@ -18,7 +18,7 @@ class Input(Widget):
         super().__init__(null=null, **context)
         self.default = default
 
-    async def parse_value(self, value: Any):
+    async def parse_value(self, request: Request, value: Any):
         """
         Parse value from frontend
         :param value:
@@ -139,7 +139,7 @@ class Enum(Select):
         self.enum = enum
         self.enum_type = enum_type
 
-    async def parse_value(self, value: Any):
+    async def parse_value(self, request: Request, value: Any):
         return self.enum(self.enum_type(value))
 
     async def get_options(self):
@@ -203,7 +203,7 @@ class File(Input):
         )
         self.upload_provider = upload_provider
 
-    async def parse_value(self, value: Optional[UploadFile]):
+    async def parse_value(self, request: Request, value: Optional[UploadFile]):
         if value:
             return await self.upload_provider.upload(value)
 
@@ -230,7 +230,7 @@ class RadioEnum(Enum):
 class Switch(Input):
     template = "widgets/inputs/switch.html"
 
-    async def parse_value(self, value: str):
+    async def parse_value(self, request: Request, value: str):
         if value == "on":
             return True
         return False

@@ -62,10 +62,10 @@ class AdminResource(Model):
             return {"class": "bg-danger text-white"}
         return await super().cell_attributes(request, obj, field)
 
-    def get_actions(self) -> List[Action]:
+    async def get_actions(self, request: Request) -> List[Action]:
         return []
 
-    def get_bulk_actions(self) -> List[Action]:
+    async def get_bulk_actions(self, request: Request) -> List[Action]:
         return []
 
 
@@ -124,7 +124,7 @@ class ConfigResource(Model):
     async def row_attributes(self, request: Request, obj: dict) -> dict:
         if obj.get("status") == enums.Status.on:
             return {"class": "bg-green text-white"}
-        return await super().row_attributes(obj)
+        return await super().row_attributes(request, obj)
 
 
 @app.register
@@ -138,7 +138,7 @@ class GithubLink(Link):
 @app.register
 class DocumentationLink(Link):
     label = "Documentation"
-    url = "https://long2ice.github.io/fastadmin"
+    url = "https://fastapi-admin-docs.long2ice.cn"
     icon = "fas fa-file-code"
     target = "_blank"
 

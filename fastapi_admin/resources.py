@@ -77,13 +77,13 @@ class Model(Resource):
     async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
         return {}
 
-    def get_actions(self) -> List[Action]:
+    async def get_actions(self, request: Request) -> List[Action]:
         return [
             Action(label=_("update"), icon="ti ti-edit", name="update", ajax=False),
             Action(label=_("delete"), icon="ti ti-trash", name="delete", method="DELETE"),
         ]
 
-    def get_bulk_actions(self) -> List[Action]:
+    async def get_bulk_actions(self, request: Request) -> List[Action]:
         return [
             Action(
                 label=_("delete_selected"),
@@ -94,7 +94,7 @@ class Model(Resource):
         ]
 
     @classmethod
-    async def get_inputs(cls, obj: Optional[TortoiseModel] = None):
+    async def get_inputs(cls, request: Request, obj: Optional[TortoiseModel] = None):
         ret = []
         for field in cls.get_fields(is_display=False):
             input_ = field.input
@@ -103,21 +103,21 @@ class Model(Resource):
             if isinstance(input_, inputs.File):
                 cls.enctype = "multipart/form-data"
             name = input_.context.get("name")
-            ret.append(await input_.render(getattr(obj, name, None)))
+            ret.append(await input_.render(request, getattr(obj, name, None)))
         return ret
 
     @classmethod
-    async def resolve_query_params(cls, values: dict):
+    async def resolve_query_params(cls, request: Request, values: dict):
         ret = {}
         for f in cls.filters:
             name = f.context.get("name")
             v = values.get(name)
             if v is not None and v != "":
-                ret[name] = await f.parse_value(v)
+                ret[name] = await f.parse_value(request, v)
         return ret
 
     @classmethod
-    async def resolve_data(cls, data: FormData):
+    async def resolve_data(cls, request: Request, data: FormData):
         ret = {}
         m2m_ret = {}
         for field in cls.get_fields(is_display=False):
@@ -127,11 +127,11 @@ class Model(Resource):
             name = input_.context.get("name")
             if isinstance(input_, inputs.ManyToMany):
                 v = data.getlist(name)
-                value = await input_.parse_value(v)
+                value = await input_.parse_value(request, v)
                 m2m_ret[name] = await input_.model.filter(pk__in=value)
             else:
                 v = data.get(name)
-                value = await input_.parse_value(v)
+                value = await input_.parse_value(request, v)
                 ret[name] = value
         return ret, m2m_ret
 

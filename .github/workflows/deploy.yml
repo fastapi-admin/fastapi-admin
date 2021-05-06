@@ -1,7 +1,7 @@
 name: deploy
 on: [ push, pull_request ]
 jobs:
-  example:
+  examples:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy

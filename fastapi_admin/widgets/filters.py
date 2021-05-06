@@ -63,8 +63,9 @@ class Datetime(Filter):
         )
         self.context.update(format=format_)
 
-    async def parse_value(self, value: Optional[str]):
-        return value.split(" - ")
+    async def parse_value(self, request: Request, value: Optional[str]):
+        if value:
+            return value.split(" - ")
 
     async def render(self, request: Request, value: Any):
         if value is not None:
@@ -122,7 +123,7 @@ class Enum(Select):
         self.enum = enum
         self.enum_type = enum_type
 
-    async def parse_value(self, value: Any):
+    async def parse_value(self, request: Request, value: Any):
         return self.enum(self.enum_type(value))
 
     async def get_options(self):
