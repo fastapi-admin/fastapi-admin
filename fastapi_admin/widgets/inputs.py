@@ -4,6 +4,7 @@ from enum import Enum as EnumCLS
 from typing import Any, List, Optional, Tuple, Type
 
 from starlette.datastructures import UploadFile
+from starlette.requests import Request
 from tortoise import Model
 
 from fastapi_admin.file_upload import FileUpload
@@ -25,10 +26,10 @@ class Input(Widget):
         """
         return value
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         if value is None:
             value = self.default
-        return await super(Input, self).render(value)
+        return await super(Input, self).render(request, value)
 
 
 class DisplayOnly(Input):
@@ -68,10 +69,10 @@ class Select(Input):
         :return: list of tuple with display and value
         """
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         options = await self.get_options()
         self.context.update(options=options)
-        return await super(Select, self).render(value)
+        return await super(Select, self).render(request, value)
 
 
 class ForeignKey(Select):
@@ -115,14 +116,14 @@ class ManyToMany(Select):
     async def get_queryset(self):
         return await self.model.all()
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         options = await self.get_options()
         selected = list(map(lambda x: x.pk, value.related_objects if value else []))
         for option in options:
             if option.get("value") in selected:
                 option["selected"] = True
         self.context.update(options=json.dumps(options))
-        return await super(Input, self).render(value)
+        return await super(Input, self).render(request, value)
 
 
 class Enum(Select):
@@ -165,10 +166,10 @@ class Json(Input):
             options = {}
         self.context.update(options=options)
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         if value:
             value = json.dumps(value)
-        return await super().render(value)
+        return await super().render(request, value)
 
 
 class TextArea(Text):

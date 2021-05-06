@@ -2,6 +2,7 @@ import abc
 from enum import Enum as EnumCLS
 from typing import Any, Optional, Type
 
+from starlette.requests import Request
 from tortoise import Model
 
 from fastapi_admin import constants
@@ -65,10 +66,10 @@ class Datetime(Filter):
     async def parse_value(self, value: Optional[str]):
         return value.split(" - ")
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         if value is not None:
             value = " - ".join(value)
-        return await super().render(value)
+        return await super().render(request, value)
 
 
 class Date(Datetime):
@@ -102,10 +103,10 @@ class Select(Filter):
         :return: list of tuple with display and value
         """
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         options = await self.get_options()
         self.context.update(options=options)
-        return await super(Select, self).render(value)
+        return await super(Select, self).render(request, value)
 
 
 class Enum(Select):
@@ -152,7 +153,7 @@ class ForeignKey(Select):
     async def get_queryset(self):
         return await self.model.all()
 
-    async def render(self, value: Any):
+    async def render(self, request: Request, value: Any):
         if value is not None:
             value = int(value)
-        return await super().render(value)
+        return await super().render(request, value)

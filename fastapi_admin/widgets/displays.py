@@ -2,6 +2,8 @@ import json
 from datetime import datetime
 from typing import Optional
 
+from starlette.requests import Request
+
 from fastapi_admin import constants
 from fastapi_admin.widgets import Widget
 
@@ -17,10 +19,10 @@ class DatetimeDisplay(Display):
         super().__init__()
         self.format_ = format_
 
-    async def render(self, value: datetime):
+    async def render(self, request: Request, value: datetime):
         if value:
             value = value.strftime(self.format_)
-        return await super(DatetimeDisplay, self).render(value)
+        return await super(DatetimeDisplay, self).render(request, value)
 
 
 class DateDisplay(DatetimeDisplay):
@@ -48,7 +50,5 @@ class Image(Display):
 class Json(Display):
     template = "widgets/displays/json.html"
 
-    async def render(self, value: dict):
-        return self.templates.get_template(self.template).render(
-            value=json.dumps(value),
-        )
+    async def render(self, request: Request, value: dict):
+        return await super(Json, self).render(request, json.dumps(value))
