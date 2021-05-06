@@ -14,8 +14,10 @@ from fastapi_admin.widgets import Widget
 class Input(Widget):
     template = "widgets/inputs/input.html"
 
-    def __init__(self, default: Any = None, null: bool = False, **context):
-        super().__init__(null=null, **context)
+    def __init__(
+        self, help_text: Optional[str] = None, default: Any = None, null: bool = False, **context
+    ):
+        super().__init__(null=null, help_text=help_text, **context)
         self.default = default
 
     async def parse_value(self, request: Request, value: Any):
@@ -42,7 +44,12 @@ class Text(Input):
     input_type: Optional[str] = "text"
 
     def __init__(
-        self, default: Any = None, null: bool = False, placeholder: str = "", disabled: bool = False
+        self,
+        help_text: Optional[str] = None,
+        default: Any = None,
+        null: bool = False,
+        placeholder: str = "",
+        disabled: bool = False,
     ):
         super().__init__(
             null=null,
@@ -50,14 +57,21 @@ class Text(Input):
             input_type=self.input_type,
             placeholder=placeholder,
             disabled=disabled,
+            help_text=help_text,
         )
 
 
 class Select(Input):
     template = "widgets/inputs/select.html"
 
-    def __init__(self, default: Any = None, null: bool = False, disabled: bool = False):
-        super().__init__(null=null, default=default, disabled=disabled)
+    def __init__(
+        self,
+        help_text: Optional[str] = None,
+        default: Any = None,
+        null: bool = False,
+        disabled: bool = False,
+    ):
+        super().__init__(help_text=help_text, null=null, default=default, disabled=disabled)
 
     @abc.abstractmethod
     async def get_options(self):
@@ -82,8 +96,9 @@ class ForeignKey(Select):
         default: Any = None,
         null: bool = False,
         disabled: bool = False,
+        help_text: Optional[str] = None,
     ):
-        super().__init__(default=default, null=null, disabled=disabled)
+        super().__init__(help_text=help_text, default=default, null=null, disabled=disabled)
         self.model = model
 
     async def get_options(self):
@@ -104,8 +119,9 @@ class ManyToMany(Select):
         self,
         model: Type[Model],
         disabled: bool = False,
+        help_text: Optional[str] = None,
     ):
-        super().__init__(disabled=disabled)
+        super().__init__(help_text=help_text, disabled=disabled)
         self.model = model
 
     async def get_options(self):
@@ -134,8 +150,9 @@ class Enum(Select):
         enum_type: Type = int,
         null: bool = False,
         disabled: bool = False,
+        help_text: Optional[str] = None,
     ):
-        super().__init__(default=default, null=null, disabled=disabled)
+        super().__init__(help_text=help_text, default=default, null=null, disabled=disabled)
         self.enum = enum
         self.enum_type = enum_type
 
@@ -156,12 +173,17 @@ class Email(Text):
 class Json(Input):
     template = "widgets/inputs/json.html"
 
-    def __init__(self, null: bool = False, options: Optional[dict] = None):
+    def __init__(
+        self,
+        help_text: Optional[str] = None,
+        null: bool = False,
+        options: Optional[dict] = None,
+    ):
         """
         options config to jsoneditor, see https://github.com/josdejong/jsoneditor
         :param options:
         """
-        super().__init__(null=null)
+        super().__init__(null=null, help_text=help_text)
         if not options:
             options = {}
         self.context.update(options=options)
@@ -190,22 +212,25 @@ class File(Input):
 
     def __init__(
         self,
-        upload_provider: FileUpload,
+        upload: FileUpload,
         default: Any = None,
         null: bool = False,
         disabled: bool = False,
+        help_text: Optional[str] = None,
     ):
         super().__init__(
             null=null,
             default=default,
             input_type=self.input_type,
             disabled=disabled,
+            help_text=help_text,
         )
-        self.upload_provider = upload_provider
+        self.upload = upload
 
     async def parse_value(self, request: Request, value: Optional[UploadFile]):
-        if value:
-            return await self.upload_provider.upload(value)
+        if value and value.filename:
+            return await self.upload.upload(value)
+        return ""
 
 
 class Image(File):
@@ -215,8 +240,14 @@ class Image(File):
 class Radio(Select):
     template = "widgets/inputs/radio.html"
 
-    def __init__(self, options: List[Tuple[str, Any]], default: Any = None, disabled: bool = False):
-        super().__init__(default=default, disabled=disabled)
+    def __init__(
+        self,
+        options: List[Tuple[str, Any]],
+        help_text: Optional[str] = None,
+        default: Any = None,
+        disabled: bool = False,
+    ):
+        super().__init__(default=default, disabled=disabled, help_text=help_text)
         self.options = options
 
     async def get_options(self):
@@ -242,3 +273,7 @@ class Password(Text):
 
 class Number(Text):
     input_type = "number"
+
+
+class Color(Text):
+    template = "widgets/inputs/color.html"
