@@ -28,12 +28,14 @@ class FastAPIAdmin(FastAPI):
     resources: List[Type[Resource]] = []
     model_resources: Dict[Type[Model], Type[Resource]] = {}
     redis: Redis
+    language_switch: bool = True
 
     async def configure(
         self,
         redis: Redis,
         logo_url: str = None,
         default_locale: str = "en_US",
+        language_switch: bool = True,
         admin_path: str = "/admin",
         template_folders: Optional[List[str]] = None,
         providers: Optional[List[Provider]] = None,
@@ -41,6 +43,7 @@ class FastAPIAdmin(FastAPI):
         self.redis = redis
         i18n.set_locale(default_locale)
         self.admin_path = admin_path
+        self.language_switch = language_switch
         self.logo_url = logo_url
         if template_folders:
             template.add_template_folder(*template_folders)
@@ -75,7 +78,4 @@ app = FastAPIAdmin(
     description="A fast admin dashboard based on fastapi and tortoise-orm with tabler ui.",
 )
 app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_processor)
-app.add_exception_handler(HTTP_500_INTERNAL_SERVER_ERROR, server_error_exception)
-app.add_exception_handler(HTTP_404_NOT_FOUND, not_found_error_exception)
-app.add_exception_handler(HTTP_403_FORBIDDEN, forbidden_error_exception)
 app.include_router(router)

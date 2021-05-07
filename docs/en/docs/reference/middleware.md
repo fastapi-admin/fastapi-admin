@@ -1,5 +1,13 @@
 # Middleware
 
+## language_processor
+
+By default `fastapi-admin` support both `Chinese` and `English` and will display a language switch in page. To enable that, you should add `language_processor` middleware.
+
+```python
+admin_app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_processor)
+```
+
 ## LoginPasswordMaxTryMiddleware (💗 Pro only)
 
 If you want limit login failed ip with error password, you can use `LoginPasswordMaxTryMiddleware`.

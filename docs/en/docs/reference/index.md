@@ -37,3 +37,4 @@ async def startup():
 - `default_locale`: Current support `zh` and `en`, default is `en`.
 - `template_folders`: Template folders registered to jinja2 and also can be used to override builtin templates.
 - `providers`: List of providers to register, all are subclasses of `fastapi_admin.providers.Provider`.
+- `language_switch`: Whether show a language switch in page, default is `True`, and you should add [language_processor](/reference/middleware/#language_processor) to enable that.

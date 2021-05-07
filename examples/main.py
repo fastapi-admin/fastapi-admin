@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
+from starlette.status import HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from tortoise.contrib.fastapi import register_tortoise
 
 from examples import settings
@@ -13,6 +14,11 @@ from examples.constants import BASE_DIR
 from examples.models import Admin
 from examples.providers import LoginProvider
 from fastapi_admin.app import app as admin_app
+from fastapi_admin.exceptions import (
+    forbidden_error_exception,
+    not_found_error_exception,
+    server_error_exception,
+)
 
 
 def create_app():
@@ -27,6 +33,10 @@ def create_app():
     async def index():
         return RedirectResponse(url="/admin")
 
+    admin_app.add_exception_handler(HTTP_500_INTERNAL_SERVER_ERROR, server_error_exception)
+    admin_app.add_exception_handler(HTTP_404_NOT_FOUND, not_found_error_exception)
+    admin_app.add_exception_handler(HTTP_403_FORBIDDEN, forbidden_error_exception)
+
     @app.on_event("startup")
     async def startup():
         redis = await aioredis.create_redis_pool(
@@ -40,7 +50,8 @@ def create_app():
             template_folders=[os.path.join(BASE_DIR, "templates")],
             providers=[
                 LoginProvider(
-                    login_logo_url="https://preview.tabler.io/static/logo.svg", admin_model=Admin
+                    login_logo_url="https://preview.tabler.io/static/logo.svg",
+                    admin_model=Admin,
                 )
             ],
             redis=redis,

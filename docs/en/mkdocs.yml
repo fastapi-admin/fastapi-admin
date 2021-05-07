@@ -51,8 +51,6 @@ nav:
       - reference/permission.md
       - reference/admin_log.md
       - reference/global_search.md
-      - reference/actions.md
-      - reference/bulk_actions.md
       - reference/errors.md
   - Customization:
       - custom/page.md

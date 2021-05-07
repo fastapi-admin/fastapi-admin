@@ -49,7 +49,7 @@ class Datetime(Filter):
         self,
         name: str,
         label: str,
-        format_: str = constants.DATE_FORMAT_MOMENT,
+        format_: str = constants.DATETIME_FORMAT_MOMENT,
     ):
         """
         Datetime filter
