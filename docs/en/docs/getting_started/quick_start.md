@@ -22,11 +22,11 @@ There are some configs to configure the admin app, and you need to configure it 
 ```python
 from fastapi_admin.app import app as admin_app
 from fastapi_admin.providers.login import UsernamePasswordProvider
-from examples.models import User
+from examples.models import Admin
 import aioredis
 from fastapi import FastAPI
 
-login_provider = UsernamePasswordProvider(user_model=User, enable_captcha=True)
+login_provider = UsernamePasswordProvider(admin_model=Admin, enable_captcha=True)
 
 app = FastAPI()
 
@@ -77,12 +77,11 @@ The `Model` make a TortoiseORM model as a menu with CURD page.
 
 from examples.models import Admin
 from fastapi_admin.app import app
-from fastapi_admin.resources import Field, Model, Action
-from fastapi_admin.widgets import displays, filters, inputs
-from typing import List
 from fastapi_admin.file_upload import FileUpload
+from fastapi_admin.resources import Field, Model
+from fastapi_admin.widgets import displays, filters, inputs
 
-upload_provider = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
+upload = FileUpload(uploads=os.path.join(BASE_DIR, "static", "uploads"))
 
 
 @app.register
@@ -112,17 +111,10 @@ class AdminResource(Model):
             name="avatar",
             label="Avatar",
             display=displays.Image(width="40"),
-            input_=inputs.Image(null=True, upload_provider=upload_provider),
+            input_=inputs.Image(null=True, upload=upload),
         ),
         "created_at",
     ]
-    can_create = False
-
-    async def get_actions(self,request:Request) -> List[Action]:
-        return []
-
-    async def get_bulk_actions(self,request:Request) -> List[Action]:
-        return []
 ```
 
 ### Dropdown

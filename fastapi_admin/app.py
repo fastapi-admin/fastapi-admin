@@ -33,14 +33,12 @@ class FastAPIAdmin(FastAPI):
         self,
         redis: Redis,
         logo_url: str = None,
-        login_logo_url: str = None,
         default_locale: str = "en_US",
         admin_path: str = "/admin",
         template_folders: Optional[List[str]] = None,
         providers: Optional[List[Provider]] = None,
     ):
         self.redis = redis
-        self.login_logo_url = login_logo_url
         i18n.set_locale(default_locale)
         self.admin_path = admin_path
         self.logo_url = logo_url

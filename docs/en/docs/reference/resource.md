@@ -1,43 +1,25 @@
 # Resource
 
-There are three kinds of resources, `Link`,`Model` and `Dropdown`.
+There are three kinds of resources, `Link`,`Model` and `Dropdown`, all are inherited
+from `fastapi_admin.resources.Resource`.
 
-## General configuration
-
-The following are the general configurations of three kinds of resources.
-
-### label
-
-Nav bar menu name.
-
-### icon
-
-Icon name comes from <https://fontawesome.com>, like `fas fa-user` will display a user icon in menu.
-
+You should use `app.register` decorator to register a resource.
 ## Link
 
-General `a` tag menu.
+`Link` just display a menu with a link.
 
-### url
+```python
+from fastapi_admin.app import app
+from fastapi_admin.resources import Link
 
-`href` attr of `a` tag.
 
-### target
-
-`target` attr of `a` tag, default is `_self`.
-
-## Field
-
-## Action
+@app.register
+class Home(Link):
+    label = "Home"
+    icon = "fas fa-home"
+    url = "/admin"
+```
 
 ## Model
-
-### get_actions
-
-### get_bulk_actions
-
-### row_attributes
-
-### cell_attributes
 
 ## Dropdown

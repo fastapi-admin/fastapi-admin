@@ -34,18 +34,27 @@ class UsernamePasswordProvider(Provider):
         logout_path="/logout",
         template="login.html",
         login_title="Login to your account",
+        login_logo_url: str = None,
     ):
         self.login_path = login_path
         self.logout_path = logout_path
         self.template = template
         self.admin_model = admin_model
         self.login_title = login_title
+        self.login_logo_url = login_logo_url
 
     async def login_view(
         self,
         request: Request,
     ):
-        return templates.TemplateResponse(self.template, context={"request": request})
+        return templates.TemplateResponse(
+            self.template,
+            context={
+                "request": request,
+                "login_logo_url": self.login_logo_url,
+                "login_title": self.login_title,
+            },
+        )
 
     async def register(self, app: "FastAPIAdmin"):
         await super(UsernamePasswordProvider, self).register(app)

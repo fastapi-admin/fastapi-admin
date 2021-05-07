@@ -37,9 +37,12 @@ def create_app():
         )
         await admin_app.configure(
             logo_url="https://preview.tabler.io/static/logo-white.svg",
-            login_logo_url="https://preview.tabler.io/static/logo.svg",
             template_folders=[os.path.join(BASE_DIR, "templates")],
-            providers=[LoginProvider(admin_model=Admin)],
+            providers=[
+                LoginProvider(
+                    login_logo_url="https://preview.tabler.io/static/logo.svg", admin_model=Admin
+                )
+            ],
             redis=redis,
         )
 
