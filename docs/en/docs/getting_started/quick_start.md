@@ -26,7 +26,11 @@ from examples.models import Admin
 import aioredis
 from fastapi import FastAPI
 
-login_provider = UsernamePasswordProvider(admin_model=Admin, enable_captcha=True)
+login_provider = UsernamePasswordProvider(
+    admin_model=Admin,
+    enable_captcha=True,
+    login_logo_url="https://preview.tabler.io/static/logo.svg"
+)
 
 app = FastAPI()
 
@@ -36,7 +40,6 @@ async def startup():
     redis = await aioredis.create_redis_pool("redis://localhost", encoding="utf8")
     admin_app.configure(
         logo_url="https://preview.tabler.io/static/logo-white.svg",
-        login_logo_url="https://preview.tabler.io/static/logo.svg",
         template_folders=[os.path.join(BASE_DIR, "templates")],
         providers=[login_provider],
         redis=redis,
@@ -165,3 +168,5 @@ class Content(Dropdown):
 ### What's next?
 
 That's all, you can run your app now. For more reference you can see [Reference](/reference).
+
+Or you can see full [examples](https://github.com/fastapi-admin/fastapi-admin/tree/dev/examples).

@@ -2,9 +2,14 @@
 
 ## language_processor
 
-By default `fastapi-admin` support both `Chinese` and `English` and will display a language switch in page. To enable that, you should add `language_processor` middleware.
+By default `fastapi-admin` support both `Chinese` and `English` and will display a language switch in page. To enable
+that, you should add `language_processor` middleware.
 
 ```python
+from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi_admin import middlewares
+from fastapi_admin.app import app as admin_app
+
 admin_app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_processor)
 ```
 
@@ -13,7 +18,12 @@ admin_app.add_middleware(BaseHTTPMiddleware, dispatch=middlewares.language_proce
 If you want limit login failed ip with error password, you can use `LoginPasswordMaxTryMiddleware`.
 
 ```python
-admin_app.add_middleware(BaseHTTPMiddleware, dispatch=LoginPasswordMaxTryMiddleware(max_times=3, after_seconds=3600))
+from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi_admin import middlewares
+from fastapi_admin.app import app as admin_app
+
+admin_app.add_middleware(BaseHTTPMiddleware,
+                         dispatch=middlewares.LoginPasswordMaxTryMiddleware(max_times=3, after_seconds=3600))
 ```
 
 After that, user can try max `3` times password, if all failed, the ip will be limited `3600` seconds.

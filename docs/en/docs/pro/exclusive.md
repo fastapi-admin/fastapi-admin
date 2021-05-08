@@ -18,18 +18,25 @@ admin_app.add_middleware(BaseHTTPMiddleware, dispatch=LoginPasswordMaxTryMiddlew
 
 ## Permission Control
 
+`PermissionProvider` allow you to configure the access control for resources of admin users with permissions `read`
+/`create`/`update`/`delete`.
+
 ## Additional File Upload
 
 ### ALiYunOSS
 
+File upload for ALiYunOSS.
+
 ### AwsS3
+
+File upload for AWS S3.
 
 ## Maintenance
 
 If your site is in maintenance, you can set `true` to `admin_app.configure(...)`.
 
 ```python
-admin_app.configure(maintenance=True)
+await admin_app.configure(maintenance=True)
 ```
 
 ## Admin Log
@@ -37,7 +44,7 @@ admin_app.configure(maintenance=True)
 If you want to log all `create/update/delete` actions, you can add `AdminLogProvider` to `admin_app.configure(...)`.
 
 ```python
-admin_app.configure(providers=[AdminLogProvider(Log)])
+await admin_app.configure(providers=[AdminLogProvider(Log)])
 ```
 
 ## Site Search
@@ -45,5 +52,5 @@ admin_app.configure(providers=[AdminLogProvider(Log)])
 You can enable site search by add `SearchProvider` to `admin_app.configure(...)`.
 
 ```python
-admin_app.configure(providers=[SearchProvider()])
+await admin_app.configure(providers=[SearchProvider()])
 ```
