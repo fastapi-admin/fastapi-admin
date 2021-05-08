@@ -2,6 +2,7 @@ from typing import Dict, List, Optional, Type
 
 from aioredis import Redis
 from fastapi import FastAPI
+from pydantic import HttpUrl
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from tortoise import Model
@@ -29,6 +30,7 @@ class FastAPIAdmin(FastAPI):
     model_resources: Dict[Type[Model], Type[Resource]] = {}
     redis: Redis
     language_switch: bool = True
+    favicon_url: Optional[HttpUrl] = None
 
     async def configure(
         self,
@@ -39,12 +41,14 @@ class FastAPIAdmin(FastAPI):
         admin_path: str = "/admin",
         template_folders: Optional[List[str]] = None,
         providers: Optional[List[Provider]] = None,
+        favicon_url: Optional[HttpUrl] = None,
     ):
         self.redis = redis
         i18n.set_locale(default_locale)
         self.admin_path = admin_path
         self.language_switch = language_switch
         self.logo_url = logo_url
+        self.favicon_url = favicon_url
         if template_folders:
             template.add_template_folder(*template_folders)
         await self._register_providers(providers)

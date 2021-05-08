@@ -10,7 +10,7 @@ include = [
     "fastapi_admin/locales/en_US/LC_MESSAGES/messages.mo",
     "fastapi_admin/locales/zh_CN/LC_MESSAGES/messages.mo"
 ]
-keywords = ["fastapi", "admin", "dashboard"]
+keywords = ["fastapi", "admin", "dashboard", "tortoise-orm"]
 license = "Apache-2.0"
 name = "fastapi-admin"
 packages = [

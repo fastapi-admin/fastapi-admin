@@ -4,19 +4,25 @@ from typing import Any, Optional, Type
 
 from starlette.requests import Request
 from tortoise import Model
+from tortoise.queryset import QuerySet
 
 from fastapi_admin import constants
 from fastapi_admin.widgets.inputs import Input
 
 
 class Filter(Input):
-    def __init__(self, name: str, label: str, placeholder: str = ""):
+    def __init__(self, name: str, label: str, placeholder: str = "", null: bool = True, **context):
         """
         Parent class for all filters
         :param name: model field name
         :param label:
         """
-        super().__init__(name=name, label=label, placeholder=placeholder)
+        super().__init__(name=name, label=label, placeholder=placeholder, null=null, **context)
+
+    async def get_queryset(self, request: Request, value: Any, qs: QuerySet):
+        value = await self.parse_value(request, value)
+        filters = {self.context.get("name"): value}
+        return qs.filter(**filters)
 
 
 class Search(Filter):
@@ -28,6 +34,7 @@ class Search(Filter):
         label: str,
         search_mode: str = "equal",
         placeholder: str = "",
+        null: bool = True,
     ):
         """
         Search for keyword
@@ -36,7 +43,7 @@ class Search(Filter):
         :param search_mode: equal,contains,icontains,startswith,istartswith,endswith,iendswith,iexact,search
         """
         if search_mode == "equal":
-            super().__init__(name, label, placeholder)
+            super().__init__(name, label, placeholder, null)
         else:
             super().__init__(name + "__" + search_mode, label, placeholder)
         self.context.update(search_mode=search_mode)
@@ -46,10 +53,7 @@ class Datetime(Filter):
     template = "widgets/filters/datetime.html"
 
     def __init__(
-        self,
-        name: str,
-        label: str,
-        format_: str = constants.DATETIME_FORMAT_MOMENT,
+        self, name: str, label: str, format_: str = constants.DATE_FORMAT_MOMENT, null: bool = True
     ):
         """
         Datetime filter
@@ -57,15 +61,10 @@ class Datetime(Filter):
         :param label:
         :param format_: the format of moment.js
         """
-        super().__init__(
-            name + "__range",
-            label,
-        )
-        self.context.update(format=format_)
+        super().__init__(name + "__range", label, null=null, format=format_)
 
     async def parse_value(self, request: Request, value: Optional[str]):
-        if value:
-            return value.split(" - ")
+        return value.split(" - ")
 
     async def render(self, request: Request, value: Any):
         if value is not None:
@@ -75,24 +74,16 @@ class Datetime(Filter):
 
 class Date(Datetime):
     def __init__(
-        self,
-        name: str,
-        label: str,
-        format_: str = constants.DATE_FORMAT_MOMENT,
+        self, name: str, label: str, format_: str = constants.DATE_FORMAT_MOMENT, null: bool = True
     ):
-        super().__init__(
-            name,
-            label,
-            format_,
-        )
+        super().__init__(name=name, label=label, format_=format_, null=null)
 
 
 class Select(Filter):
     template = "widgets/filters/select.html"
 
     def __init__(self, name: str, label: str, null: bool = True):
-        super().__init__(name, label)
-        self.null = null
+        super().__init__(name, label, null=null)
 
     @abc.abstractmethod
     async def get_options(self):
@@ -119,7 +110,7 @@ class Enum(Select):
         enum_type: Type = int,
         null: bool = True,
     ):
-        super().__init__(name, label, null)
+        super().__init__(name=name, label=label, null=null)
         self.enum = enum
         self.enum_type = enum_type
 
@@ -128,7 +119,7 @@ class Enum(Select):
 
     async def get_options(self):
         options = [(v.name, v.value) for v in self.enum]
-        if self.null:
+        if self.context.get("null"):
             options = [("", "")] + options
         return options
 
@@ -139,7 +130,7 @@ class ForeignKey(Select):
         self.model = model
 
     async def get_options(self):
-        ret = await self.get_queryset()
+        ret = await self.get_models()
         options = [
             (
                 str(x),
@@ -147,11 +138,11 @@ class ForeignKey(Select):
             )
             for x in ret
         ]
-        if self.null:
+        if self.context.get("null"):
             options = [("", "")] + options
         return options
 
-    async def get_queryset(self):
+    async def get_models(self):
         return await self.model.all()
 
     async def render(self, request: Request, value: Any):

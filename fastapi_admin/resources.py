@@ -7,6 +7,7 @@ from tortoise import ForeignKeyFieldInstance, ManyToManyFieldInstance
 from tortoise import Model as TortoiseModel
 from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
 from tortoise.fields.data import CharEnumFieldInstance, IntEnumFieldInstance, IntField, TextField
+from tortoise.queryset import QuerySet
 
 from fastapi_admin.exceptions import NoSuchFieldFound
 from fastapi_admin.i18n import _
@@ -107,14 +108,15 @@ class Model(Resource):
         return ret
 
     @classmethod
-    async def resolve_query_params(cls, request: Request, values: dict):
+    async def resolve_query_params(cls, request: Request, values: dict, qs: QuerySet):
         ret = {}
         for f in cls.filters:
             name = f.context.get("name")
             v = values.get(name)
             if v is not None and v != "":
                 ret[name] = await f.parse_value(request, v)
-        return ret
+                qs = await f.get_queryset(request, v, qs)
+        return ret, qs
 
     @classmethod
     async def resolve_data(cls, request: Request, data: FormData):

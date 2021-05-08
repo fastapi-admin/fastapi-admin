@@ -3,35 +3,21 @@
 <div class="text-muted">
     {{ label }}:
     <div class="d-inline-block">
-        <input class="form-control" type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}">
+        <input {% if not null %}
+            required
+        {% endif %} class="form-control" type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}">
     </div>
 </div>
 <script>
     $(function () {
         let value = "{{value}}";
-        let start, end;
-        if (value !== '') {
-            let s = value.split(' - ')
-            start = moment(s[0]);
-            end = moment(s[1]);
-        } else {
-            start = moment().subtract(7, 'days');
-            end = moment().subtract(-1, 'days');
-        }
-
         let format = '{{ format }}';
-
-        function cb(start, end) {
-            $('#{{name}} span').html(start.format(format) + ' - ' + end.format(format));
-        }
-
-        $('#{{name}}').daterangepicker({
-            startDate: start,
-            endDate: end,
+        let option = {
+            autoUpdateInput: false,
             timePicker: true,
             timePicker24Hour: true,
             locale: {
-                format: format
+                format: format,
             },
             ranges: {
                 'Today': [moment(), moment()],
@@ -41,7 +27,26 @@
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
-        }, cb);
-        cb(start, end);
+        };
+        if (value !== '') {
+            let s = value.split(' - ')
+            option.startDate = moment(s[0]);
+            option.endDate = moment(s[1]);
+        }
+
+        function cb(start, end) {
+            $('#{{name}} span').html(start.format(format) + ' - ' + end.format(format));
+        }
+
+        let element = $('#{{name}}');
+        element.daterangepicker(option, cb);
+        element.on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+        });
+
+        element.on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+
     });
 </script>

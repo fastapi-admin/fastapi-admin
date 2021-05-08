@@ -28,9 +28,9 @@ async def list_view(
     fields_name = model_resource.get_fields_name()
     fields_label = model_resource.get_fields_label()
     fields = model_resource.get_fields()
-    params = await model_resource.resolve_query_params(request, dict(request.query_params))
+    qs = model.all()
+    params, qs = await model_resource.resolve_query_params(request, dict(request.query_params), qs)
     filters = await model_resource.get_filters(request, params)
-    qs = model.filter(**params)
     total = await qs.count()
     if page_size:
         qs = qs.limit(page_size)
