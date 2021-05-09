@@ -52,6 +52,7 @@ nav:
       - reference/admin_log.md
       - reference/global_search.md
       - reference/errors.md
+      - reference/notification.md
   - Customization:
       - custom/page.md
       - custom/overwrite.md

@@ -32,7 +32,7 @@ class UsernamePasswordProvider(Provider):
         admin_model: Type[AbstractAdmin],
         login_path="/login",
         logout_path="/logout",
-        template="login.html",
+        template="providers/login/login.html",
         login_title="Login to your account",
         login_logo_url: str = None,
     ):
@@ -179,7 +179,7 @@ class UsernamePasswordProvider(Provider):
         resources=Depends(get_resources),
     ):
         return templates.TemplateResponse(
-            "password.html",
+            "providers/login/password.html",
             context={
                 "request": request,
                 "resources": resources,

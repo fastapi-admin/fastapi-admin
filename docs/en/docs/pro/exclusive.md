@@ -54,3 +54,11 @@ You can enable site search by add `SearchProvider` to `admin_app.configure(...)`
 ```python
 await admin_app.configure(providers=[SearchProvider()])
 ```
+
+## Notification
+
+You can use notification by adding `NotificationProvider` to `admin_app.configure(...) implement by websocket.
+
+```python
+await admin_app.configure(providers=[NotificationProvider()])
+```
