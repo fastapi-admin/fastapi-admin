@@ -2,7 +2,7 @@
 
 `FastAPI-Admin` provide a notification center implement by websocket.
 
-![](https://github.com/fastapi-admin/fastapi-admin/blob/dev/images/notification.png?raw=true)
+![](https://raw.githubusercontent.com/fastapi-admin/fastapi-admin/dev/images/notification.png)
 
 ## Usage
 
@@ -33,7 +33,8 @@ One is call `await provider.broadcast()` directly.
 data = {
     "title": "test",
     "content": "//avatars.githubusercontent.com/u/13377178?v=4",
-    "image": "https://avatars.githubusercontent.com/u/13377178?v=4"
+    "image": "https://avatars.githubusercontent.com/u/13377178?v=4",
+    "link": "https://fastapi-admin-docs.long2ice.cn"
 }
 await provider.broadcast(data)
 ```
