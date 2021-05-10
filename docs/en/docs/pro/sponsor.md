@@ -14,7 +14,11 @@ organization.
 
 ## Levels
 
-### $18 - Month
+### $38 - One time
+
+I will send you the source code without subsequent updates and invitation.
+
+### $48 - Month
 
 You will be invited and keep collaborator role for a month.
 
@@ -22,7 +26,7 @@ You will be invited and keep collaborator role for a month.
 
 You will be invited and keep collaborator role for half a year.
 
-### $188 - Year
+### $158 - Year
 
 You will be invited and keep collaborator role for a year.
 
