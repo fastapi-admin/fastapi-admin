@@ -1,12 +1,12 @@
 # Sponsor
 
-The pro version is just for the sponsors. As a sponsor, you will be invited
+The pro version is just for the sponsors. As a sponsor, you will get source code or be invited
 to [fastapi-admin](https://github.com/fastapi-admin) organization as an outside collaborator with readonly access, and
 you can get the pro features and get updates for a time.
 
 ## How to become a sponsor
 
-Sponsor Link: <http://sponsor.long2ice.cn>
+Sponsor Link: <https://sponsor.long2ice.cn>
 
 You can choose any sponsor way you like. After sponsor, you can email me <long2ice@gmail.com> with your GitHub account
 and sponsor way and account, then I will invite you to join [fastapi-admin](https://github.com/fastapi-admin)
