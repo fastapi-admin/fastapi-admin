@@ -34,7 +34,8 @@ async def startup():
 - `admin_path`: Default is `/admin`, but you can change to other path.
 - `maintenance`: If set to `true`, all pages will be redirected to the `/maintenance` page. (💗 Pro only)
 - `redis`: Instance of `aioredis`.
-- `default_locale`: Current support `zh` and `en`, default is `en`.
+- `default_locale`: Current support `zh_CN` and `en_US`, default is `en_US`.
 - `template_folders`: Template folders registered to jinja2 and also can be used to override builtin templates.
 - `providers`: List of providers to register, all are subclasses of `fastapi_admin.providers.Provider`.
-- `language_switch`: Whether show a language switch in page, default is `True`, and you should add [language_processor](/reference/middleware/#language_processor) to enable that.
+- `language_switch`: Whether show a language switch in page, default is `True`.
+- `default_layout`: Set default layout, current there are both layouts `layout.html` and `layout-navbar.html`, default is `layout.html`. (💗 Pro only)

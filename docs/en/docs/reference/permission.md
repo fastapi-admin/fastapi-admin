@@ -4,7 +4,7 @@ There are for kinds of permissions builtin. The `Link` has only `read`, and `Mod
 permissions.
 
 ```python
-class Permission(Enum):
+class Permission(str, Enum):
     create = "create"
     delete = "delete"
     update = "update"
