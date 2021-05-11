@@ -20,15 +20,15 @@ I will send you the source code without subsequent updates and invitation.
 
 ### $48 - Month
 
-You will be invited and keep collaborator role for a month.
+You will be invited and keep collaborator role for a month and with `$10` per month if renew.
 
-### $98 - Half a Year
+### $95 - Half a Year
 
-You will be invited and keep collaborator role for half a year.
+You will be invited and keep collaborator role for half a year and with `$10` per month if renew.
 
-### $158 - Year
+### $152 - Year
 
-You will be invited and keep collaborator role for a year.
+You will be invited and keep collaborator role for a year and with `$10` per month if renew.
 
 ## Licence
 
