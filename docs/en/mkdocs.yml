@@ -46,6 +46,7 @@ nav:
           - reference/widget/filter.md
           - reference/widget/display.md
           - reference/widget/input.md
+      - reference/login.md
       - reference/file_upload.md
       - reference/middleware.md
       - reference/permission.md
