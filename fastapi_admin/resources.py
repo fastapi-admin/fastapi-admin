@@ -75,6 +75,9 @@ class Model(Resource):
     async def row_attributes(self, request: Request, obj: dict) -> dict:
         return {}
 
+    async def column_attributes(self, request: Request, field: Field) -> dict:
+        return {}
+
     async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
         return {}
 

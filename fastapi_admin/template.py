@@ -1,7 +1,7 @@
 import os
 import typing
 from datetime import date
-from typing import Any, List, Tuple
+from typing import Any, List
 from urllib.parse import urlencode
 
 from jinja2 import contextfilter
@@ -51,7 +51,7 @@ async def render_values(
     fields: List["Field"],
     values: List[typing.Dict[str, Any]],
     display: bool = True,
-) -> typing.Tuple[List[List[Any]], List[dict], List[List[dict]]]:
+) -> typing.Tuple[List[List[Any]], List[dict], List[dict], List[List[dict]]]:
     """
     render values with template render
     :param fields:
@@ -64,6 +64,9 @@ async def render_values(
     ret = []
     cell_attributes: List[List[dict]] = []
     row_attributes: List[dict] = []
+    column_attributes: List[dict] = []
+    for field in fields:
+        column_attributes.append(await model.column_attributes(request, field))
     for value in values:
         row_attributes.append(await model.row_attributes(request, value))
         item = []
@@ -76,4 +79,4 @@ async def render_values(
                 item.append(await fields[i].input.render(request, value[k]))
         ret.append(item)
         cell_attributes.append(cell_item)
-    return ret, row_attributes, cell_attributes
+    return ret, row_attributes, column_attributes, cell_attributes

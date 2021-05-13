@@ -2,6 +2,10 @@
 
 ## 1.0
 
+### 1.0.1
+
+- Add `column_attributes`.
+
 ### 1.0.0
 
 **This is a completely different version and rewrite all code. If you are using old version, you can't upgrade directly,

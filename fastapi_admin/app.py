@@ -4,15 +4,9 @@ from aioredis import Redis
 from fastapi import FastAPI
 from pydantic import HttpUrl
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.status import HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from tortoise import Model
 
 from fastapi_admin import i18n
-from fastapi_admin.exceptions import (
-    forbidden_error_exception,
-    not_found_error_exception,
-    server_error_exception,
-)
 
 from . import middlewares, template
 from .providers import Provider

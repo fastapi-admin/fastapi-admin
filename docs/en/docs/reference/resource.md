@@ -50,7 +50,8 @@ class AdminResource(Model):
     ]
 ```
 
-You can pass `str` or `Field` to `fields`, if is `str`, it will try to auto mapping display and input widget, such as `displays.Boolean` for `BooleanField`, `inputs.Date` for `DateField`.
+You can pass `str` or `Field` to `fields`, if is `str`, it will try to auto mapping display and input widget, such
+as `displays.Boolean` for `BooleanField`, `inputs.Date` for `DateField`.
 
 All kind of widgets you can find in [Display](/reference/widget/display/) and [Input](/reference/widget/input/).
 
@@ -58,9 +59,11 @@ All kind of widgets you can find in [Display](/reference/widget/display/) and [I
 
 The `Action` define the action display in every end of row, and bulk action for every model.
 
-By default there are two actions, Which are delete action and edit action, and one bulk action, which allow delete rows in bulk.
+By default there are two actions, Which are delete action and edit action, and one bulk action, which allow delete rows
+in bulk.
 
-To use that, you should override the `get_actions` and `get_bulk_actions`. The following example hide all default actions with return empty list.
+To use that, you should override the `get_actions` and `get_bulk_actions`. The following example hide all default
+actions with return empty list.
 
 ```python
 @app.register
@@ -74,7 +77,8 @@ class AdminResource(Model):
 
 ## Model
 
-`Model` is the core resource, which make TortoiseORM model as a menu and display a data table with create, update, and delete.
+`Model` is the core resource, which make TortoiseORM model as a menu and display a data table with create, update, and
+delete.
 
 ```python
 @app.register
@@ -101,8 +105,9 @@ class AdminResource(Model):
 - `model`: TortoiseORM model.
 - `page_pre_title`: Show page pre title in content.
 - `page_title`: Show page title in content.
-- `filters`: Define filters for the model, which will display filter inputs in table above, all kinds of filters you can find in [Filter](/reference/widget/filter/).
-- `can_delete`: Whether show a `create` button there.
+- `filters`: Define filters for the model, which will display filter inputs in table above, all kinds of filters you can
+  find in [Filter](/reference/widget/filter/).
+- `can_create`: Whether show a `create` button there.
 
 ### row_attributes
 
@@ -119,17 +124,33 @@ class ConfigResource(Model):
 
 The example above will add the css `class = "bg-green text-white"` for the row which `status = enums.Status.on`.
 
+### column_attributes
+
+You can add extra attributes to each column by use `column_attributes`.
+
+```python
+@app.register
+class LogResource(Model):
+    async def column_attributes(self, request: Request, field: Field) -> dict:
+        if field.name == "content":
+            return {"class": "w-50"}
+        return await super().column_attributes(request, field)
+```
+
+The example above will add the css `class = "w-50"` for the column which `content`.
+
 ### cell_attributes
 
-Same as `row_attributes` but for the cell, you can add extra attributes to cell depends on the row object and column field.
+Same as `row_attributes` but for the cell, you can add extra attributes to cell depends on the row object and column
+field.
 
 ```python
 @app.register
 class AdminResource(Model):
     async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
-    if field.name == "id":
-        return {"class": "bg-danger text-white"}
-    return await super().cell_attributes(request, obj, field)
+        if field.name == "id":
+            return {"class": "bg-danger text-white"}
+        return await super().cell_attributes(request, obj, field)
 ```
 
 ## Dropdown

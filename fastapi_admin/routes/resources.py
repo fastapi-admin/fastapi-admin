@@ -38,7 +38,7 @@ async def list_view(
         page_size = model_resource.page_size
     qs = qs.offset((page_num - 1) * page_size)
     values = await qs.values(*fields_name)
-    rendered_values, row_attributes, cell_attributes = await render_values(
+    rendered_values, row_attributes, column_attributes, cell_attributes = await render_values(
         request, model_resource, fields, values
     )
     context = {
@@ -48,6 +48,7 @@ async def list_view(
         "fields": fields,
         "values": values,
         "row_attributes": row_attributes,
+        "column_attributes": column_attributes,
         "cell_attributes": cell_attributes,
         "rendered_values": rendered_values,
         "filters": filters,

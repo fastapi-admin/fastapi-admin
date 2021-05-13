@@ -52,11 +52,11 @@ async def startup():
                 Admin,
                 settings.GOOGLE_CLIENT_ID,
                 settings.GOOGLE_CLIENT_SECRET,
-                redirect_uri="https://fastapi-admin-pro.long2ice.cn/admin/login/google_oauth2_provider",
+                redirect_uri="https://fastapi-admin-pro.long2ice.cn/admin/oauth2/google_oauth2_provider",
             ),
         ]
     )
 ```
 
 If you want custom oauth2 provider, just inherit `fastapi_admin.providers.login.OAuth2Provider` and implement its
-methods.
+methods. And the `redirect_uri` format is `{server_url}/{admin_path}/oauth2/{provider_name}`.
