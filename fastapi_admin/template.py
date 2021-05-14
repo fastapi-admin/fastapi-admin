@@ -4,7 +4,7 @@ from datetime import date
 from typing import Any, List
 from urllib.parse import urlencode
 
-from jinja2 import contextfilter
+from jinja2 import pass_context
 from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 
@@ -19,11 +19,9 @@ templates.env.globals["VERSION"] = VERSION
 templates.env.globals["NOW_YEAR"] = date.today().year
 templates.env.add_extension("jinja2.ext.i18n")
 templates.env.add_extension("jinja2.ext.autoescape")
-templates.env.add_extension("jinja2.ext.with_")
-templates.env.add_extension("jinja2.ext.do")
 
 
-@contextfilter
+@pass_context
 def current_page_with_params(context: dict, params: dict):
     request = context.get("request")  # type:Request
     full_path = request.scope["raw_path"].decode()

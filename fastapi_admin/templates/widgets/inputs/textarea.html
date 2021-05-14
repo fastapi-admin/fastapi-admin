@@ -2,9 +2,7 @@
     <label class="form-label">{{ label }}</label>
     <textarea {% if not null %}required{% endif %} class="form-control" name="{{ name }}"
               placeholder="{{ placeholder }}"
-              {% if disabled %}disabled{% endif %}>
-{{ value }}
-    </textarea>
+              {% if disabled %}disabled{% endif %}>{{ value }}</textarea>
     {% if help_text %}
         <small class="form-hint">
             {{ help_text }}

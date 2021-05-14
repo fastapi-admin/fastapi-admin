@@ -6,8 +6,7 @@ from starlette.requests import Request
 from tortoise import ForeignKeyFieldInstance, ManyToManyFieldInstance
 from tortoise import Model as TortoiseModel
 from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
-from tortoise.fields.data import (CharEnumFieldInstance, IntEnumFieldInstance,
-                                  IntField, TextField)
+from tortoise.fields.data import CharEnumFieldInstance, IntEnumFieldInstance, IntField, TextField
 from tortoise.queryset import QuerySet
 
 from fastapi_admin.enums import Method
@@ -90,7 +89,9 @@ class Model(Resource):
 
     async def get_actions(self, request: Request) -> List[Action]:
         return [
-            Action(label=_("update"), icon="ti ti-edit", name="update", method=Method.PUT),
+            Action(
+                label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False
+            ),
             Action(label=_("delete"), icon="ti ti-trash", name="delete", method=Method.DELETE),
         ]
 

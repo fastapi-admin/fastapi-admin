@@ -106,7 +106,7 @@ async def update(
             .get()
             .prefetch_related(*model_resource.get_m2m_field())
         )
-    inputs = await model_resource.get_inputs(obj)
+    inputs = await model_resource.get_inputs(request, obj)
     if "save" in form.keys():
         context = {
             "request": request,
@@ -142,7 +142,7 @@ async def update_view(
     model=Depends(get_model),
 ):
     obj = await model.get(pk=pk)
-    inputs = await model_resource.get_inputs(obj)
+    inputs = await model_resource.get_inputs(request, obj)
     context = {
         "request": request,
         "resources": resources,
