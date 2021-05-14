@@ -126,6 +126,18 @@ class ConfigResource(Model):
             return {"class": "bg-green text-white"}
         return await super().row_attributes(request, obj)
 
+    async def get_actions(self, request: Request) -> List[Action]:
+        actions = await super().get_actions(request)
+        switch_status = Action(
+            label="Switch Status",
+            icon="ti ti-toggle-left",
+            name="switch_status",
+            method="GET",
+            ajax=False,
+        )
+        actions.append(switch_status)
+        return actions
+
 
 @app.register
 class GithubLink(Link):

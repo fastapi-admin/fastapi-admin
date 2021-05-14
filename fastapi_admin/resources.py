@@ -1,6 +1,6 @@
 from typing import List, Optional, Type, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from starlette.datastructures import FormData
 from starlette.requests import Request
 from tortoise import ForeignKeyFieldInstance, ManyToManyFieldInstance
@@ -9,6 +9,7 @@ from tortoise.fields import BooleanField, DateField, DatetimeField, JSONField
 from tortoise.fields.data import CharEnumFieldInstance, IntEnumFieldInstance, IntField, TextField
 from tortoise.queryset import QuerySet
 
+from fastapi_admin.enums import Method
 from fastapi_admin.exceptions import NoSuchFieldFound
 from fastapi_admin.i18n import _
 from fastapi_admin.widgets import Widget, displays, inputs
@@ -58,8 +59,13 @@ class Action(BaseModel):
     icon: str
     label: str
     name: str
-    method: str = "POST"
+    method: Method = Method.POST
     ajax: bool = True
+
+    @validator("ajax")
+    def ajax_validate(cls, v: bool, values: dict, **kwargs):
+        if not v and values["method"] != Method.GET:
+            raise ValueError("ajax is False only available when method is Method.GET")
 
 
 class Model(Resource):
@@ -83,8 +89,10 @@ class Model(Resource):
 
     async def get_actions(self, request: Request) -> List[Action]:
         return [
-            Action(label=_("update"), icon="ti ti-edit", name="update", ajax=False),
-            Action(label=_("delete"), icon="ti ti-trash", name="delete", method="DELETE"),
+            Action(
+                label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False
+            ),
+            Action(label=_("delete"), icon="ti ti-trash", name="delete", method=Method.DELETE),
         ]
 
     async def get_bulk_actions(self, request: Request) -> List[Action]:
