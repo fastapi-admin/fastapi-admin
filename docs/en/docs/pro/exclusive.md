@@ -62,3 +62,21 @@ You can use notification by adding `NotificationProvider` to `admin_app.configur
 ```python
 await admin_app.configure(providers=[NotificationProvider()])
 ```
+
+## OAuth2
+
+Current there are two builtin oauth2 implementations `GitHubOAuth2Provider` and `GoogleOAuth2Provider`.
+
+```python
+await admin_app.configure(
+    providers=[
+        GitHubProvider(Admin, settings.GITHUB_CLIENT_ID, settings.GITHUB_CLIENT_SECRET),
+        GoogleProvider(
+            Admin,
+            settings.GOOGLE_CLIENT_ID,
+            settings.GOOGLE_CLIENT_SECRET,
+            redirect_uri="https://fastapi-admin-pro.long2ice.cn/admin/oauth2/google_oauth2_provider",
+        ),
+    ]
+)
+```

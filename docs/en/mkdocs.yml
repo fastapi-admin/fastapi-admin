@@ -60,6 +60,7 @@ nav:
       - custom/widget.md
       - custom/file_upload.md
       - custom/provider.md
+      - custom/action.md
   - Pro Version For Sponsor:
       - pro/sponsor.md
       - pro/exclusive.md

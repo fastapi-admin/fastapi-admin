@@ -39,13 +39,13 @@ pytest-asyncio = "*"
 pytest-mock = "*"
 pytest-xdist = "*"
 # lint
-black = "^20.8b1"
+black = "*"
 flake8 = "*"
 isort = "*"
 mypy = "*"
 pylint = "*"
 # example
-asyncmy = "*"
+asyncmy = { git = "https://github.com/long2ice/asyncmy.git", branch = "dev" }
 python-dotenv = "*"
 # docs
 mkdocs = "*"
