@@ -92,7 +92,7 @@ class Content(Dropdown):
             "is_reviewed",
             "type",
             Field(name="image", label="Image", display=displays.Image(width="40")),
-            "body",
+            Field(name="body", label='Body', input_=inputs.Editor()),
             "created_at",
         ]
 

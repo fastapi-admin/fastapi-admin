@@ -8,11 +8,13 @@
                 {% endif %} >{{ option[0] }}</option>
             {% endfor %}
         </select>
+        {% if help_text %}
+            <div class="mt-2">
+                <small class="form-hint">
+                    {{ help_text }}
+                </small>
+            </div>
+        {% endif %}
     </div>
     {% include "components/select.html" %}
-    {% if help_text %}
-        <small class="form-hint">
-            {{ help_text }}
-        </small>
-    {% endif %}
 {% endwith %}

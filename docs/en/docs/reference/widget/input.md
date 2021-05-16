@@ -30,11 +30,15 @@ Html email input.
 
 ## Json
 
-Display a json editor widget.
+Display a json editor widget, based on [jsoneditor](https://github.com/josdejong/jsoneditor).
 
 ## TextArea
 
 Html textarea input.
+
+## Editor
+
+Based on [quilljs](https://github.com/quilljs/quill), display a rich editor input.
 
 ## DateTime
 

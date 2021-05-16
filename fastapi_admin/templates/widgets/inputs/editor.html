@@ -1,0 +1,52 @@
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+<div class="form-group mb-3">
+    <label class="form-label">{{ label }}</label>
+    <input {% if not null %}required{% endif %} type="{{ input_type }}" class="form-control" name="{{ name }}"
+           {% if disabled %}disabled{% endif %} value="{{ value }}" hidden>
+    <div id="editor-{{ name }}">
+    </div>
+    {% if help_text %}
+        <small class="form-hint">
+            {{ help_text }}
+        </small>
+    {% endif %}
+</div>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script>
+    Quill.prototype.getHTML = function () {
+        return this.container.querySelector('.ql-editor').innerHTML;
+    };
+    Quill.prototype.setHTML = function (html) {
+        this.container.querySelector('.ql-editor').innerHTML = html;
+    };
+    let toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{'header': 1}, {'header': 2}],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{'script': 'sub'}, {'script': 'super'}],
+        [{'indent': '-1'}, {'indent': '+1'}],
+        [{'direction': 'rtl'}],
+        [{'size': ['small', false, 'large', 'huge']}],
+        [{'header': [1, 2, 3, 4, 5, 6, false]}],
+        [{'color': []}, {'background': []}],
+        [{'font': []}],
+        [{'align': []}],
+        ['clean']
+    ];
+
+    let quill = new Quill('#editor-{{ name }}', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        placeholder: "{{ placeholder }}",
+        theme: 'snow'
+    });
+    {% if value %}
+        quill.setHTML('{{ value|safe }}');
+    {% endif %}
+
+    quill.on('text-change', function (delta, oldDelta, source) {
+        $('input[name={{ name }}]').val(quill.getHTML())
+    });
+</script>
