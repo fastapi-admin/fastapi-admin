@@ -14,21 +14,17 @@ organization.
 
 ## Levels
 
-### $38 - One time
+### $18 - Month
 
-I will send you the source code without subsequent updates and invitation.
+You will be invited and keep collaborator role for a month.
 
-### $48 - Month
+### $58 - Half a Year
 
-You will be invited and keep collaborator role for a month and with `$10` per month if renew.
+You will be invited and keep collaborator role for half a year.
 
-### $95 - Half a Year
+### $98 - Year
 
-You will be invited and keep collaborator role for half a year and with `$10` per month if renew.
-
-### $152 - Year
-
-You will be invited and keep collaborator role for a year and with `$10` per month if renew.
+You will be invited and keep collaborator role for a year.
 
 ## Licence
 
