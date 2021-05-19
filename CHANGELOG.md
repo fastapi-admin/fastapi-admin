@@ -5,6 +5,7 @@
 ### 1.0.1
 
 - Add `column_attributes`.
+- Remove `can_create` and add `get_toolbar_actions`.
 
 ### 1.0.0
 

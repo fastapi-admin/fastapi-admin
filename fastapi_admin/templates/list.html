@@ -29,14 +29,7 @@
                             {% endfor %}
                             <div class="ms-2">
                                 <button type="submit" class="btn btn-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search"
-                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                         stroke="currentColor" fill="none" stroke-linecap="round"
-                                         stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="10" cy="10" r="7"></circle>
-                                        <line x1="21" y1="21" x2="15" y2="15"></line>
-                                    </svg>
+                                    <i class="fas fa-search me-2"></i>
                                     {{ _('search') }}
                                 </button>
                             </div>
@@ -72,18 +65,15 @@
               </span>
                     {% endif %}
                 </div>
-                {% if model_resource.can_create %}
-                    <a class="ms-auto btn btn-dark" href="{{ request.app.admin_path }}/{{ resource }}/create">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                             stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        {{ _('create') }}
-                    </a>
-                {% endif %}
+                <div id="toolbar-actions" class="ms-auto btn-list">
+                    {% for action in model_resource.toolbar_actions %}
+                        <a class="btn {{ action.class_ }}"
+                           href="{{ request.app.admin_path }}/{{ resource }}/{{ action.name }}">
+                            <i class="{{ action.icon }} me-2"></i>
+                            {{ action.label }}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap datatable">
@@ -121,11 +111,11 @@
                         {% with outer_index = loop.index0 %}
                             {% for x in value %}
                                 <td {% for k,v in cell_attributes[outer_index][loop.index0].items() %}
-                                    {{ k }}="{{ v }}"{% endfor %}>{{ x|safe }}</td>
+                                {{ k }}="{{ v }}"{% endfor %}>{{ x|safe }}</td>
                             {% endfor %}
                         {% endwith %}
-                            {% if model_resource.actions %}
-                                <td class="text-end">
+                        {% if model_resource.actions %}
+                            <td class="text-end">
               <span class="dropdown">
                 <button
                         class="btn dropdown-toggle align-text-top"
@@ -154,8 +144,8 @@
                 {% endfor %}
                 </div>
               </span>
-                                </td>
-                            {% endif %}
+                            </td>
+                        {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

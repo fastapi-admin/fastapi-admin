@@ -68,6 +68,10 @@ class Action(BaseModel):
             raise ValueError("ajax is False only available when method is Method.GET")
 
 
+class ToolbarAction(Action):
+    class_: Optional[str]
+
+
 class Model(Resource):
     model: Type[TortoiseModel]
     fields: List[Union[str, Field]] = []
@@ -77,6 +81,18 @@ class Model(Resource):
     filters: Optional[List[Union[str, Filter]]] = []
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
+
+    async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
+        return [
+            ToolbarAction(
+                label=_("create"),
+                icon="fas fa-plus",
+                name="create",
+                method=Method.GET,
+                ajax=False,
+                class_="btn-dark",
+            )
+        ]
 
     async def row_attributes(self, request: Request, obj: dict) -> dict:
         return {}

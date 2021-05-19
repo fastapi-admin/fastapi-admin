@@ -25,6 +25,8 @@ async def get_model_resource(request: Request, model=Depends(get_model)):
         raise HTTPException(status_code=HTTP_404_NOT_FOUND)
     actions = await model_resource.get_actions(request)
     bulk_actions = await model_resource.get_bulk_actions(request)
+    toolbar_actions = await model_resource.get_toolbar_actions(request)
+    setattr(model_resource, "toolbar_actions", toolbar_actions)
     setattr(model_resource, "actions", actions)
     setattr(model_resource, "bulk_actions", bulk_actions)
     return model_resource

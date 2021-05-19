@@ -9,7 +9,7 @@ from examples.models import Admin, Category, Config, Product
 from fastapi_admin.app import app
 from fastapi_admin.enums import Method
 from fastapi_admin.file_upload import FileUpload
-from fastapi_admin.resources import Action, Dropdown, Field, Link, Model
+from fastapi_admin.resources import Action, Dropdown, Field, Link, Model, ToolbarAction
 from fastapi_admin.widgets import displays, filters, inputs
 
 upload = FileUpload(uploads_dir=os.path.join(BASE_DIR, "static", "uploads"))
@@ -56,7 +56,8 @@ class AdminResource(Model):
         ),
         "created_at",
     ]
-    can_create = False
+    async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
+        return []
 
     async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
         if field.name == "id":
@@ -92,7 +93,7 @@ class Content(Dropdown):
             "is_reviewed",
             "type",
             Field(name="image", label="Image", display=displays.Image(width="40")),
-            Field(name="body", label='Body', input_=inputs.Editor()),
+            Field(name="body", label="Body", input_=inputs.Editor()),
             "created_at",
         ]
 
