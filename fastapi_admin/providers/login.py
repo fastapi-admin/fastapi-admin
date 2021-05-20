@@ -70,8 +70,11 @@ class UsernamePasswordProvider(Provider):
         signals.pre_save(self.admin_model)(self.pre_save_admin)
 
     async def pre_save_admin(self, _, instance: AbstractAdmin, using_db, update_fields):
-        db_obj = await instance.get(pk=instance.pk)
-        if db_obj.password != instance.password:
+        if instance.pk:
+            db_obj = await instance.get(pk=instance.pk)
+            if db_obj.password != instance.password:
+                instance.password = hash_password(instance.password)
+        else:
             instance.password = hash_password(instance.password)
 
     async def login(self, request: Request, redis: Redis = Depends(get_redis)):
