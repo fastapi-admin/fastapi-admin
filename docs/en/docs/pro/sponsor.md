@@ -1,7 +1,7 @@
 # Sponsor
 
 The pro version is just for the sponsors. As a sponsor, you will get source code or be invited
-to [fastapi-admin](https://github.com/fastapi-admin) organization as an outside collaborator with readonly access, and
+to [fastapi-admin](https://github.com/fastapi-admin) organization as an `outside collaborator with readonly access`, and
 you can get the pro features and get updates for a time.
 
 ## How to become a sponsor
