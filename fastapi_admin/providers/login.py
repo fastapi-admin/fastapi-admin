@@ -138,11 +138,11 @@ class UsernamePasswordProvider(Provider):
     async def create_user(self, username: str, password: str):
         return await self.admin_model.create(
             username=username,
-            password=hash_password(password),
+            password=password,
         )
 
     async def update_password(self, admin: AbstractAdmin, password: str):
-        admin.password = hash_password(password)
+        admin.password = password
         await admin.save(update_fields=["password"])
 
     async def init_view(self, request: Request):
