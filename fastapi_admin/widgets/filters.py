@@ -149,3 +149,26 @@ class ForeignKey(Select):
         if value is not None:
             value = int(value)
         return await super().render(request, value)
+
+
+class DistinctColumn(Select):
+    def __init__(self, model: Type[Model], name: str, label: str, null: bool = True):
+        super().__init__(name=name, label=label, null=null)
+        self.model = model
+        self.name = name
+
+    async def get_options(self):
+        ret = await self.get_values()
+        options = [
+            (
+                str(x[0]),
+                str(x[0]),
+            )
+            for x in ret
+        ]
+        if self.context.get("null"):
+            options = [("", "")] + options
+        return options
+
+    async def get_values(self):
+        return await self.model.all().distinct().values_list(self.name)

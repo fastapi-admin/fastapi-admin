@@ -6,6 +6,7 @@
 
 - Add `column_attributes`.
 - Remove `can_create` and add `get_toolbar_actions`.
+- Add `DistinctColumn` filter.
 
 ### 1.0.0
 

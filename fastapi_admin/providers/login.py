@@ -135,15 +135,8 @@ class UsernamePasswordProvider(Provider):
         response = await call_next(request)
         return response
 
-    async def create_user(self, username: str, password: str):
-        return await self.admin_model.create(
-            username=username,
-            password=password,
-        )
-
-    async def update_password(self, admin: AbstractAdmin, password: str):
-        admin.password = password
-        await admin.save(update_fields=["password"])
+    async def create_user(self, username: str, password: str, **kwargs):
+        return await self.admin_model.create(username=username, password=password, **kwargs)
 
     async def init_view(self, request: Request):
         exists = await self.admin_model.all().limit(1).exists()
@@ -208,5 +201,6 @@ class UsernamePasswordProvider(Provider):
                 "password.html",
                 context={"request": request, "resources": resources, "error": error},
             )
-        await self.update_password(admin, new_password)
+        admin.password = new_password
+        await admin.save(update_fields=["password"])
         return await self.logout(request)
