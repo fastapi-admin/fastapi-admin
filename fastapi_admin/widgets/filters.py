@@ -1,7 +1,8 @@
 import abc
 from enum import Enum as EnumCLS
-from typing import Any, Optional, Type
+from typing import Any, Optional, Type, Tuple
 
+import pendulum
 from starlette.requests import Request
 from tortoise import Model
 from tortoise.queryset import QuerySet
@@ -53,7 +54,12 @@ class Datetime(Filter):
     template = "widgets/filters/datetime.html"
 
     def __init__(
-        self, name: str, label: str, format_: str = constants.DATE_FORMAT_MOMENT, null: bool = True
+        self,
+        name: str,
+        label: str,
+        format_: str = constants.DATETIME_FORMAT_MOMENT,
+        null: bool = True,
+        placeholder: str = "",
     ):
         """
         Datetime filter
@@ -61,23 +67,39 @@ class Datetime(Filter):
         :param label:
         :param format_: the format of moment.js
         """
-        super().__init__(name + "__range", label, null=null, format=format_)
+        super().__init__(
+            name + "__range", label, null=null, format=format_, placeholder=placeholder
+        )
 
     async def parse_value(self, request: Request, value: Optional[str]):
-        return value.split(" - ")
+        if value:
+            ranges = value.split(" - ")
+            return pendulum.parse(ranges[0]), pendulum.parse(ranges[1])
 
-    async def render(self, request: Request, value: Any):
+    async def render(self, request: Request, value: Tuple[pendulum.DateTime, pendulum.DateTime]):
+        format_ = self.context.get('format')
         if value is not None:
-            value = " - ".join(value)
+            value = (
+                value[0].format(format_)
+                + " - "
+                + value[1].format(format_)
+            )
         return await super().render(request, value)
 
 
 class Date(Datetime):
     def __init__(
-        self, name: str, label: str, format_: str = constants.DATE_FORMAT_MOMENT, null: bool = True
+        self,
+        name: str,
+        label: str,
+        format_: str = constants.DATE_FORMAT_MOMENT,
+        null: bool = True,
+        placeholder: str = "",
     ):
-        super().__init__(name=name, label=label, format_=format_, null=null)
-
+        super().__init__(
+            name=name, label=label, format_=format_, null=null, placeholder=placeholder
+        )
+        self.context.update(date=True)
 
 class Select(Filter):
     template = "widgets/filters/select.html"
