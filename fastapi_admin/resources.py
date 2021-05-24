@@ -72,6 +72,14 @@ class ToolbarAction(Action):
     class_: Optional[str]
 
 
+class ComputeField(BaseModel):
+    label: str
+    name: str
+
+    async def get_value(self, request: Request, obj: dict):
+        return obj.get(self.name)
+
+
 class Model(Resource):
     model: Type[TortoiseModel]
     fields: List[Union[str, Field]] = []
@@ -81,6 +89,9 @@ class Model(Resource):
     filters: Optional[List[Union[str, Filter]]] = []
     can_create: bool = True
     enctype = "application/x-www-form-urlencoded"
+
+    async def get_compute_fields(self, request: Request) -> List[ComputeField]:
+        return []
 
     async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
         return [

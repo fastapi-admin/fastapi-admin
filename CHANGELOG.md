@@ -6,6 +6,7 @@
 
 - Add `column_attributes`.
 - Remove `can_create` and add `get_toolbar_actions`.
+- Add `resource.get_compute_fields`.
 
 ### 1.0.0
 

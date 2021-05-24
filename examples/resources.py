@@ -56,6 +56,7 @@ class AdminResource(Model):
         ),
         "created_at",
     ]
+
     async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
         return []
 

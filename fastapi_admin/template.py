@@ -75,6 +75,9 @@ async def render_values(
                 item.append(await fields[i].display.render(request, value[k]))
             else:
                 item.append(await fields[i].input.render(request, value[k]))
+        for compute_field in await model.get_compute_fields(request):
+            item.append(await compute_field.get_value(request, value))
+            cell_item.append({})
         ret.append(item)
         cell_attributes.append(cell_item)
     return ret, row_attributes, column_attributes, cell_attributes
