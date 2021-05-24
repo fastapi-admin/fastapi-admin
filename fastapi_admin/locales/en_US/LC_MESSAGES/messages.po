@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-05 14:09+0800\n"
+"POT-Creation-Date: 2021-05-24 21:16+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -18,31 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: fastapi_admin/resources.py:75
+#: fastapi_admin/resources.py:99
+msgid "create"
+msgstr "Create"
+
+#: fastapi_admin/resources.py:120
 msgid "update"
 msgstr "Update"
 
-#: fastapi_admin/resources.py:76
+#: fastapi_admin/resources.py:122
 msgid "delete"
 msgstr "Delete"
 
-#: fastapi_admin/resources.py:81
+#: fastapi_admin/resources.py:128
 msgid "delete_selected"
 msgstr "Delete Selected"
 
-#: fastapi_admin/providers/login.py:68
+#: fastapi_admin/providers/login.py:90
 msgid "login_failed"
 msgstr "Login to your account failed"
 
-#: fastapi_admin/providers/login.py:152
+#: fastapi_admin/providers/login.py:161
 msgid "confirm_password_different"
 msgstr "Password is different"
 
-#: fastapi_admin/providers/login.py:187 fastapi_admin/routes/password.py:38
+#: fastapi_admin/providers/login.py:196
 msgid "old_password_error"
 msgstr "Old password error"
 
-#: fastapi_admin/providers/login.py:189 fastapi_admin/routes/password.py:40
+#: fastapi_admin/providers/login.py:198
 msgid "new_password_different"
 msgstr "New password is different"
 
@@ -60,19 +64,6 @@ msgstr "Save and add another"
 msgid "return"
 msgstr "Return"
 
-#: fastapi_admin/templates/layout.html:68
-msgid "welcome"
-msgstr "Welcome"
-
-#: fastapi_admin/templates/layout.html:73
-#: fastapi_admin/templates/password.html:6
-msgid "update_password"
-msgstr "Update password"
-
-#: fastapi_admin/templates/layout.html:76
-msgid "logout"
-msgstr "Logout"
-
 #: fastapi_admin/templates/list.html:13
 msgid "show"
 msgstr "Show"
@@ -81,86 +72,30 @@ msgstr "Show"
 msgid "entries"
 msgstr ""
 
-#: fastapi_admin/templates/list.html:40
+#: fastapi_admin/templates/list.html:33
 msgid "search"
 msgstr "Search"
 
-#: fastapi_admin/templates/list.html:53
+#: fastapi_admin/templates/list.html:46
 msgid "bulk_actions"
 msgstr "Bulk Actions"
 
-#: fastapi_admin/templates/list.html:84
-msgid "create"
-msgstr "Create"
-
-#: fastapi_admin/templates/list.html:132
+#: fastapi_admin/templates/list.html:128
 msgid "actions"
 msgstr "Actions"
 
-#: fastapi_admin/templates/list.html:163
+#: fastapi_admin/templates/list.html:159
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
 msgstr ""
 
-#: fastapi_admin/templates/list.html:174
+#: fastapi_admin/templates/list.html:170
 msgid "prev_page"
 msgstr "Prev"
 
-#: fastapi_admin/templates/list.html:195
+#: fastapi_admin/templates/list.html:191
 msgid "next_page"
 msgstr "Next"
-
-#: fastapi_admin/templates/login.html:40
-msgid "username"
-msgstr "Username"
-
-#: fastapi_admin/templates/login.html:45
-msgid "login_username_placeholder"
-msgstr "Enter username"
-
-#: fastapi_admin/templates/login.html:50
-msgid "password"
-msgstr "Password"
-
-#: fastapi_admin/templates/login.html:55
-msgid "login_password_placeholder"
-msgstr "Enter password"
-
-#: fastapi_admin/templates/login.html:71
-msgid "remember_me"
-msgstr "Remember me"
-
-#: fastapi_admin/templates/login.html:76
-msgid "sign_in"
-msgstr "Sign in"
-
-#: fastapi_admin/templates/password.html:12
-msgid "old_password"
-msgstr "Old password"
-
-#: fastapi_admin/templates/password.html:15
-msgid "old_password_placeholder"
-msgstr "Enter old password"
-
-#: fastapi_admin/templates/password.html:19
-msgid "new_password"
-msgstr "New password"
-
-#: fastapi_admin/templates/password.html:22
-msgid "new_password_placeholder"
-msgstr "Enter new password"
-
-#: fastapi_admin/templates/password.html:26
-msgid "re_new_password"
-msgstr "Confirm new password"
-
-#: fastapi_admin/templates/password.html:29
-msgid "re_new_password_placeholder"
-msgstr "Enter new password again"
-
-#: fastapi_admin/templates/password.html:32
-msgid "submit"
-msgstr "Submit"
 
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"
@@ -172,3 +107,63 @@ msgstr "Save and return"
 msgid "return_home"
 msgstr "Take me home"
 
+#: fastapi_admin/templates/providers/login/avatar.html:18
+#: fastapi_admin/templates/providers/login/password.html:6
+msgid "update_password"
+msgstr "Update password"
+
+#: fastapi_admin/templates/providers/login/avatar.html:24
+msgid "logout"
+msgstr "Logout"
+
+#: fastapi_admin/templates/providers/login/login.html:42
+msgid "username"
+msgstr "Username"
+
+#: fastapi_admin/templates/providers/login/login.html:47
+msgid "login_username_placeholder"
+msgstr "Enter username"
+
+#: fastapi_admin/templates/providers/login/login.html:52
+msgid "password"
+msgstr "Password"
+
+#: fastapi_admin/templates/providers/login/login.html:57
+msgid "login_password_placeholder"
+msgstr "Enter password"
+
+#: fastapi_admin/templates/providers/login/login.html:73
+msgid "remember_me"
+msgstr "Remember me"
+
+#: fastapi_admin/templates/providers/login/login.html:78
+msgid "sign_in"
+msgstr "Sign in"
+
+#: fastapi_admin/templates/providers/login/password.html:12
+msgid "old_password"
+msgstr "Old password"
+
+#: fastapi_admin/templates/providers/login/password.html:15
+msgid "old_password_placeholder"
+msgstr "Enter old password"
+
+#: fastapi_admin/templates/providers/login/password.html:19
+msgid "new_password"
+msgstr "New password"
+
+#: fastapi_admin/templates/providers/login/password.html:22
+msgid "new_password_placeholder"
+msgstr "Enter new password"
+
+#: fastapi_admin/templates/providers/login/password.html:26
+msgid "re_new_password"
+msgstr "Confirm new password"
+
+#: fastapi_admin/templates/providers/login/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "Enter new password again"
+
+#: fastapi_admin/templates/providers/login/password.html:32
+msgid "submit"
+msgstr "Submit"
