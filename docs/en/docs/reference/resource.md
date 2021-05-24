@@ -75,6 +75,28 @@ class AdminResource(Model):
         return []
 ```
 
+## ComputeField
+
+The class that `model.get_compute_fields` used.
+
+```python
+class ComputeField(BaseModel):
+    label: str
+    name: str
+
+    async def get_value(self, request: Request, obj: dict):
+        return obj.get(self.name)
+```
+
+What you need to do is just override the `get_value` method.
+
+```python
+class RestDays(ComputeField):
+    async def get_value(self, request: Request, obj: dict):
+        days = (obj.get(self.name) - date.today()).days
+        return days if days >= 0 else 0
+```
+
 ## Model
 
 `Model` is the core resource, which make TortoiseORM model as a menu and display a data table with create, update, and
@@ -151,6 +173,17 @@ class AdminResource(Model):
         if field.name == "id":
             return {"class": "bg-danger text-white"}
         return await super().cell_attributes(request, obj, field)
+```
+
+### get_compute_fields
+
+In some cases we need show some extra fields which are computed from other fields, you can use `get_compute_fields`.
+
+```python
+@app.register
+class SponsorResource(Model):
+    async def get_compute_fields(self, request: Request) -> List[ComputeField]:
+        return [RestDays(name="invalid_date", label="Days Remaining")]
 ```
 
 ## Dropdown
