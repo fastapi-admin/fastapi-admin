@@ -70,8 +70,11 @@ class UsernamePasswordProvider(Provider):
         signals.pre_save(self.admin_model)(self.pre_save_admin)
 
     async def pre_save_admin(self, _, instance: AbstractAdmin, using_db, update_fields):
-        db_obj = await instance.get(pk=instance.pk)
-        if db_obj.password != instance.password:
+        if instance.pk:
+            db_obj = await instance.get(pk=instance.pk)
+            if db_obj.password != instance.password:
+                instance.password = hash_password(instance.password)
+        else:
             instance.password = hash_password(instance.password)
 
     async def login(self, request: Request, redis: Redis = Depends(get_redis)):
@@ -132,15 +135,8 @@ class UsernamePasswordProvider(Provider):
         response = await call_next(request)
         return response
 
-    async def create_user(self, username: str, password: str):
-        return await self.admin_model.create(
-            username=username,
-            password=hash_password(password),
-        )
-
-    async def update_password(self, admin: AbstractAdmin, password: str):
-        admin.password = hash_password(password)
-        await admin.save(update_fields=["password"])
+    async def create_user(self, username: str, password: str, **kwargs):
+        return await self.admin_model.create(username=username, password=password, **kwargs)
 
     async def init_view(self, request: Request):
         exists = await self.admin_model.all().limit(1).exists()
@@ -205,5 +201,6 @@ class UsernamePasswordProvider(Provider):
                 "password.html",
                 context={"request": request, "resources": resources, "error": error},
             )
-        await self.update_password(admin, new_password)
+        admin.password = new_password
+        await admin.save(update_fields=["password"])
         return await self.logout(request)

@@ -5,7 +5,8 @@
     <div class="d-inline-block">
         <input {% if not null %}
             required
-        {% endif %} class="form-control" type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}">
+        {% endif %} class="form-control" type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}"
+            placeholder="{{ placeholder }}" size="30">
     </div>
 </div>
 <script>
@@ -14,7 +15,7 @@
         let format = '{{ format }}';
         let option = {
             autoUpdateInput: false,
-            timePicker: true,
+            timePicker: {% if not date %}true{% else %}false{% endif%},
             timePicker24Hour: true,
             locale: {
                 format: format,

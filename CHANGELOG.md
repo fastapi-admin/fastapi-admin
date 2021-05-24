@@ -6,6 +6,8 @@
 
 - Add `column_attributes`.
 - Remove `can_create` and add `get_toolbar_actions`.
+- Add `DistinctColumn` filter.
+- Fix datetime filter.
 - Add `resource.get_compute_fields`.
 
 ### 1.0.0
