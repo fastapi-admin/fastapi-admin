@@ -97,6 +97,15 @@ class RestDays(ComputeField):
         return days if days >= 0 else 0
 ```
 
+## ToolbarAction
+
+The class that `mode.get_toolbar_actions` used.
+
+```python
+class ToolbarAction(Action):
+    class_: Optional[str]
+```
+
 ## Model
 
 `Model` is the core resource, which make TortoiseORM model as a menu and display a data table with create, update, and
@@ -129,7 +138,6 @@ class AdminResource(Model):
 - `page_title`: Show page title in content.
 - `filters`: Define filters for the model, which will display filter inputs in table above, all kinds of filters you can
   find in [Filter](/reference/widget/filter/).
-- `can_create`: Whether show a `create` button there.
 
 ### row_attributes
 
@@ -184,6 +192,20 @@ In some cases we need show some extra fields which are computed from other field
 class SponsorResource(Model):
     async def get_compute_fields(self, request: Request) -> List[ComputeField]:
         return [RestDays(name="invalid_date", label="Days Remaining")]
+```
+
+### get_toolbar_actions
+
+Show toolbar actions top right of the table.
+
+```python
+@app.register
+class CategoryResource(Model):
+    async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
+        actions = await super().get_toolbar_actions(request)
+        actions.append(import_export_provider.import_action)
+        actions.append(import_export_provider.export_action)
+        return actions
 ```
 
 ## Dropdown
