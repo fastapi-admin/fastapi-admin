@@ -9,6 +9,7 @@
 - Add `DistinctColumn` filter.
 - Fix datetime filter.
 - Add `resource.get_compute_fields`.
+- Fix `init` admin.
 
 ### 1.0.0
 

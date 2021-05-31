@@ -1,6 +1,6 @@
 import abc
 from enum import Enum as EnumCLS
-from typing import Any, Optional, Type, Tuple
+from typing import Any, Optional, Tuple, Type
 
 import pendulum
 from starlette.requests import Request
@@ -77,13 +77,9 @@ class Datetime(Filter):
             return pendulum.parse(ranges[0]), pendulum.parse(ranges[1])
 
     async def render(self, request: Request, value: Tuple[pendulum.DateTime, pendulum.DateTime]):
-        format_ = self.context.get('format')
+        format_ = self.context.get("format")
         if value is not None:
-            value = (
-                value[0].format(format_)
-                + " - "
-                + value[1].format(format_)
-            )
+            value = value[0].format(format_) + " - " + value[1].format(format_)
         return await super().render(request, value)
 
 
@@ -100,6 +96,7 @@ class Date(Datetime):
             name=name, label=label, format_=format_, null=null, placeholder=placeholder
         )
         self.context.update(date=True)
+
 
 class Select(Filter):
     template = "widgets/filters/select.html"

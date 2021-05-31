@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-24 21:16+0800\n"
+"POT-Creation-Date: 2021-05-31 20:49+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -64,6 +64,41 @@ msgstr "Save and add another"
 msgid "return"
 msgstr "Return"
 
+#: fastapi_admin/templates/init.html:10
+msgid "Create first admin"
+msgstr ""
+
+#: fastapi_admin/templates/init.html:12
+#: fastapi_admin/templates/providers/login/login.html:42
+msgid "username"
+msgstr "Username"
+
+#: fastapi_admin/templates/init.html:14
+msgid "username_placeholder"
+msgstr "Enter username"
+
+#: fastapi_admin/templates/init.html:18
+#: fastapi_admin/templates/providers/login/login.html:52
+msgid "password"
+msgstr "Password"
+
+#: fastapi_admin/templates/init.html:23
+msgid "password_placeholder"
+msgstr "Enter password"
+
+#: fastapi_admin/templates/init.html:31
+msgid "confirm_password"
+msgstr "Enter password again"
+
+#: fastapi_admin/templates/init.html:36
+msgid "confirm_password_placeholder"
+msgstr "Enter password again"
+
+#: fastapi_admin/templates/init.html:43
+#: fastapi_admin/templates/providers/login/password.html:32
+msgid "submit"
+msgstr "Submit"
+
 #: fastapi_admin/templates/list.html:13
 msgid "show"
 msgstr "Show"
@@ -116,17 +151,9 @@ msgstr "Update password"
 msgid "logout"
 msgstr "Logout"
 
-#: fastapi_admin/templates/providers/login/login.html:42
-msgid "username"
-msgstr "Username"
-
 #: fastapi_admin/templates/providers/login/login.html:47
 msgid "login_username_placeholder"
 msgstr "Enter username"
-
-#: fastapi_admin/templates/providers/login/login.html:52
-msgid "password"
-msgstr "Password"
 
 #: fastapi_admin/templates/providers/login/login.html:57
 msgid "login_password_placeholder"
@@ -163,7 +190,3 @@ msgstr "Confirm new password"
 #: fastapi_admin/templates/providers/login/password.html:29
 msgid "re_new_password_placeholder"
 msgstr "Enter new password again"
-
-#: fastapi_admin/templates/providers/login/password.html:32
-msgid "submit"
-msgstr "Submit"

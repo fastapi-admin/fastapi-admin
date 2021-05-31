@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block outer_body %}
+    <body class="border-primary d-flex flex-column">
+    <div class="page page-center">
+        <div class="container-tight py-4">
+            {% include "components/alert_error.html" %}
+            <form class="card card-md" action="{{ request.app.admin_path }}/init"
+                  method="post" autocomplete="off">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">{{ _('Create first admin') }}</h2>
+                    <div class="mb-3">
+                        <label class="form-label">{{ _('username') }}</label>
+                        <input name="username" type="text" class="form-control"
+                               placeholder="{{ _('username_placeholder') }}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">
+                            {{ _('password') }}
+                            <span class="form-label-description">
+                            </span>
+                        </label>
+                        <div class="input-group input-group-flat">
+                            <input placeholder="{{ _('password_placeholder') }}" name="password" type="password"
+                                   class="form-control" autocomplete="off">
+                            <span class="input-group-text">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">
+                            {{ _('confirm_password') }}
+                            <span class="form-label-description">
+                            </span>
+                        </label>
+                        <div class="input-group input-group-flat">
+                            <input placeholder="{{ _('confirm_password_placeholder') }}" name="confirm_password" type="password"
+                                   class="form-control" autocomplete="off">
+                            <span class="input-group-text">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">{{ _('submit') }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </body>
+{% endblock %}

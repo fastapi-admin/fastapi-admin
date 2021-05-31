@@ -46,7 +46,7 @@ isort = "*"
 mypy = "*"
 pylint = "*"
 # example
-asyncmy = { git = "https://github.com/long2ice/asyncmy.git", branch = "dev" }
+asyncmy = "*"
 python-dotenv = "*"
 # docs
 mkdocs = "*"
