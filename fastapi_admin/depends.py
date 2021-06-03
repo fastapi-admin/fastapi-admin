@@ -14,7 +14,8 @@ def get_model(resource: Optional[str] = Path(...)):
     if not resource:
         return
     for app, models in Tortoise.apps.items():
-        model = models.get(resource.title())
+        models = {key.lower(): val for key, val in models.items()}
+        model = models.get(resource)
         if model:
             return model
 
