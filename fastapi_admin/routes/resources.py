@@ -79,7 +79,7 @@ async def list_view(
 async def update(
     request: Request,
     resource: str = Path(...),
-    pk: int = Path(...),
+    pk: str = Path(...),
     model_resource: ModelResource = Depends(get_model_resource),
     resources=Depends(get_resources),
     model=Depends(get_model),
@@ -136,7 +136,7 @@ async def update(
 async def update_view(
     request: Request,
     resource: str = Path(...),
-    pk: int = Path(...),
+    pk: str = Path(...),
     model_resource: ModelResource = Depends(get_model_resource),
     resources=Depends(get_resources),
     model=Depends(get_model),
@@ -237,7 +237,7 @@ async def create(
 
 
 @router.delete("/{resource}/delete/{pk}")
-async def delete(request: Request, pk: int, model: Model = Depends(get_model)):
+async def delete(request: Request, pk: str, model: Model = Depends(get_model)):
     await model.filter(pk=pk).delete()
     return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
 

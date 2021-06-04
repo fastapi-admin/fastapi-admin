@@ -2,6 +2,10 @@
 
 ## 1.0
 
+### 1.0.2
+
+- Use `str` type for `pk` path param. (#52)
+
 ### 1.0.1
 
 - Add `column_attributes`.
