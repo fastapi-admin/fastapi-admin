@@ -2,17 +2,19 @@
     <div class="wrapper min-vh-100">
         <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <h1 class="navbar-brand navbar-brand-autodark">
-                    <a href="{{ request.app.admin_path }}">
-                        <img
-                                src="{{ request.app.logo_url }}"
-                                width="110"
-                                height="32"
-                                alt="Tabler"
-                                class="navbar-brand-image"
-                        />
-                    </a>
-                </h1>
+                {% if request.app.logo_url %}
+                    <h1 class="navbar-brand navbar-brand-autodark">
+                        <a href="{{ request.app.admin_path }}">
+                            <img
+                                    src="{{ request.app.logo_url }}"
+                                    width="110"
+                                    height="32"
+                                    alt="Tabler"
+                                    class="navbar-brand-image"
+                            />
+                        </a>
+                    </h1>
+                {% endif %}
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="navbar-nav pt-lg-3">
                         {% for resource in resources %} {% if resource.type == 'link' %}

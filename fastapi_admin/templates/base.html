@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler-vendors.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <script src="https://kit.fontawesome.com/65694932fa.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="{{ request.app.favicon_url }}">
+    {% if request.app.favicon_url %}
+        <link rel="icon" href="{{ request.app.favicon_url }}">
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.js"></script>
     <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>

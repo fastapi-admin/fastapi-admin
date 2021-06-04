@@ -3,12 +3,14 @@
     <div class="page page-center">
         <div class="container-tight py-4">
             <div class="text-center mb-4">
-                <a href="../.."
-                ><img
-                        src="{{ login_logo_url }}"
-                        height="36"
-                        alt=""
-                /></a>
+                {% if login_logo_url %}
+                    <a href="../.."
+                    ><img
+                            src="{{ login_logo_url }}"
+                            height="36"
+                            alt=""
+                    /></a>
+                {% endif %}
             </div>
             {% if error %}
                 <div
