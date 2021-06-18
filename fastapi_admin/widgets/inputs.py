@@ -234,7 +234,7 @@ class File(Input):
     async def parse_value(self, request: Request, value: Optional[UploadFile]):
         if value and value.filename:
             return await self.upload.upload(value)
-        return ""
+        return None
 
 
 class Image(File):

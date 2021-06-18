@@ -5,6 +5,7 @@
 ### 1.0.2
 
 - Use `str` type for `pk` path param. (#52)
+- Fix `Image` input.
 
 ### 1.0.1
 

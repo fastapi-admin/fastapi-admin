@@ -172,6 +172,8 @@ class Model(Resource):
             else:
                 v = data.get(name)
                 value = await input_.parse_value(request, v)
+                if value is None:
+                    continue
                 ret[name] = value
         return ret, m2m_ret
 
