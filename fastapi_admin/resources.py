@@ -13,7 +13,7 @@ from fastapi_admin.enums import Method
 from fastapi_admin.exceptions import NoSuchFieldFound
 from fastapi_admin.i18n import _
 from fastapi_admin.widgets import Widget, displays, inputs
-from fastapi_admin.widgets.filters import Filter
+from fastapi_admin.widgets.filters import Filter, Search
 
 
 class Resource:
@@ -149,6 +149,8 @@ class Model(Resource):
     async def resolve_query_params(cls, request: Request, values: dict, qs: QuerySet):
         ret = {}
         for f in cls.filters:
+            if isinstance(f, str):
+                f = Search(name=f, label=f.title())
             name = f.context.get("name")
             v = values.get(name)
             if v is not None and v != "":
@@ -183,6 +185,8 @@ class Model(Resource):
             values = {}
         ret = []
         for f in cls.filters:
+            if isinstance(f, str):
+                f = Search(name=f, label=f.title())
             name = f.context.get("name")
             value = values.get(name)
             ret.append(await f.render(request, value))
