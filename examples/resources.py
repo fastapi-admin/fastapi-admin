@@ -160,6 +160,6 @@ class DocumentationLink(Link):
 @app.register
 class ProLink(Link):
     label = "Pro Version"
-    url = "https://fastapi-admin-pro.long2ice.cn"
+    url = "https://fastapi-admin-pro.long2ice.cn/admin/login"
     icon = "far fa-heart"
     target = "_blank"
