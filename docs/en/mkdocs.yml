@@ -76,7 +76,9 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/long2ice
-
+  analytics:
+    provider: google
+    property: G-VFN6RZTCH3
 copyright: Copyright &copy; 2021 long2ice
 
 plugins:
