@@ -1,0 +1,42 @@
+name: deploy
+on:
+  push:
+    branches:
+      - 'dev'
+    paths:
+      - 'docs'
+  pull_request:
+    branches:
+      - 'dev'
+    paths:
+      - 'docs'
+jobs:
+  gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.x"
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1.1.1
+        with:
+          virtualenvs-create: false
+      - name: Install deps
+        run: make deps
+      - name: Build en
+        run: cd docs/en && mkdocs build
+      - name: Deploy en
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/en/site
+      - name: Build zh
+        run: cd docs/zh && mkdocs build
+      - name: Deploy zh
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/zh/site
+          destination_dir: zh
+          cname: fastapi-admin-docs.long2ice.cn

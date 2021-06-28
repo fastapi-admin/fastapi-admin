@@ -1,8 +1,24 @@
 name: deploy
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - 'dev'
+  pull_request:
+    branches:
+      - 'dev'
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        run: docker buildx build -t docker.pkg.github.com/fastapi-admin/fastapi-admin/fastapi-admin:latest .
+      - name: Publish image
+        run: docker push docker.pkg.github.com/fastapi-admin/fastapi-admin/fastapi-admin:latest
   examples:
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
@@ -13,34 +29,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/fastapi-admin/
-            git pull
-            docker-compose up -d --build
-  gh-pages:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
-        with:
-          python-version: "3.x"
-      - name: Install and configure Poetry
-        uses: snok/install-poetry@v1.1.1
-        with:
-          virtualenvs-create: false
-      - name: Install deps
-        run: make deps
-      - name: Build en
-        run: cd docs/en && mkdocs build
-      - name: Deploy en
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/en/site
-      - name: Build zh
-        run: cd docs/zh && mkdocs build
-      - name: Deploy zh
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/zh/site
-          destination_dir: zh
-          cname: fastapi-admin-docs.long2ice.cn
+            docker-compose pull
+            docker-compose up -d
