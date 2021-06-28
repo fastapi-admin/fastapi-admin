@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build image
-        run: docker buildx build -t docker.pkg.github.com/fastapi-admin/fastapi-admin/fastapi-admin:latest .
-      - name: Publish image
-        run: docker push docker.pkg.github.com/fastapi-admin/fastapi-admin/fastapi-admin:latest
+      - name: Build and Publish
+        uses: VaultVulp/gp-docker-action@1.1.8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: fastapi-admin
   examples:
     runs-on: ubuntu-latest
     needs:
