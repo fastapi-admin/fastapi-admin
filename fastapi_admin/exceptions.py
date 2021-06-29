@@ -7,9 +7,9 @@ from fastapi_admin.template import templates
 
 class ServerHTTPException(HTTPException):
     def __init__(self, error: str = None):
-        super(ServerHTTPException, self).__init__(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=error
-        )
+        super(ServerHTTPException,
+              self).__init__(status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                             detail=error)
 
 
 class InvalidResource(ServerHTTPException):
@@ -45,12 +45,19 @@ async def server_error_exception(request: Request, exc: HTTPException):
 
 
 async def not_found_error_exception(request: Request, exc: HTTPException):
-    return templates.TemplateResponse(
-        "errors/404.html", status_code=exc.status_code, context={"request": request}
-    )
+    from fastapi_admin.app import app
+    return templates.TemplateResponse("errors/404.html",
+                                      status_code=exc.status_code,
+                                      context={
+                                          "request":
+                                          request,
+                                          "redirect_url":
+                                          request.app.admin_path +
+                                          app.login_provider.login_path
+                                      })
 
 
 async def forbidden_error_exception(request: Request, exc: HTTPException):
-    return templates.TemplateResponse(
-        "errors/403.html", status_code=exc.status_code, context={"request": request}
-    )
+    return templates.TemplateResponse("errors/403.html",
+                                      status_code=exc.status_code,
+                                      context={"request": request})

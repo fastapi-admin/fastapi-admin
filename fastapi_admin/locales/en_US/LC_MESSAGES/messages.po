@@ -142,6 +142,10 @@ msgstr "Save and return"
 msgid "return_home"
 msgstr "Take me home"
 
+#: fastapi_admin/templates/errors/404.html:21
+msgid "return_login"
+msgstr "Go to login"
+
 #: fastapi_admin/templates/providers/login/avatar.html:18
 #: fastapi_admin/templates/providers/login/password.html:6
 msgid "update_password"
