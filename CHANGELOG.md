@@ -7,6 +7,7 @@
 - Use `str` type for `pk` path param. (#52)
 - Fix `Image` input.
 - `filters` can accept `str` type and default use `Search` filter.
+- Fix accessible when not login. (#53)
 
 ### 1.0.1
 
