@@ -62,6 +62,7 @@ async def list_view(
         "to": page_size * page_num,
         "page_title": model_resource.page_title,
         "page_pre_title": model_resource.page_pre_title,
+        "title": model_resource.label
     }
     try:
         return templates.TemplateResponse(
@@ -118,6 +119,7 @@ async def update(
             "pk": pk,
             "page_title": model_resource.page_title,
             "page_pre_title": model_resource.page_pre_title,
+            "title": model_resource.label
         }
         try:
             return templates.TemplateResponse(
@@ -153,6 +155,7 @@ async def update_view(
         "model_resource": model_resource,
         "page_title": model_resource.page_title,
         "page_pre_title": model_resource.page_pre_title,
+        "title": model_resource.label
     }
     try:
         return templates.TemplateResponse(
@@ -183,6 +186,7 @@ async def create_view(
         "model_resource": model_resource,
         "page_title": model_resource.page_title,
         "page_pre_title": model_resource.page_pre_title,
+        "title": model_resource.label
     }
     try:
         return templates.TemplateResponse(
@@ -223,6 +227,7 @@ async def create(
         "model_resource": model_resource,
         "page_title": model_resource.page_title,
         "page_pre_title": model_resource.page_pre_title,
+        "title": model_resource.label
     }
     try:
         return templates.TemplateResponse(
