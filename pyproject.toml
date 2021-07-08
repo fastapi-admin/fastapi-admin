@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["long2ice <long2ice@gmail.com>"]
 description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
-documentation = "https://fastapi-admin-docs.long2ice.cn"
+documentation = "https://fastapi-admin.github.io"
 homepage = "https://github.com/fastapi-admin/fastapi-admin"
 include = [
     "LICENSE",

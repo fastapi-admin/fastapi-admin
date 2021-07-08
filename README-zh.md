@@ -47,7 +47,7 @@
 
 ## 文档
 
-文档地址 <https://fastapi-admin-docs.long2ice.cn>。
+文档地址 <https://fastapi-admin.github.io>。
 
 ## 许可
 

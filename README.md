@@ -2,7 +2,7 @@
 
 [![image](https://img.shields.io/pypi/v/fastapi-admin.svg?style=flat)](https://pypi.python.org/pypi/fastapi-admin)
 [![image](https://img.shields.io/github/license/fastapi-admin/fastapi-admin)](https://github.com/fastapi-admin/fastapi-admin)
-[![image](https://github.com/fastapi-admin/fastapi-admin/workflows/gh-pages/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:gh-pages)
+[![image](https://github.com/fastapi-admin/fastapi-admin/workflows/deploy/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:deploy)
 [![image](https://github.com/fastapi-admin/fastapi-admin/workflows/pypi/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:pypi)
 
 ## Introduction
@@ -57,7 +57,7 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/lo
 
 ## Documentation
 
-See documentation at <https://fastapi-admin-docs.long2ice.cn>.
+See documentation at <https://fastapi-admin.github.io>.
 
 ## License
 
