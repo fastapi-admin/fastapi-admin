@@ -5,6 +5,7 @@
 ### 1.0.3
 
 - Fix action link.
+- Fix `get_m2m_field`.
 
 ### 1.0.2
 
