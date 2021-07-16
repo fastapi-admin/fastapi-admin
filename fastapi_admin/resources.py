@@ -279,8 +279,9 @@ class Model(Resource):
     def get_m2m_field(cls):
         ret = []
         for field in cls.fields or cls.model._meta.fields:
-            if field in cls.model._meta.m2m_fields:
-                ret.append(field)
+            _field = getattr(field, "name", field)
+            if _field in cls.model._meta.m2m_fields:
+                ret.append(_field)
         return ret
 
 
