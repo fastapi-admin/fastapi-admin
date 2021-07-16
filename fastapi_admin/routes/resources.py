@@ -242,7 +242,7 @@ async def delete(request: Request, pk: str, model: Model = Depends(get_model)):
     return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
 
 
-@router.delete("/{resource}/bulk_action/delete")
+@router.delete("/{resource}/delete")
 async def bulk_delete(request: Request, ids: str, model: Model = Depends(get_model)):
     await model.filter(pk__in=ids.split(",")).delete()
     return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)

@@ -47,7 +47,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     {% for action in model_resource.bulk_actions %}
-                        {% set url = request.app.admin_path + '/' + resource +'/bulk_action/'+ action.name %}
+                        {% set url = request.app.admin_path + '/' + resource +'/'+ action.name %}
                         <a
                                 class="dropdown-item"
                                 {% if action.ajax %}
@@ -68,7 +68,7 @@
                 <div id="toolbar-actions" class="ms-auto btn-list">
                     {% for action in model_resource.toolbar_actions %}
                         <a class="btn {{ action.class_ }}"
-                           href="{{ request.app.admin_path }}/{{ resource }}/toolbar_action/{{ action.name }}">
+                           href="{{ request.app.admin_path }}/{{ resource }}/{{ action.name }}">
                             <i class="{{ action.icon }} me-2"></i>
                             {{ action.label }}
                         </a>
@@ -131,7 +131,7 @@
                         class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
                 >
                 {% for action in model_resource.actions %}
-                    {% set url = request.app.admin_path + '/' + resource +'/action/'+ action.name +'/'+ value[0]|string %}
+                    {% set url = request.app.admin_path + '/' + resource +'/'+ action.name +'/'+ value[0]|string %}
                     <a
                             class="dropdown-item"
                             {% if action.ajax %}

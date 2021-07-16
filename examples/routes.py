@@ -26,7 +26,7 @@ async def home(
     )
 
 
-@app.put("/config/action/switch_status/{config_id}")
+@app.put("/config/switch_status/{config_id}")
 async def switch_config_status(request: Request, config_id: int):
     config = await Config.get_or_none(pk=config_id)
     if not config:
