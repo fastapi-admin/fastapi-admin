@@ -48,10 +48,6 @@ pylint = "*"
 # example
 asyncmy = "*"
 python-dotenv = "*"
-# docs
-mkdocs = "*"
-mkdocs-git-revision-date-localized-plugin = "*"
-mkdocs-material = "*"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
