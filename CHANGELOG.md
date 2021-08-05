@@ -7,6 +7,7 @@
 - Fix action link.
 - Fix `get_m2m_field`.
 - Refactor `ComputeField` and remove `get_compute_fields`.
+- Upgrade `aioredis` to `2.0`.
 
 ### 1.0.2
 

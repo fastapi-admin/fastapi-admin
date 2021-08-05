@@ -39,7 +39,7 @@ def create_app():
 
     @app.on_event("startup")
     async def startup():
-        redis = await aioredis.create_redis_pool(
+        redis = aioredis.from_url(
             f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
             db=settings.REDIS_DB,
             password=settings.REDIS_PASSWORD,
