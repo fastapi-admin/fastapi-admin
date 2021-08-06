@@ -36,10 +36,7 @@
 
    ```dotenv
    DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   REDIS_PASSWORD=
-   REDIS_DB=0
+   REDIS_URL=redis://localhost:6379/0
    ```
 
 3. 运行 `docker-compose up -d --build`。

@@ -40,9 +40,8 @@ def create_app():
     @app.on_event("startup")
     async def startup():
         redis = aioredis.from_url(
-            f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
-            db=settings.REDIS_DB,
-            password=settings.REDIS_PASSWORD,
+            settings.REDIS_URL,
+            decode_responses=True,
             encoding="utf8",
         )
         await admin_app.configure(
