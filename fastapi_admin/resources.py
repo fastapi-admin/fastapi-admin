@@ -257,7 +257,7 @@ class Model(Resource):
                 if field == pk_column:
                     continue
                 field = cls._get_display_input_field(field)
-            elif isinstance(field, ComputeField) and not is_display:
+            if isinstance(field, ComputeField) and not is_display:
                 continue
             elif isinstance(field, Field):
                 if field.name == pk_column:
