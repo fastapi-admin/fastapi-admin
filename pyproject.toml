@@ -47,6 +47,7 @@ mypy = "*"
 pylint = "*"
 # example
 asyncmy = "*"
+asyncpg = "*"
 python-dotenv = "*"
 
 [build-system]
