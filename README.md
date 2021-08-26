@@ -25,12 +25,12 @@ inspired by Django admin.
 
 ## Online Demo
 
-You can check a online demo [here](https://fastapi-admin.long2ice.cn/admin/login).
+You can check a online demo [here](https://fastapi-admin.long2ice.io/admin/login).
 
 - username: `admin`
 - password: `123456`
 
-Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/login).
+Or pro version online demo [here](https://fastapi-admin-pro.long2ice.io/admin/login).
 
 - username: `admin`
 - password: `123456`
