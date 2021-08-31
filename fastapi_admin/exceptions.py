@@ -54,3 +54,9 @@ async def forbidden_error_exception(request: Request, exc: HTTPException):
     return templates.TemplateResponse(
         "errors/403.html", status_code=exc.status_code, context={"request": request}
     )
+
+
+async def unauthorized_error_exception(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(
+        "errors/401.html", status_code=exc.status_code, context={"request": request}
+    )
