@@ -2,7 +2,9 @@
 
 ## 1.0
 
-### 0.1.4
+### 1.0.4
+
+- Add `widgets.filters.Boolean` class
 
 ### 1.0.3
 
