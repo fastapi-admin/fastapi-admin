@@ -32,15 +32,8 @@
 ## 本地运行示例
 
 1. 克隆仓库。
-2. 创建 `.env` 文件。
-
-   ```dotenv
-   DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
-   REDIS_URL=redis://localhost:6379/0
-   ```
-
-3. 运行 `docker-compose up -d --build`。
-4. 访问 <http://localhost:8000/admin/init> 创建第一个管理员。
+2. 运行 `docker-compose up -d --build`。
+3. 访问 <http://localhost:8000/admin/init> 创建第一个管理员。
 
 ## 文档
 
