@@ -7,3 +7,13 @@ services:
     network_mode: host
     image: fastapi-admin
     command: uvicorn examples.main:app_ --port 8000 --host 0.0.0.0
+    depends_on:
+    - redis
+
+  redis:
+    image: 'redis:6.2.5-alpine'
+    volumes:
+    - redis_data:/data
+
+volumes:
+  redis_data:
