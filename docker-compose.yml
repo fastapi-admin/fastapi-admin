@@ -5,7 +5,7 @@ services:
     restart: always
     env_file: .env
     image: fastapi-admin
-    command: uvicorn examples.main:app_ --port 8000 --host 0.0.0.0 --reload
+    command: bash -c "pybabel compile -d fastapi_admin/locales && uvicorn examples.main:app_ --port 8000 --host 0.0.0.0 --reload"
     depends_on:
     - db
     - redis
