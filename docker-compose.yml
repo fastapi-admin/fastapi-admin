@@ -8,7 +8,19 @@ services:
     image: fastapi-admin
     command: uvicorn examples.main:app_ --port 8000 --host 0.0.0.0
     depends_on:
+    - db
     - redis
+
+  db:
+    image: mysql:5.7
+    volumes:
+    - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: fastapi-admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
 
   redis:
     image: 'redis:6.2.5-alpine'
@@ -16,4 +28,5 @@ services:
     - redis_data:/data
 
 volumes:
+  db_data:
   redis_data:
