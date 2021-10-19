@@ -294,6 +294,15 @@ class Model(Resource):
                 ret.append(field)
         return ret
 
+    @classmethod
+    def get_fk_field(cls):
+        ret = []
+        for field in cls.fields or cls.model._meta.fields:
+            if isinstance(field, Field):
+                field = field.name
+            if field in cls.model._meta.fk_fields:
+                ret.append(field)
+        return ret
 
 class Dropdown(Resource):
     resources: List[Type[Resource]]
