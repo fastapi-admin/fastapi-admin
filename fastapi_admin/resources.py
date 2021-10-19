@@ -134,7 +134,11 @@ class Model(Resource):
                 continue
             if isinstance(input_, inputs.File):
                 cls.enctype = "multipart/form-data"
-            if isinstance(input_, inputs.ForeignKey) and name in obj._meta.fk_fields:
+            if (
+                isinstance(input_, inputs.ForeignKey)
+                and (obj is not None)
+                and name in obj._meta.fk_fields
+            ):
                 await obj.fetch_related(name)
                 # Value must be the string representation of the fk obj 
                 value = str(getattr(obj, name, None))
