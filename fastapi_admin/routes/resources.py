@@ -86,13 +86,14 @@ async def update(
 ):
     form = await request.form()
     data, m2m_data = await model_resource.resolve_data(request, form)
+    m2m_fields = model_resource.get_m2m_field()
     async with in_transaction() as conn:
         obj = (
             await model.filter(pk=pk)
             .using_db(conn)
             .select_for_update()
             .get()
-            .prefetch_related(*model_resource.get_m2m_field())
+            .prefetch_related(*m2m_fields)
         )
         await obj.update_from_dict(data).save(using_db=conn)
         for k, items in m2m_data.items():
@@ -105,7 +106,7 @@ async def update(
             .using_db(conn)
             .select_related(*model_resource.get_fk_field())
             .get()
-            .prefetch_related(*model_resource.get_m2m_field())
+            .prefetch_related(*m2m_fields)
         )
     inputs = await model_resource.get_inputs(request, obj)
     if "save" in form.keys():
