@@ -129,11 +129,17 @@ class Model(Resource):
         ret = []
         for field in cls.get_fields(is_display=False):
             input_ = field.input
+            name = input_.context.get("name")
             if isinstance(input_, inputs.DisplayOnly):
                 continue
             if isinstance(input_, inputs.File):
                 cls.enctype = "multipart/form-data"
-            name = input_.context.get("name")
+            if isinstance(input_, inputs.ForeignKey) and name in obj._meta.fk_fields:
+                await obj.fetch_related(name)
+                # Value must be the string representation of the fk obj 
+                value = str(getattr(obj, name, None))
+                ret.append(await input_.render(request, value))
+                continue
             ret.append(await input_.render(request, getattr(obj, name, None)))
         return ret
 
