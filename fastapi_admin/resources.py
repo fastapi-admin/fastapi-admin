@@ -169,6 +169,8 @@ class Model(Resource):
             if input_.context.get("disabled") or isinstance(input_, inputs.DisplayOnly):
                 continue
             name = input_.context.get("name")
+            if input_.context.get("null") and data.get(name) == "":
+                continue
             if isinstance(input_, inputs.ForeignKey):
                 v = data.getlist(name)[0]
                 model = await input_.model.get(id=v)
