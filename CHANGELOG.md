@@ -5,6 +5,7 @@
 ### 1.0.4
 
 - Add `widgets.filters.Boolean` class
+- Fix multiple json field input. (#98)
 
 ### 1.0.3
 
