@@ -12,8 +12,29 @@ from fastapi_admin.resources import Model as ModelResource
 from fastapi_admin.resources import render_values
 from fastapi_admin.responses import redirect
 from fastapi_admin.template import templates
+from fastapi_admin.resources import ComputeField
 
 router = APIRouter()
+
+
+def resolve_fetched_values(qs, model_resource: ModelResource):
+    """
+    Resolve which values to fetch from database.
+    Fetches all values by default + adds prefetched values specified in ComputeField.prefetch
+    """
+    # Fetch all fields by default
+    _fields = [
+                  field
+                  for field in qs.model._meta.fields_map.keys()
+                  if field in qs.model._meta.db_fields
+              ] + list(qs._annotations.keys())
+    fields_for_select = {field: field for field in _fields}
+    # Add prefetched from ComputeField
+    for f in model_resource.fields:
+        if isinstance(f, ComputeField):
+            for pf in getattr(f, 'prefetch', tuple()):
+                fields_for_select[pf] = pf
+    return fields_for_select
 
 
 @router.get("/{resource}/list")
@@ -37,7 +58,8 @@ async def list_view(
     else:
         page_size = model_resource.page_size
     qs = qs.offset((page_num - 1) * page_size)
-    values = await qs.values()
+    fetch_values = resolve_fetched_values(qs, model_resource)
+    values = await qs.values(**fetch_values)
     rendered_values, row_attributes, column_attributes, cell_attributes = await render_values(
         request, model_resource, fields, values
     )
