@@ -1,0 +1,193 @@
+# French (French) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-08-06 23:07+0800\n"
+"PO-Revision-Date: 2021-04-16 22:46+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr_FR\n"
+"Language-Team: fr_FR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: fastapi_admin/resources.py:91
+msgid "create"
+msgstr "Créer"
+
+#: fastapi_admin/resources.py:112
+msgid "update"
+msgstr "Mettre à jour"
+
+#: fastapi_admin/resources.py:114
+msgid "delete"
+msgstr "Supprimer"
+
+#: fastapi_admin/resources.py:120
+msgid "delete_selected"
+msgstr "Supprimer la sélection"
+
+#: fastapi_admin/providers/login.py:90
+msgid "login_failed"
+msgstr "La connexion à votre compte a échoué"
+
+#: fastapi_admin/providers/login.py:161
+msgid "confirm_password_different"
+msgstr "Le mot de passe de confirmation est différent"
+
+#: fastapi_admin/providers/login.py:196
+msgid "old_password_error"
+msgstr "Erreur de mot de passe ancien"
+
+#: fastapi_admin/providers/login.py:198
+msgid "new_password_different"
+msgstr "Le nouveau mot de passe est différent"
+
+#: fastapi_admin/templates/create.html:14
+#: fastapi_admin/templates/update.html:16
+msgid "save"
+msgstr "Enregistrer"
+
+#: fastapi_admin/templates/create.html:16
+msgid "save_and_add_another"
+msgstr "Enregistrer et ajouter un autre"
+
+#: fastapi_admin/templates/create.html:18
+#: fastapi_admin/templates/update.html:29
+msgid "return"
+msgstr "Retourner"
+
+#: fastapi_admin/templates/init.html:10
+msgid "Create first admin"
+msgstr "Créer un premier administrateur"
+
+#: fastapi_admin/templates/init.html:12
+#: fastapi_admin/templates/providers/login/login.html:44
+msgid "username"
+msgstr "Nom d'utilisateur"
+
+#: fastapi_admin/templates/init.html:14
+msgid "username_placeholder"
+msgstr "Saisissez un nom d'utilisateur"
+
+#: fastapi_admin/templates/init.html:18
+#: fastapi_admin/templates/providers/login/login.html:54
+msgid "password"
+msgstr "Mot de passe"
+
+#: fastapi_admin/templates/init.html:23
+msgid "password_placeholder"
+msgstr "Entrer un mot de passe"
+
+#: fastapi_admin/templates/init.html:31
+msgid "confirm_password"
+msgstr "Entrez le mot de passe à nouveau"
+
+#: fastapi_admin/templates/init.html:36
+msgid "confirm_password_placeholder"
+msgstr "Entrez le mot de passe à nouveau"
+
+#: fastapi_admin/templates/init.html:43
+#: fastapi_admin/templates/providers/login/password.html:32
+msgid "submit"
+msgstr "Soumettre"
+
+#: fastapi_admin/templates/list.html:13
+msgid "show"
+msgstr "Voir"
+
+#: fastapi_admin/templates/list.html:24
+msgid "entries"
+msgstr "entrées"
+
+#: fastapi_admin/templates/list.html:33
+msgid "search"
+msgstr "Search"
+
+#: fastapi_admin/templates/list.html:46
+msgid "bulk_actions"
+msgstr "Actions groupées"
+
+#: fastapi_admin/templates/list.html:125
+msgid "actions"
+msgstr "Actions"
+
+#: fastapi_admin/templates/list.html:156
+#, python-format
+msgid "Showing %(from)s to %(to)s of %(total)s entries"
+msgstr "Voir %(from)s de %(to)s à %(total)s entrées"
+
+#: fastapi_admin/templates/list.html:167
+msgid "prev_page"
+msgstr "Prec"
+
+#: fastapi_admin/templates/list.html:188
+msgid "next_page"
+msgstr "Suiv"
+
+#: fastapi_admin/templates/update.html:23
+msgid "save_and_return"
+msgstr "Enregistrer et retourner"
+
+#: fastapi_admin/templates/errors/403.html:21
+#: fastapi_admin/templates/errors/404.html:21
+#: fastapi_admin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "Retour à la page d'accueil"
+
+#: fastapi_admin/templates/providers/login/avatar.html:18
+#: fastapi_admin/templates/providers/login/password.html:6
+msgid "update_password"
+msgstr "Mettre à jour le mot de passe"
+
+#: fastapi_admin/templates/providers/login/avatar.html:24
+msgid "logout"
+msgstr "Se déconnecter"
+
+#: fastapi_admin/templates/providers/login/login.html:49
+msgid "login_username_placeholder"
+msgstr "Saisissez un nom d'utilisateur"
+
+#: fastapi_admin/templates/providers/login/login.html:59
+msgid "login_password_placeholder"
+msgstr "Entrer un mot de passe"
+
+#: fastapi_admin/templates/providers/login/login.html:75
+msgid "remember_me"
+msgstr "Se souvenir de moi"
+
+#: fastapi_admin/templates/providers/login/login.html:80
+msgid "sign_in"
+msgstr "Se connecter"
+
+#: fastapi_admin/templates/providers/login/password.html:12
+msgid "old_password"
+msgstr "Ancien mot de passe"
+
+#: fastapi_admin/templates/providers/login/password.html:15
+msgid "old_password_placeholder"
+msgstr "Entrez l'ancien mot de passe"
+
+#: fastapi_admin/templates/providers/login/password.html:19
+msgid "new_password"
+msgstr "Nouveau mot de passe"
+
+#: fastapi_admin/templates/providers/login/password.html:22
+msgid "new_password_placeholder"
+msgstr "Entrez un nouveau mot de passe"
+
+#: fastapi_admin/templates/providers/login/password.html:26
+msgid "re_new_password"
+msgstr "Confirmer le nouveau mot de passe"
+
+#: fastapi_admin/templates/providers/login/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "Entrez à nouveau le nouveau mot de passe"
+
