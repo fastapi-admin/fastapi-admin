@@ -104,7 +104,7 @@ class UsernamePasswordProvider(Provider):
             path=request.app.admin_path,
             httponly=True,
         )
-        await redis.set(constants.LOGIN_USER.format(token=token), admin.pk, ex=expire)
+        await redis.set(constants.LOGIN_USER.format(token=token), admin.pk, expire=expire)
         return response
 
     async def logout(self, request: Request):
