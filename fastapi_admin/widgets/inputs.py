@@ -134,6 +134,8 @@ class ManyToMany(Select):
 
     async def render(self, request: Request, value: Any):
         options = await self.get_options()
+        print(value)
+        print(options)
         selected = list(map(lambda x: x.pk, value.related_objects if value else []))
         for option in options:
             if option.get("value") in selected:
