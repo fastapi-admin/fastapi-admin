@@ -136,7 +136,10 @@ class ManyToMany(Select):
         options = await self.get_options()
         print(value,"imheree")
         print(options,"hereee")
-        selected = list(map(lambda x: x.pk, value.related_objects if value else []))
+        if value:
+            selected = list(map(lambda x: x.pk, value.related_objects if value else []))
+        else:
+            selected = []
         for option in options:
             if option.get("value") in selected:
                 option["selected"] = True
