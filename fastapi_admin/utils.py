@@ -20,4 +20,8 @@ def check_password(password: str, password_hash: str):
 
 
 def hash_password(password: str):
-    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    try:
+        return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    except AttributeError:
+        return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
