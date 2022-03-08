@@ -18,7 +18,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/fastapi-admin/fastapi-admin.git"
-version = "1.0.4"
+version = "1.0.5"
 
 [tool.poetry.dependencies]
 Babel = "*"

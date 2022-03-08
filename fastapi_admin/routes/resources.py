@@ -28,8 +28,11 @@ async def list_view(
 ):
     fields_label = model_resource.get_fields_label()
     fields = model_resource.get_fields()
+    fk_fields = model_resource.get_fk_field()
     qs = model.all()
-    params, qs = await model_resource.resolve_query_params(request, dict(request.query_params), qs)
+    params, qs = await model_resource.resolve_query_params(
+        request, dict(request.query_params), qs
+    )
     filters = await model_resource.get_filters(request, params)
     total = await qs.count()
     if page_size:
@@ -37,10 +40,23 @@ async def list_view(
     else:
         page_size = model_resource.page_size
     qs = qs.offset((page_num - 1) * page_size)
-    values = await qs.values()
-    rendered_values, row_attributes, column_attributes, cell_attributes = await render_values(
-        request, model_resource, fields, values
-    )
+    if fk_fields:
+        objects = await qs.select_related(*fk_fields)
+        values = []
+        for obj in objects:
+            obj_as_dict = dict(obj)
+            for attr in fk_fields:
+                obj_as_dict[attr] = getattr(obj, attr)
+            values.append(obj_as_dict)
+    else:
+        values = await qs.values()
+
+    (
+        rendered_values,
+        row_attributes,
+        column_attributes,
+        cell_attributes,
+    ) = await render_values(request, model_resource, fields, values)
     context = {
         "request": request,
         "resources": resources,
@@ -86,13 +102,14 @@ async def update(
 ):
     form = await request.form()
     data, m2m_data = await model_resource.resolve_data(request, form)
+    m2m_fields = model_resource.get_m2m_field()
     async with in_transaction() as conn:
         obj = (
             await model.filter(pk=pk)
             .using_db(conn)
             .select_for_update()
             .get()
-            .prefetch_related(*model_resource.get_m2m_field())
+            .prefetch_related(*m2m_fields)
         )
         await obj.update_from_dict(data).save(using_db=conn)
         for k, items in m2m_data.items():
@@ -103,8 +120,9 @@ async def update(
         obj = (
             await model.filter(pk=pk)
             .using_db(conn)
+            .select_related(*model_resource.get_fk_field())
             .get()
-            .prefetch_related(*model_resource.get_m2m_field())
+            .prefetch_related(*m2m_fields)
         )
     inputs = await model_resource.get_inputs(request, obj)
     if "save" in form.keys():
@@ -239,10 +257,14 @@ async def create(
 @router.delete("/{resource}/delete/{pk}")
 async def delete(request: Request, pk: str, model: Model = Depends(get_model)):
     await model.filter(pk=pk).delete()
-    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
+    return RedirectResponse(
+        url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER
+    )
 
 
 @router.delete("/{resource}/delete")
 async def bulk_delete(request: Request, ids: str, model: Model = Depends(get_model)):
     await model.filter(pk__in=ids.split(",")).delete()
-    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
+    return RedirectResponse(
+        url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER
+    )

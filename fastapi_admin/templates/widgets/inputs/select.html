@@ -3,7 +3,7 @@
         <div class="form-label">{{ label }}</div>
         <select class="form-select" name="{{ name }}" id="{{ id }}">
             {% for option in options %}
-                <option value="{{ option[1] }}" {% if option[1] == value %}
+                <option value="{{ option[1] }}" {% if option[0] == value %}
                         selected
                 {% endif %} >{{ option[0] }}</option>
             {% endfor %}
