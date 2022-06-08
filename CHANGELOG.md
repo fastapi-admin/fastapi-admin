@@ -6,6 +6,7 @@
 
 - Add `widgets.filters.Boolean` class
 - Fix multiple json field input. (#98)
+- Fix `jinja2.ext.autoescape` error.
 
 ### 1.0.3
 
