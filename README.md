@@ -56,7 +56,7 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.io/admin/lo
 
 ## Documentation
 
-See documentation at <https://fastapi-admin.github.io>.
+See documentation at <https://fastapi-admin-docs.long2ice.io>.
 
 ## License
 
