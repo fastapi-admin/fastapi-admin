@@ -4,6 +4,7 @@ from starlette.requests import Request
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER
 from tortoise import Model
+from tortoise.exceptions import BaseORMException
 from tortoise.fields import ManyToManyRelation
 from tortoise.transactions import in_transaction
 
@@ -86,28 +87,33 @@ async def update(
 ):
     form = await request.form()
     data, m2m_data = await model_resource.resolve_data(request, form)
-    async with in_transaction() as conn:
-        obj = (
-            await model.filter(pk=pk)
-            .using_db(conn)
-            .select_for_update()
-            .get()
-            .prefetch_related(*model_resource.get_m2m_field())
-        )
-        await obj.update_from_dict(data).save(using_db=conn)
-        for k, items in m2m_data.items():
-            m2m_obj = getattr(obj, k)
-            await m2m_obj.clear()
-            if items:
-                await m2m_obj.add(*items)
-        obj = (
-            await model.filter(pk=pk)
-            .using_db(conn)
-            .get()
-            .prefetch_related(*model_resource.get_m2m_field())
-        )
+    error = await model_resource.validate_data(request, data, m2m_data, pk=pk)
+    obj = None
+
+    if not error:
+        async with in_transaction() as conn:
+            obj = (
+                await model.filter(pk=pk)
+                .using_db(conn)
+                .select_for_update()
+                .get()
+                .prefetch_related(*model_resource.get_m2m_field())
+            )
+            await obj.update_from_dict(data).save(using_db=conn)
+            for k, items in m2m_data.items():
+                m2m_obj = getattr(obj, k)
+                await m2m_obj.clear()
+                if items:
+                    await m2m_obj.add(*items)
+            obj = (
+                await model.filter(pk=pk)
+                .using_db(conn)
+                .get()
+                .prefetch_related(*model_resource.get_m2m_field())
+            )
+
     inputs = await model_resource.get_inputs(request, obj)
-    if "save" in form.keys():
+    if error or "save" in form.keys():
         context = {
             "request": request,
             "resources": resources,
@@ -118,6 +124,7 @@ async def update(
             "pk": pk,
             "page_title": model_resource.page_title,
             "page_pre_title": model_resource.page_pre_title,
+            "error": error
         }
         try:
             return templates.TemplateResponse(
@@ -207,13 +214,20 @@ async def create(
     inputs = await model_resource.get_inputs(request)
     form = await request.form()
     data, m2m_data = await model_resource.resolve_data(request, form)
-    async with in_transaction() as conn:
-        obj = await model.create(**data, using_db=conn)
-        for k, items in m2m_data.items():
-            m2m_obj = getattr(obj, k)  # type:ManyToManyRelation
-            await m2m_obj.add(*items, using_db=conn)
-    if "save" in form.keys():
-        return redirect(request, "list_view", resource=resource)
+    error = await model_resource.validate_data(request, data, m2m_data, pk=None)
+    if not error:
+        try:
+            async with in_transaction() as conn:
+                obj = await model.create(**data, using_db=conn)
+                for k, items in m2m_data.items():
+                    m2m_obj = getattr(obj, k)  # type:ManyToManyRelation
+                    await m2m_obj.add(*items, using_db=conn)
+        except BaseORMException as exc:
+            error = str(exc)
+
+        if not error and "save" in form.keys():
+            return redirect(request, "list_view", resource=resource)
+
     context = {
         "request": request,
         "resources": resources,
@@ -223,6 +237,7 @@ async def create(
         "model_resource": model_resource,
         "page_title": model_resource.page_title,
         "page_pre_title": model_resource.page_pre_title,
+        "error": error,
     }
     try:
         return templates.TemplateResponse(
