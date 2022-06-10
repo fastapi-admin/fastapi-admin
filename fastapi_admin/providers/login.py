@@ -28,13 +28,13 @@ class UsernamePasswordProvider(Provider):
     access_token = "access_token"
 
     def __init__(
-        self,
-        admin_model: Type[AbstractAdmin],
-        login_path="/login",
-        logout_path="/logout",
-        template="providers/login/login.html",
-        login_title="Login to your account",
-        login_logo_url: str = None,
+            self,
+            admin_model: Type[AbstractAdmin],
+            login_path="/login",
+            logout_path="/logout",
+            template="providers/login/login.html",
+            login_title="Login to your account",
+            login_logo_url: str = None,
     ):
         self.login_path = login_path
         self.logout_path = logout_path
@@ -44,8 +44,8 @@ class UsernamePasswordProvider(Provider):
         self.login_logo_url = login_logo_url
 
     async def login_view(
-        self,
-        request: Request,
+            self,
+            request: Request,
     ):
         return templates.TemplateResponse(
             self.template,
@@ -104,7 +104,7 @@ class UsernamePasswordProvider(Provider):
             path=request.app.admin_path,
             httponly=True,
         )
-        await redis.set(constants.LOGIN_USER.format(token=token), admin.pk, expire=expire)
+        await redis.set(constants.LOGIN_USER.format(token=token), admin.pk, ex=expire)
         return response
 
     async def logout(self, request: Request):
@@ -115,9 +115,9 @@ class UsernamePasswordProvider(Provider):
         return response
 
     async def authenticate(
-        self,
-        request: Request,
-        call_next: RequestResponseEndpoint,
+            self,
+            request: Request,
+            call_next: RequestResponseEndpoint,
     ):
         redis = request.app.redis  # type:Redis
         token = request.cookies.get(self.access_token)
@@ -145,8 +145,8 @@ class UsernamePasswordProvider(Provider):
         return templates.TemplateResponse("init.html", context={"request": request})
 
     async def init(
-        self,
-        request: Request,
+            self,
+            request: Request,
     ):
         exists = await self.admin_model.all().limit(1).exists()
         if exists:
@@ -170,9 +170,9 @@ class UsernamePasswordProvider(Provider):
         )
 
     async def password_view(
-        self,
-        request: Request,
-        resources=Depends(get_resources),
+            self,
+            request: Request,
+            resources=Depends(get_resources),
     ):
         return templates.TemplateResponse(
             "providers/login/password.html",
@@ -183,13 +183,13 @@ class UsernamePasswordProvider(Provider):
         )
 
     async def password(
-        self,
-        request: Request,
-        old_password: str = Form(...),
-        new_password: str = Form(...),
-        re_new_password: str = Form(...),
-        admin: AbstractAdmin = Depends(get_current_admin),
-        resources=Depends(get_resources),
+            self,
+            request: Request,
+            old_password: str = Form(...),
+            new_password: str = Form(...),
+            re_new_password: str = Form(...),
+            admin: AbstractAdmin = Depends(get_current_admin),
+            resources=Depends(get_resources),
     ):
         error = None
         if not check_password(old_password, admin.password):

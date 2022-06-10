@@ -22,19 +22,19 @@
 
 </style>
 <script>
-    const container = document.getElementById("{{name}}")
-    let options = {{options|safe}};
-    if (Object.keys(options).length === 0) {
-        options = {
+    const container_{{name}} = document.getElementById("{{name}}")
+    let options_{{name}} = {{options|safe}};
+    if (Object.keys(options_{{name}}).length === 0) {
+        options_{{name}} = {
             modes: ['tree', 'view', 'form', 'code', 'text', 'preview'],
         }
     }
-    options.onChangeText = function (json) {
+    options_{{name}}.onChangeText = function (json) {
         $('input[name={{ name }}]').val(json);
     }
-    const editor = new JSONEditor(container, options)
+    const editor_{{name}} = new JSONEditor(container_{{name}}, options_{{name}})
     {% if value %}
-        editor.set({{ value|safe }})
+        editor_{{name}}.set({{ value|safe }})
     {% endif %}
-    editor.expandAll();
+    editor_{{name}}.expandAll();
 </script>

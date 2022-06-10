@@ -50,10 +50,10 @@ async def not_found_error_exception(request: Request, exc: HTTPException):
                                       status_code=exc.status_code,
                                       context={
                                           "request":
-                                          request,
+                                              request,
                                           "redirect_url":
-                                          request.app.admin_path +
-                                          app.login_provider.login_path
+                                              request.app.admin_path +
+                                              app.login_provider.login_path
                                       })
 
 
@@ -61,3 +61,8 @@ async def forbidden_error_exception(request: Request, exc: HTTPException):
     return templates.TemplateResponse("errors/403.html",
                                       status_code=exc.status_code,
                                       context={"request": request})
+
+
+async def not_authenticate_error_exception(request: Request,
+                                           exc: HTTPException):
+    return request.app.login_provider.redirect_login(request)

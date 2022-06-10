@@ -5,6 +5,7 @@ from typing import Optional
 from starlette.requests import Request
 
 from fastapi_admin import constants
+from fastapi_admin.utils import localtime
 from fastapi_admin.widgets import Widget
 
 
@@ -21,7 +22,7 @@ class DatetimeDisplay(Display):
 
     async def render(self, request: Request, value: datetime):
         return await super(DatetimeDisplay, self).render(
-            request, value.strftime(self.format_) if value else None
+            request, localtime(value).strftime(self.format_) if value else None
         )
 
 

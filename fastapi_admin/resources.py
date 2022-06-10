@@ -37,11 +37,11 @@ class Field:
     input: inputs.Input
 
     def __init__(
-        self,
-        name: str,
-        label: str,
-        display: Optional[displays.Display] = None,
-        input_: Optional[Widget] = None,
+            self,
+            name: str,
+            label: str,
+            display: Optional[displays.Display] = None,
+            input_: Optional[Widget] = None,
     ):
         self.name = name
         self.label = label
@@ -88,22 +88,25 @@ class Model(Resource):
     page_title: Optional[str] = None
     filters: Optional[List[Union[str, Filter]]] = []
     can_create: bool = True
+    can_delete: bool = True
     enctype = "application/x-www-form-urlencoded"
 
     async def get_compute_fields(self, request: Request) -> List[ComputeField]:
         return []
 
     async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
-        return [
-            ToolbarAction(
-                label=_("create"),
-                icon="fas fa-plus",
-                name="create",
-                method=Method.GET,
-                ajax=False,
-                class_="btn-dark",
-            )
-        ]
+        if self.can_create:
+            return [
+                ToolbarAction(
+                    label=_("create"),
+                    icon="fas fa-plus",
+                    name="create",
+                    method=Method.GET,
+                    ajax=False,
+                    class_="btn-dark",
+                )
+            ]
+        return []
 
     async def row_attributes(self, request: Request, obj: dict) -> dict:
         return {}
@@ -115,22 +118,30 @@ class Model(Resource):
         return {}
 
     async def get_actions(self, request: Request) -> List[Action]:
+        if self.can_delete:
+            return [
+                Action(
+                    label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False
+                ),
+                Action(label=_("delete"), icon="ti ti-trash", name="delete", method=Method.DELETE),
+            ]
         return [
             Action(
                 label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False
-            ),
-            Action(label=_("delete"), icon="ti ti-trash", name="delete", method=Method.DELETE),
+            )
         ]
 
     async def get_bulk_actions(self, request: Request) -> List[Action]:
-        return [
-            Action(
-                label=_("delete_selected"),
-                icon="ti ti-trash",
-                name="delete",
-                method=Method.DELETE,
-            ),
-        ]
+        if self.can_delete:
+            return [
+                Action(
+                    label=_("delete_selected"),
+                    icon="ti ti-trash",
+                    name="delete",
+                    method=Method.DELETE,
+                ),
+            ]
+        return []
 
     @classmethod
     async def get_inputs(cls, request: Request, obj: Optional[TortoiseModel] = None):
@@ -174,7 +185,7 @@ class Model(Resource):
             else:
                 v = data.get(name)
                 value = await input_.parse_value(request, v)
-                if value is None:
+                if value is None or value == '':
                     continue
                 ret[name] = value
         return ret, m2m_ret
@@ -265,7 +276,7 @@ class Model(Resource):
                 ret.append(field)
             else:
                 if (is_display and isinstance(field.display, displays.InputOnly)) or (
-                    not is_display and isinstance(field.input, inputs.DisplayOnly)
+                        not is_display and isinstance(field.input, inputs.DisplayOnly)
                 ):
                     continue
                 ret.append(field)
