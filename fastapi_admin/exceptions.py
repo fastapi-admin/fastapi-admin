@@ -66,3 +66,9 @@ async def forbidden_error_exception(request: Request, exc: HTTPException):
 async def not_authenticate_error_exception(request: Request,
                                            exc: HTTPException):
     return request.app.login_provider.redirect_login(request)
+
+
+async def unauthorized_error_exception(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(
+        "errors/401.html", status_code=exc.status_code, context={"request": request}
+    )

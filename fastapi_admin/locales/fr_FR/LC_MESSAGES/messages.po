@@ -1,4 +1,4 @@
-# Chinese (Simplified, China) translations for PROJECT.
+# French (French) translations for PROJECT.
 # Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -10,9 +10,9 @@ msgstr ""
 "POT-Creation-Date: 2021-08-06 23:07+0800\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_Hans_CN\n"
-"Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: fr_FR\n"
+"Language-Team: fr_FR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,178 +20,174 @@ msgstr ""
 
 #: fastapi_admin/resources.py:91
 msgid "create"
-msgstr "创建"
+msgstr "Créer"
 
 #: fastapi_admin/resources.py:112
 msgid "update"
-msgstr "编辑"
+msgstr "Mettre à jour"
 
 #: fastapi_admin/resources.py:114
 msgid "delete"
-msgstr "删除"
+msgstr "Supprimer"
 
 #: fastapi_admin/resources.py:120
 msgid "delete_selected"
-msgstr "删除选中"
+msgstr "Supprimer la sélection"
 
 #: fastapi_admin/providers/login.py:90
 msgid "login_failed"
-msgstr "登录失败"
+msgstr "La connexion à votre compte a échoué"
 
 #: fastapi_admin/providers/login.py:161
 msgid "confirm_password_different"
-msgstr "密码不一致"
+msgstr "Le mot de passe de confirmation est différent"
 
 #: fastapi_admin/providers/login.py:196
 msgid "old_password_error"
-msgstr "旧密码错误"
+msgstr "Erreur de mot de passe ancien"
 
 #: fastapi_admin/providers/login.py:198
 msgid "new_password_different"
-msgstr "新密码不一致"
+msgstr "Le nouveau mot de passe est différent"
 
 #: fastapi_admin/templates/create.html:14
 #: fastapi_admin/templates/update.html:16
 msgid "save"
-msgstr "保存"
+msgstr "Enregistrer"
 
 #: fastapi_admin/templates/create.html:16
 msgid "save_and_add_another"
-msgstr "保存并新增"
+msgstr "Enregistrer et ajouter un autre"
 
 #: fastapi_admin/templates/create.html:18
 #: fastapi_admin/templates/update.html:29
 msgid "return"
-msgstr "返回"
+msgstr "Retourner"
 
 #: fastapi_admin/templates/init.html:10
 msgid "Create first admin"
-msgstr ""
+msgstr "Créer un premier administrateur"
 
 #: fastapi_admin/templates/init.html:12
 #: fastapi_admin/templates/providers/login/login.html:44
 msgid "username"
-msgstr "用户名"
+msgstr "Nom d'utilisateur"
 
 #: fastapi_admin/templates/init.html:14
 msgid "username_placeholder"
-msgstr "请输入用户名"
+msgstr "Saisissez un nom d'utilisateur"
 
 #: fastapi_admin/templates/init.html:18
 #: fastapi_admin/templates/providers/login/login.html:54
 msgid "password"
-msgstr "密码"
+msgstr "Mot de passe"
 
 #: fastapi_admin/templates/init.html:23
 msgid "password_placeholder"
-msgstr "请输入密码"
+msgstr "Entrer un mot de passe"
 
 #: fastapi_admin/templates/init.html:31
 msgid "confirm_password"
-msgstr "请确认密码"
+msgstr "Entrez le mot de passe à nouveau"
 
 #: fastapi_admin/templates/init.html:36
 msgid "confirm_password_placeholder"
-msgstr "请再次输入密码"
+msgstr "Entrez le mot de passe à nouveau"
 
 #: fastapi_admin/templates/init.html:43
 #: fastapi_admin/templates/providers/login/password.html:32
 msgid "submit"
-msgstr "提交"
+msgstr "Soumettre"
 
 #: fastapi_admin/templates/list.html:13
 msgid "show"
-msgstr "显示"
+msgstr "Voir"
 
 #: fastapi_admin/templates/list.html:24
 msgid "entries"
-msgstr "项"
+msgstr "entrées"
 
 #: fastapi_admin/templates/list.html:33
 msgid "search"
-msgstr "查询"
+msgstr "Search"
 
 #: fastapi_admin/templates/list.html:46
 msgid "bulk_actions"
-msgstr "批量操作"
+msgstr "Actions groupées"
 
 #: fastapi_admin/templates/list.html:125
 msgid "actions"
-msgstr "动作"
+msgstr "Actions"
 
 #: fastapi_admin/templates/list.html:156
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
-msgstr "显示 %(from)s 到 %(to)s 共 %(total)s 项"
+msgstr "Voir %(from)s de %(to)s à %(total)s entrées"
 
 #: fastapi_admin/templates/list.html:167
 msgid "prev_page"
-msgstr "上一页"
+msgstr "Prec"
 
 #: fastapi_admin/templates/list.html:188
 msgid "next_page"
-msgstr "下一页"
+msgstr "Suiv"
 
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"
-msgstr "保存并返回"
+msgstr "Enregistrer et retourner"
 
 #: fastapi_admin/templates/errors/403.html:21
 #: fastapi_admin/templates/errors/404.html:21
 #: fastapi_admin/templates/errors/500.html:21
 msgid "return_home"
-msgstr "返回首页"
-
-#: fastapi_admin/templates/errors/404.html:21
-msgid "return_login"
-msgstr "去登陆"
+msgstr "Retour à la page d'accueil"
 
 #: fastapi_admin/templates/providers/login/avatar.html:18
 #: fastapi_admin/templates/providers/login/password.html:6
 msgid "update_password"
-msgstr "修改密码"
+msgstr "Mettre à jour le mot de passe"
 
 #: fastapi_admin/templates/providers/login/avatar.html:24
 msgid "logout"
-msgstr "退出登录"
+msgstr "Se déconnecter"
 
 #: fastapi_admin/templates/providers/login/login.html:49
 msgid "login_username_placeholder"
-msgstr "请输入用户名"
+msgstr "Saisissez un nom d'utilisateur"
 
 #: fastapi_admin/templates/providers/login/login.html:59
 msgid "login_password_placeholder"
-msgstr "请输入密码"
+msgstr "Entrer un mot de passe"
 
 #: fastapi_admin/templates/providers/login/login.html:75
 msgid "remember_me"
-msgstr "记住我"
+msgstr "Se souvenir de moi"
 
 #: fastapi_admin/templates/providers/login/login.html:80
 msgid "sign_in"
-msgstr "登录"
+msgstr "Se connecter"
 
 #: fastapi_admin/templates/providers/login/password.html:12
 msgid "old_password"
-msgstr "旧密码"
+msgstr "Ancien mot de passe"
 
 #: fastapi_admin/templates/providers/login/password.html:15
 msgid "old_password_placeholder"
-msgstr "请输入旧密码"
+msgstr "Entrez l'ancien mot de passe"
 
 #: fastapi_admin/templates/providers/login/password.html:19
 msgid "new_password"
-msgstr "新密码"
+msgstr "Nouveau mot de passe"
 
 #: fastapi_admin/templates/providers/login/password.html:22
 msgid "new_password_placeholder"
-msgstr "请输入新密码"
+msgstr "Entrez un nouveau mot de passe"
 
 #: fastapi_admin/templates/providers/login/password.html:26
 msgid "re_new_password"
-msgstr "确认新密码"
+msgstr "Confirmer le nouveau mot de passe"
 
 #: fastapi_admin/templates/providers/login/password.html:29
 msgid "re_new_password_placeholder"
-msgstr "请再次输入新密码"
+msgstr "Entrez à nouveau le nouveau mot de passe"
 

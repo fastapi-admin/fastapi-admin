@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler-flags.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler-payments.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler-vendors.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    <script src="https://kit.fontawesome.com/65694932fa.js" crossorigin="anonymous"></script>
+    {% if request.app.favicon_url %}
+        <link rel="icon" href="{{ request.app.favicon_url }}">
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.js"></script>
+    <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4103172601745047"
+            crossorigin="anonymous"></script>
+    {% block head %}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-T7MFB9RV5E"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', 'G-T7MFB9RV5E');
+        </script>
+    {% endblock %}
+    <title>{{ title }}</title>
+</head>
+{% block outer_body %}
+    <body>
+    {% block body %}
+    {% endblock %}
+    </body>
+{% endblock %}
+</html>

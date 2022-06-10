@@ -4,6 +4,7 @@ from fastapi import Depends, HTTPException
 from fastapi.params import Path
 from starlette.requests import Request
 from starlette.status import HTTP_404_NOT_FOUND, HTTP_401_UNAUTHORIZED
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
 from tortoise import Tortoise
 
 from fastapi_admin.exceptions import InvalidResource
@@ -27,11 +28,9 @@ async def get_model_resource(request: Request, model=Depends(get_model)):
     actions = await model_resource.get_actions(request)
     bulk_actions = await model_resource.get_bulk_actions(request)
     toolbar_actions = await model_resource.get_toolbar_actions(request)
-    compute_fields = await model_resource.get_compute_fields(request)
     setattr(model_resource, "toolbar_actions", toolbar_actions)
     setattr(model_resource, "actions", actions)
     setattr(model_resource, "bulk_actions", bulk_actions)
-    setattr(model_resource, "compute_fields", compute_fields)
     return model_resource
 
 

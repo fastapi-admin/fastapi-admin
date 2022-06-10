@@ -13,12 +13,12 @@
 
 ## 线上 DEMO
 
-你可以在 [此处](https://fastapi-admin.long2ice.cn/admin/login) 查看线上 demo。
+你可以在 [此处](https://fastapi-admin.long2ice.io/admin/login) 查看线上 demo。
 
 - 用户名： `admin`
 - 密码： `123456`
 
-或者在 [此处](https://fastapi-admin-pro.long2ice.cn/admin/login) 查看 Pro 版本 demo。
+或者在 [此处](https://fastapi-admin-pro.long2ice.io/admin/login) 查看 Pro 版本 demo。
 
 - 用户名： `admin`
 - 密码： `123456`
@@ -36,10 +36,7 @@
 
    ```dotenv
    DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   REDIS_PASSWORD=
-   REDIS_DB=0
+   REDIS_URL=redis://localhost:6379/0
    ```
 
 3. 运行 `docker-compose up -d --build`。
@@ -47,7 +44,7 @@
 
 ## 文档
 
-文档地址 <https://fastapi-admin-docs.long2ice.cn>。
+文档地址 <https://fastapi-admin.github.io>。
 
 ## 许可
 

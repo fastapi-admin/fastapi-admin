@@ -1,4 +1,4 @@
-from typing import List, Optional, Type, Union
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseModel, validator
 from starlette.datastructures import FormData
@@ -44,15 +44,20 @@ class Field:
             input_: Optional[Widget] = None,
     ):
         self.name = name
-        self.label = label
+        self.label = label or name.title()
         if not display:
             display = displays.Display()
-        display.context.update(label=label)
+        display.context.update(label=self.label)
         self.display = display
         if not input_:
             input_ = inputs.Input()
-        input_.context.update(label=label, name=name)
+        input_.context.update(label=self.label, name=name)
         self.input = input_
+
+
+class ComputeField(Field):
+    async def get_value(self, request: Request, obj: dict):
+        return obj.get(self.name)
 
 
 class Action(BaseModel):
@@ -72,21 +77,13 @@ class ToolbarAction(Action):
     class_: Optional[str]
 
 
-class ComputeField(BaseModel):
-    label: str
-    name: str
-
-    async def get_value(self, request: Request, obj: dict):
-        return obj.get(self.name)
-
-
 class Model(Resource):
     model: Type[TortoiseModel]
-    fields: List[Union[str, Field]] = []
+    fields: List[Union[str, Field, ComputeField]] = []
     page_size: int = 10
     page_pre_title: Optional[str] = None
     page_title: Optional[str] = None
-    filters: Optional[List[Union[str, Filter]]] = []
+    filters: List[Union[str, Filter]] = []
     can_create: bool = True
     can_delete: bool = True
     enctype = "application/x-www-form-urlencoded"
@@ -270,16 +267,28 @@ class Model(Resource):
     @classmethod
     def get_fields(cls, is_display: bool = True):
         ret = []
-        for field in cls.fields or cls.model._meta.db_fields:
+        pk_column = cls.model._meta.db_pk_column
+        for field in cls.fields or cls.model._meta.fields:
             if isinstance(field, str):
+                if field == pk_column:
+                    continue
                 field = cls._get_display_input_field(field)
-                ret.append(field)
-            else:
+            if isinstance(field, ComputeField) and not is_display:
+                continue
+            elif isinstance(field, Field):
+                if field.name == pk_column:
+                    continue
                 if (is_display and isinstance(field.display, displays.InputOnly)) or (
                         not is_display and isinstance(field.input, inputs.DisplayOnly)
                 ):
                     continue
-                ret.append(field)
+            if (
+                field.name in cls.model._meta.fetch_fields
+                and field.name not in cls.model._meta.fk_fields | cls.model._meta.m2m_fields
+            ):
+                continue
+            ret.append(field)
+        ret.insert(0, cls._get_display_input_field(pk_column))
         return ret
 
     @classmethod
@@ -290,6 +299,8 @@ class Model(Resource):
     def get_m2m_field(cls):
         ret = []
         for field in cls.fields or cls.model._meta.fields:
+            if isinstance(field, Field):
+                field = field.name
             if field in cls.model._meta.m2m_fields:
                 ret.append(field)
         return ret
@@ -297,3 +308,46 @@ class Model(Resource):
 
 class Dropdown(Resource):
     resources: List[Type[Resource]]
+
+
+async def render_values(
+    request: Request,
+    model: "Model",
+    fields: List["Field"],
+    values: List[Dict[str, Any]],
+    display: bool = True,
+) -> Tuple[List[List[Any]], List[dict], List[dict], List[List[dict]]]:
+    """
+    render values with template render
+    :params model:
+    :params request:
+    :params fields:
+    :params values:
+    :params display:
+    :params request:
+    :params model:
+    :return:
+    """
+    ret = []
+    cell_attributes: List[List[dict]] = []
+    row_attributes: List[dict] = []
+    column_attributes: List[dict] = []
+    for field in fields:
+        column_attributes.append(await model.column_attributes(request, field))
+    for value in values:
+        row_attributes.append(await model.row_attributes(request, value))
+        item = []
+        cell_item = []
+        for field in fields:
+            if isinstance(field, ComputeField):
+                v = await field.get_value(request, value)
+            else:
+                v = value.get(field.name)
+            cell_item.append(await model.cell_attributes(request, value, field))
+            if display:
+                item.append(await field.display.render(request, v))
+            else:
+                item.append(await field.input.render(request, v))
+        ret.append(item)
+        cell_attributes.append(cell_item)
+    return ret, row_attributes, column_attributes, cell_attributes

@@ -152,7 +152,7 @@ class GithubLink(Link):
 @app.register
 class DocumentationLink(Link):
     label = "Documentation"
-    url = "https://fastapi-admin-docs.long2ice.cn"
+    url = "https://fastapi-admin.github.io"
     icon = "fas fa-file-code"
     target = "_blank"
 
@@ -160,6 +160,6 @@ class DocumentationLink(Link):
 @app.register
 class ProLink(Link):
     label = "Pro Version"
-    url = "https://fastapi-admin-pro.long2ice.cn/admin/login"
+    url = "https://fastapi-admin-pro.long2ice.io/admin/login"
     icon = "far fa-heart"
     target = "_blank"

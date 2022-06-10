@@ -2,8 +2,10 @@
 
 [![image](https://img.shields.io/pypi/v/fastapi-admin.svg?style=flat)](https://pypi.python.org/pypi/fastapi-admin)
 [![image](https://img.shields.io/github/license/fastapi-admin/fastapi-admin)](https://github.com/fastapi-admin/fastapi-admin)
-[![image](https://github.com/fastapi-admin/fastapi-admin/workflows/gh-pages/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:gh-pages)
+[![image](https://github.com/fastapi-admin/fastapi-admin/workflows/deploy/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:deploy)
 [![image](https://github.com/fastapi-admin/fastapi-admin/workflows/pypi/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:pypi)
+
+[中文文档](./README-zh.md)
 
 ## Introduction
 
@@ -23,12 +25,12 @@ inspired by Django admin.
 
 ## Online Demo
 
-You can check a online demo [here](https://fastapi-admin.long2ice.cn/admin/login).
+You can check a online demo [here](https://fastapi-admin.long2ice.io/admin/login).
 
 - username: `admin`
 - password: `123456`
 
-Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/login).
+Or pro version online demo [here](https://fastapi-admin-pro.long2ice.io/admin/login).
 
 - username: `admin`
 - password: `123456`
@@ -46,10 +48,7 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/lo
 
    ```dotenv
    DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   REDIS_PASSWORD=
-   REDIS_DB=0
+   REDIS_URL=redis://localhost:6379/0
    ```
 
 3. Run `docker-compose up -d --build`.
@@ -57,7 +56,7 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.cn/admin/lo
 
 ## Documentation
 
-See documentation at <https://fastapi-admin-docs.long2ice.cn>.
+See documentation at <https://fastapi-admin-docs.long2ice.io>.
 
 ## License
 

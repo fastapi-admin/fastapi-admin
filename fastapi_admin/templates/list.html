@@ -47,7 +47,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     {% for action in model_resource.bulk_actions %}
-                        {% set url = request.app.admin_path + '/' + resource +'/bulk_actions/'+ action.name %}
+                        {% set url = request.app.admin_path + '/' + resource +'/'+ action.name %}
                         <a
                                 class="dropdown-item"
                                 {% if action.ajax %}
@@ -90,9 +90,6 @@
                         {% endif %}
                         {% for label in fields_label %}
                             <th>{{ label }}</th>
-                        {% endfor %}
-                        {% for compute_field in model_resource.compute_fields %}
-                            <th>{{ compute_field.label }}</th>
                         {% endfor %}
                         {% if model_resource.actions %}
                             <th></th>

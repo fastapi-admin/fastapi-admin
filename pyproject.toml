@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["long2ice <long2ice@gmail.com>"]
 description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
-documentation = "https://fastapi-admin-docs.long2ice.cn"
+documentation = "https://fastapi-admin.github.io"
 homepage = "https://github.com/fastapi-admin/fastapi-admin"
 include = [
     "LICENSE",
@@ -18,7 +18,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/fastapi-admin/fastapi-admin.git"
-version = "1.0.2"
+version = "1.0.4"
 
 [tool.poetry.dependencies]
 Babel = "*"
@@ -47,11 +47,8 @@ mypy = "*"
 pylint = "*"
 # example
 asyncmy = "*"
+asyncpg = "*"
 python-dotenv = "*"
-# docs
-mkdocs = "*"
-mkdocs-git-revision-date-localized-plugin = "*"
-mkdocs-material = "*"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

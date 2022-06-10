@@ -2,6 +2,20 @@
 
 ## 1.0
 
+### 1.0.4
+
+- Add `widgets.filters.Boolean` class
+- Fix multiple json field input. (#98)
+- Fix `jinja2.ext.autoescape` error.
+
+### 1.0.3
+
+- Fix action link.
+- Fix `get_m2m_field`.
+- Refactor `ComputeField` and remove `get_compute_fields`.
+- Upgrade `aioredis` to `2.0`.
+- Make `get_current_admin` error to `401` and add `401` error page.
+
 ### 1.0.2
 
 - Use `str` type for `pk` path param. (#52)

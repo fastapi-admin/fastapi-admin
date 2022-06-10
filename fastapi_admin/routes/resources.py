@@ -13,8 +13,9 @@ from tortoise.transactions import in_transaction
 
 from fastapi_admin.depends import get_model, get_model_resource, get_resources
 from fastapi_admin.resources import Model as ModelResource
+from fastapi_admin.resources import render_values
 from fastapi_admin.responses import redirect
-from fastapi_admin.template import render_values, templates
+from fastapi_admin.template import templates
 
 router = APIRouter()
 
@@ -30,7 +31,6 @@ async def list_view(
         page_size: Optional[int] = None,
         page_num: int = 1,
 ):
-    fields_name = model_resource.get_fields_name()
     fields_label = model_resource.get_fields_label()
     fields = model_resource.get_fields()
     qs = model.all()
@@ -41,7 +41,7 @@ async def list_view(
         page_size = model_resource.page_size
     qs = qs.limit(page_size)
     qs = qs.offset((page_num - 1) * page_size)
-    values = await qs.values(*fields_name)
+    values = await qs.values()
     rendered_values, row_attributes, column_attributes, cell_attributes = await render_values(
         request, model_resource, fields, values
     )
@@ -255,7 +255,7 @@ async def delete(request: Request, pk: str, model: Model = Depends(get_model)):
     return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
 
 
-@router.delete("/{resource}/bulk_actions/delete")
+@router.delete("/{resource}/delete")
 async def bulk_delete(request: Request, ids: str, model: Model = Depends(get_model)):
     await model.filter(pk__in=ids.split(",")).delete()
     return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)

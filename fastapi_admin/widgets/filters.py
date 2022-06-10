@@ -1,6 +1,6 @@
 import abc
 from enum import Enum as EnumCLS
-from typing import Any, Optional, Tuple, Type
+from typing import Any, List, Optional, Tuple, Type
 
 import pendulum
 from starlette.requests import Request
@@ -191,3 +191,21 @@ class DistinctColumn(Select):
 
     async def get_values(self):
         return await self.model.all().distinct().values_list(self.name)
+
+
+class Boolean(Select):
+    async def get_options(self) -> List[Tuple[str, str]]:
+        """Return list of possible values to select from."""
+        options = [
+            ("TRUE", "true"),
+            ("FALSE", "false"),
+        ]
+        if self.context.get("null"):
+            options.insert(0, ("", ""))
+
+        return options
+
+    async def get_queryset(self, request: Request, value: str, qs: QuerySet[Model]) -> QuerySet[Model]:
+        """Return filtered queryset."""
+        filters = {self.context.get("name"): (value == "true")}
+        return qs.filter(**filters)
