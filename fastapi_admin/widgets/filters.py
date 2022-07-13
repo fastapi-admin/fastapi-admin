@@ -30,12 +30,12 @@ class Search(Filter):
     template = "widgets/filters/search.html"
 
     def __init__(
-        self,
-        name: str,
-        label: str,
-        search_mode: str = "equal",
-        placeholder: str = "",
-        null: bool = True,
+            self,
+            name: str,
+            label: str,
+            search_mode: str = "equal",
+            placeholder: str = "",
+            null: bool = True,
     ):
         """
         Search for keyword
@@ -54,12 +54,12 @@ class Datetime(Filter):
     template = "widgets/filters/datetime.html"
 
     def __init__(
-        self,
-        name: str,
-        label: str,
-        format_: str = constants.DATETIME_FORMAT_MOMENT,
-        null: bool = True,
-        placeholder: str = "",
+            self,
+            name: str,
+            label: str,
+            format_: str = constants.DATETIME_FORMAT_MOMENT,
+            null: bool = True,
+            placeholder: str = "",
     ):
         """
         Datetime filter
@@ -85,12 +85,12 @@ class Datetime(Filter):
 
 class Date(Datetime):
     def __init__(
-        self,
-        name: str,
-        label: str,
-        format_: str = constants.DATE_FORMAT_MOMENT,
-        null: bool = True,
-        placeholder: str = "",
+            self,
+            name: str,
+            label: str,
+            format_: str = constants.DATE_FORMAT_MOMENT,
+            null: bool = True,
+            placeholder: str = "",
     ):
         super().__init__(
             name=name, label=label, format_=format_, null=null, placeholder=placeholder
@@ -122,12 +122,12 @@ class Select(Filter):
 
 class Enum(Select):
     def __init__(
-        self,
-        enum: Type[EnumCLS],
-        name: str,
-        label: str,
-        enum_type: Type = int,
-        null: bool = True,
+            self,
+            enum: Type[EnumCLS],
+            name: str,
+            label: str,
+            enum_type: Type = int,
+            null: bool = True,
     ):
         super().__init__(name=name, label=label, null=null)
         self.enum = enum
@@ -139,7 +139,7 @@ class Enum(Select):
     async def get_options(self):
         options = [(v.name, v.value) for v in self.enum]
         if self.context.get("null"):
-            options = [("", "")] + options
+            options = [("pls choose", "")] + options
         return options
 
 
@@ -158,7 +158,7 @@ class ForeignKey(Select):
             for x in ret
         ]
         if self.context.get("null"):
-            options = [("", "")] + options
+            options = [("pls choose", "")] + options
         return options
 
     async def get_models(self):
@@ -186,7 +186,7 @@ class DistinctColumn(Select):
             for x in ret
         ]
         if self.context.get("null"):
-            options = [("", "")] + options
+            options = [("pls choose", "")] + options
         return options
 
     async def get_values(self):

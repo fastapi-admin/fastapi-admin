@@ -1,7 +1,8 @@
 import abc
 import json
+import uuid
 from enum import Enum as EnumCLS
-from typing import Any, List, Optional, Tuple, Type
+from typing import Any, List, Optional, Tuple, Type, Callable
 
 from starlette.datastructures import UploadFile
 from starlette.requests import Request
@@ -14,11 +15,15 @@ from fastapi_admin.widgets import Widget
 class Input(Widget):
     template = "widgets/inputs/input.html"
 
-    def __init__(
-        self, help_text: Optional[str] = None, default: Any = None, null: bool = False, **context
-    ):
+    def __init__(self,
+                 help_text: Optional[str] = None,
+                 default: Any = None,
+                 default_factory: Callable[[], Any] = None,
+                 null: bool = False,
+                 **context):
         super().__init__(null=null, help_text=help_text, **context)
         self.default = default
+        self.default_factory = default_factory
 
     async def parse_value(self, request: Request, value: Any):
         """
@@ -30,7 +35,10 @@ class Input(Widget):
 
     async def render(self, request: Request, value: Any):
         if value is None:
-            value = self.default
+            if self.default_factory:
+                value = self.default_factory()
+            elif self.default:
+                value = self.default
         return await super(Input, self).render(request, value)
 
 
@@ -43,22 +51,31 @@ class DisplayOnly(Input):
 class Text(Input):
     input_type: Optional[str] = "text"
 
-    def __init__(
-        self,
-        help_text: Optional[str] = None,
-        default: Any = None,
-        null: bool = False,
-        placeholder: str = "",
-        disabled: bool = False,
-    ):
+    def __init__(self,
+                 help_text: Optional[str] = None,
+                 default: Any = None,
+                 default_factory: Callable[[], Any] = None,
+                 null: bool = False,
+                 placeholder: str = "",
+                 disabled: bool = False,
+                 readonly: bool = False):
         super().__init__(
             null=null,
             default=default,
+            default_factory=default_factory,
             input_type=self.input_type,
             placeholder=placeholder,
             disabled=disabled,
+            readonly=readonly,
             help_text=help_text,
         )
+
+
+class UUID(Text):
+    input_type: Optional[str] = "text"
+
+    def __init__(self, ):
+        super().__init__(default_factory=uuid.uuid4, readonly=True)
 
 
 class Select(Input):
@@ -71,7 +88,10 @@ class Select(Input):
         null: bool = False,
         disabled: bool = False,
     ):
-        super().__init__(help_text=help_text, null=null, default=default, disabled=disabled)
+        super().__init__(help_text=help_text,
+                         null=null,
+                         default=default,
+                         disabled=disabled)
 
     @abc.abstractmethod
     async def get_options(self):
@@ -98,7 +118,10 @@ class ForeignKey(Select):
         disabled: bool = False,
         help_text: Optional[str] = None,
     ):
-        super().__init__(help_text=help_text, default=default, null=null, disabled=disabled)
+        super().__init__(help_text=help_text,
+                         default=default,
+                         null=null,
+                         disabled=disabled)
         self.model = model
 
     async def get_options(self):
@@ -134,7 +157,8 @@ class ManyToMany(Select):
 
     async def render(self, request: Request, value: Any):
         options = await self.get_options()
-        selected = list(map(lambda x: x.pk, value.related_objects if value else []))
+        selected = list(
+            map(lambda x: x.pk, value.related_objects if value else []))
         for option in options:
             if option.get("value") in selected:
                 option["selected"] = True
@@ -152,7 +176,10 @@ class Enum(Select):
         disabled: bool = False,
         help_text: Optional[str] = None,
     ):
-        super().__init__(help_text=help_text, default=default, null=null, disabled=disabled)
+        super().__init__(help_text=help_text,
+                         default=default,
+                         null=null,
+                         disabled=disabled)
         self.enum = enum
         self.enum_type = enum_type
 
@@ -173,17 +200,16 @@ class Email(Text):
 class Json(Input):
     template = "widgets/inputs/json.html"
 
-    def __init__(
-        self,
-        help_text: Optional[str] = None,
-        null: bool = False,
-        options: Optional[dict] = None,
-    ):
+    def __init__(self,
+                 help_text: Optional[str] = None,
+                 null: bool = False,
+                 options: Optional[dict] = None,
+                 default: Optional[str] = None):
         """
         options config to jsoneditor, see https://github.com/josdejong/jsoneditor
         :param options:
         """
-        super().__init__(null=null, help_text=help_text)
+        super().__init__(null=null, help_text=help_text, default=default)
         if not options:
             options = {}
         self.context.update(options=options)
@@ -252,7 +278,9 @@ class Radio(Select):
         default: Any = None,
         disabled: bool = False,
     ):
-        super().__init__(default=default, disabled=disabled, help_text=help_text)
+        super().__init__(default=default,
+                         disabled=disabled,
+                         help_text=help_text)
         self.options = options
 
     async def get_options(self):

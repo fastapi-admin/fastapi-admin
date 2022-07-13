@@ -142,6 +142,10 @@ msgstr "保存并返回"
 msgid "return_home"
 msgstr "返回首页"
 
+#: fastapi_admin/templates/errors/404.html:21
+msgid "return_login"
+msgstr "去登陆"
+
 #: fastapi_admin/templates/providers/login/avatar.html:18
 #: fastapi_admin/templates/providers/login/password.html:6
 msgid "update_password"
