@@ -3,7 +3,6 @@ from typing import List, Optional, Type
 from fastapi import Depends, HTTPException
 from fastapi.params import Path
 from starlette.requests import Request
-from starlette.status import HTTP_404_NOT_FOUND, HTTP_401_UNAUTHORIZED
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
 from tortoise import Tortoise
 
