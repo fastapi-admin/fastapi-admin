@@ -129,11 +129,21 @@ class Model(Resource):
         ret = []
         for field in cls.get_fields(is_display=False):
             input_ = field.input
+            name = input_.context.get("name")
             if isinstance(input_, inputs.DisplayOnly):
                 continue
             if isinstance(input_, inputs.File):
                 cls.enctype = "multipart/form-data"
-            name = input_.context.get("name")
+            if (
+                isinstance(input_, inputs.ForeignKey)
+                and (obj is not None)
+                and name in obj._meta.fk_fields
+            ):
+                await obj.fetch_related(name)
+                # Value must be the string representation of the fk obj 
+                value = str(getattr(obj, name, None))
+                ret.append(await input_.render(request, value))
+                continue
             ret.append(await input_.render(request, getattr(obj, name, None)))
         return ret
 
@@ -159,6 +169,11 @@ class Model(Resource):
             if input_.context.get("disabled") or isinstance(input_, inputs.DisplayOnly):
                 continue
             name = input_.context.get("name")
+            if isinstance(input_, inputs.ForeignKey):
+                v = data.getlist(name)[0]
+                model = await input_.model.get(id=v)
+                ret[name] = model
+                continue
             if isinstance(input_, inputs.ManyToMany):
                 v = data.getlist(name)
                 value = await input_.parse_value(request, v)
@@ -289,6 +304,15 @@ class Model(Resource):
                 ret.append(field)
         return ret
 
+    @classmethod
+    def get_fk_field(cls):
+        ret = []
+        for field in cls.fields or cls.model._meta.fields:
+            if isinstance(field, Field):
+                field = field.name
+            if field in cls.model._meta.fk_fields:
+                ret.append(field)
+        return ret
 
 class Dropdown(Resource):
     resources: List[Type[Resource]]
