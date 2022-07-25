@@ -2,7 +2,7 @@ import typing
 import uuid
 from typing import Type
 
-from aioredis import Redis
+import redis.asyncio as redis
 from fastapi import Depends, Form
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.requests import Request
@@ -77,7 +77,7 @@ class UsernamePasswordProvider(Provider):
         else:
             instance.password = hash_password(instance.password)
 
-    async def login(self, request: Request, redis: Redis = Depends(get_redis)):
+    async def login(self, request: Request, redis: redis.Redis = Depends(get_redis)):
         form = await request.form()
         username = form.get("username")
         password = form.get("password")

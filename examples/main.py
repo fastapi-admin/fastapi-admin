@@ -1,6 +1,6 @@
 import os
 
-import aioredis
+import redis.asyncio as redis
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -46,7 +46,7 @@ def create_app():
 
     @app.on_event("startup")
     async def startup():
-        redis = aioredis.from_url(
+        r = redis.from_url(
             settings.REDIS_URL,
             decode_responses=True,
             encoding="utf8",
@@ -61,7 +61,7 @@ def create_app():
                     admin_model=Admin,
                 )
             ],
-            redis=redis,
+            redis=r,
         )
 
     app.mount("/admin", admin_app)

@@ -205,7 +205,9 @@ class Boolean(Select):
 
         return options
 
-    async def get_queryset(self, request: Request, value: str, qs: QuerySet[Model]) -> QuerySet[Model]:
+    async def get_queryset(
+        self, request: Request, value: str, qs: QuerySet[Model]
+    ) -> QuerySet[Model]:
         """Return filtered queryset."""
         filters = {self.context.get("name"): (value == "true")}
         return qs.filter(**filters)

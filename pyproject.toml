@@ -23,7 +23,7 @@ version = "1.0.4"
 [tool.poetry.dependencies]
 Babel = "*"
 aiofiles = "*"
-aioredis = "*"
+redis = "^4.2.0rc1"
 bcrypt = "*"
 fastapi = "*"
 jinja2 = "*"
@@ -43,12 +43,12 @@ pytest-xdist = "*"
 black = "*"
 flake8 = "*"
 isort = "*"
-mypy = "*"
 pylint = "*"
 # example
 asyncmy = "*"
 asyncpg = "*"
 python-dotenv = "*"
+mypy = "*"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

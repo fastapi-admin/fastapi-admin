@@ -12,7 +12,7 @@ class FileUpload:
         self,
         uploads_dir: str,
         allow_extensions: Optional[List[str]] = None,
-        max_size: int = 1024 ** 3,
+        max_size: int = 1024**3,
         filename_generator: Optional[Callable] = None,
         prefix: str = "/static/uploads",
     ):
