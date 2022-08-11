@@ -1,0 +1,192 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-08-06 23:07+0800\n"
+"PO-Revision-Date: 2021-04-16 22:46+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa_IR\n"
+"Language-Team: fa_IR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: fastapi_admin/resources.py:91
+msgid "create"
+msgstr "ایجاد"
+
+#: fastapi_admin/resources.py:112
+msgid "update"
+msgstr "به‌روزرسانی"
+
+#: fastapi_admin/resources.py:114
+msgid "delete"
+msgstr "پاک کردن"
+
+#: fastapi_admin/resources.py:120
+msgid "delete_selected"
+msgstr "پاک کردن انتخاب‌شده‌ها"
+
+#: fastapi_admin/providers/login.py:90
+msgid "login_failed"
+msgstr "ورود به حساب کاربری شما انجام نشد"
+
+#: fastapi_admin/providers/login.py:161
+msgid "confirm_password_different"
+msgstr "تایید رمز عبور متفاوت است"
+
+#: fastapi_admin/providers/login.py:196
+msgid "old_password_error"
+msgstr "خطای رمز عبور قدیمی"
+
+#: fastapi_admin/providers/login.py:198
+msgid "new_password_different"
+msgstr "رمز عبور جدید متفاوت است"
+
+#: fastapi_admin/templates/create.html:14
+#: fastapi_admin/templates/update.html:16
+msgid "save"
+msgstr "ذخیره"
+
+#: fastapi_admin/templates/create.html:16
+msgid "save_and_add_another"
+msgstr "ذخیره و ایجاد یکی دیگر"
+
+#: fastapi_admin/templates/create.html:18
+#: fastapi_admin/templates/update.html:29
+msgid "return"
+msgstr "بازگشت"
+
+#: fastapi_admin/templates/init.html:10
+msgid "Create first admin"
+msgstr "ساخت اولین مدیر"
+
+#: fastapi_admin/templates/init.html:12
+#: fastapi_admin/templates/providers/login/login.html:44
+msgid "username"
+msgstr "نام کاربری"
+
+#: fastapi_admin/templates/init.html:14
+msgid "username_placeholder"
+msgstr "نام کاربری را وارد کنید"
+
+#: fastapi_admin/templates/init.html:18
+#: fastapi_admin/templates/providers/login/login.html:54
+msgid "password"
+msgstr "رمز عبور"
+
+#: fastapi_admin/templates/init.html:23
+msgid "password_placeholder"
+msgstr "رمز عبور را وارد کنید"
+
+#: fastapi_admin/templates/init.html:31
+msgid "confirm_password"
+msgstr "رمز عبور را دوباره وارد کنید"
+
+#: fastapi_admin/templates/init.html:36
+msgid "confirm_password_placeholder"
+msgstr "رمز عبور را دوباره وارد کنید"
+
+#: fastapi_admin/templates/init.html:43
+#: fastapi_admin/templates/providers/login/password.html:32
+msgid "submit"
+msgstr "ارسال"
+
+#: fastapi_admin/templates/list.html:13
+msgid "show"
+msgstr "نمایش"
+
+#: fastapi_admin/templates/list.html:24
+msgid "entries"
+msgstr "مورد"
+
+#: fastapi_admin/templates/list.html:33
+msgid "search"
+msgstr "جستجو"
+
+#: fastapi_admin/templates/list.html:46
+msgid "bulk_actions"
+msgstr "اقدامات دسته‌ای"
+
+#: fastapi_admin/templates/list.html:125
+msgid "actions"
+msgstr "اقدامات"
+
+#: fastapi_admin/templates/list.html:156
+#, python-format
+msgid "Showing %(from)s to %(to)s of %(total)s entries"
+msgstr "نمایش %(from) الی %(to) از %(total) مورد"
+
+#: fastapi_admin/templates/list.html:167
+msgid "prev_page"
+msgstr "قبلی"
+
+#: fastapi_admin/templates/list.html:188
+msgid "next_page"
+msgstr "بعدی"
+
+#: fastapi_admin/templates/update.html:23
+msgid "save_and_return"
+msgstr "ذخیره و بازگشت"
+
+#: fastapi_admin/templates/errors/403.html:21
+#: fastapi_admin/templates/errors/404.html:21
+#: fastapi_admin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "بازگشت به خانه"
+
+#: fastapi_admin/templates/providers/login/avatar.html:18
+#: fastapi_admin/templates/providers/login/password.html:6
+msgid "update_password"
+msgstr "به‌روزرسانی رمز عبور"
+
+#: fastapi_admin/templates/providers/login/avatar.html:24
+msgid "logout"
+msgstr "خروج"
+
+#: fastapi_admin/templates/providers/login/login.html:49
+msgid "login_username_placeholder"
+msgstr "نام کاربری را وارد کنید"
+
+#: fastapi_admin/templates/providers/login/login.html:59
+msgid "login_password_placeholder"
+msgstr "رمز عبور را وارد کنید"
+
+#: fastapi_admin/templates/providers/login/login.html:75
+msgid "remember_me"
+msgstr "مرا به خاطر بسپار"
+
+#: fastapi_admin/templates/providers/login/login.html:80
+msgid "sign_in"
+msgstr "ورود"
+
+#: fastapi_admin/templates/providers/login/password.html:12
+msgid "old_password"
+msgstr "رمز عبور قدیمی"
+
+#: fastapi_admin/templates/providers/login/password.html:15
+msgid "old_password_placeholder"
+msgstr "رمز عبور قدیمی را وارد کنید"
+
+#: fastapi_admin/templates/providers/login/password.html:19
+msgid "new_password"
+msgstr "رمز عبور جدید"
+
+#: fastapi_admin/templates/providers/login/password.html:22
+msgid "new_password_placeholder"
+msgstr "رمز عبور جدید را وارد کنید"
+
+#: fastapi_admin/templates/providers/login/password.html:26
+msgid "re_new_password"
+msgstr "رمز عبور جدید را تایید کنید"
+
+#: fastapi_admin/templates/providers/login/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "رمز عبور جدید را دوباره وارد کنید"
