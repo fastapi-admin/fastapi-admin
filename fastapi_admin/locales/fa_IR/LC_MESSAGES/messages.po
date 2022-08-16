@@ -122,7 +122,7 @@ msgstr "اقدامات"
 #: fastapi_admin/templates/list.html:156
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
-msgstr "نمایش %(from) الی %(to) از %(total) مورد"
+msgstr "نمایش %(from)s الی %(to)s از %(total)s مورد"
 
 #: fastapi_admin/templates/list.html:167
 msgid "prev_page"
