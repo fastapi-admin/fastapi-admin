@@ -19,6 +19,7 @@ packages = [
 readme = "README.md"
 repository = "https://github.com/fastapi-admin/fastapi-admin.git"
 version = "1.0.5"
+build = "build.py"
 
 [tool.poetry.dependencies]
 Babel = "*"
@@ -52,8 +53,4 @@ mypy = "*"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
-
-[tool.poetry.build]
-generate-setup-file = false
-script = "build.py"
+requires = ["poetry-core>=1.0.0", "setuptools"]
