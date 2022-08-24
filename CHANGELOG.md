@@ -2,6 +2,10 @@
 
 ## 1.0
 
+### 1.0.5
+
+- Fix translations build.
+
 ### 1.0.4
 
 - Add `widgets.filters.Boolean` class
