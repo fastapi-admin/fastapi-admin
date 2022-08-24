@@ -3,13 +3,6 @@ authors = ["long2ice <long2ice@gmail.com>"]
 description = "A fast admin dashboard based on FastAPI and TortoiseORM with tabler ui, inspired by Django admin."
 documentation = "https://fastapi-admin.github.io"
 homepage = "https://github.com/fastapi-admin/fastapi-admin"
-include = [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "fastapi_admin/locales/en_US/LC_MESSAGES/messages.mo",
-    "fastapi_admin/locales/zh_CN/LC_MESSAGES/messages.mo"
-]
 keywords = ["fastapi", "admin", "dashboard", "tortoise-orm"]
 license = "Apache-2.0"
 name = "fastapi-admin"
@@ -19,7 +12,6 @@ packages = [
 readme = "README.md"
 repository = "https://github.com/fastapi-admin/fastapi-admin.git"
 version = "1.0.5"
-build = "build.py"
 
 [tool.poetry.dependencies]
 Babel = "*"
