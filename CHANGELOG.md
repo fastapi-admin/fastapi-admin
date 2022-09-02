@@ -5,6 +5,7 @@
 ### 1.0.5
 
 - Fix translations build.
+- Improve datetime and date input
 
 ### 1.0.4
 

@@ -1,0 +1,14 @@
+{% extends "widgets/inputs/datetime.html" %}
+{% block script %}
+    <script>
+        $(function () {
+            $('input[name="{{ name }}"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+            });
+        });
+    </script>
+{% endblock %}

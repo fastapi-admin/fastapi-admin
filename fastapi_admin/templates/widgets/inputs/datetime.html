@@ -1,0 +1,27 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<div class="form-group">
+    <label class="form-label">{{ label }}</label>
+    <input {% if not null %}required{% endif %} type="{{ input_type }}" class="form-control" name="{{ name }}"
+           placeholder="{{ placeholder }}" {% if disabled %}disabled{% endif %} value="{{ value }}">
+    {% if help_text %}
+        <small class="form-hint">
+            {{ help_text }}
+        </small>
+    {% endif %}
+</div>
+
+{% block script %}
+    <script>
+        $(function () {
+            $('input[name="{{ name }}"]').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            });
+        });
+    </script>
+{% endblock %}
