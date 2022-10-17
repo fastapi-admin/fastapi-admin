@@ -2,14 +2,14 @@ name: deploy
 on:
   push:
     branches:
-      - 'dev'
+      - "dev"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build and Publish
-        uses: VaultVulp/gp-docker-action@1.1.8
+        uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: fastapi-admin
@@ -19,8 +19,13 @@ jobs:
       - build
     steps:
       - name: Deploy
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        uses: appleboy/ssh-action@master
         with:
-          args: rollout restart deployment fastapi-admin
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /root/docker/fastapi-admin/
+            docker compose pull
+            docker compose up -d
