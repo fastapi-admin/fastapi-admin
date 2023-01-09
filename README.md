@@ -6,6 +6,7 @@
 [![image](https://github.com/fastapi-admin/fastapi-admin/workflows/pypi/badge.svg)](https://github.com/fastapi-admin/fastapi-admin/actions?query=workflow:pypi)
 
 [中文文档](./README-zh.md)
+[한국어 문서](./README-ko.md)
 
 ## Introduction
 
