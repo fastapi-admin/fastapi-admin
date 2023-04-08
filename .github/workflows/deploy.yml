@@ -13,6 +13,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: fastapi-admin
+          custom-args: --platform=linux/arm64,linux/amd64
   deploy:
     runs-on: ubuntu-latest
     needs:
