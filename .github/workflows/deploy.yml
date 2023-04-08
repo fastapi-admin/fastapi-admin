@@ -28,5 +28,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/docker/fastapi-admin/
-            docker compose pull
-            docker compose up -d
+            docker compose up -d --pull always
