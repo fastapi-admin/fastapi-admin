@@ -4,7 +4,7 @@ RUN mkdir -p /fastapi-admin
 WORKDIR /fastapi-admin
 COPY pyproject.toml poetry.lock /fastapi-admin/
 ENV POETRY_VIRTUALENVS_CREATE false
-RUN pip install --upgrade pip && pip3 install poetry && poetry install --no-root
+RUN pip install --upgrade pip && pip3 install poetry && poetry install
 COPY . /fastapi-admin
 RUN poetry install && make compile
 
