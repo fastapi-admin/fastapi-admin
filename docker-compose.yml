@@ -1,9 +1,0 @@
-version: "3"
-services:
-  app:
-    build: .
-    restart: always
-    env_file: .env
-    network_mode: host
-    image: fastapi-admin
-    command: uvicorn examples.main:app_ --port 8000 --host 0.0.0.0
