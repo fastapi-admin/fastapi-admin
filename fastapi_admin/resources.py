@@ -171,7 +171,8 @@ class Model(Resource):
             name = input_.context.get("name")
             if isinstance(input_, inputs.ForeignKey):
                 v = data.getlist(name)[0]
-                ret[name] = v
+                model = await input_.model.get(id=v)
+                ret[name] = model
                 continue
             if isinstance(input_, inputs.ManyToMany):
                 v = data.getlist(name)
