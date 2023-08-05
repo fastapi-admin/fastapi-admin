@@ -157,7 +157,7 @@ async def update_view(
     resources=Depends(get_resources),
     model=Depends(get_model),
 ):
-    obj = await model.get(pk=pk)
+    obj = await model.get(pk=pk).prefetch_related(*model_resource.get_m2m_field())
     inputs = await model_resource.get_inputs(request, obj)
     context = {
         "request": request,
