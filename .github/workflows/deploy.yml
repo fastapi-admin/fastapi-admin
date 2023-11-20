@@ -30,7 +30,7 @@ jobs:
 
   build-dev:
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref == 'refs/heads/develop'|| github.ref == 'refs/heads/develop' }}
+    if: ${{ github.head_ref == 'refs/heads/dev'|| github.ref == 'refs/heads/dev' }}
     steps:
       - uses: actions/checkout@v2
       - name: Build Steps
