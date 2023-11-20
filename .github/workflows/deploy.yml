@@ -3,11 +3,11 @@ name: My Build
 on:
   push:
     branches:
-      - main
+      - dev
       - UAT
   pull_request:
     branches:
-      - main
+      - dev
       - UAT
   workflow_dispatch:
 
