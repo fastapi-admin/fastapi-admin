@@ -43,15 +43,5 @@ jobs:
       - name: 'prod'
     steps:
       - uses: actions/checkout@v2
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-      - name: initalize cluster
-        uses: unfor19/install-aws-cli-action@master
-        with:
-          version: 2
-      - run: aws eks --region us-east-2 update-kubeconfig --name eks-prod
-      - run: kubectl apply -f argo.yaml
+      - name: Deploy steps
+        run: echo "Deploy steps"
