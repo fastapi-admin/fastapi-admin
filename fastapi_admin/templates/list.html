@@ -88,8 +88,22 @@
                                 />
                             </th>
                         {% endif %}
-                        {% for label in fields_label %}
-                            <th>{{ label }}</th>
+                        {% for field in fields %}
+                            <th {% for k,v in column_attributes[loop.index0].items() %}{{ k }}="{{ v }}"{% endfor %}>
+                            {% set current_order = request.query_params.get('order_by', '') %}
+                            {% set is_desc = current_order.startswith('-') %}
+                            {% if current_order.lstrip('-') == field.name %}
+                                {% set order_by = '-' + field.name if not is_desc else field.name %}
+                            {% else %}
+                                {% set order_by = field.name %}
+                            {% endif %}
+                            <a href="{{ request.url.include_query_params(order_by=order_by) }}">
+                                {{ field.label }}
+                                {% if current_order.lstrip('-') == field.name %}
+                                    {% if is_desc %}&#x25BC;{% else %}&#x25B2;{% endif %}
+                                {% endif %}
+                            </a>
+                            </th>
                         {% endfor %}
                         {% if model_resource.actions %}
                             <th></th>

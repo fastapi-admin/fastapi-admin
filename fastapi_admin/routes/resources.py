@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, Path
 from jinja2 import TemplateNotFound
 from starlette.requests import Request
@@ -25,6 +27,7 @@ async def list_view(
     resource: str = Path(...),
     page_size: int = 10,
     page_num: int = 1,
+    order_by: Optional[str] = None,
 ):
     fields_label = model_resource.get_fields_label()
     fields = model_resource.get_fields()
@@ -33,6 +36,8 @@ async def list_view(
     params, qs = await model_resource.resolve_query_params(request, dict(request.query_params), qs)
     filters = await model_resource.get_filters(request, params)
     total = await qs.count()
+    if order_by:
+        qs = qs.order_by(order_by)
     if page_size:
         qs = qs.limit(page_size)
     else:
