@@ -10,6 +10,7 @@ TRANSLATIONS = {
     "en_US": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["en_US"]),
     "fr_FR": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["fr_FR"]),
     "fa_IR": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["fa_IR"]),
+    "tr_TR": Translations.load(os.path.join(BASE_DIR, "locales"), locales=["tr_TR"]),
 }
 
 translations = TRANSLATIONS.get("en_US")
