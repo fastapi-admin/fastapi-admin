@@ -20,174 +20,174 @@ msgstr ""
 
 #: fastapi_admin/resources.py:91
 msgid "create"
-msgstr "Create"
+msgstr "Oluştur"
 
 #: fastapi_admin/resources.py:112
 msgid "update"
-msgstr "Update"
+msgstr "Güncelle"
 
 #: fastapi_admin/resources.py:114
 msgid "delete"
-msgstr "Delete"
+msgstr "Sil"
 
 #: fastapi_admin/resources.py:120
 msgid "delete_selected"
-msgstr "Delete Selected"
+msgstr "Seçili öğeleri sil"
 
 #: fastapi_admin/providers/login.py:90
 msgid "login_failed"
-msgstr "Login to your account failed"
+msgstr "Giriş başarısız"
 
 #: fastapi_admin/providers/login.py:161
 msgid "confirm_password_different"
-msgstr "Password is different"
+msgstr "Şifreler farklı"
 
 #: fastapi_admin/providers/login.py:196
 msgid "old_password_error"
-msgstr "Old password error"
+msgstr "Eski şifre hatalı"
 
 #: fastapi_admin/providers/login.py:198
 msgid "new_password_different"
-msgstr "New password is different"
+msgstr "Yeni şifre farklı"
 
 #: fastapi_admin/templates/create.html:14
 #: fastapi_admin/templates/update.html:16
 msgid "save"
-msgstr "Save"
+msgstr "Kaydet"
 
 #: fastapi_admin/templates/create.html:16
 msgid "save_and_add_another"
-msgstr "Save and add another"
+msgstr "Kaydet ve başka bir tane ekle"
 
 #: fastapi_admin/templates/create.html:18
 #: fastapi_admin/templates/update.html:29
 msgid "return"
-msgstr "Return"
+msgstr "Geri dön"
 
 #: fastapi_admin/templates/init.html:10
 msgid "Create first admin"
-msgstr ""
+msgstr "İlk yöneticiyi oluştur"
 
 #: fastapi_admin/templates/init.html:12
 #: fastapi_admin/templates/providers/login/login.html:44
 msgid "username"
-msgstr "Username"
+msgstr "Kullanıcı adı"
 
 #: fastapi_admin/templates/init.html:14
 msgid "username_placeholder"
-msgstr "Enter username"
+msgstr "Kullanıcı adını girin"
 
 #: fastapi_admin/templates/init.html:18
 #: fastapi_admin/templates/providers/login/login.html:54
 msgid "password"
-msgstr "Password"
+msgstr "Şifre"
 
 #: fastapi_admin/templates/init.html:23
 msgid "password_placeholder"
-msgstr "Enter password"
+msgstr "Şifreyi girin"
 
 #: fastapi_admin/templates/init.html:31
 msgid "confirm_password"
-msgstr "Enter password again"
+msgstr "Şifreyi onayla"
 
 #: fastapi_admin/templates/init.html:36
 msgid "confirm_password_placeholder"
-msgstr "Enter password again"
+msgstr "Şifreyi tekrar girin"
 
 #: fastapi_admin/templates/init.html:43
 #: fastapi_admin/templates/providers/login/password.html:32
 msgid "submit"
-msgstr "Submit"
+msgstr "Gönder"
 
 #: fastapi_admin/templates/list.html:13
 msgid "show"
-msgstr "Show"
+msgstr "Göster"
 
 #: fastapi_admin/templates/list.html:24
 msgid "entries"
-msgstr ""
+msgstr "Kayıtlar"
 
 #: fastapi_admin/templates/list.html:33
 msgid "search"
-msgstr "Search"
+msgstr "Ara"
 
 #: fastapi_admin/templates/list.html:46
 msgid "bulk_actions"
-msgstr "Bulk Actions"
+msgstr "Toplu işlemler"
 
 #: fastapi_admin/templates/list.html:125
 msgid "actions"
-msgstr "Actions"
+msgstr "İşlemler"
 
 #: fastapi_admin/templates/list.html:156
 #, python-format
 msgid "Showing %(from)s to %(to)s of %(total)s entries"
-msgstr ""
+msgstr "Toplam %(total)s kayıttan %(from)s ile %(to)s arası kayıt gösteriliyor."
 
 #: fastapi_admin/templates/list.html:167
 msgid "prev_page"
-msgstr "Prev"
+msgstr "Önceki"
 
 #: fastapi_admin/templates/list.html:188
 msgid "next_page"
-msgstr "Next"
+msgstr "Sonraki"
 
 #: fastapi_admin/templates/update.html:23
 msgid "save_and_return"
-msgstr "Save and return"
+msgstr "Kaydet ve geri dön"
 
 #: fastapi_admin/templates/errors/403.html:21
 #: fastapi_admin/templates/errors/404.html:21
 #: fastapi_admin/templates/errors/500.html:21
 msgid "return_home"
-msgstr "Take me home"
+msgstr "Beni anasayfaya götür"
 
 #: fastapi_admin/templates/providers/login/avatar.html:18
 #: fastapi_admin/templates/providers/login/password.html:6
 msgid "update_password"
-msgstr "Update password"
+msgstr "Şifreyi güncelle"
 
 #: fastapi_admin/templates/providers/login/avatar.html:24
 msgid "logout"
-msgstr "Logout"
+msgstr "Çıkış yap"
 
 #: fastapi_admin/templates/providers/login/login.html:49
 msgid "login_username_placeholder"
-msgstr "Enter username"
+msgstr "Kullanıcı adını girin"
 
 #: fastapi_admin/templates/providers/login/login.html:59
 msgid "login_password_placeholder"
-msgstr "Enter password"
+msgstr "Şifreyi girin"
 
 #: fastapi_admin/templates/providers/login/login.html:75
 msgid "remember_me"
-msgstr "Remember me"
+msgstr "Beni hatırla"
 
 #: fastapi_admin/templates/providers/login/login.html:80
 msgid "sign_in"
-msgstr "Sign in"
+msgstr "Giriş yap"
 
 #: fastapi_admin/templates/providers/login/password.html:12
 msgid "old_password"
-msgstr "Old password"
+msgstr "Eski şifre"
 
 #: fastapi_admin/templates/providers/login/password.html:15
 msgid "old_password_placeholder"
-msgstr "Enter old password"
+msgstr "Eski şifreyi girin"
 
 #: fastapi_admin/templates/providers/login/password.html:19
 msgid "new_password"
-msgstr "New password"
+msgstr "Yeni şifre"
 
 #: fastapi_admin/templates/providers/login/password.html:22
 msgid "new_password_placeholder"
-msgstr "Enter new password"
+msgstr "Yeni şifreyi girin"
 
 #: fastapi_admin/templates/providers/login/password.html:26
 msgid "re_new_password"
-msgstr "Confirm new password"
+msgstr "Yeni şifreyi onaylayın"
 
 #: fastapi_admin/templates/providers/login/password.html:29
 msgid "re_new_password_placeholder"
-msgstr "Enter new password again"
+msgstr "Yeni şifreyi tekrar girin"
 
