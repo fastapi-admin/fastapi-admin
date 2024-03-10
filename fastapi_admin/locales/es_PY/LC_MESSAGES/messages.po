@@ -1,0 +1,249 @@
+# Spanish (Paraguay) translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-02-21 12:21-0300\n"
+"PO-Revision-Date: 2024-02-21 12:22-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es_PY\n"
+"Language-Team: es_PY <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: fastapi_admin/middlewares.py:77
+#, python-format
+msgid "You can only try after %(seconds)s seconds"
+msgstr "Solo puedes intentarlo después de %(seconds)s segundos"
+
+#: fastapi_admin/middlewares.py:88
+#, python-format
+msgid "Login failed %(times)s times, you can try %(rest_times)s more times"
+msgstr "Fallo en el inicio de sesión %(times)s veces, puedes intentarlo %(rest_times)s veces más"
+
+#: fastapi_admin/resources.py:120
+msgid "create"
+msgstr "Agregar nuevo"
+
+#: fastapi_admin/resources.py:132
+msgid "update"
+msgstr "Editar"
+
+#: fastapi_admin/resources.py:139
+msgid "delete"
+msgstr "Borrar"
+
+#: fastapi_admin/resources.py:149
+msgid "delete_selected"
+msgstr "Eliminar seleccionados"
+
+#: fastapi_admin/providers/import_export.py:106
+#: fastapi_admin/templates/providers/import_export/import.html:6
+#: fastapi_admin/templates/providers/import_export/import.html:30
+msgid "Import"
+msgstr "Importar"
+
+#: fastapi_admin/providers/import_export.py:117
+#: fastapi_admin/templates/providers/import_export/export.html:6
+#: fastapi_admin/templates/providers/import_export/export.html:23
+msgid "Export"
+msgstr "Exportar"
+
+#: fastapi_admin/providers/import_export.py:176
+#, python-format
+msgid "Success create %(count)s %(label)s"
+msgstr "Éxito al crear %(count)s %(label)s"
+
+#: fastapi_admin/providers/login.py:136
+msgid "captcha_error"
+msgstr "Error en el captcha"
+
+#: fastapi_admin/providers/login.py:153
+msgid "Google recaptcha verify failed"
+msgstr "La verificación de Google reCAPTCHA falló"
+
+#: fastapi_admin/providers/login.py:160
+msgid "login_failed"
+msgstr "Fallo en el inicio de sesión"
+
+#: fastapi_admin/providers/login.py:234
+msgid "confirm_password_different"
+msgstr "Las contraseñas no coinciden"
+
+#: fastapi_admin/providers/login.py:269
+msgid "old_password_error"
+msgstr "Error en la contraseña antigua"
+
+#: fastapi_admin/providers/login.py:271
+msgid "new_password_different"
+msgstr "La nueva contraseña no coincide"
+
+#: fastapi_admin/templates/create.html:15
+#: fastapi_admin/templates/update.html:17
+msgid "save"
+msgstr "Guardar"
+
+#: fastapi_admin/templates/create.html:17
+msgid "save_and_add_another"
+msgstr "Guardar y agregar otro"
+
+#: fastapi_admin/templates/create.html:19
+#: fastapi_admin/templates/providers/import_export/export.html:25
+#: fastapi_admin/templates/providers/import_export/import.html:32
+#: fastapi_admin/templates/update.html:27
+msgid "return"
+msgstr "Volver"
+
+#: fastapi_admin/templates/init.html:10
+msgid "Create first admin"
+msgstr "Crear primer administrador"
+
+#: fastapi_admin/templates/init.html:12
+#: fastapi_admin/templates/providers/login/login.html:17
+msgid "username"
+msgstr "Nombre de usuario"
+
+#: fastapi_admin/templates/init.html:14
+#: fastapi_admin/templates/providers/login/login.html:19
+msgid "username_placeholder"
+msgstr "Ingrese el nombre de usuario"
+
+#: fastapi_admin/templates/init.html:18
+#: fastapi_admin/templates/providers/login/login.html:23
+msgid "password"
+msgstr "Contraseña"
+
+#: fastapi_admin/templates/init.html:23
+#: fastapi_admin/templates/providers/login/login.html:28
+msgid "password_placeholder"
+msgstr "Ingrese la contraseña"
+
+#: fastapi_admin/templates/init.html:31
+msgid "confirm_password"
+msgstr "Confirmar contraseña"
+
+#: fastapi_admin/templates/init.html:36
+msgid "confirm_password_placeholder"
+msgstr "Ingrese la contraseña nuevamente"
+
+#: fastapi_admin/templates/init.html:43
+#: fastapi_admin/templates/providers/login/password.html:32
+msgid "submit"
+msgstr "Enviar"
+
+#: fastapi_admin/templates/list.html:13
+msgid "show"
+msgstr "Mostrar"
+
+#: fastapi_admin/templates/list.html:24
+msgid "entries"
+msgstr "entradas"
+
+#: fastapi_admin/templates/list.html:33
+msgid "search"
+msgstr "Buscar"
+
+#: fastapi_admin/templates/list.html:46
+msgid "bulk_actions"
+msgstr "Acciones masivas"
+
+#: fastapi_admin/templates/list.html:127
+msgid "actions"
+msgstr "Acciones"
+
+#: fastapi_admin/templates/list.html:158
+#, python-format
+msgid "Showing %(from)s to %(to)s of %(total)s entries"
+msgstr "Mostrando %(from)s a %(to)s de %(total)s entradas"
+
+#: fastapi_admin/templates/list.html:169
+msgid "prev_page"
+msgstr "Pág. Anterior"
+
+#: fastapi_admin/templates/list.html:190
+msgid "next_page"
+msgstr "Pág. Siguiente"
+
+#: fastapi_admin/templates/update.html:24
+msgid "save_and_return"
+msgstr "Guardar y volver"
+
+#: fastapi_admin/templates/errors/401.html:21
+#: fastapi_admin/templates/errors/403.html:21
+#: fastapi_admin/templates/errors/404.html:21
+#: fastapi_admin/templates/errors/500.html:21
+msgid "return_home"
+msgstr "Volver a inicio"
+
+#: fastapi_admin/templates/providers/import_export/export.html:11
+#: fastapi_admin/templates/providers/import_export/import.html:18
+msgid "Format"
+msgstr "Formato"
+
+#: fastapi_admin/templates/providers/import_export/import.html:14
+msgid "File to import"
+msgstr "Archivo a importar"
+
+#: fastapi_admin/templates/providers/login/avatar.html:20
+#: fastapi_admin/templates/providers/login/password.html:6
+msgid "update_password"
+msgstr "Actualizar contraseña"
+
+#: fastapi_admin/templates/providers/login/avatar.html:23
+msgid "logout"
+msgstr "Cerrar sesión"
+
+#: fastapi_admin/templates/providers/login/login.html:37
+msgid "captcha"
+msgstr "Captcha"
+
+#: fastapi_admin/templates/providers/login/login.html:45
+msgid "captcha_placeholder"
+msgstr "Ingrese el captcha"
+
+#: fastapi_admin/templates/providers/login/login.html:61
+msgid "remember_me"
+msgstr "Recordarme"
+
+#: fastapi_admin/templates/providers/login/login.html:65
+msgid "sign_in"
+msgstr "Iniciar sesión"
+
+#: fastapi_admin/templates/providers/login/password.html:12
+msgid "old_password"
+msgstr "Contraseña antigua"
+
+#: fastapi_admin/templates/providers/login/password.html:15
+msgid "old_password_placeholder"
+msgstr "Ingrese la contraseña antigua"
+
+#: fastapi_admin/templates/providers/login/password.html:19
+msgid "new_password"
+msgstr "Nueva contraseña"
+
+#: fastapi_admin/templates/providers/login/password.html:22
+msgid "new_password_placeholder"
+msgstr "Ingrese la nueva contraseña"
+
+#: fastapi_admin/templates/providers/login/password.html:26
+msgid "re_new_password"
+msgstr "Repetir nueva contraseña"
+
+#: fastapi_admin/templates/providers/login/password.html:29
+msgid "re_new_password_placeholder"
+msgstr "Ingrese la nueva contraseña nuevamente"
+
+#: fastapi_admin/templates/providers/search/search.html:11
+msgid "Search in site..."
+msgstr "Buscar en el sitio..."
+
+#: fastapi_admin/templates/providers/search/search_result.html:9
+msgid "No results found for search text"
+msgstr "No se encontraron resultados para el texto de búsqueda"
