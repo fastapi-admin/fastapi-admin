@@ -48,7 +48,7 @@ Or pro version online demo [here](https://fastapi-admin-pro.long2ice.io/admin/lo
 2. Create `.env` file.
 
    ```dotenv
-   DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi-admin
+   DATABASE_URL=mysql://root:123456@127.0.0.1:3306/fastapi_admin
    REDIS_URL=redis://localhost:6379/0
    ```
 
