@@ -16,11 +16,13 @@
                     </h1>
                 {% endif %}
                 <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbar-menu"
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-menu"
                 >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="navbar-nav pt-lg-3">
                         {% for resource in resources %} {% if resource.type == 'link' %}
@@ -36,8 +38,6 @@
                     class="navbar navbar-expand-md navbar-light d-none d-lg-flex d-print-none"
             >
                 <div class="container-fluid">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                     <div class="navbar-nav flex-row order-md-last">
                         {% if request.app.language_switch %}
                             {% include "components/language.html" %}

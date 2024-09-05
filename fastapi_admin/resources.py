@@ -144,6 +144,12 @@ class Model(Resource):
                 value = str(getattr(obj, name, None))
                 ret.append(await input_.render(request, value))
                 continue
+            if (
+                isinstance(input_, inputs.ManyToMany)
+                and (obj is not None)
+                and name in obj._meta.m2m_fields
+            ):
+                await obj.fetch_related(name)
             ret.append(await input_.render(request, getattr(obj, name, None)))
         return ret
 
