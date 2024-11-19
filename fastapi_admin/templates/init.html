@@ -9,31 +9,31 @@
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">{{ _('Create first admin') }}</h2>
                     <div class="mb-3">
-                        <label class="form-label">{{ _('username') }}</label>
-                        <input name="username" type="text" class="form-control"
+                        <label class="form-label" for="username">{{ _('username') }}</label>
+                        <input id="username" name="username" type="text" class="form-control"
                                placeholder="{{ _('username_placeholder') }}">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">
+                        <label class="form-label" for="password">
                             {{ _('password') }}
                             <span class="form-label-description">
                             </span>
                         </label>
                         <div class="input-group input-group-flat">
-                            <input placeholder="{{ _('password_placeholder') }}" name="password" type="password"
+                            <input id="password" placeholder="{{ _('password_placeholder') }}" name="password" type="password"
                                    class="form-control" autocomplete="off">
                             <span class="input-group-text">
                             </span>
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">
+                        <label class="form-label" for="confirm_password">
                             {{ _('confirm_password') }}
                             <span class="form-label-description">
                             </span>
                         </label>
                         <div class="input-group input-group-flat">
-                            <input placeholder="{{ _('confirm_password_placeholder') }}" name="confirm_password" type="password"
+                            <input id="confirm_password" placeholder="{{ _('confirm_password_placeholder') }}" name="confirm_password" type="password"
                                    class="form-control" autocomplete="off">
                             <span class="input-group-text">
                             </span>

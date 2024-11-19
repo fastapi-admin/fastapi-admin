@@ -1,6 +1,5 @@
 from typing import Any
 
-from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 
 from fastapi_admin.template import templates as t
@@ -17,7 +16,7 @@ class Widget:
         """
         self.context = context
 
-    async def render(self, request: Request, value: Any):
+    async def render(self, value: Any):
         if value is None:
             value = ""
         if not self.template:

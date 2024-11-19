@@ -6,7 +6,6 @@ from starlette.requests import Request
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER
 from tortoise import Model
-from tortoise.fields import ManyToManyRelation
 from tortoise.transactions import in_transaction
 
 from fastapi_admin.depends import get_model, get_model_resource, get_resources

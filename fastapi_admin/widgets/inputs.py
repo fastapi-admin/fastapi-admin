@@ -20,12 +20,8 @@ class Input(Widget):
         super().__init__(null=null, help_text=help_text, **context)
         self.default = default
 
-    async def parse_value(self, request: Request, value: Any):
-        """
-        Parse value from frontend
-        :param value:
-        :return:
-        """
+    async def parse_value(self, value: Any):
+        """Parse value from frontend"""
         return value
 
     async def render(self, request: Request, value: Any):

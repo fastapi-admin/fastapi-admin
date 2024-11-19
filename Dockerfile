@@ -1,4 +1,4 @@
-FROM python:3.9 as builder
+FROM python:3.9 AS builder
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 RUN mkdir -p /fastapi-admin
 WORKDIR /fastapi-admin

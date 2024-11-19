@@ -56,7 +56,7 @@ class Field:
 
 
 class ComputeField(Field):
-    async def get_value(self, request: Request, obj: dict):
+    async def get_value(self, obj: dict):
         return obj.get(self.name)
 
 
@@ -85,7 +85,7 @@ class Model(Resource):
     page_title: Optional[str] = None
     filters: List[Union[str, Filter]] = []
 
-    async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
+    async def get_toolbar_actions(self) -> List[ToolbarAction]:
         return [
             ToolbarAction(
                 label=_("create"),
@@ -97,31 +97,24 @@ class Model(Resource):
             )
         ]
 
-    async def row_attributes(self, request: Request, obj: dict) -> dict:
+    async def row_attributes(self) -> dict:
         return {}
 
-    async def column_attributes(self, request: Request, field: Field) -> dict:
+    async def column_attributes(self) -> dict:
         return {}
 
-    async def cell_attributes(self, request: Request, obj: dict, field: Field) -> dict:
+    async def cell_attributes(self) -> dict:
         return {}
 
-    async def get_actions(self, request: Request) -> List[Action]:
+    async def get_actions(self) -> List[Action]:
         return [
-            Action(
-                label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False
-            ),
+            Action(label=_("update"), icon="ti ti-edit", name="update", method=Method.GET, ajax=False),
             Action(label=_("delete"), icon="ti ti-trash", name="delete", method=Method.DELETE),
         ]
 
-    async def get_bulk_actions(self, request: Request) -> List[Action]:
+    async def get_bulk_actions(self) -> List[Action]:
         return [
-            Action(
-                label=_("delete_selected"),
-                icon="ti ti-trash",
-                name="delete",
-                method=Method.DELETE,
-            ),
+            Action(label=_("delete_selected"), icon="ti ti-trash", name="delete", method=Method.DELETE),
         ]
 
     @classmethod
@@ -340,18 +333,18 @@ async def render_values(
     cell_attributes: List[List[dict]] = []
     row_attributes: List[dict] = []
     column_attributes: List[dict] = []
-    for field in fields:
-        column_attributes.append(await model.column_attributes(request, field))
+    for _ in fields:
+        column_attributes.append(await model.column_attributes())
     for value in values:
-        row_attributes.append(await model.row_attributes(request, value))
+        row_attributes.append(await model.row_attributes())
         item = []
         cell_item = []
         for field in fields:
             if isinstance(field, ComputeField):
-                v = await field.get_value(request, value)
+                v = await field.get_value(value)
             else:
                 v = value.get(field.name)
-            cell_item.append(await model.cell_attributes(request, value, field))
+            cell_item.append(await model.cell_attributes())
             if display:
                 item.append(await field.display.render(request, v))
             else:

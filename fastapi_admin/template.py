@@ -4,7 +4,6 @@ from typing import Any
 from urllib.parse import urlencode
 
 from jinja2 import pass_context
-from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 
 from fastapi_admin import VERSION

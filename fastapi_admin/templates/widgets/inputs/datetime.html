@@ -1,8 +1,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 <div class="form-group">
-    <label class="form-label">{{ label }}</label>
-    <input {% if not null %}required{% endif %} type="{{ input_type }}" class="form-control" name="{{ name }}"
+    <label class="form-label" for="{{ name }}">{{ label }}</label>
+    <input id="{{ name }}" {% if not null %}required{% endif %} type="{{ input_type }}" class="form-control" name="{{ name }}"
            placeholder="{{ placeholder }}" {% if disabled %}disabled{% endif %} value="{{ value }}">
     {% if help_text %}
         <small class="form-hint">

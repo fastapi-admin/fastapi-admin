@@ -36,7 +36,7 @@ class FileExtNotAllowed(ServerHTTPException):
     """
 
 
-async def server_error_exception(request: Request, exc: HTTPException):
+async def server_error_exception(request: Request):
     return templates.TemplateResponse(
         "errors/500.html",
         status_code=HTTP_500_INTERNAL_SERVER_ERROR,
