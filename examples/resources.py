@@ -71,6 +71,9 @@ class AdminResource(Model):
     async def get_bulk_actions(self, request: Request) -> List[Action]:
         return []
 
+    async def on_after_create(self, request: Request, obj: Admin) -> None:
+        print(f"New admin were created through admin panel! | {obj.email}")
+
 
 @app.register
 class Content(Dropdown):

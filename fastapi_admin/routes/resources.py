@@ -233,6 +233,8 @@ async def create(
         for k, items in m2m_data.items():
             m2m_obj = getattr(obj, k)  # type:ManyToManyRelation
             await m2m_obj.add(*items, using_db=conn)
+    await model_resource.on_after_create(request, obj)
+
     if "save" in form.keys():
         return redirect(request, "list_view", resource=resource)
     context = {

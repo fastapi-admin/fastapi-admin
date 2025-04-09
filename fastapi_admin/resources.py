@@ -124,6 +124,9 @@ class Model(Resource):
             ),
         ]
 
+    async def on_after_create(self, request: Request, obj: TortoiseModel) -> None:
+        return None
+
     @classmethod
     async def get_inputs(cls, request: Request, obj: Optional[TortoiseModel] = None):
         ret = []
