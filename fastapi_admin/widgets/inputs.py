@@ -8,6 +8,7 @@ from starlette.requests import Request
 from tortoise import Model
 
 from fastapi_admin.file_upload import FileUpload
+from fastapi_admin.i18n import _
 from fastapi_admin.widgets import Widget
 
 
@@ -105,7 +106,7 @@ class ForeignKey(Select):
         ret = await self.get_queryset()
         options = [(str(x), x.pk) for x in ret]
         if self.context.get("null"):
-            options = [("", "")] + options
+            options = [(f"-- {_('select')} --", "")] + options
         return options
 
     async def get_queryset(self):
@@ -162,7 +163,7 @@ class Enum(Select):
     async def get_options(self):
         options = [(v.name, v.value) for v in self.enum]
         if self.context.get("null"):
-            options = [("", "")] + options
+            options = [(f"-- {_('select')} --", "")] + options
         return options
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-28 10:24+0100\n"
+"POT-Creation-Date: 2025-02-01 11:40+0000\n"
 "PO-Revision-Date: 2021-04-16 22:46+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.14.0\n"
+"Generated-By: Babel 2.16.0\n"
 
 #: fastapi_admin/resources.py:91
 msgid "create"
@@ -195,4 +195,9 @@ msgstr "Confirm new password"
 #: fastapi_admin/templates/providers/login/password.html:29
 msgid "re_new_password_placeholder"
 msgstr "Enter new password again"
+
+#: fastapi_admin/widgets/inputs.py:109 fastapi_admin/widgets/inputs.py:166
+#, fuzzy
+msgid "select"
+msgstr "Select"
 
