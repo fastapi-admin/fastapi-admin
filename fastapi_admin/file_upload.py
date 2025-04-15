@@ -5,7 +5,7 @@ import aiofiles
 from starlette.datastructures import UploadFile
 
 from fastapi_admin.exceptions import FileExtNotAllowed, FileMaxSizeLimit
-
+from pathlib import Path
 
 class FileUpload:
     def __init__(
@@ -24,6 +24,8 @@ class FileUpload:
 
     async def save_file(self, filename: str, content: bytes):
         file = os.path.join(self.uploads_dir, filename)
+        if not Path(file).parent.exists():
+            Path(file).parent.mkdir(parents=True)
         async with aiofiles.open(file, "wb") as f:
             await f.write(content)
         return os.path.join(self.prefix, filename)
