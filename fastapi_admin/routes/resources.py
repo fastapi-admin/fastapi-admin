@@ -1,4 +1,5 @@
 from typing import Optional
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, Path
 from jinja2 import TemplateNotFound
@@ -256,14 +257,32 @@ async def create(
             context=context,
         )
 
+def get_safe_redirect_url(request):
+    referer = request.headers.get("referer")
+    if not referer:
+        return f"https://{request_host}/admin/product/list#"  # Default redirect if no referer is provided
+    
+    # Parse the URL to extract the domain
+    parsed_url = urlparse(referer)
+    request_host = request.headers.get("host")
+    
+    # Check if the referer's domain matches the host
+    if parsed_url.netloc == request_host:
+        return referer
+    else:
+        # If domain doesn't match, redirect to a safe default location
+        return f"https://{request_host}/admin/product/list#"
+
 
 @router.delete("/{resource}/delete/{pk}")
 async def delete(request: Request, pk: str, model: Model = Depends(get_model)):
     await model.filter(pk=pk).delete()
-    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
+    safe_url = get_safe_redirect_url(request)
+    return RedirectResponse(url=safe_url, status_code=HTTP_303_SEE_OTHER)
 
 
 @router.delete("/{resource}/delete")
 async def bulk_delete(request: Request, ids: str, model: Model = Depends(get_model)):
     await model.filter(pk__in=ids.split(",")).delete()
-    return RedirectResponse(url=request.headers.get("referer"), status_code=HTTP_303_SEE_OTHER)
+    safe_url = get_safe_redirect_url(request)
+    return RedirectResponse(url=safe_url, status_code=HTTP_303_SEE_OTHER)
